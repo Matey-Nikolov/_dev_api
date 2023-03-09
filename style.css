@@ -1,11 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 form {
     display: flex;
-    flex-direction:  column;
-    align-items:  center;
+    flex-direction: column;
+    align-items: center;
 }
 
 input {
-    margin:  10px;
+    margin: 10px;
 }
 
 #nav {
@@ -21,18 +26,33 @@ input {
 }
 
 a {
+    font-size: 20px;
     color: white;
     text-decoration: none;
     margin-left: 20px;
 }
 
-#recipe-list{
+h2 {
+    margin: 10px;
+}
+
+h3 {
+    margin: 10px;
+}
+
+
+#recipe-list {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#recipe-list >* {
+#recipe-list > * {
     margin: 30px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border: 1px solid black;
+    border-radius: 30px;
 }
-
