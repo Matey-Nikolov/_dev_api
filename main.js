@@ -1,3 +1,5 @@
+import { loadRecipes } from "./src/home";
+
 const appEl = document.getElementById('app');
 const navEl = document.getElementById('nav');
 const [homeLinkEl, loginLinkEl, registerLinkEl, logoutLinkEl] = document.querySelectorAll('a');
@@ -7,24 +9,8 @@ function el(type) {
     return element;    
 }
 
-async function loadRecipes() {
-    const recpiseListEl = el('ul');
-    recpiseListEl.id = 'recipe-list'; 
-    const response = await fetch('http://localhost:3030/data/recipes')
-    const data = await response.json();
-    data.map(recipe => {
-        const recipeItemEl = el('li');
-        const nameEl = el('h3');
-        const imgEl = el('img');
-        nameEl.textContent = recipe.name;
-        imgEl.src = recipe.img;
-        recipeItemEl.append(nameEl);
-        recipeItemEl.append(imgEl);
-        recpiseListEl.append(recipeItemEl);
-    })
-    appEl.append(recpiseListEl);
-}
-loadRecipes();
+
+loadRecipes(appEl, el);
 
 homeLinkEl.addEventListener('click', (event) => {
     appEl.innerHTML = '';
