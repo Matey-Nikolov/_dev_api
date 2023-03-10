@@ -195,4 +195,3 @@ function loadRegisterForm() {
 //         console.log(err);
 //     }
 // })
-
