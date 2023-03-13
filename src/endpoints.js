@@ -10,8 +10,6 @@ async function endpoints(divApp){
   //url.searchParams.append('pageTotal', 'true'); 
   //url.searchParams.append('pageSize', '1'); 
 
-  console.log(setGlobal());
-
   let endpoints = await fetch(url, setGlobal())
   .then(response => response.json())
   .catch(error => console.log('error', error));

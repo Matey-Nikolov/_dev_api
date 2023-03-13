@@ -1,58 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 * {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* body {
+  background: #272727;
+  font-family: "Montserrat", sans-serif;
+} */
+
+ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
-}
+    overflow: hidden;
+    background-color: #dddddd;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li button {
+    display: block;
+    padding: 8px;
+  }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-input {
-    margin: 10px;
-}
-
-#nav {
-    background-color: rgb(230, 106, 24);
-    height: 50px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    color: white;
-    font-size: 20px;
-}
-
-a {
-    font-size: 20px;
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-}
-
-h2 {
-    margin: 10px;
-}
-
-h3 {
-    margin: 10px;
-}
-
-
-#recipe-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#recipe-list > * {
-    margin: 30px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    border: 1px solid black;
-    border-radius: 30px;
-}
