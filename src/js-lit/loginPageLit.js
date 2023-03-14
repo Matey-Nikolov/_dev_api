@@ -1,38 +1,16 @@
-//import {LitElement, html} from 'lit';
-import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
+import { html } from '../GlobalImport/globalLit.js';
 
+const loginTemplate = () =>{
+    return html`
+    <form>
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
 
-export class SimpleLogin extends LitElement {
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+        
+        <button type="submit">Login</button>
+    </form>`;
+};
 
-    static properties = {
-    name: {type: String},
-    };
-
-    constructor() {
-        super();
-        // this.name = 'Somebody';
-    }
-
-
-    loginTemplate(){
-        return html`
-        <form>
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-    
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-            
-            <button type="submit">Login</button>
-        </form>`;
-    }
-
-    render() {
-        return html`${this.loginTemplate()}`;
-    }
-
-    //!!!!
-    createRenderRoot() {
-        return this;
-    }
-}
+export { loginTemplate };
