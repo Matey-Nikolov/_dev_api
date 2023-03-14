@@ -15,8 +15,6 @@ const btnLogin = document.getElementById('login');
 
 
 
-
-
 btnCall.addEventListener('click', post);
 btnGet.addEventListener('click', whoIam);
 
@@ -30,7 +28,16 @@ btnLogin.addEventListener('click', (event) =>{
     const inputUsername = document.getElementById('username');
     const inputPassword = document.getElementById('password');
 
-    console.log(inputPassword.value);
+    btn.addEventListener('click', (event) =>{
+
+        event.preventDefault();
+
+        // Validation
+        sessionStorage.setItem('usernameLogin', inputUsername.value);
+        sessionStorage.setItem('passwordLogin', inputPassword.value);
+    
+        inputUsername.value = '';
+    });
 });
 
 btnTenetInfo.addEventListener('click', () =>{
@@ -40,3 +47,4 @@ btnTenetInfo.addEventListener('click', () =>{
 btnAlerts.addEventListener('click', () =>{
     getAlerts();
 });
+
