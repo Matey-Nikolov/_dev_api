@@ -4,12 +4,12 @@ const loginTemplate = () =>{
     return html`
     <form>
         <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+        <input id="username" type="text" placeholder="Enter Username" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input id="password" type="password" placeholder="Enter Password" name="psw" required>
         
-        <button type="submit">Login</button>
+        <button id="loginBtn" type="submit">Login</button>
     </form>`;
 };
 
