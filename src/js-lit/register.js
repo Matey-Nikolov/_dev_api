@@ -1,9 +1,9 @@
 import { html } from '../GlobalImport/globalLit.js';
 
-const loginTemplate = () =>{
+const registerTemplate = () =>{
     return html`
     <form>
-        <p>Login page</p>
+        <p>Register</p>
         <label for="uname"><b>Username</b></label>
         <input id="username" type="text" placeholder="Enter Username" name="uname" required>
 
@@ -14,4 +14,4 @@ const loginTemplate = () =>{
     </form>`;
 };
 
-export { loginTemplate };
+export { registerTemplate };
