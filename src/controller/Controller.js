@@ -37,6 +37,7 @@ btnLogin.addEventListener('click', (event) =>{
         sessionStorage.setItem('passwordLogin', inputPassword.value);
     
         inputUsername.value = '';
+        inputPassword.value = '';
     });
 });
 
