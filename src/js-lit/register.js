@@ -1,6 +1,6 @@
 import { html } from '../GlobalImport/globalLit.js';
 
-const RegisterTemplate = () =>{
+const registerTemplate = () =>{
     return html`
     <form>
         <p>Register</p>
@@ -14,4 +14,4 @@ const RegisterTemplate = () =>{
     </form>`;
 };
 
-export { RegisterTemplate };
+export { registerTemplate };

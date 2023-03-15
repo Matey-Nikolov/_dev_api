@@ -20,6 +20,9 @@ const buttonsTemplate = () =>{
         <li>
             <button id="login">login</button>
         </li>
+        <li>
+            <button id="register">register</button>
+        </li>
     </ul>`;
 }
 
