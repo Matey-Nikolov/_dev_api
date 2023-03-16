@@ -9,5 +9,3 @@ const inputUsername = document.getElementById('username');
 const inputPassword = document.getElementById('password');
 
 console.log(divApp);
-
-console.log(inputPassword.value);

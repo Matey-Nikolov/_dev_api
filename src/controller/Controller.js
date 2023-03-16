@@ -1,18 +1,26 @@
 import {post, whoIam, endpoints, getAlerts} from '../GlobalImport/globalInport.js'
-import { registerTemplate, loginTemplate, buttonsTemplate, render } from '../GlobalImport/globalLit.js';
+import { registerTemplate, loginTemplate, buttonsTemplate, render, welcomePage } from '../GlobalImport/globalLit.js';
+
+function getTypeId(typeId){
+    const type = document.getElementById(typeId);
+    return type;
+}
+
+const navBar = getTypeId('navBar');
+const divApp = getTypeId('app');
+
+render(buttonsTemplate('Matey'), navBar);
+render(welcomePage(), divApp);
+
+const btnCall = getTypeId('new');
+const btnGet = getTypeId('get');
+const btnTenetInfo = getTypeId('info');
+const btnAlerts = getTypeId('alert');
 
 
-const navBar = document.getElementById('navBar');
-const divApp = document.getElementById('app');
 
-render(buttonsTemplate(), navBar);
-
-const btnCall = document.getElementById('new');
-const btnGet = document.getElementById('get');
-const btnTenetInfo = document.getElementById('info');
-const btnAlerts = document.getElementById('alert');
-const btnLogin = document.getElementById('login');
-const btnRegister = document.getElementById('register');
+const btnLogin = getTypeId('login');
+const btnRegister = getTypeId('register');
 
 
 
@@ -23,15 +31,16 @@ btnRegister.addEventListener('click', (event) =>{
     event.preventDefault();
 
     render(registerTemplate(), divApp);
+    
+    const btn = getTypeId('registerPage');
+    const inputUsername = getTypeId('username');
+    const inputPassword = getTypeId('password');
 
-    const btn = document.getElementById('loginBtn');
-    const inputUsername = document.getElementById('username');
-    const inputPassword = document.getElementById('password');
+    console.log(btn);
 
     btn.addEventListener('click', (event) =>{
-
         event.preventDefault();
-
+        
         // Validation
         sessionStorage.setItem('usernameLogin', inputUsername.value);
         sessionStorage.setItem('passwordLogin', inputPassword.value);
@@ -47,18 +56,22 @@ btnLogin.addEventListener('click', (event) =>{
 
     render(loginTemplate(), divApp);
 
-    const btn = document.getElementById('loginBtn');
-    const inputUsername = document.getElementById('username');
-    const inputPassword = document.getElementById('password');
+    console.log(divApp);
+
+
+    const btn = getTypeId('loginBtn');
+    const inputUsername = getTypeId('username');
+    const inputPassword = getTypeId('password');
 
     btn.addEventListener('click', (event) =>{
 
         event.preventDefault();
 
         // Validation
-        sessionStorage.setItem('usernameLogin', inputUsername.value);
-        sessionStorage.setItem('passwordLogin', inputPassword.value);
-    
+        if (inputUsername.value === sessionStorage.getItem('usernameLogin') && inputPassword.value === sessionStorage.getItem('passwordLogin')) {
+            console.log('asda');
+        }
+
         inputUsername.value = '';
         inputPassword.value = '';
     });
@@ -71,4 +84,3 @@ btnTenetInfo.addEventListener('click', () =>{
 btnAlerts.addEventListener('click', () =>{
     getAlerts();
 });
-
