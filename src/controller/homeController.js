@@ -9,23 +9,28 @@ function getTypeId(typeId){
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
-render(buttonsTemplate('Matey'), navBar);
+render(buttonsTemplate(), navBar);
 render(welcomePage(), divApp);
 
-const btnCall = getTypeId('new');
-const btnGet = getTypeId('get');
-const btnTenetInfo = getTypeId('info');
-const btnAlerts = getTypeId('alert');
+// const btnCall = getTypeId('new');
+// const btnGet = getTypeId('get');
+// const btnTenetInfo = getTypeId('info');
+// const btnAlerts = getTypeId('alert');
 
 
 
 const btnLogin = getTypeId('login');
 const btnRegister = getTypeId('register');
+// const btnLogOut = getTypeId('log_out');
 
 
+// btnCall.addEventListener('click', post);
+// btnGet.addEventListener('click', whoIam);
 
-btnCall.addEventListener('click', post);
-btnGet.addEventListener('click', whoIam);
+// btnLogOut.addEventListener('click', () =>{
+//     render(buttonsTemplate(undefined), navBar);
+//     render(welcomePage(), divApp);
+// });
 
 btnRegister.addEventListener('click', (event) =>{
     event.preventDefault();
@@ -41,7 +46,7 @@ btnRegister.addEventListener('click', (event) =>{
     btn.addEventListener('click', (event) =>{
         event.preventDefault();
         
-        // Validation
+        // register - work
         sessionStorage.setItem('usernameLogin', inputUsername.value);
         sessionStorage.setItem('passwordLogin', inputPassword.value);
     
@@ -67,9 +72,11 @@ btnLogin.addEventListener('click', (event) =>{
 
         event.preventDefault();
 
-        // Validation
+        // Validation - work
         if (inputUsername.value === sessionStorage.getItem('usernameLogin') && inputPassword.value === sessionStorage.getItem('passwordLogin')) {
-            console.log('asda');
+
+            render(buttonsTemplate(sessionStorage.getItem('usernameLogin')), navBar);
+            render(welcomePage(), divApp);
         }
 
         inputUsername.value = '';
@@ -77,6 +84,7 @@ btnLogin.addEventListener('click', (event) =>{
     });
 });
 
+/*
 btnTenetInfo.addEventListener('click', () =>{
     endpoints(divApp);
 });
@@ -84,3 +92,6 @@ btnTenetInfo.addEventListener('click', () =>{
 btnAlerts.addEventListener('click', () =>{
     getAlerts();
 });
+*/
+
+export { divApp };

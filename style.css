@@ -11,6 +11,11 @@
   font-family: "Montserrat", sans-serif;
 } */
 
+/* nav{
+  display:  flex;
+  align-items: center;
+} */
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -20,7 +25,7 @@ ul {
 }
 
 li {
-  float: right;
+  float: left;
 }
 
 li button {
@@ -34,4 +39,9 @@ form{
 
 h1{
   text-align: center;
+}
+
+button{
+  background-color: aqua;
+  text-align: right;
 }
