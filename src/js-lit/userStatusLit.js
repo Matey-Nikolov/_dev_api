@@ -1,8 +1,6 @@
-import { html } from '../GlobalImport/globalLit.js';
+import { html, render } from '../GlobalImport/globalLit.js';
 
 
-/*
-else{
     return html`
     <ul>
         <li>
@@ -24,5 +22,3 @@ else{
             <button id="log_out">log out</button>
         </li>
     </ul>`;
-}
-*/

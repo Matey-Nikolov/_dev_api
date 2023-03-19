@@ -45,3 +45,8 @@ button{
   background-color: aqua;
   text-align: right;
 }
+
+table, th, td {
+  text-align: center;
+  border: 1px solid;
+}

@@ -77,6 +77,14 @@ btnLogin.addEventListener('click', (event) =>{
 
             render(buttonsTemplate(sessionStorage.getItem('usernameLogin')), navBar);
             render(welcomePage(), divApp);
+
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = './src/controller/userController.js';
+
+            document.body.appendChild(script);
+
+            console.log(script);
         }
 
         inputUsername.value = '';
@@ -93,5 +101,6 @@ btnAlerts.addEventListener('click', () =>{
     getAlerts();
 });
 */
+
 
 export { divApp };
