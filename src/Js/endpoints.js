@@ -1,13 +1,10 @@
 import { setGlobal, apiHost } from './global.js';
   
-async function endpoints(divApp){
-
-  const userInfo = document.createElement('div');
-
+async function endpoints(){
 
   let url = new URL(`${apiHost}/endpoint/v1/endpoints`);
 
-  //url.searchParams.append('pageTotal', 'true'); 
+  url.searchParams.append('pageTotal', 'true'); 
   //url.searchParams.append('pageSize', '1'); 
 
   let endpoints = await fetch(url, setGlobal())
@@ -15,8 +12,7 @@ async function endpoints(divApp){
   .catch(error => console.log('error', error));
 
   console.log(endpoints);
-
-  divApp.append(userInfo);
+  return endpoints;
 }
 
 export { endpoints };

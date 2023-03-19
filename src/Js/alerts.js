@@ -8,6 +8,7 @@ async function getAlerts(){
     let url = new URL(`${apiHost}/common/v1/alerts`);
 
     console.log(url);
+    console.log(setGlobal);
 
     const data = await fetch(url, setGlobal)
     .then(response => response.json())
