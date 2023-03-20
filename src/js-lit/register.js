@@ -16,7 +16,7 @@ const registerTemplate = () =>{
         
         <p></p>
 
-        <button id="registerPage" type="submit">Register</button>
+        <button id="registerPage" type="submit" class="btn btn-outline-success">Register</button>
     </form>`;
 };
 

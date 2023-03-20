@@ -4,7 +4,7 @@ import { html } from "../GlobalImport/globalLit.js";
 function tableTemplate(endpoints){
 
     return html`
-        <table>
+        <table class="table-secondary">
             <thead>
                 <tr>
                     <th>type</th>

@@ -11,10 +11,10 @@ const buttonsTemplate = (name) =>{
                 <p>Welcome ${name}</p>
             </li>
             <li>
-                <button id="login">login</button>
+                <button id="login" class="btn btn-outline-info">login</button>
             </li>
             <li>
-                <button id="register">register</button>
+                <button id="register" class="btn btn-outline-info">register</button>
             </li>
         </ul>`;
     }else{
@@ -24,19 +24,19 @@ const buttonsTemplate = (name) =>{
                 <p>Welcome ${name}</p>
             </li>
             <li>
-                <button id="new">Call</button>
+                <button id="new" class="btn btn-primary">Call</button>
             </li>
             <li>
-                <button id="get">get</button>
+                <button id="get" class="btn btn-primary">get</button>
             </li>
             <li>
-                <button id="info">info user</button>
+                <button id="info" class="btn btn-primary">info user</button>
             </li>
             <li>
-                <button id="alert">alerts</button>
+                <button id="alert" class="btn btn-primary">alerts</button>
             </li>
             <li>
-                <button id="log_out">log out</button>
+                <button id="log_out" class="btn btn-primary">log out</button>
             </li>
         </ul>`;
     }
@@ -44,7 +44,6 @@ const buttonsTemplate = (name) =>{
 }
 
 const welcomePage = () =>{
-
     return html`
     <div class="bgimg">
         <div class="topleft">

@@ -16,7 +16,7 @@ const loginTemplate = () =>{
         
         <p></p>
 
-        <button id="loginBtn" type="submit">Login</button>
+        <button id="loginBtn" type="submit" class="btn btn-outline-success">Login</button>
     </form>`;
 };
 
