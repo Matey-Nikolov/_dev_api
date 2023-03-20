@@ -45,3 +45,7 @@ table, th, td {
   text-align: center;
   border: 1px solid;
 }
+
+form{
+  text-align: center;
+}
