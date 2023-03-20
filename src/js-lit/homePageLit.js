@@ -44,6 +44,7 @@ const buttonsTemplate = (name) =>{
 }
 
 const welcomePage = () =>{
+
     return html`
     <div class="bgimg">
         <div class="topleft">
@@ -51,9 +52,10 @@ const welcomePage = () =>{
         </div>
         <div class="middle">
             <h1>COMING SOON</h1>
-            <hr>
-            <p id="demo" style="font-size:30px"></p>
         </div>
+
+        <hr>
+
         <footer>
             <p>2023 16 05</p>
         </footer>
