@@ -12,28 +12,15 @@ const divApp = getTypeId('app');
 render(buttonsTemplate(), navBar);
 render(welcomePage(), divApp);
 
-// const btnCall = getTypeId('new');
-// const btnGet = getTypeId('get');
-// const btnTenetInfo = getTypeId('info');
-// const btnAlerts = getTypeId('alert');
-
-
 
 const btnLogin = getTypeId('login');
 const btnRegister = getTypeId('register');
-// const btnLogOut = getTypeId('log_out');
-
-
-// btnCall.addEventListener('click', post);
-// btnGet.addEventListener('click', whoIam);
-
-// btnLogOut.addEventListener('click', () =>{
-//     render(buttonsTemplate(undefined), navBar);
-//     render(welcomePage(), divApp);
-// });
+let script;
 
 btnRegister.addEventListener('click', (event) =>{
     event.preventDefault();
+
+
 
     render(registerTemplate(), divApp);
     
@@ -78,7 +65,7 @@ btnLogin.addEventListener('click', (event) =>{
             render(buttonsTemplate(sessionStorage.getItem('usernameLogin')), navBar);
             render(welcomePage(), divApp);
 
-            const script = document.createElement('script');
+            script = document.createElement('script');
             script.type = 'module';
             script.src = './src/controller/userController.js';
 
@@ -103,4 +90,4 @@ btnAlerts.addEventListener('click', () =>{
 */
 
 
-export { divApp };
+export { divApp, script };
