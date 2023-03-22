@@ -14,7 +14,7 @@ const registerTemplate = () =>{
                 <input id="password" type="password" placeholder="Enter Password" name="psw" required class="form-control border border-primary">
             </div>
             <div class="d-grid">
-                <button id="loginBtn" type="submit" class="btn btn-outline-success">Login</button>
+                <button id="registerPage" type="submit" class="btn btn-outline-success">register</button>
             </div>
         </form>
     </div>`;
