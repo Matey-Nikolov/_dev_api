@@ -9,6 +9,7 @@ function getTypeId(typeId){
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
+
 const btnLogin = (event) =>{
     event.preventDefault();
 
@@ -60,9 +61,13 @@ const btnRegister = (event) =>{
     });
 };
 
+const welcomeNavigator = () =>{
+    render(welcomePage(), divApp);
+};
+
 const logOut = () =>{
     console.log('ok');
-    
+
     render(buttonsTemplate(), navBar);
     render(welcomePage(undefined), divApp);
 };
@@ -70,4 +75,4 @@ const logOut = () =>{
 render(buttonsTemplate(), navBar);
 render(welcomePage(), divApp);
 
-export { divApp, logOut, btnLogin, btnRegister };
+export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator };

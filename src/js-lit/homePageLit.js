@@ -1,15 +1,17 @@
 //import {LitElement, html} from 'lit';
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 import { html } from "../GlobalImport/globalLit.js";
-import { post, whoIam, endpoints, getAlerts, logOut, btnLogin, btnRegister } from '../GlobalImport/globalInport.js'
+import { post, whoIam, endpoints, getAlerts, logOut, btnLogin, btnRegister, welcomeNavigator } from '../GlobalImport/globalInport.js'
 
 const buttonsTemplate = (name) =>{
+
+    console.log(welcomeNavigator);
 
     if(name === undefined){
         return html`
         <ul>
             <li>
-                <p>Welcome ${name}</p>
+               <p @click=${welcomeNavigator}>Welcome</p>
             </li>
             <li>
                 <button @click=${btnLogin} class="btn btn-outline-info">login</button>
