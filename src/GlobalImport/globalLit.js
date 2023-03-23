@@ -3,5 +3,7 @@ import { buttonsTemplate, welcomePage } from '../js-lit/homePageLit.js';
 import { loginTemplate } from '../js-lit/loginPageLit.js';
 import { registerTemplate } from '../js-lit/register.js';
 import { tableTemplate } from '../js-lit/endpointsLit.js';
+import { tableAlertTemplate } from '../js-lit/alertLit.js';
 
-export { tableTemplate, welcomePage, buttonsTemplate, registerTemplate , html, css , render, loginTemplate, LitElement};
+export { tableTemplate, tableAlertTemplate, welcomePage, buttonsTemplate, registerTemplate };
+export { html, css , render, loginTemplate, LitElement};

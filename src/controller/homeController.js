@@ -9,54 +9,8 @@ function getTypeId(typeId){
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
-render(buttonsTemplate(), navBar);
-render(welcomePage(), divApp);
 
-// const btnCall = getTypeId('new');
-// const btnGet = getTypeId('get');
-// const btnTenetInfo = getTypeId('info');
-// const btnAlerts = getTypeId('alert');
-
-
-
-const btnLogin = getTypeId('login');
-const btnRegister = getTypeId('register');
-// const btnLogOut = getTypeId('log_out');
-
-
-// btnCall.addEventListener('click', post);
-// btnGet.addEventListener('click', whoIam);
-
-// btnLogOut.addEventListener('click', () =>{
-//     render(buttonsTemplate(undefined), navBar);
-//     render(welcomePage(), divApp);
-// });
-
-btnRegister.addEventListener('click', (event) =>{
-    event.preventDefault();
-
-    render(registerTemplate(), divApp);
-    
-    const btn = getTypeId('registerPage');
-    const inputUsername = getTypeId('username');
-    const inputPassword = getTypeId('password');
-
-    console.log(btn);
-
-    btn.addEventListener('click', (event) =>{
-        event.preventDefault();
-        
-        // register - work
-        sessionStorage.setItem('usernameLogin', inputUsername.value);
-        sessionStorage.setItem('passwordLogin', inputPassword.value);
-    
-        inputUsername.value = '';
-        inputPassword.value = '';
-    });
-});
-
-btnLogin.addEventListener('click', (event) =>{
-
+const btnLogin = (event) =>{
     event.preventDefault();
 
     render(loginTemplate(), divApp);
@@ -77,30 +31,48 @@ btnLogin.addEventListener('click', (event) =>{
 
             render(buttonsTemplate(sessionStorage.getItem('usernameLogin')), navBar);
             render(welcomePage(), divApp);
-
-            const script = document.createElement('script');
-            script.type = 'module';
-            script.src = './src/controller/userController.js';
-
-            document.body.appendChild(script);
-
-            console.log(script);
         }
 
         inputUsername.value = '';
         inputPassword.value = '';
     });
-});
+};
 
-/*
-btnTenetInfo.addEventListener('click', () =>{
-    endpoints(divApp);
-});
+const btnRegister = (event) =>{
+    event.preventDefault();
 
-btnAlerts.addEventListener('click', () =>{
-    getAlerts();
-});
-*/
+    render(registerTemplate(), divApp);
+    
+    const btn = getTypeId('registerPage');
+    const inputUsername = getTypeId('username');
+    const inputPassword = getTypeId('password');
 
+    console.log(btn);
 
-export { divApp };
+    btn.addEventListener('click', (event) =>{
+        event.preventDefault();
+        
+        // register - work
+        sessionStorage.setItem('usernameLogin', inputUsername.value);
+        sessionStorage.setItem('passwordLogin', inputPassword.value);
+    
+        inputUsername.value = '';
+        inputPassword.value = '';
+    });
+};
+
+const welcomeNavigator = () =>{
+    render(welcomePage(), divApp);
+};
+
+const logOut = () =>{
+    console.log('ok');
+
+    render(buttonsTemplate(), navBar);
+    render(welcomePage(undefined), divApp);
+};
+
+render(buttonsTemplate(), navBar);
+render(welcomePage(), divApp);
+
+export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator };

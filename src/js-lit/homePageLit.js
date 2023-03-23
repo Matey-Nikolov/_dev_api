@@ -1,20 +1,23 @@
 //import {LitElement, html} from 'lit';
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 import { html } from "../GlobalImport/globalLit.js";
+import { post, whoIam, endpoints, getAlerts, logOut, btnLogin, btnRegister, welcomeNavigator } from '../GlobalImport/globalInport.js'
 
 const buttonsTemplate = (name) =>{
+
+    console.log(welcomeNavigator);
 
     if(name === undefined){
         return html`
         <ul>
             <li>
-                <p>Welcome ${name}</p>
+               <p @click=${welcomeNavigator}>Welcome</p>
             </li>
             <li>
-                <button id="login" class="btn btn-outline-info">login</button>
+                <button @click=${btnLogin} class="btn btn-outline-info">login</button>
             </li>
             <li>
-                <button id="register" class="btn btn-outline-info">register</button>
+                <button @click=${btnRegister} class="btn btn-outline-info">register</button>
             </li>
         </ul>`;
     }else{
@@ -24,19 +27,19 @@ const buttonsTemplate = (name) =>{
                 <p>Welcome ${name}</p>
             </li>
             <li>
-                <button id="new" class="btn btn-primary">Call</button>
+                <button @click=${post} class="btn btn-primary">Call</button>
             </li>
             <li>
-                <button id="get" class="btn btn-primary">get</button>
+                <button @click=${whoIam} class="btn btn-primary">get</button>
             </li>
             <li>
-                <button id="info" class="btn btn-primary">info user</button>
+                <button @click=${endpoints} class="btn btn-primary">info user</button>
             </li>
             <li>
-                <button id="alert" class="btn btn-primary">alerts</button>
+                <button @click=${getAlerts} class="btn btn-primary">alerts</button>
             </li>
             <li>
-                <button id="log_out" class="btn btn-primary">log out</button>
+                <button @click=${logOut} class="btn btn-primary">log out</button>
             </li>
         </ul>`;
     }
