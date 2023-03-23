@@ -1,43 +1,37 @@
 import { script, divApp, post, whoIam, endpoints, getAlerts } from '../GlobalImport/globalInport.js';
 import { welcomePage, buttonsTemplate, tableTemplate, render } from '../GlobalImport/globalLit.js';
 
-function getTypeId(typeId){
-    const type = document.getElementById(typeId);
-    return type;
-}
+// function getTypeId(typeId){
+//     const type = document.getElementById(typeId);
+//     return type;
+// }
 
-console.log(divApp);
+// console.log(divApp);
 
-const btnCall = getTypeId('new');
-const btnGet = getTypeId('get');
-const btnTenetInfo = getTypeId('info');
-const btnAlerts = getTypeId('alert');
-const btnLogOut = getTypeId('log_out');
-
-
-btnCall.addEventListener('click', post);
-btnGet.addEventListener('click', whoIam);
+// const btnCall = getTypeId('new');
+// const btnGet = getTypeId('get');
+// const btnTenetInfo = getTypeId('info');
+// const btnAlerts = getTypeId('alert');
+// const btnLogOut = getTypeId('log_out');
 
 
-btnTenetInfo.addEventListener('click', async () =>{
-    let getEndpoints = await endpoints();
+// btnCall.addEventListener('click', post);
+// btnGet.addEventListener('click', whoIam);
 
-    render(tableTemplate(getEndpoints), divApp);
-});
 
-btnAlerts.addEventListener('click', () =>{
-    getAlerts();
-});
+// btnTenetInfo.addEventListener('click', async () =>{
+//     let getEndpoints = await endpoints();
 
-btnLogOut.addEventListener('click', () =>{
-    render(buttonsTemplate(undefined), navBar);
-    render(welcomePage(), divApp);
+//     render(tableTemplate(getEndpoints), divApp);
+// });
 
-    console.log(script);
-    script.type = 'module';
-    script.src = './src/controller/homeController.js';
+// btnAlerts.addEventListener('click', () =>{
+//     getAlerts();
+// });
 
-    script.onreadystatechange = tr;
-    script.onload = callback;
+// btnLogOut.addEventListener('click', () =>{
 
-});
+
+//     render(buttonsTemplate(undefined), navBar);
+//     render(welcomePage(), divApp);
+// });
