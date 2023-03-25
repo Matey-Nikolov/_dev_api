@@ -1,10 +1,9 @@
 import { setGlobal, apiHost } from "./global.js";
-import { render, tableAlertTemplate } from '../GlobalImport/globalLit.js';
+import { render, tableAlertTemplate, buttonsTemplate } from '../GlobalImport/globalLit.js';
 import { divApp } from '../GlobalImport/globalInport.js';
 
 async function getAlerts(){
 
-    console.log(apiHost);
 
     let url = new URL(`${apiHost}/common/v1/alerts`);
 
@@ -15,10 +14,24 @@ async function getAlerts(){
     .then(response => response.json())
     .catch(error => console.log('error', error));
     
-    console.log(alertsData);
-
     render(tableAlertTemplate(alertsData), divApp);
 
+    return alertsData;
 }
 
-export { getAlerts };
+async function filter(){
+    const data = await getAlerts();
+    console.log(data);
+
+    let filtered = {
+        'items': {},
+        'pages': {}
+    };
+
+    filtered.items = data.items.filter(x => x.severity === 'low');
+    filter.pages = data.pages;
+
+    render(tableAlertTemplate(filtered), divApp);
+}
+
+export { getAlerts, filter };
