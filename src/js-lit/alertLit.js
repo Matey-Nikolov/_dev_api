@@ -1,5 +1,5 @@
 import { html } from "../GlobalImport/globalLit.js";
-import { f}
+import { filter } from "../GlobalImport/globalInport.js";
 
 function tableAlertTemplate(alerts){
 
@@ -18,9 +18,8 @@ function tableAlertTemplate(alerts){
                             
                             <div class="collapse show" id="home-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><p @click=${}></p>
-                                <!-- <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
-                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li> -->
+                                <li>
+                                    <button @click=${filter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Filter</button>
                                 </ul>
                             </div>
                         </li>

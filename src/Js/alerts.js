@@ -15,14 +15,23 @@ async function getAlerts(){
     .catch(error => console.log('error', error));
     
     render(tableAlertTemplate(alertsData), divApp);
-    console.log(divApp);
+
+    return alertsData;
 }
 
-function filter(alerts){
-    // let filtered = alerts.items.filter( x => x.severity === 'high');
+async function filter(){
+    const data = await getAlerts();
+    console.log(data);
 
-    console.log(alerts);
-    console.log('ok');
+    let filtered = {
+        'items': {},
+        'pages': {}
+    };
+
+    filtered.items = data.items.filter(x => x.severity === 'low');
+    filter.pages = data.pages;
+
+    render(tableAlertTemplate(filtered), divApp);
 }
 
 export { getAlerts, filter };
