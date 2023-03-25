@@ -4,6 +4,7 @@ import { html } from "../GlobalImport/globalLit.js";
 function tableTemplate(endpoints){
 
     return html`
+    <div id="app">
         <table class="table-secondary">
             <thead>
                 <tr>
@@ -18,7 +19,7 @@ function tableTemplate(endpoints){
                     <td>${endpoints.items.map((value) => html`<tr>${value.lastSeenAt}</tr></td>`)}
             </tbody>
         </table>
-        `;
+    </div>`;
     
 }
 
