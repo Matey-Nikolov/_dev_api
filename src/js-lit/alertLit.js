@@ -1,5 +1,5 @@
 import { html } from "../GlobalImport/globalLit.js";
-import { filter } from "../GlobalImport/globalInport.js";
+import { filterLow, filterMedium, filterHigh } from "../GlobalImport/globalInport.js";
 
 function tableAlertTemplate(alerts){
 
@@ -19,13 +19,14 @@ function tableAlertTemplate(alerts){
                             <div class="collapse show" id="home-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <button @click=${filter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Filter</button>
+                                    <button @click=${filterLow} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Severity - low</button>
+                                    <button @click=${filterMedium} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Severity - medium</button>
+                                    <button @click=${filterHigh} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Severity - high</button>
                                 </ul>
                             </div>
                         </li>
                     </ul>
                     </div>
-
                 </div>
                 <div class="col">
                 <div class="table-responsive">
