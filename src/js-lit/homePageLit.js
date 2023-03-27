@@ -59,12 +59,14 @@ const buttonsTemplate = (name) =>{
 const welcomePage = () =>{
 
     return html`
-    <div class="bgimg">
+    <div class="bgimg" style="margin: auto;">
         <div class="topleft">
             <p>Logo</p>
         </div>
         <div class="middle">
             <h1>COMING SOON</h1>
+
+            <img src="src/photos/api.png" style="display: block; margin: auto;   width: 300px; height: 300px;">
         </div>
 
         <hr>

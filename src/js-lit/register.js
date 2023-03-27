@@ -2,7 +2,7 @@ import { html } from '../GlobalImport/globalLit.js';
 
 const registerTemplate = () =>{
     return html`
-    <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
+    <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary" style="margin: auto;">
         <h2 class="text-center mb-4 text-primary">Register</h2>
         <form>
             <div class="mb-3">

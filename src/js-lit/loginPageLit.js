@@ -4,7 +4,7 @@ const loginTemplate = () =>{
     
     // https://frontendshape.com/post/bootstrap-v52-design-login-form-page
     return html`
-    <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
+    <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary" style="margin: auto;">
         <h2 class="text-center mb-4 text-primary">Login</h2>
         <form>
             <div class="mb-3">
