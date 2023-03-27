@@ -19,19 +19,37 @@ async function getAlerts(){
     return alertsData;
 }
 
-async function filter(){
+let filtered = {
+    'items': {},
+    'pages': {}
+};
+
+async function filterLow(){
     const data = await getAlerts();
-    console.log(data);
-
-    let filtered = {
-        'items': {},
-        'pages': {}
-    };
-
+    
     filtered.items = data.items.filter(x => x.severity === 'low');
-    filter.pages = data.pages;
+    filtered.pages = data.pages;
 
     render(tableAlertTemplate(filtered), divApp);
 }
 
-export { getAlerts, filter };
+async function filterMedium(){
+    const data = await getAlerts();
+
+    filtered.items = data.items.filter(x => x.severity === 'medium');
+    filtered.pages = data.pages;
+
+    render(tableAlertTemplate(filtered), divApp);
+}
+
+async function filterHigh(){
+    const data = await getAlerts();
+
+    filtered.items = data.items.filter(x => x.severity === 'high');
+    filtered.pages = data.pages;
+
+    render(tableAlertTemplate(filtered), divApp);
+}
+
+
+export { getAlerts, filterLow, filterMedium, filterHigh };
