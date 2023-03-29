@@ -1,6 +1,8 @@
 import {post, whoIam, endpoints, getAlerts} from '../GlobalImport/globalInport.js'
 import { registerTemplate, loginTemplate, buttonsTemplate, render, welcomePage } from '../GlobalImport/globalLit.js';
 
+import { createUser, loginUser } from '../GlobalImport/globalInport.js';
+
 function getTypeId(typeId){
     const type = document.getElementById(typeId);
     return type;
@@ -26,12 +28,18 @@ const btnLogin = (event) =>{
 
         event.preventDefault();
 
-        // Validation - work
-        if (inputUsername.value === sessionStorage.getItem('usernameLogin') && inputPassword.value === sessionStorage.getItem('passwordLogin')) {
+        let bool = loginUser(inputUsername.value, inputPassword.value);
+        
+        // console.log(bool);
 
-            render(buttonsTemplate(sessionStorage.getItem('usernameLogin')), navBar);
-            render(welcomePage(), divApp);
-        }
+        // if (bool) {
+        //     console.log('okwaesrfdgthj');
+        //     render(buttonsTemplate(inputUsername.value), navBar);
+        //     render(welcomePage(), divApp);
+        // }
+        // else{
+        //     alert('Incorrect password or username!');
+        // }
 
         inputUsername.value = '';
         inputPassword.value = '';
@@ -51,13 +59,14 @@ const btnRegister = (event) =>{
 
     btn.addEventListener('click', (event) =>{
         event.preventDefault();
-        
-        // register - work
-        sessionStorage.setItem('usernameLogin', inputUsername.value);
-        sessionStorage.setItem('passwordLogin', inputPassword.value);
-    
+
+        createUser(event, inputUsername.value, inputPassword.value);
+
         inputUsername.value = '';
         inputPassword.value = '';
+
+        render(buttonsTemplate(), divApp);
+        render(welcomePage(), divApp);
     });
 };
 
@@ -66,8 +75,6 @@ const welcomeNavigator = () =>{
 };
 
 const logOut = () =>{
-    console.log('ok');
-
     render(buttonsTemplate(), navBar);
     render(welcomePage(undefined), divApp);
 };
