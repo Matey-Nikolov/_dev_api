@@ -10,7 +10,7 @@ const buttonsTemplate = (name) =>{
     if(name === undefined){
         return html`
             <div class="container-fluid">
-                <a class="navbar-brand" @click=${welcomePage}>Welcome ${name}</a>
+                <a @click=${welcomePage} class="navbar-brand" >Welcome ${name}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
