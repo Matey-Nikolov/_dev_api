@@ -6,6 +6,11 @@ const registerTemplate = () =>{
         <h2 class="text-center mb-4 text-primary">Register</h2>
         <form>
             <div class="mb-3">
+                <label for="uname" class="form-label"><b>Role</b></label>
+                <!-- admin or guest -->
+                <input id="role" type="text" placeholder="Enter role" required class="form-control border border-primary" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
                 <label for="uname" class="form-label"><b>Username</b></label>
                 <input id="username" type="text" placeholder="Enter Username" name="uname" required class="form-control border border-primary" aria-describedby="emailHelp">
             </div>

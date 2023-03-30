@@ -52,15 +52,15 @@ const btnRegister = (event) =>{
     render(registerTemplate(), divApp);
     
     const btn = getTypeId('registerPage');
+    
+    const role = getTypeId('role');
     const inputUsername = getTypeId('username');
     const inputPassword = getTypeId('password');
-
-    console.log(btn);
 
     btn.addEventListener('click', (event) =>{
         event.preventDefault();
 
-        createUser(event, inputUsername.value, inputPassword.value);
+        createUser(event, inputUsername.value, inputPassword.value, role.value);
 
         inputUsername.value = '';
         inputPassword.value = '';

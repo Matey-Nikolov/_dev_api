@@ -17,12 +17,13 @@ const navBarDemoNotHere = document.getElementById('navBar');
 
 const db = getFirestore(app);
 
-async function createUser(event, usernameInput, passwordInput){
+async function createUser(event, usernameInput, passwordInput, roleInput){
     event.preventDefault();
 
-    docRef = await addDoc(collection(db, 'user'), {
-        Username: usernameInput,
-        Password: passwordInput
+    docRef = await addDoc(collection(db, 'User'), {
+        username: usernameInput,
+        password: passwordInput,
+        role: roleInput
     });
 
     // console.log("Document written with ID: ", docRef.id);
@@ -30,22 +31,26 @@ async function createUser(event, usernameInput, passwordInput){
 
 async function loginUser(usernameInput, passwordInput){
     
-    const querySnapshot = await getDocs(collection(db, "user"));
+    const querySnapshot = await getDocs(collection(db, 'User'));
+
 
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data().Username);
-        let userDb = doc.data().Username;
-        let passwordDb = doc.data().Password;
+        let userDb = doc.data().username;
+        let passwordDb = doc.data().password;
+        let roleDb = doc.data().role;
+
 
         if (userDb === usernameInput && passwordDb === passwordInput) {
             // return true;
-            render(buttonsTemplate(userDb), navBarDemoNotHere);
+            console.log('ok');
+            render(buttonsTemplate(userDb, roleDb), navBarDemoNotHere);
             render(welcomePage(), divAppDemoNotHere);
         }
-        else{
-            alert('Incorrect password or username!');
-        }
+        // else{
+        //     alert('Incorrect password or username!');
+        // }
     });
     
     // return false;
