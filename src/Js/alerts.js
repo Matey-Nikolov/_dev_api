@@ -24,13 +24,11 @@ let filtered = {
     'pages': {}
 };
 
-const btnFilterseverity = 
-
-async function severityFilter(level){
+async function severityFilter(severityFilter){
     const data = await getAlerts();
     
 
-    switch(level){
+    switch(severityFilter){
         case'low':
             filtered.items = data.items.filter(x => x.severity === 'low');
             filtered.pages = data.pages;
@@ -48,10 +46,6 @@ async function severityFilter(level){
 
 
     render(tableAlertTemplate(filtered), divApp);
-}
-
-function filterLow(){
-
 }
 
 async function filterMedium(){
@@ -73,4 +67,4 @@ async function filterHigh(){
 }
 
 
-export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
+export { getAlerts, filterLow, filterMedium, filterHigh };
