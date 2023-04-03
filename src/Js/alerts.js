@@ -48,6 +48,15 @@ async function severityFilter(severityFilter){
     render(tableAlertTemplate(filtered), divApp);
 }
 
+async function filterLow(){
+    const data = await getAlerts();
+
+    filtered.items = data.items.filter(x => x.severity === 'low');
+    filtered.pages = data.pages;
+
+    render(tableAlertTemplate(filtered), divApp);
+}
+
 async function filterMedium(){
     const data = await getAlerts();
 
@@ -67,4 +76,4 @@ async function filterHigh(){
 }
 
 
-export { getAlerts, filterLow, filterMedium, filterHigh };
+export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
