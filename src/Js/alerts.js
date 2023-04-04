@@ -1,6 +1,6 @@
 import { setGlobal, apiHost } from "./global.js";
 import { render, tableAlertTemplate, buttonsTemplate } from '../GlobalImport/globalLit.js';
-import { divApp } from '../GlobalImport/globalInport.js';
+import { divApp, pagesTable } from '../GlobalImport/globalInport.js';
 
 async function getAlerts(){
 
@@ -15,6 +15,8 @@ async function getAlerts(){
     .catch(error => console.log('error', error));
     
     render(tableAlertTemplate(alertsData), divApp);
+
+    console.log(pagesTable());
 
     return alertsData;
 }
@@ -42,8 +44,6 @@ async function severityFilter(severityFilter){
             filtered.pages = data.pages;
         break;
     }
-
-
 
     render(tableAlertTemplate(filtered), divApp);
 }

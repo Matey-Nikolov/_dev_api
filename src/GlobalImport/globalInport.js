@@ -6,8 +6,10 @@ import { getAlerts, filterLow, filterMedium, filterHigh, severityFilter } from '
 
 import { createUser, loginUser } from '../firebase/registerCreate.js';
 
+import { pagesTable } from '../Js/tablePagination.js';
+
 export { post, whoIam, endpoints, getAlerts};
 export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator };
 export { filterLow, filterMedium, filterHigh, severityFilter };
 
-export { createUser, loginUser };
+export { createUser, loginUser, pagesTable };
