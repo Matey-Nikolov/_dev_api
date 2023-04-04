@@ -42,13 +42,21 @@ function tableAlertTemplate(alerts){
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Gender</th>
+                            <th>Tenant</th>
+                            <th>Product</th>
+                            <th>Severity</th>
+                            <th>RaisedAt</th>
                         </tr>
                         </thead>
                         <tbody id="table-body">
-
+                            ${alerts.items.map((value) => html`
+                                <tr>
+                                <td>${value.tenant.name}</td>
+                                <td>${value.product}</td>
+                                <td>${value.severity}</td>
+                                <td>${value.raisedAt}</td>
+                                </tr>`)}
+                            
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation">
@@ -74,9 +82,7 @@ old table
         </tr>
     </thead>
     <tbody>
-        <td>
-            ${alerts.items.map((value) => html`<tr>${value.tenant.name}</tr>
-        </td>`)}
+        <td>${alerts.items.map((value) => html`<tr>${value.tenant.name}</tr></td>`)}
         <td>
             ${alerts.items.map((value) => html`<tr>${value.product}</tr>
         </td>`)}
