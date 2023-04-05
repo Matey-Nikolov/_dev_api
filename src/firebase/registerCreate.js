@@ -3,6 +3,8 @@ import { addDoc, doc, getDocs, getFirestore, collection, getDoc } from "https://
 import { firebaseConfig } from "./firebaseConfig.js";
 
 import { buttonsTemplate, welcomePage, render } from "../GlobalImport/globalLit.js";
+import { post } from '../GlobalImport/globalInport.js'
+
 // import { divApp } from "../src/controller/homeController.js";
 // import { html, render } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 
@@ -44,7 +46,9 @@ async function loginUser(usernameInput, passwordInput){
 
         if (userDb === usernameInput && passwordDb === passwordInput) {
             // return true;
-            console.log('ok');
+
+            console.log(post());
+
             render(buttonsTemplate(userDb, roleDb), navBarDemoNotHere);
             render(welcomePage(), divAppDemoNotHere);
         }

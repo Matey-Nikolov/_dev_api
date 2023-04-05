@@ -17,17 +17,13 @@ const requestOptions = {
   //mode: 'no-cors'
 };
 
-let accessToken = {};
-
 
 async function post(){
-  const response = await fetch(`https://id.sophos.com/api/v2/oauth2/token`, requestOptions);
-  const data = await response.json();
-  accessToken = data.access_token;
-
-  console.log(accessToken);
-
-  sessionStorage.setItem('token', accessToken);
+  const response = await fetch(`https://id.sophos.com/api/v2/oauth2/token`, requestOptions)
+  .then(response =>  response.json())
+  .then(result =>{
+    sessionStorage.setItem('token', result.access_token);
+  });
 };
 
 
