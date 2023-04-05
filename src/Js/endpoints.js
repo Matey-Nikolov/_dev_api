@@ -1,8 +1,9 @@
 import { setGlobal, apiHost } from './global.js';
 import { render, tableTemplate } from '../GlobalImport/globalLit.js';
-import { divApp } from '../GlobalImport/globalInport.js';
+import { divApp, pagesTable } from '../GlobalImport/globalInport.js';
  
 async function endpoints(){
+
 
   let url = new URL(`${apiHost}/endpoint/v1/endpoints`);
 
@@ -14,6 +15,8 @@ async function endpoints(){
   .catch(error => console.log('error', error));
 
   render(tableTemplate(endpoints), divApp);
+
+  pagesTable();
 
   return endpoints;
 }

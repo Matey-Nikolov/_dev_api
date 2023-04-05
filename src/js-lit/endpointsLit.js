@@ -25,20 +25,27 @@ function tableTemplate(endpoints){
             </div>
             <div class="col">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Health</th>
-                            <th>LastSeenAt</th>
-                        </tr>
+                    <tr>
+                        <th>Type</th>
+                        <th>Health</th>
+                        <th>LastSeenAt</th>
+                    </tr>
                     </thead>
-                    <tbody>
-                        <td>${endpoints.items.map((value) => html`<tr>${value.type}</tr></td>`)}
-                        <td>${endpoints.items.map((value) => html`<tr>${value.health.overall}</tr></td>`)}
-                        <td>${endpoints.items.map((value) => html`<tr>${value.lastSeenAt}</tr></td>`)}
+                    <tbody id="table-body">
+                        ${endpoints.items.map((value) => html`
+                            <tr>
+                            <td>${value.type}</td>
+                            <td>${value.health.overall}</td>
+                            <td>${value.lastSeenAt}</td>
+                            </tr>`)}
+                        
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                </nav>
             </div>
             </div>
         </div>

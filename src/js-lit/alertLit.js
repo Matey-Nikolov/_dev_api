@@ -2,10 +2,6 @@ import { html } from "../GlobalImport/globalLit.js";
 import { filterLow, filterMedium, filterHigh } from "../GlobalImport/globalInport.js";
 
 function tableAlertTemplate(alerts){
-
-    console.log(alerts);
-
-
     return html`
         <div class="container text-center">
             <div class="row">
@@ -38,30 +34,30 @@ function tableAlertTemplate(alerts){
                 </div>
                 <div class="col">
                     <div class="container mt-5">
-                    <h1>Table with Pagination</h1>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Tenant</th>
-                            <th>Product</th>
-                            <th>Severity</th>
-                            <th>RaisedAt</th>
-                        </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            ${alerts.items.map((value) => html`
-                                <tr>
-                                <td>${value.tenant.name}</td>
-                                <td>${value.product}</td>
-                                <td>${value.severity}</td>
-                                <td>${value.raisedAt}</td>
-                                </tr>`)}
-                            
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center" id="pagination"></ul>
-                    </nav>
+                        <h1>Table with Pagination</h1>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Tenant</th>
+                                <th>Product</th>
+                                <th>Severity</th>
+                                <th>RaisedAt</th>
+                            </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                ${alerts.items.map((value) => html`
+                                    <tr>
+                                    <td>${value.tenant.name}</td>
+                                    <td>${value.product}</td>
+                                    <td>${value.severity}</td>
+                                    <td>${value.raisedAt}</td>
+                                    </tr>`)}
+                                
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center" id="pagination"></ul>
+                        </nav>
                     </div>
                 </div>
             </div>
