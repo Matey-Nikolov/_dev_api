@@ -1,4 +1,4 @@
-import { divApp, logOut, btnLogin, btnRegister, welcomeNavigator } from '../controller/homeController.js';
+import { divApp, logOut, btnLogin, btnRegister, welcomeNavigator, loginRouter, registerRouter, logOutRouter } from '../controller/homeController.js';
 import { post } from '../Js/authentication.js';
 import { whoIam } from '../Js/authorization.js';
 import { endpoints, endpointsRoute } from '../Js/endpoints.js';
@@ -8,7 +8,7 @@ import { createUser, loginUser } from '../firebase/registerCreate.js';
 import { pagesTable } from '../Js/tablePagination.js';
 
 
-export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator };
+export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator, loginRouter, registerRouter, logOutRouter };
 
 
 export { post };

@@ -12,8 +12,10 @@ const app = initializeApp(firebaseConfig);
 let docRef;
 let docSnap;
 
+const divAppDemoNotHere = document.getElementById('app');
 const navBarDemoNotHere = document.getElementById('navBar');
 //https://firebase.google.com/docs/firestore/query-data/get-data#web-version-9_3
+// single
 
 const db = getFirestore(app);
 
@@ -45,6 +47,8 @@ async function loginUser(usernameInput, passwordInput){
         if (userDb === usernameInput && passwordDb === passwordInput) {
             
             render(buttonsTemplate(userDb, roleDb), navBarDemoNotHere);
+            render(welcomePage(), divAppDemoNotHere);
+
             return true;
         }
         // else{

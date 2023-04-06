@@ -9,26 +9,14 @@ function getTypeId(typeId){
     return type;
 }
 
-
-
-
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
-
-// const btnLogin = (event) => {
-//     event.preventDefault();
-//     console.log('ok');
-//     page.redirect('/login');
-// };
-
 const btnLogin = (event) =>{
     event.preventDefault();
+// console.log(divApp);
 
     render(loginTemplate(), divApp);
-
-    console.log(divApp);
-
 
     const btn = getTypeId('loginBtn');
     const inputUsername = getTypeId('username');
@@ -43,7 +31,6 @@ const btnLogin = (event) =>{
 
         if (bool) {
             console.log('True');
-            page.redirect('/home');
         }
 
         // TODO VALIDATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -56,7 +43,6 @@ const btnLogin = (event) =>{
 const btnRegister = (event) =>{
     event.preventDefault();
 
-    render(registerTemplate(), divApp);
     
     const btn = getTypeId('registerPage');
     
@@ -77,11 +63,24 @@ const btnRegister = (event) =>{
     });
 };
 
-const welcomeNavigator = () =>{
-    render(welcomePage(), divApp);
+const logOutRouter = () => {
+    logOut();
+    page.redirect('/home');
 };
 
-const logOut = () =>{
+const registerRouter = () => {
+    page.redirect('/createUser');
+};
+
+const loginRouter = () => {
+    page.redirect('/login');
+};
+
+const welcomeNavigator = () => {
+    page.redirect('/home');
+};
+
+const logOut = () => {
     render(buttonsTemplate(), navBar);
     render(welcomePage(undefined), divApp);
 };
@@ -94,11 +93,16 @@ page('/home', () => {
     render(welcomePage(), divApp);
 });
 
-page('/login', () => {
-    render(loginTemplate(), divApp);
+// page('/login', () => {
+//     render(loginTemplate(), divApp);
+// });
+
+page('/createUser', () =>{
+    render(registerTemplate(), divApp);
 });
 
 
 page();
 
-export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator };
+export { divApp, logOut, btnLogin, btnRegister  };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter};

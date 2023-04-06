@@ -1,14 +1,16 @@
 //import {LitElement, html} from 'lit';
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 import { html } from "../GlobalImport/globalLit.js";
-import { post, whoIam, endpoints, endpointsRoute, alertRouter, getAlerts, logOut, btnLogin, btnRegister, welcomeNavigator } from '../GlobalImport/globalInport.js'
+import { post, whoIam, logOut, btnLogin } from '../GlobalImport/globalInport.js';
+import { welcomeNavigator } from '../GlobalImport/globalInport.js';
+import { endpointsRoute, alertRouter, registerRouter, logOutRouter } from '../GlobalImport/globalInport.js'; 
 
 const buttonsTemplate = (name, role) =>{
 
     if(role === undefined){
         return html`
             <div class="container-fluid">
-                <a class="navbar-brand" >Welcome</a>
+                <a class="navbar-brand" @click=${welcomeNavigator}>Welcome</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -21,7 +23,7 @@ const buttonsTemplate = (name, role) =>{
     }else if (role === 'admin'){
         return html`
         <div class="container-fluid">
-            <a class="navbar-brand" @click=${welcomePage}>Welcome ${name}</a>
+            <a class="navbar-brand" @click=${welcomeNavigator}>Welcome ${name}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,15 +43,15 @@ const buttonsTemplate = (name, role) =>{
                     </li>
                 </ul>
                 <li class="nav-item">
-                    <button @click=${btnRegister} class="btn btn-outline-success">register new</button>
-                    <button @click=${logOut} class="btn btn-outline-success">log out</button>
+                    <button @click=${registerRouter} class="btn btn-outline-success">register new</button>
+                    <button @click=${logOutRouter} class="btn btn-outline-success">log out</button>
                 </li>
             </div>
         </div>`;
     }else if (role === 'guest'){
         return html`
         <div class="container-fluid">
-            <a class="navbar-brand" @click=${welcomePage}>Welcome ${name}</a>
+            <a class="navbar-brand" @click=${welcomeNavigator}>Welcome ${name}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -62,10 +64,10 @@ const buttonsTemplate = (name, role) =>{
                         <button @click=${whoIam} class="btn btn-outline-success">get</button>
                     </li>
                     <li class="nav-item">
-                        <button @click=${endpoints} class="btn btn-outline-success">info user</button>
+                        <button @click=${endpointsRoute} class="btn btn-outline-success">info user</button>
                     </li>
                     <li class="nav-item">
-                        <button @click=${getAlerts} class="btn btn-outline-success">alerts</button>
+                        <button @click=${alertRouter} class="btn btn-outline-success">alerts</button>
                     </li>
                 </ul>
                 <li class="nav-item">
