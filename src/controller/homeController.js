@@ -3,6 +3,7 @@ import { registerTemplate, loginTemplate, buttonsTemplate, render, welcomePage, 
 
 import { createUser, loginUser } from '../GlobalImport/globalInport.js';
 
+
 function getTypeId(typeId){
     const type = document.getElementById(typeId);
     return type;
@@ -14,6 +15,12 @@ function getTypeId(typeId){
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
+
+// const btnLogin = (event) => {
+//     event.preventDefault();
+//     console.log('ok');
+//     page.redirect('/login');
+// };
 
 const btnLogin = (event) =>{
     event.preventDefault();
@@ -31,18 +38,15 @@ const btnLogin = (event) =>{
 
         event.preventDefault();
 
-        let bool = loginUser(inputUsername.value, inputPassword.value);
-        
-        // console.log(bool);
 
-        // if (bool) {
-        //     console.log('okwaesrfdgthj');
-        //     render(buttonsTemplate(inputUsername.value), navBar);
-        //     render(welcomePage(), divApp);
-        // }
-        // else{
-        //     alert('Incorrect password or username!');
-        // }
+        let bool = loginUser(inputUsername.value, inputPassword.value);
+
+        if (bool) {
+            console.log('True');
+            page.redirect('/home');
+        }
+
+        // TODO VALIDATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         inputUsername.value = '';
         inputPassword.value = '';
@@ -83,19 +87,17 @@ const logOut = () =>{
 };
 
 render(buttonsTemplate(), navBar);
-// render(welcomePage(), divApp);
+render(welcomePage(), divApp);
 
-const notfound = () => { html`<p>no</p>`};
 
-page('/', () => {
+page('/home', () => {
     render(welcomePage(), divApp);
 });
+
 page('/login', () => {
     render(loginTemplate(), divApp);
-    next();
 });
 
-page('/login');
 
 page();
 

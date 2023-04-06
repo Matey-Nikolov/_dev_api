@@ -2,6 +2,11 @@ import { setGlobal, apiHost } from "./global.js";
 import { render, tableAlertTemplate, buttonsTemplate } from '../GlobalImport/globalLit.js';
 import { divApp, pagesTable } from '../GlobalImport/globalInport.js';
 
+const alertRouter = () =>{
+    page.redirect('/alerts/');
+    getAlerts();
+};
+
 async function getAlerts(){
 
 
@@ -76,4 +81,4 @@ async function filterHigh(){
 }
 
 
-export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
+export { alertRouter, getAlerts, filterLow, filterMedium, filterHigh, severityFilter };

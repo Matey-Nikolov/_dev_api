@@ -1,7 +1,7 @@
 //import {LitElement, html} from 'lit';
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 import { html } from "../GlobalImport/globalLit.js";
-import { post, whoIam, endpoints, getAlerts, logOut, btnLogin, btnRegister, welcomeNavigator } from '../GlobalImport/globalInport.js'
+import { post, whoIam, endpoints, endpointsRoute, alertRouter, getAlerts, logOut, btnLogin, btnRegister, welcomeNavigator } from '../GlobalImport/globalInport.js'
 
 const buttonsTemplate = (name, role) =>{
 
@@ -34,10 +34,10 @@ const buttonsTemplate = (name, role) =>{
                         <button @click=${whoIam} class="btn btn-outline-success">get</button>
                     </li>
                     <li class="nav-item">
-                        <button @click=${endpoints} class="btn btn-outline-success">info user</button>
+                        <button @click=${endpointsRoute} class="btn btn-outline-success">info user</button>
                     </li>
                     <li class="nav-item">
-                        <button @click=${getAlerts} class="btn btn-outline-success">alerts</button>
+                        <button @click=${alertRouter} class="btn btn-outline-success">alerts</button>
                     </li>
                 </ul>
                 <li class="nav-item">
