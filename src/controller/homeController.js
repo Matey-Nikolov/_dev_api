@@ -1,5 +1,5 @@
 import {post, whoIam, endpoints, getAlerts} from '../GlobalImport/globalInport.js'
-import { registerTemplate, loginTemplate, buttonsTemplate, render, welcomePage } from '../GlobalImport/globalLit.js';
+import { registerTemplate, loginTemplate, buttonsTemplate, render, welcomePage, html } from '../GlobalImport/globalLit.js';
 
 import { createUser, loginUser } from '../GlobalImport/globalInport.js';
 
@@ -7,6 +7,9 @@ function getTypeId(typeId){
     const type = document.getElementById(typeId);
     return type;
 }
+
+
+
 
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
@@ -80,6 +83,20 @@ const logOut = () =>{
 };
 
 render(buttonsTemplate(), navBar);
-render(welcomePage(), divApp);
+// render(welcomePage(), divApp);
+
+const notfound = () => { html`<p>no</p>`};
+
+page('/', () => {
+    render(welcomePage(), divApp);
+});
+page('/login', () => {
+    render(loginTemplate(), divApp);
+    next();
+});
+
+page('/login');
+
+page();
 
 export { divApp, logOut, btnLogin, btnRegister, welcomeNavigator };
