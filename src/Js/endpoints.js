@@ -1,12 +1,9 @@
-import { setGlobal, apiHost } from './global.js';
-import { render, tableTemplate } from '../GlobalImport/globalLit.js';
-import { divApp, pagesTable } from '../GlobalImport/globalInport.js';
+import { setGlobal, apiHost, pagesTable } from './global.js';
+import { render, tableTemplate } from '../Global/globalLit.js';
+import { divApp } from '../Global/globalInport.js';
 
 
-const endpointsRoute = () =>{
-  page.redirect('/endpoints/');
-  endpoints();
-};
+
 
 async function endpoints(){
 
@@ -27,4 +24,4 @@ async function endpoints(){
   return endpoints;
 }
 
-export { endpointsRoute, endpoints };
+export { endpoints };

@@ -2,8 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebas
 import { addDoc, doc, getDocs, getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 
-import { buttonsTemplate, welcomePage, render } from "../GlobalImport/globalLit.js";
-import { post } from '../GlobalImport/globalInport.js'
+import { buttonsTemplate, welcomePage, render } from "../Global/globalLit.js";
+import { welcomeNavigator } from '../Global/globalInport.js'
 
 // import { divApp } from "../src/controller/homeController.js";
 // import { html, render } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
@@ -49,6 +49,7 @@ async function loginUser(usernameInput, passwordInput){
             render(buttonsTemplate(userDb, roleDb), navBarDemoNotHere);
             render(welcomePage(), divAppDemoNotHere);
 
+            welcomeNavigator();
             return true;
         }
         // else{

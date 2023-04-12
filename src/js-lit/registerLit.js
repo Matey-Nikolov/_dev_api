@@ -1,4 +1,4 @@
-import { html } from '../GlobalImport/globalLit.js';
+import { html } from '../Global/globalLit.js';
 
 const registerTemplate = () =>{
     return html`

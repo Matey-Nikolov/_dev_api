@@ -1,9 +1,10 @@
 //import {LitElement, html} from 'lit';
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
-import { html } from "../GlobalImport/globalLit.js";
-import { post, whoIam, logOut, btnLogin } from '../GlobalImport/globalInport.js';
-import { welcomeNavigator } from '../GlobalImport/globalInport.js';
-import { endpointsRoute, alertRouter, registerRouter, logOutRouter } from '../GlobalImport/globalInport.js'; 
+import { html } from "../Global/globalLit.js";
+import { post, whoIam, btnLogin } from '../Global/globalInport.js';
+
+
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute } from '../Global/globalInport.js';
 
 const buttonsTemplate = (name, role) =>{
 
@@ -19,7 +20,6 @@ const buttonsTemplate = (name, role) =>{
                     <button @click=${btnLogin} class="btn btn-outline-success">login</button>
                 </div>
             </div>`;
-
     }else if (role === 'admin'){
         return html`
         <div class="container-fluid">
@@ -71,7 +71,7 @@ const buttonsTemplate = (name, role) =>{
                     </li>
                 </ul>
                 <li class="nav-item">
-                    <button @click=${logOut} class="btn btn-outline-success">log out</button>
+                    <button @click=${logOutRouter} class="btn btn-outline-success">log out</button>
                 </li>
             </div>
         </div>`;

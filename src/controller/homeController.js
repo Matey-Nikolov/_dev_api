@@ -1,8 +1,7 @@
-import {post, whoIam, endpoints, getAlerts} from '../GlobalImport/globalInport.js'
-import { registerTemplate, loginTemplate, buttonsTemplate, render, welcomePage, html } from '../GlobalImport/globalLit.js';
+import { loginTemplate, buttonsTemplate, render, welcomePage } from '../Global/globalLit.js';
 
-import { createUser, loginUser } from '../GlobalImport/globalInport.js';
-
+import { createUser, loginUser } from '../Global/globalInport.js';
+// import { welcomeNavigator } from '../Global/globalInport.js';
 
 function getTypeId(typeId){
     const type = document.getElementById(typeId);
@@ -12,9 +11,10 @@ function getTypeId(typeId){
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
+
+
 const btnLogin = (event) =>{
     event.preventDefault();
-// console.log(divApp);
 
     render(loginTemplate(), divApp);
 
@@ -27,13 +27,14 @@ const btnLogin = (event) =>{
         event.preventDefault();
 
 
+        // TODO VALIDATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         let bool = loginUser(inputUsername.value, inputPassword.value);
 
-        if (bool) {
-            console.log('True');
-        }
+        // welcomeNavigator();
 
-        // TODO VALIDATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // if (bool) {
+        //     console.log('True');
+        // }
 
         inputUsername.value = '';
         inputPassword.value = '';
@@ -63,46 +64,7 @@ const btnRegister = (event) =>{
     });
 };
 
-const logOutRouter = () => {
-    logOut();
-    page.redirect('/home');
-};
-
-const registerRouter = () => {
-    page.redirect('/createUser');
-};
-
-const loginRouter = () => {
-    page.redirect('/login');
-};
-
-const welcomeNavigator = () => {
-    page.redirect('/home');
-};
-
-const logOut = () => {
-    render(buttonsTemplate(), navBar);
-    render(welcomePage(undefined), divApp);
-};
-
 render(buttonsTemplate(), navBar);
 render(welcomePage(), divApp);
 
-
-page('/home', () => {
-    render(welcomePage(), divApp);
-});
-
-// page('/login', () => {
-//     render(loginTemplate(), divApp);
-// });
-
-page('/createUser', () =>{
-    render(registerTemplate(), divApp);
-});
-
-
-page();
-
-export { divApp, logOut, btnLogin, btnRegister  };
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter};
+export { divApp, navBar, btnLogin, btnRegister };

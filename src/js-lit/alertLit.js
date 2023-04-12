@@ -1,5 +1,5 @@
-import { html } from "../GlobalImport/globalLit.js";
-import { filterLow, filterMedium, filterHigh } from "../GlobalImport/globalInport.js";
+import { html } from "../Global/globalLit.js";
+import { filterLow, filterMedium, filterHigh } from "../Global/globalInport.js";
 
 function tableAlertTemplate(alerts){
     return html`

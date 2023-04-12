@@ -1,7 +1,7 @@
 import { html } from "../Global/globalLit.js";
 
 
-function tableTemplate(endpoints){
+function tableEventTemplate(events){
 
     return html`
     <div class="container text-center">
@@ -34,7 +34,7 @@ function tableTemplate(endpoints){
                     </tr>
                     </thead>
                     <tbody id="table-body">
-                        ${endpoints.items.map((value) => html`
+                        ${events.items.map((value) => html`
                             <tr>
                             <td>${value.type}</td>
                             <td>${value.health.overall}</td>
@@ -52,4 +52,4 @@ function tableTemplate(endpoints){
     </div>`;
 }
 
-export { tableTemplate };
+export { tableEventTemplate };

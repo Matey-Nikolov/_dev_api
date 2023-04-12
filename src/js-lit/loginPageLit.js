@@ -1,4 +1,4 @@
-import { html, css, LitElement } from '../GlobalImport/globalLit.js';
+import { html, css, LitElement } from '../Global/globalLit.js';
 
 const loginTemplate = () =>{
     
