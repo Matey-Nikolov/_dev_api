@@ -28,17 +28,15 @@ function tableEventTemplate(events){
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Type</th>
-                        <th>Health</th>
-                        <th>LastSeenAt</th>
+                        <th>Name</th>
+                        <th>Group</th>
                     </tr>
                     </thead>
                     <tbody id="table-body">
                         ${events.items.map((value) => html`
                             <tr>
-                            <td>${value.type}</td>
-                            <td>${value.health.overall}</td>
-                            <td>${value.lastSeenAt}</td>
+                            <td>${value.name}</td>
+                            <td>${value.group}</td>
                             </tr>`)}
                         
                     </tbody>

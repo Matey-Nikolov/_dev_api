@@ -4,7 +4,7 @@ import { html } from "../Global/globalLit.js";
 import { post, whoIam, btnLogin } from '../Global/globalInport.js';
 
 
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute } from '../Global/globalInport.js';
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute, eventRouter } from '../Global/globalInport.js';
 
 const buttonsTemplate = (name, role) =>{
 
@@ -40,6 +40,9 @@ const buttonsTemplate = (name, role) =>{
                     </li>
                     <li class="nav-item">
                         <button @click=${alertRouter} class="btn btn-outline-success">alerts</button>
+                    </li>
+                    <li class="nav-item">
+                        <button @click=${eventRouter} class="btn btn-outline-success">events</button>
                     </li>
                 </ul>
                 <li class="nav-item">

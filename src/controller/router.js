@@ -1,11 +1,16 @@
 import { divApp, navBar } from './homeController.js';
 import { registerTemplate, buttonsTemplate, render, welcomePage } from '../Global/globalLit.js';
-import { endpoints, getAlerts } from '../Global/globalInport.js';
+import { endpoints, getAlerts, getEvents } from '../Global/globalInport.js';
 // // console.log(divApp);
 // // console.log(navBar);
 
 // render(buttonsTemplate(), navBar);
 // render(welcomePage(), divApp);
+
+const eventRouter = () =>{
+    page.redirect('/events');
+    getEvents();
+};
 
 const endpointsRoute = () =>{
     page.redirect('/endpoints/');
@@ -53,4 +58,4 @@ page('/createUser', () =>{
 
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute, eventRouter };

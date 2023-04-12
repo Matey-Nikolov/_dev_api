@@ -2,9 +2,6 @@ import { setGlobal, apiHost, pagesTable } from './global.js';
 import { render, tableTemplate } from '../Global/globalLit.js';
 import { divApp } from '../Global/globalInport.js';
 
-
-
-
 async function endpoints(){
 
 

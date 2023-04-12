@@ -4,6 +4,7 @@ import { loginTemplate } from '../js-lit/loginPageLit.js';
 import { registerTemplate } from '../js-lit/RegisterLit.js';
 import { tableTemplate } from '../js-lit/endpointsLit.js';
 import { tableAlertTemplate } from '../js-lit/alertLit.js';
+import { tableEventTemplate } from '../js-lit/eventLit.js';
 
-export { tableTemplate, tableAlertTemplate, welcomePage, buttonsTemplate, registerTemplate };
+export { tableTemplate, tableAlertTemplate, welcomePage, buttonsTemplate, registerTemplate, tableEventTemplate };
 export { html, css , render, loginTemplate, LitElement};

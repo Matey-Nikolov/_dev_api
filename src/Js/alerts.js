@@ -3,14 +3,10 @@ import { render, tableAlertTemplate, buttonsTemplate } from '../Global/globalLit
 import { divApp } from '../Global/globalInport.js';
 
 
-
 async function getAlerts(){
 
 
     let url = new URL(`${apiHost}/common/v1/alerts`);
-
-    console.log(url);
-    console.log(setGlobal);
 
     const alertsData = await fetch(url, setGlobal())
     .then(response => response.json())
@@ -18,7 +14,7 @@ async function getAlerts(){
     
     render(tableAlertTemplate(alertsData), divApp);
 
-    console.log(pagesTable());
+    pagesTable();
 
     return alertsData;
 }
