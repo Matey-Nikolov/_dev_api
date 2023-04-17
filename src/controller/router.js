@@ -40,6 +40,7 @@ const welcomeNavigator = () => {
 };
 
 const logOut = () => {
+    sessionStorage.removeItem('token');
     render(buttonsTemplate(), navBar);
     render(welcomePage(undefined), divApp);
 };

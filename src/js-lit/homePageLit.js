@@ -1,7 +1,7 @@
 //import {LitElement, html} from 'lit';
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 import { html } from "../Global/globalLit.js";
-import { post, whoIam, btnLogin } from '../Global/globalInport.js';
+import { post, btnLogin } from '../Global/globalInport.js';
 
 
 import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute, eventRouter } from '../Global/globalInport.js';
@@ -30,10 +30,7 @@ const buttonsTemplate = (name, role) =>{
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li>
-                    <button @click=${post} class="btn btn-outline-success">Call</button>
-                    </li>
-                    <li class="nav-item">
-                        <button @click=${whoIam} class="btn btn-outline-success">get</button>
+                    <button @click=${post} class="btn btn-outline-success">who I'am</button>
                     </li>
                     <li class="nav-item">
                         <button @click=${endpointsRoute} class="btn btn-outline-success">info user</button>
@@ -61,10 +58,7 @@ const buttonsTemplate = (name, role) =>{
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li>
-                    <button @click=${post} class="btn btn-outline-success">Call</button>
-                    </li>
-                    <li class="nav-item">
-                        <button @click=${whoIam} class="btn btn-outline-success">get</button>
+                    <button @click=${post} class="btn btn-outline-success">who I'am</button>
                     </li>
                     <li class="nav-item">
                         <button @click=${endpointsRoute} class="btn btn-outline-success">info user</button>

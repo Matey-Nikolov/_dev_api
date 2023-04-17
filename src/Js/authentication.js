@@ -1,3 +1,5 @@
+import { whoIam } from './authorization.js';
+
 const myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 //myHeaders.append("headers", { 'Content-type': 'application/json' });
@@ -23,6 +25,7 @@ async function post(){
   .then(response =>  response.json())
   .then(result =>{
     sessionStorage.setItem('token', result.access_token);
+    whoIam();
   });
 };
 
