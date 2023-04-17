@@ -1,7 +1,10 @@
 import { html } from "../Global/globalLit.js";
-import { filterLow, filterMedium, filterHigh } from "../Global/globalInport.js";
+import { getAlerts, filterLow, filterMedium, filterHigh } from "../Global/globalInport.js";
 
 function tableAlertTemplate(alerts){
+
+    console.log(alerts);
+
     return html`
         <div class="container text-center">
             <div class="row">
@@ -10,7 +13,12 @@ function tableAlertTemplate(alerts){
 
                         <span class="fs-5 fw-semibold">Filters</span>
                         <ul class="list-unstyled ps-0">
+                            <button @click=${getAlerts} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                                All alerts
+                            </button>
+
                             <li class="mb-1">
+
                                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                                     Severity
                                 </button>
@@ -34,11 +42,10 @@ function tableAlertTemplate(alerts){
                 </div>
                 <div class="col">
                     <div class="container mt-5">
-                        <h1>Table with Pagination</h1>
+                        <h2>User - ${alerts.items[0].tenant.name}</h2>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Tenant</th>
                                 <th>Product</th>
                                 <th>Severity</th>
                                 <th>RaisedAt</th>
@@ -47,12 +54,10 @@ function tableAlertTemplate(alerts){
                             <tbody id="table-body">
                                 ${alerts.items.map((value) => html`
                                     <tr>
-                                    <td>${value.tenant.name}</td>
-                                    <td>${value.product}</td>
-                                    <td>${value.severity}</td>
-                                    <td>${value.raisedAt}</td>
+                                        <td>${value.product}</td>
+                                        <td>${value.severity}</td>
+                                        <td>${value.raisedAt}</td>
                                     </tr>`)}
-                                
                             </tbody>
                         </table>
                         <nav aria-label="Page navigation">
