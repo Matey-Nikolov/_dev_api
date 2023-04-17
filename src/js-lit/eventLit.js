@@ -28,15 +28,16 @@ function tableEventTemplate(events){
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Group</th>
+                        <th>Messages</th>
+                        <!-- <th>Group</th> -->
+                        <th>Allow</th>
                     </tr>
                     </thead>
                     <tbody id="table-body">
                         ${events.items.map((value) => html`
                             <tr>
                             <td>${value.name}</td>
-                            <td>${value.group}</td>
+                            <!-- <td>${value.group}</td> -->
                             </tr>`)}
                         
                     </tbody>
