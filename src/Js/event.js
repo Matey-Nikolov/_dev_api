@@ -3,15 +3,20 @@ import { render, tableEventTemplate } from '../Global/globalLit.js';
 import { divApp } from '../Global/globalInport.js';
 
 // const regex = /https?:\/\/(?<website>(?:[-\w.]|(?:%[\da-fA-F]{2}))+)/g;
-const regex = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
+const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
+const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
-let websiteGet = '';
+let getWebsite = '';
+let getType = '';
+let matchWebSite = '';
+let matcType = '';
 
-// let events = {
-//     'has_more': Boolean,
-//     'items': {},
-//     'next_cursor': ''
-// };
+let events = 
+{
+    has_more: Boolean,
+    items: {},
+    next_cursor: ''
+};
 
 async function getEvents(){
 
@@ -21,13 +26,9 @@ async function getEvents(){
     // url.searchParams.append('pageTotal', 'true'); 
     // //url.searchParams.append('pageSize', '1'); 
 
-    let eventData = await fetch(url, setGlobal())
+    const eventData = await fetch(url, setGlobal())
     .then(response => response.json())
     .catch(error => console.log('error', error));
-
-    // events.has_more = eventData.has_more;
-    // events.items = eventData.items.filter(x => x.name.match(regex));
-    // events.next_cursor = eventData.next_cursor;
     
     console.log(eventData);
 
@@ -36,18 +37,24 @@ async function getEvents(){
     // // const match = imageDescription.match(regexpSize);
     // // console.log(match[1]);
 
-    eventData.items.map((value) => {
-        websiteGet = value.name;
-        const match = websiteGet.match(regex);
-        value.name = match[1];
+    events.has_more = eventData.has_more;
+    events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
+    events.next_cursor = eventData.next_cursor;
+
+    events.items.map((value) => {
+        getWebsite = value.name;
+        
+        matchWebSite = getWebsite.match(regexWebsite);
+        value.name = matchWebSite[1];
     });
 
+    // console.log(events);
 
-    render(tableEventTemplate(eventData), divApp);
+    render(tableEventTemplate(events), divApp);
     pagesTable();
 
     // return eventData;
-}
+};
 
 
 export { getEvents };
