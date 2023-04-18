@@ -16,7 +16,14 @@ const buttonsTemplate = (name, role) =>{
                 <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0"></ul>
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li>
+                    <button @click=${post} class="btn btn-outline-success">who I'am</button>
+                    </li>
+                </ul>
+                <li class="nav-item">
+                        <button @click=${eventRouter} class="btn btn-outline-success">events</button>
+                    </li>
                     <button @click=${btnLogin} class="btn btn-outline-success">login</button>
                 </div>
             </div>`;

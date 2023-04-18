@@ -1,5 +1,5 @@
 import { html } from "../Global/globalLit.js";
-
+import { btnAllowWebsite } from "../Global/globalInport.js";
 
 function tableEventTemplate(events){
 
@@ -10,14 +10,24 @@ function tableEventTemplate(events){
             <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
                 <p><b>Filters</b></p>
                 <ul class="list-unstyled ps-0">
+                    <button @click=${getAlerts} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                        All alerts
+                    </button>
+
                     <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Home page</button>
-                        
+
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                            Severity
+                        </button>
                         <div class="collapse show" id="home-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li>
-                                <button  class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Filter</button>
-                            </ul>
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Low</button>
+                            </li>
+                            <li>
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Medium</button>
+                            </li>
+                        </ul>
                         </div>
                     </li>
                 </ul>
@@ -37,7 +47,7 @@ function tableEventTemplate(events){
                         ${events.items.map((value) => html`
                             <tr>
                             <td>${value.name}</td>
-                            <!-- <td>${value.group}</td> -->
+                            <td><button @click=${btnAllowWebsite} class="btn btn-outline-success">allow</button></td>
                             </tr>`)}
                         
                     </tbody>

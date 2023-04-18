@@ -1,6 +1,6 @@
 import { divApp, navBar } from './homeController.js';
 import { registerTemplate, buttonsTemplate, render, welcomePage } from '../Global/globalLit.js';
-import { endpoints, getAlerts, getEvents } from '../Global/globalInport.js';
+import { endpoints, getAlerts, callEvents } from '../Global/globalInport.js';
 // // console.log(divApp);
 // // console.log(navBar);
 
@@ -9,7 +9,7 @@ import { endpoints, getAlerts, getEvents } from '../Global/globalInport.js';
 
 const eventRouter = () =>{
     page.redirect('/events');
-    getEvents();
+    callEvents();
 };
 
 const endpointsRoute = () =>{

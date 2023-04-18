@@ -5,7 +5,7 @@ import { post } from '../Js/authentication.js';
 // import { whoIam } from '../Js/authorization.js';
 import { endpoints } from '../Js/endpoints.js';
 import { getAlerts, filterLow, filterMedium, filterHigh, severityFilter } from '../Js/alerts.js';
-import { getEvents } from '../Js/event.js';
+import { callEvents, btnAllowWebsite } from '../Js/event.js';
 
 import { createUser, loginUser } from '../firebase/registerCreate.js';
 
@@ -18,6 +18,6 @@ export { post };
 // export { whoIam };
 export { endpoints };
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
-export { getEvents };
+export { callEvents, btnAllowWebsite };
 
 export { createUser, loginUser };

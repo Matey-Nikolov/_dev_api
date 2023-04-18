@@ -18,6 +18,11 @@ let events =
     next_cursor: ''
 };
 
+function callEvents(){
+    getEvents();
+}
+
+//(
 async function getEvents(){
 
 
@@ -29,14 +34,8 @@ async function getEvents(){
     const eventData = await fetch(url, setGlobal())
     .then(response => response.json())
     .catch(error => console.log('error', error));
-    
-    console.log(eventData);
 
-    // const imageDescription = "'https://msedge.b.tlu.dl.delivery.mp.microsoft.com/filestreamingservice/files/7e7042ed-93ab-4b32-8d60-c109f34e8c13' blocked due to filetype 'Windows Executable (exe)'";
-    // // const regexpSize = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
-    // // const match = imageDescription.match(regexpSize);
-    // // console.log(match[1]);
-
+    //Web filter - still in progress
     events.has_more = eventData.has_more;
     events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
     events.next_cursor = eventData.next_cursor;
@@ -45,7 +44,7 @@ async function getEvents(){
         getWebsite = value.name;
         
         matchWebSite = getWebsite.match(regexWebsite);
-        value.name = matchWebSite[1];
+        value.name = matchWebSite[1] + ' - ' + 'block';
     });
 
     // console.log(events);
@@ -55,6 +54,12 @@ async function getEvents(){
 
     // return eventData;
 };
+//)
 
+const btnAllowWebsite = (event) =>{
+    event.preventDefault();
 
-export { getEvents };
+    console.log('ok');
+};
+
+export { callEvents, btnAllowWebsite };
