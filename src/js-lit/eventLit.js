@@ -10,22 +10,26 @@ function tableEventTemplate(events){
             <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
                 <p><b>Filters</b></p>
                 <ul class="list-unstyled ps-0">
-                    <button @click=${getAlerts} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
-                        All alerts
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                        All events
                     </button>
 
                     <li class="mb-1">
 
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                            Severity
+                            Type
                         </button>
                         <div class="collapse show" id="home-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li>
-                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Low</button>
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                                    Endpoint
+                                </button>
                             </li>
                             <li>
-                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Medium</button>
+                                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                                    Firewall
+                                </button>
                             </li>
                         </ul>
                         </div>
