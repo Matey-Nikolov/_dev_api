@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "firebase": "^9.18.0"
+  },
+  "name": "apischool",
+  "description": "Simple start",
+  "version": "1.0.0",
+  "main": "homeController.js",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  },
+  "scripts": {
+    "start": "lite-server index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matey-Nikolov/Final_Project_Demo.git"
+  },
+  "keywords": [
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "Matey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Matey-Nikolov/Final_Project_Demo/issues"
+  },
+  "homepage": "https://github.com/Matey-Nikolov/Final_Project_Demo#readme"
+}
