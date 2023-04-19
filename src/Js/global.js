@@ -23,6 +23,21 @@ function setGlobal(){
     return requestOptions;
 }
 
+function setGlobalPOST(){
+  const myHeaders = new Headers();
+  myHeaders.append('X-Tenant-ID', id);
+  myHeaders.append('Accept', 'application/json');
+  myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+  
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  return requestOptions;
+}
+
 function pagesTable(){
   $(document).ready(function() {
       let tableBody = $('#table-body');
@@ -59,4 +74,4 @@ function pagesTable(){
   });
 }
 
-export { setGlobal, authorization, id, apiHost, pagesTable }
+export { setGlobal, setGlobalPOST, authorization, id, apiHost, pagesTable }

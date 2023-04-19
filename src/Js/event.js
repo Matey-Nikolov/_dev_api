@@ -1,10 +1,11 @@
-import { setGlobal, apiHost, pagesTable } from './global.js';
+import { setGlobal, setGlobalPOST, apiHost, pagesTable } from './global.js';
 import { render, tableEventTemplate } from '../Global/globalLit.js';
 import { divApp } from '../Global/globalInport.js';
 
 // const regex = /https?:\/\/(?<website>(?:[-\w.]|(?:%[\da-fA-F]{2}))+)/g;
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
 const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
+
 
 let getWebsite = '';
 let getType = '';
@@ -56,9 +57,14 @@ async function getEvents(){
 };
 //)
 
-const btnAllowWebsite = (event) =>{
+const btnAllowWebsite = async (event) =>{
     event.preventDefault();
 
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+
+    const allowPost = await fetch(url, setGlobalPOST());
+
+    console.log(allowPost);
     console.log('ok');
 };
 
