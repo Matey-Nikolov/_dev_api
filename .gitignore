@@ -1,1 +1,9 @@
 node_modules
+Tests/login/index.html
+Tests/login/style.css
+Tests/regex/extractUrl.js
+Tests/regex/index.html
+Tests/routing/index.html
+Tests/routing/index.js
+Tests/table/index.html
+Tests/table/sd.js
