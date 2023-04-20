@@ -139,7 +139,7 @@ const welcomePage = () =>{
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" @click=${btnLogin}>Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
+                                            <a class="nav-link" @click=${registerRouter}>Register</a>
                                             <a class="nav-link" href="password.html">Forgot Password</a>
                                         </nav>
                                     </div>
@@ -175,7 +175,7 @@ const welcomePage = () =>{
             </div>
             <div id="layoutSidenav_content">
                 <main id="main">
-                    <div id="main" class="container-fluid px-4">
+                    <div class="container-fluid px-4">
                         <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
