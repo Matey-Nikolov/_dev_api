@@ -28,8 +28,8 @@ class loginTemplate extends LitElement {
 const loginTemplate = () =>{
 
     return html`
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
+        <div>
+            <div>
                 <!-- <main> -->
                     <div class="container">
                         <div class="row justify-content-center">
