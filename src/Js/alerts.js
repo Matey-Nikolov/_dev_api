@@ -12,8 +12,6 @@ async function getAlerts(){
     .then(response => response.json())
     .catch(error => console.log('error', error));
     
-    render(tableAlertTemplate(alertsData), divApp);
-
     pagesTable();
 
     return alertsData;

@@ -21,11 +21,11 @@ const endpointsRoute = () =>{
     endpoints();
   };
 
-const alertRouter = () =>{
+const alertRouter = async () =>{
     page.redirect('/alerts/');
-    let alerts = getAlerts();
-    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    let alerts = await getAlerts();
 
+    render(welcomePage(tableAlertTemplate(alerts)), divApp);
 };
 
 const logOutRouter = () => {
