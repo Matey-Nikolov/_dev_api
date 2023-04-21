@@ -28,7 +28,7 @@ class loginTemplate extends LitElement {
 const loginTemplate = () =>{
 
     return html`
-        <div>
+        <div class="container-fluid px-4">
             <div>
                 <!-- <main> -->
                     <div class="container">

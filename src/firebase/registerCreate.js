@@ -12,8 +12,8 @@ const app = initializeApp(firebaseConfig);
 let docRef;
 let docSnap;
 
-const divAppDemoNotHere = document.getElementById('app');
-const navBarDemoNotHere = document.getElementById('navBar');
+// const divAppDemoNotHere = document.getElementById('app');
+// const navBarDemoNotHere = document.getElementById('navBar');
 //https://firebase.google.com/docs/firestore/query-data/get-data#web-version-9_3
 // single
 
