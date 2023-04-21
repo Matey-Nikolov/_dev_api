@@ -3,7 +3,7 @@ import { getAlerts, filterLow, filterMedium, filterHigh } from "../Global/global
 
 function tableAlertTemplate(alerts){
 
-    console.log(alerts);
+    // console.log(alerts);
 
     return html`
         <div class="container text-center">

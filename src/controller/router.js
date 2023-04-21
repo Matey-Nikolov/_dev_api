@@ -1,15 +1,19 @@
 import { divApp, navBar } from './homeController.js';
 import { registerTemplate, buttonsTemplate, render, welcomePage } from '../Global/globalLit.js';
 import { endpoints, getAlerts, callEvents } from '../Global/globalInport.js';
+
+import { tableEventTemplate, tableAlertTemplate } from '../Global/globalLit.js';
 // // console.log(divApp);
 // // console.log(navBar);
 
 // render(buttonsTemplate(), navBar);
 // render(welcomePage(), divApp);
 
-const eventRouter = () =>{
+const eventRouter = async () =>{
     page.redirect('/events');
-    callEvents();
+    let events = await callEvents();
+
+    render(welcomePage(tableEventTemplate(events)), divApp);
 };
 
 const endpointsRoute = () =>{
@@ -19,7 +23,9 @@ const endpointsRoute = () =>{
 
 const alertRouter = () =>{
     page.redirect('/alerts/');
-    getAlerts();
+    let alerts = getAlerts();
+    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+
 };
 
 const logOutRouter = () => {
@@ -42,7 +48,7 @@ const welcomeNavigator = () => {
 const logOut = () => {
     sessionStorage.removeItem('token');
     render(buttonsTemplate(), navBar);
-    render(welcomePage(undefined), divApp);
+    render(welcomePage(), divApp);
 };
 
 
@@ -53,7 +59,7 @@ page('/home', () => {
 
 
 page('/createUser', () =>{
-    render(registerTemplate(), divApp);
+    render(welcomePage(registerTemplate()), divApp);
 });
 
 

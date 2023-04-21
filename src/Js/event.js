@@ -19,8 +19,8 @@ let events =
     next_cursor: ''
 };
 
-function callEvents(){
-    getEvents();
+async function callEvents(){
+    return await getEvents();
 }
 
 //(
@@ -48,12 +48,9 @@ async function getEvents(){
         value.name = matchWebSite[1] + ' - ' + 'block';
     });
 
-    // console.log(events);
-
-    render(tableEventTemplate(events), divApp);
     pagesTable();
 
-    // return eventData;
+    return events;
 };
 //)
 

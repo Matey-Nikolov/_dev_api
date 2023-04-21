@@ -70,7 +70,7 @@ const btnRegister = (event) =>{
     });
 };
 
-render(buttonsTemplate(), navBar);
+
 render(welcomePage(), divApp);
 
 const mainApp = document.querySelector('main div');
