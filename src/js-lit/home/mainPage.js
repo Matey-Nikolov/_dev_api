@@ -75,7 +75,6 @@ const mainPage = (data) =>{
     `;
     }
     else{
-
         return html`${data}`;
     }
    

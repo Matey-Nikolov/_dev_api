@@ -1,7 +1,7 @@
 import { html } from "../Global/globalLit.js";
 
 
-function tableTemplate(endpoints){
+function tableEndpointsTemplate(endpoints){
 
     return html`
     <div class="container text-center">
@@ -52,4 +52,4 @@ function tableTemplate(endpoints){
     </div>`;
 }
 
-export { tableTemplate };
+export { tableEndpointsTemplate };

@@ -1,5 +1,5 @@
 import { html } from "../../Global/globalLit.js";
-import { welcomeNavigator } from '../../Global/globalInport.js';
+import { welcomeNavigator, logOutRouter } from '../../Global/globalInport.js';
 
 // const buttonsTemplate = (name, role) =>{
 
@@ -94,7 +94,7 @@ const navBar = (name) =>{
                         <li><a class="dropdown-item">Settings</a></li>
                         <li><a class="dropdown-item">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item">Logout</a></li>
+                        <li><a class="dropdown-item" @click=${logOutRouter}>Logout</a></li>
                     </ul>
                 </li>
             </ul>

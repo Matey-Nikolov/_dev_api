@@ -1,6 +1,4 @@
 import { setGlobal, setGlobalPOST, apiHost, pagesTable } from './global.js';
-import { render, tableEventTemplate } from '../Global/globalLit.js';
-import { divApp } from '../Global/globalInport.js';
 
 // const regex = /https?:\/\/(?<website>(?:[-\w.]|(?:%[\da-fA-F]{2}))+)/g;
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
@@ -21,7 +19,7 @@ let events =
 
 async function callEvents(){
     return await getEvents();
-}
+};
 
 //(
 async function getEvents(){

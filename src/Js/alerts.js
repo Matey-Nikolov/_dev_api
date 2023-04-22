@@ -1,11 +1,8 @@
 import { setGlobal, apiHost, pagesTable } from "./global.js";
-import { render, tableAlertTemplate, buttonsTemplate } from '../Global/globalLit.js';
+import { render, tableAlertTemplate } from '../Global/globalLit.js';
 import { divApp } from '../Global/globalInport.js';
 
-
 async function getAlerts(){
-
-
     let url = new URL(`${apiHost}/common/v1/alerts`);
 
     const alertsData = await fetch(url, setGlobal())
@@ -15,7 +12,7 @@ async function getAlerts(){
     pagesTable();
 
     return alertsData;
-}
+};
 
 let filtered = {
     'items': {},
@@ -42,7 +39,7 @@ async function severityFilter(severityFilter){
     }
 
     render(tableAlertTemplate(filtered), divApp);
-}
+};
 
 async function filterLow(){
     const data = await getAlerts();
@@ -50,8 +47,8 @@ async function filterLow(){
     filtered.items = data.items.filter(x => x.severity === 'low');
     filtered.pages = data.pages;
 
-    render(tableAlertTemplate(filtered), divApp);
-}
+    return filtered;
+};
 
 async function filterMedium(){
     const data = await getAlerts();
@@ -59,8 +56,8 @@ async function filterMedium(){
     filtered.items = data.items.filter(x => x.severity === 'medium');
     filtered.pages = data.pages;
 
-    render(tableAlertTemplate(filtered), divApp);
-}
+    return filtered;
+};
 
 async function filterHigh(){
     const data = await getAlerts();
@@ -68,8 +65,7 @@ async function filterHigh(){
     filtered.items = data.items.filter(x => x.severity === 'high');
     filtered.pages = data.pages;
 
-    render(tableAlertTemplate(filtered), divApp);
-}
-
+    return filtered;
+};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
