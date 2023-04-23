@@ -29,6 +29,9 @@ const welcomePage = (data, role) =>{
     console.log(staticRole);
 
     if (staticRole === '' && role === undefined) {
+
+        console.log('ok');
+
         return html`
         ${navBar()}
         <div id="layoutSidenav">
