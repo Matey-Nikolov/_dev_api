@@ -1,4 +1,4 @@
-import { divApp } from './homeController.js';
+import { btnRegister, divApp } from './homeController.js';
 import { registerTemplate, render, welcomePage } from '../Global/globalLit.js';
 import { endpoints, callEvents } from '../Global/globalInport.js';
 

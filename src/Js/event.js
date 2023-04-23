@@ -18,8 +18,21 @@ let events =
 };
 
 async function callEvents(){
+    await allowWebSite();
     return await getEvents();
 };
+
+async function allowWebSite(){
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`);
+ 
+    const allowWebSiteData = await fetch(url, setGlobal())
+    .then(response => response.json())
+    .catch(error => console.log('error', error));
+
+    let setAllow = new Set(); 
+
+    console.log(allowWebSiteData);
+}
 
 //(
 async function getEvents(){
@@ -55,11 +68,11 @@ async function getEvents(){
 const btnAllowWebsite = async (event) =>{
     event.preventDefault();
 
-    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+    // const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
 
-    const allowPost = await fetch(url, setGlobalPOST());
+    // const allowPost = await fetch(url, setGlobalPOST());
 
-    console.log(allowPost);
+    // console.log(allowPost);
     console.log('ok');
 };
 
