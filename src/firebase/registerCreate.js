@@ -2,8 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebas
 import { addDoc, doc, getDocs, getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 
-import { buttonsTemplate, welcomePage, render } from "../Global/globalLit.js";
-import { welcomeNavigator } from '../Global/globalInport.js'
+import { welcomePage, render, layoutSidenav } from "../Global/globalLit.js";
+import { divApp, welcomeNavigator } from '../Global/globalInport.js'
 
 // import { divApp } from "../src/controller/homeController.js";
 // import { html, render } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
@@ -12,24 +12,26 @@ const app = initializeApp(firebaseConfig);
 let docRef;
 let docSnap;
 
-const divAppDemoNotHere = document.getElementById('app');
-const navBarDemoNotHere = document.getElementById('navBar');
 //https://firebase.google.com/docs/firestore/query-data/get-data#web-version-9_3
 // single
 
 const db = getFirestore(app);
+let client_idDb = '';
+let client_secretDb = '';
 
-async function createUser(event, usernameInput, passwordInput, roleInput){
+async function createUser(event, username, inputPassword, inputRole, inputClient_id, inputClient_secret){
     event.preventDefault();
 
     docRef = await addDoc(collection(db, 'User'), {
-        username: usernameInput,
-        password: passwordInput,
-        role: roleInput
+        username: username,
+        password: inputPassword,
+        role: inputRole,
+        client_id: inputClient_id,
+        client_secret: inputClient_secret
     });
 
-    // console.log("Document written with ID: ", docRef.id);
-}
+    welcomeNavigator();
+};
 
 async function loginUser(usernameInput, passwordInput){
     
@@ -37,27 +39,26 @@ async function loginUser(usernameInput, passwordInput){
 
 
     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data().Username);
+
+
         let userDb = doc.data().username;
         let passwordDb = doc.data().password;
+
         let roleDb = doc.data().role;
+
 
 
         if (userDb === usernameInput && passwordDb === passwordInput) {
             
-            render(buttonsTemplate(userDb, roleDb), navBarDemoNotHere);
-            render(welcomePage(), divAppDemoNotHere);
-
-            welcomeNavigator();
+            client_idDb = doc.data().client_id;
+            client_secretDb = doc.data().client_secret;
+            render(welcomePage('login', roleDb), divApp);
+            // welcomeNavigator();
             return true;
         }
-        // else{
-        //     alert('Incorrect password or username!');
-        // }
     });
     
     return false;
 }
 
-export { createUser, loginUser }
+export { createUser, loginUser, client_idDb, client_secretDb }

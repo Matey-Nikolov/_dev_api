@@ -33,19 +33,23 @@ return html`
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPassword" type="password" placeholder="Create a password" />
-                                                    <label for="inputPassword">client_id</label>
+                                                    <input class="form-control" id="client_id" type="password" placeholder="Create a password" />
+                                                    <label for="client_id">client_id</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
-                                                    <label for="inputPasswordConfirm">Confirm Password</label>
+                                                    <input class="form-control" id="client_secret" type="password" placeholder="Confirm password" />
+                                                    <label for="client_secret">Client secret</label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-floating mb-3">
+                                            <input id="password" class="form-control" type="password" placeholder="guest or admin" />
+                                            <label for="password">Password</label>
+                                        </div>
                                         <div class="mt-4 mb-0">
-                                            <div class="d-grid"><a class="btn btn-primary btn-block" href="login.html">Create Account</a></div>
+                                            <div class="d-grid"><button id="registerPage" class="btn btn-primary btn-block">Create Account</button></div>
                                         </div>
                                     </form>
                                 </div>

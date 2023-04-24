@@ -1,6 +1,6 @@
-import { loginTemplate, buttonsTemplate, render, welcomePage } from '../Global/globalLit.js';
+import { loginTemplate, render, welcomePage, mainPage, registerTemplate } from '../Global/globalLit.js';
 
-import { createUser, loginUser } from '../Global/globalInport.js';
+import { createUser, loginUser, registerRouter } from '../Global/globalInport.js';
 // import { welcomeNavigator } from '../Global/globalInport.js';
 
 function getTypeId(typeId){
@@ -13,19 +13,21 @@ const divApp = getTypeId('app');
 
 
 
+
 const btnLogin = (event) =>{
     event.preventDefault();
 
-    render(loginTemplate(), divApp);
+
+    render(welcomePage(loginTemplate()), divApp);
 
     const btn = getTypeId('loginBtn');
-    const inputUsername = getTypeId('username');
-    const inputPassword = getTypeId('password');
 
     btn.addEventListener('click', (event) =>{
 
         event.preventDefault();
 
+        const inputUsername = getTypeId('username');
+        const inputPassword = getTypeId('password');
 
         // TODO VALIDATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         let bool = loginUser(inputUsername.value, inputPassword.value);
@@ -45,26 +47,47 @@ const btnRegister = (event) =>{
     event.preventDefault();
 
     
+    render(welcomePage(registerTemplate()), divApp);
+
     const btn = getTypeId('registerPage');
     
-    const role = getTypeId('role');
-    const inputUsername = getTypeId('username');
+
+    console.log(btn);
+
+    const inputFirstName = getTypeId('inputFirstName');
+    const inputLastName = getTypeId('inputLastName');
+    const inputRole = getTypeId('role');
+    const inputClient_id = getTypeId('client_id');
+    const inputClient_secret = getTypeId('client_secret');
+
+
+
     const inputPassword = getTypeId('password');
+    
+
 
     btn.addEventListener('click', (event) =>{
         event.preventDefault();
 
-        createUser(event, inputUsername.value, inputPassword.value, role.value);
+        const username = inputFirstName.value + ' ' + inputLastName.value;
 
-        inputUsername.value = '';
-        inputPassword.value = '';
+        console.log(username);
+        console.log(inputRole.value);
+        console.log(inputClient_id.value);
+        console.log(inputClient_secret.value);
+        console.log(inputPassword.value);
 
-        render(buttonsTemplate(), divApp);
-        render(welcomePage(), divApp);
+        createUser(event, username, inputPassword.value, inputRole.value, inputClient_id.value, inputClient_secret.value);
+        // render(welcomePage(), divApp);
     });
 };
 
-render(buttonsTemplate(), navBar);
+
 render(welcomePage(), divApp);
+
+const mainApp = document.querySelector('main div');
+console.log(mainApp);
+
+console.log(divApp);
 
 export { divApp, navBar, btnLogin, btnRegister };

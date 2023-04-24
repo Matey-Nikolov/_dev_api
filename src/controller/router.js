@@ -1,31 +1,74 @@
-import { divApp, navBar } from './homeController.js';
-import { registerTemplate, buttonsTemplate, render, welcomePage } from '../Global/globalLit.js';
-import { endpoints, getAlerts, callEvents } from '../Global/globalInport.js';
-// // console.log(divApp);
-// // console.log(navBar);
+import { btnRegister, divApp } from './homeController.js';
+import { registerTemplate, render, welcomePage } from '../Global/globalLit.js';
+import { endpoints, callEvents } from '../Global/globalInport.js';
 
-// render(buttonsTemplate(), navBar);
-// render(welcomePage(), divApp);
+import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
-const eventRouter = () =>{
+import { tableEventTemplate, tableAlertTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
+
+let alerts = {};
+
+// eventRouter
+// ---------------------eventRouter--------------------------------------
+const eventRouter = async () =>{
     page.redirect('/events');
-    callEvents();
-};
+    let events = await callEvents();
 
-const endpointsRoute = () =>{
+    render(welcomePage(tableEventTemplate(events)), divApp);
+};
+// ---------------------------------------------------------------------
+
+// -----------------------endpointsRoute---------------------------------
+const endpointsRoute = async () =>{
     page.redirect('/endpoints/');
-    endpoints();
-  };
+    let getEndpoints = await endpoints();
+    console.log(getEndpoints);
+    render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
+};
+// ---------------------------------------------------------------------
 
-const alertRouter = () =>{
+// -----------------------alertRouter-----------------------------------
+const alertRouter = async () =>{
     page.redirect('/alerts/');
-    getAlerts();
+    alerts = await getAlerts();
+
+    render(welcomePage(tableAlertTemplate(alerts)), divApp);
 };
 
+const alertLowRouter = async () =>{
+    page.redirect('/alerts/low');
+    alerts = await filterLow();
+
+    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+};
+
+const alertMediumRouter = async () =>{
+    page.redirect('/alerts/medium');
+    alerts = await filterMedium();
+
+    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+};
+
+const alertHighRouter = async () =>{
+    page.redirect('/alerts/high');
+    alerts = await filterHigh();
+
+    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+};
+// --------------------------------------------------------------------
+
+// -----------------------logOutRouter---------------------------------
 const logOutRouter = () => {
     logOut();
     page.redirect('/home');
 };
+
+const logOut = () => {
+    sessionStorage.removeItem('token');
+    render(welcomePage(undefined, 'true'), divApp);
+};
+// --------------------------------------------------------------------
+
 
 const registerRouter = () => {
     page.redirect('/createUser');
@@ -39,13 +82,6 @@ const welcomeNavigator = () => {
     page.redirect('/home');
 };
 
-const logOut = () => {
-    sessionStorage.removeItem('token');
-    render(buttonsTemplate(), navBar);
-    render(welcomePage(undefined), divApp);
-};
-
-
 
 page('/home', () => {
     render(welcomePage(), divApp);
@@ -53,10 +89,12 @@ page('/home', () => {
 
 
 page('/createUser', () =>{
-    render(registerTemplate(), divApp);
+    render(welcomePage(registerTemplate()), divApp);
 });
 
 
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, alertRouter, endpointsRoute, eventRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter };
+
+export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};

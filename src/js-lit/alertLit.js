@@ -1,9 +1,9 @@
 import { html } from "../Global/globalLit.js";
-import { getAlerts, filterLow, filterMedium, filterHigh } from "../Global/globalInport.js";
+import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from "../Global/globalInport.js";
 
 function tableAlertTemplate(alerts){
 
-    console.log(alerts);
+    // console.log(alerts);
 
     return html`
         <div class="container text-center">
@@ -13,7 +13,7 @@ function tableAlertTemplate(alerts){
 
                         <span class="fs-5 fw-semibold">Filters</span>
                         <ul class="list-unstyled ps-0">
-                            <button @click=${getAlerts} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                            <button @click=${alertRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
                                 All alerts
                             </button>
 
@@ -26,13 +26,13 @@ function tableAlertTemplate(alerts){
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                     <!-- <li><button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">All</button></li> -->
                                     <li>
-                                        <button @click=${filterLow} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Low</button>
+                                        <button @click=${alertLowRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Low</button>
                                     </li>
                                     <li>
-                                        <button @click=${filterMedium} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Medium</button>
+                                        <button @click=${alertMediumRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">Medium</button>
                                     </li>
                                     <li>
-                                        <button @click=${filterHigh} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">High</button>
+                                        <button @click=${alertHighRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">High</button>
                                     </li>
                                 </ul>
                                 </div>
