@@ -1,10 +1,11 @@
 import { btnRegister, divApp } from './homeController.js';
 import { registerTemplate, render, welcomePage, mainPage } from '../Global/globalLit.js';
-import { endpoints, callEvents } from '../Global/globalInport.js';
 
+import { endpoints, callEvents } from '../Global/globalInport.js';
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
-import { tableEventTemplate, tableAlertTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
+import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
+import { tableAlertTemplate, empty } from '../Global/globalLit.js';
 
 let alerts = {};
 
@@ -33,7 +34,7 @@ const alertRouter = async () =>{
     alerts = await getAlerts();
 
     if (alerts.items.length  === 0 ) {
-        console.log('ok');
+        render(welcomePage(empty()), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
