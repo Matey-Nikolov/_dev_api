@@ -52,7 +52,7 @@ async function loginUser(usernameInput, passwordInput){
             
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
-            render(welcomePage('login', roleDb), divApp);
+            render(welcomePage(undefined, roleDb), divApp);
             // welcomeNavigator();
             return true;
         }

@@ -34,7 +34,7 @@ return html`
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
                                                     <input class="form-control" id="client_id" type="password" placeholder="Create a password" />
-                                                    <label for="client_id">client_id</label>
+                                                    <label for="client_id">Client_id</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

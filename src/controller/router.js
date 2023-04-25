@@ -1,5 +1,5 @@
 import { btnRegister, divApp } from './homeController.js';
-import { registerTemplate, render, welcomePage } from '../Global/globalLit.js';
+import { registerTemplate, render, welcomePage, mainPage } from '../Global/globalLit.js';
 import { endpoints, callEvents } from '../Global/globalInport.js';
 
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
@@ -32,7 +32,12 @@ const alertRouter = async () =>{
     page.redirect('/alerts/');
     alerts = await getAlerts();
 
-    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    if (alerts.items.length  === 0 ) {
+        console.log('ok');
+    }else{
+        render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    }
+
 };
 
 const alertLowRouter = async () =>{
