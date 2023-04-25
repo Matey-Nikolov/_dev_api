@@ -7,3 +7,6 @@ Tests/routing/index.html
 Tests/routing/index.js
 Tests/table/index.html
 Tests/table/sd.js
+Tests/routing/login.html
+Tests/routing/js/datatables-simple-demo.js
+Tests/routing/js/scripts.js

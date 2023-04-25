@@ -70,108 +70,25 @@ function tableAlertTemplate(alerts){
     
 }
 
+function empty(){
+    return html`
+    <main id="main">
+        <div class="container-fluid px-4">
+            <div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header">
+                                    <h3 class="text-center font-weight-light my-4">No alerts</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>`;
+}
 
-/*
-old table
-<!-- <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Tenant</th>
-            <th>Product</th>
-            <th>Severity</th>
-            <th>RaisedAt</th>
-        </tr>
-    </thead>
-    <tbody>
-        <td>${alerts.items.map((value) => html`<tr>${value.tenant.name}</tr></td>`)}
-        <td>
-            ${alerts.items.map((value) => html`<tr>${value.product}</tr>
-        </td>`)}
-        <td>
-            ${alerts.items.map((value) => html`<tr>${value.severity}</tr>
-        </td>`)}
-        <td>
-            ${alerts.items.map((value) => html`<tr>${value.raisedAt}</tr>
-        </td>`)}
-    </tbody>
-</table> -->
-
-*/
-
-/*
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-<tr>
-    <td>Ira Parker</td>
-    <td>Vivamus.molestie.dapibus@quisturpisvitae.edu</td>
-    <td>1-584-906-8572</td>
-    <td>Sep 15, 2015</td>
-</tr>
-
-*/
-
-export { tableAlertTemplate };
+export { tableAlertTemplate, empty };

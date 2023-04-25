@@ -25,8 +25,8 @@ const welcomePage = (data, role) =>{
         </div>`;
     }
 
-    console.log(role);
-    console.log(staticRole);
+    // console.log(role);
+    // console.log(staticRole);
 
     if (staticRole === '' && role === undefined) {
 
@@ -47,9 +47,9 @@ const welcomePage = (data, role) =>{
         return html`
         ${navBar()}
         <div id="layoutSidenav">
-            ${layoutSidenav(role)}
+            ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
-                ${mainPage(data)}
+                ${mainPage(data, staticRole)}
                 ${footerTemplate()}
             </div>
         </div>`;
@@ -59,7 +59,7 @@ const welcomePage = (data, role) =>{
         <div id="layoutSidenav">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
-                ${mainPage(data)}
+                ${mainPage(data, staticRole)}
                 ${footerTemplate()}
             </div>
         </div>`;

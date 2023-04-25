@@ -1,11 +1,11 @@
 import { html } from '../../Global/globalLit.js';
 import { btnLogin } from '../../Global/globalInport.js';
 
-const mainPage = (data) =>{
+const mainPage = (data, role) =>{
 
-    console.log(data);
+    console.log(role);
 
-    if (data === undefined) {
+    if (data === undefined && role !== 'admin' && role !== 'guest') {
         return html`
         <main id="main">
             <div class="container-fluid px-4">
@@ -28,7 +28,9 @@ const mainPage = (data) =>{
             </div>
         </main>
         `;
-    }else if(data === 'login'){
+    }else if(data !== undefined){ 
+        return html`${data}`;
+    }else if(role === 'admin' || role === 'guest'){
         return html`
         <main id="main">
             <div class="container-fluid px-4">
@@ -50,10 +52,7 @@ const mainPage = (data) =>{
             </div>
         </main>
         `;
-    }else{
-        return html`${data}`;
     }
-   
 };
 
 export { mainPage };

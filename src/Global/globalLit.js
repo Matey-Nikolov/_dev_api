@@ -3,9 +3,13 @@ import { welcomePage, mainPage, layoutSidenav } from '../js-lit/home/homePageLit
 import { loginTemplate } from '../js-lit/loginPageLit.js';
 import { registerTemplate } from '../js-lit/RegisterLit.js';
 import { tableEndpointsTemplate } from '../js-lit/endpointsLit.js';
-import { tableAlertTemplate } from '../js-lit/alertLit.js';
+import { tableAlertTemplate, empty } from '../js-lit/alertLit.js';
 import { tableEventTemplate } from '../js-lit/eventLit.js';
 
-export { tableEndpointsTemplate, tableAlertTemplate, welcomePage, registerTemplate, tableEventTemplate };
-export { html, css , render, loginTemplate, LitElement};
-export { mainPage, layoutSidenav };
+export { html, css , render, LitElement};
+export { welcomePage, mainPage, layoutSidenav };
+export { loginTemplate };
+export { registerTemplate };
+export { tableEndpointsTemplate };
+export { tableAlertTemplate, empty };
+export { tableEventTemplate };
