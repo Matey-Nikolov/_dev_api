@@ -41,6 +41,7 @@ const layoutSidenav = (role) =>{
 
                             <div class="sb-sidenav-menu-heading">Register</div>
 
+                            <!-- registerRouter -->
                             <a class="nav-link" @click=${btnRegister}>
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 new user

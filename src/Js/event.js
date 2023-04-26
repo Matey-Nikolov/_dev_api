@@ -4,12 +4,7 @@ import { setGlobal, setGlobalPOST, apiHost, pagesTable } from './global.js';
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
 const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
-
-let getWebsite = '';
-let matchWebSite = '';
-
 let setAllowSite = new Set(); 
-let setBlockSite = new Set();
 
 let events = 
 {
@@ -35,7 +30,7 @@ async function allowWebSite(){
     });
 
     // console.log(setAllowSite);
-};
+}
 
 //(
 async function getEvents(){
@@ -53,7 +48,7 @@ async function getEvents(){
     //Web filter - still in progress
     events.has_more = eventData.has_more;
     events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
-    events.items = eventData.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
+    events.items = events.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
     events.next_cursor = eventData.next_cursor;
 
     // console.log(events);
@@ -64,10 +59,20 @@ async function getEvents(){
 };
 //)
 
-const btnAllowWebsite = async (event) =>{
-    event.preventDefault();
+const handleButtonClick = (event) => {
+    if (event.target.classList.contains('btn-outline-success')) {
+        const type = event.target.dataset.type;
+        btnAllowWebsite(type);
+    }
+};
+  
+const btnAllowWebsite = async (value) =>{
 
-    console.log(event);
+    value = value.match(regexWebsite)[1];
+    
+    // setGlobalPOST();    
+    console.log(value);
+
 };
 
-export { callEvents, btnAllowWebsite };
+export { callEvents, btnAllowWebsite, handleButtonClick };

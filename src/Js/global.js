@@ -6,7 +6,7 @@ function authorization(idTenetGet, apiHostGet){
     apiHost = apiHostGet;
     
     console.log(id, apiHost);
-}
+};
 
 function setGlobal(){
     const myHeaders = new Headers();
@@ -21,7 +21,7 @@ function setGlobal(){
     };
 
     return requestOptions;
-}
+};
 
 function setGlobalPOST(){
   const myHeaders = new Headers();
@@ -36,7 +36,7 @@ function setGlobalPOST(){
   };
 
   return requestOptions;
-}
+};
 
 function pagesTable(){
   $(document).ready(function() {
@@ -68,10 +68,10 @@ function pagesTable(){
           });
           pagination.append(li);
         }
-      }
+      };
     
       showPage(currentPage);
   });
-}
+};
 
 export { setGlobal, setGlobalPOST, authorization, id, apiHost, pagesTable }

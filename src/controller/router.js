@@ -5,11 +5,10 @@ import { endpoints, callEvents } from '../Global/globalInport.js';
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
 import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
-import { tableAlertTemplate, empty } from '../Global/globalLit.js';
+import { tableAlertTemplate, emptyAlert } from '../Global/globalLit.js';
 
 let alerts = {};
 
-// eventRouter
 // ---------------------eventRouter--------------------------------------
 const eventRouter = async () =>{
     page.redirect('/events');
@@ -23,7 +22,7 @@ const eventRouter = async () =>{
 const endpointsRoute = async () =>{
     page.redirect('/endpoints/');
     let getEndpoints = await endpoints();
-    console.log(getEndpoints);
+    // console.log(getEndpoints);
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
 };
 // ---------------------------------------------------------------------
@@ -34,7 +33,7 @@ const alertRouter = async () =>{
     alerts = await getAlerts();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(empty()), divApp);
+        render(welcomePage(emptyAlert()), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
@@ -77,7 +76,8 @@ const logOut = () => {
 
 
 const registerRouter = () => {
-    page.redirect('/createUser');
+    page.redirect('/create');
+    render(welcomePage(registerTemplate()), divApp);
 };
 
 const loginRouter = () => {
@@ -88,11 +88,9 @@ const welcomeNavigator = () => {
     page.redirect('/home');
 };
 
-
 page('/home', () => {
     render(welcomePage(), divApp);
 });
-
 
 page('/createUser', () =>{
     render(welcomePage(registerTemplate()), divApp);

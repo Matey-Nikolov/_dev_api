@@ -70,7 +70,7 @@ function tableAlertTemplate(alerts){
     
 }
 
-function empty(){
+function emptyAlert(){
     return html`
     <main id="main">
         <div class="container-fluid px-4">
@@ -91,4 +91,4 @@ function empty(){
     </main>`;
 }
 
-export { tableAlertTemplate, empty };
+export { tableAlertTemplate, emptyAlert };

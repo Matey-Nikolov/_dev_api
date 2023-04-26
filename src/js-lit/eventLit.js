@@ -1,5 +1,5 @@
 import { html } from "../Global/globalLit.js";
-import { btnAllowWebsite } from "../Global/globalInport.js";
+import { btnAllowWebsite, handleButtonClick } from "../Global/globalInport.js";
 
 function tableEventTemplate(events){
 
@@ -47,11 +47,11 @@ function tableEventTemplate(events){
                         <th>Allow</th>
                     </tr>
                     </thead>
-                    <tbody id="table-body">
+                    <tbody id="table-body" @click=${handleButtonClick}>
                         ${events.items.map((value) => html`
                             <tr>
                             <td>${value.name}</td>
-                            <td><button @click=${btnAllowWebsite} class="btn btn-outline-success">allow</button></td>
+                            <td><button data-type=${value.name}} class="btn btn-outline-success">allow</button></td>
                             </tr>`)}
                         
                     </tbody>
