@@ -26,6 +26,12 @@ import { tableAlertTemplate, emptyAlert } from '../js-lit/alertLit.js';
 import { tableEventTemplate } from '../js-lit/eventLit.js';
 // --------------------------------------------------------------
 
+// ---------------------mainInfo--------------------------------
+import { loginInfo } from '../js-lit/mainInfo/afterLogin.js';
+import { afterAuthorization } from '../js-lit/mainInfo/afterAuthorization.js';
+// --------------------------------------------------------------
+
+
 export { html, css , render, LitElement};
 export { welcomePage, mainPage, layoutSidenav };
 export { loginTemplate };
@@ -33,3 +39,4 @@ export { registerTemplate };
 export { tableEndpointsTemplate };
 export { tableAlertTemplate, emptyAlert };
 export { tableEventTemplate };
+export { loginInfo, afterAuthorization };

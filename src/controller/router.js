@@ -74,7 +74,6 @@ const logOut = () => {
 };
 // --------------------------------------------------------------------
 
-
 const registerRouter = () => {
     page.redirect('/create');
     render(welcomePage(registerTemplate()), divApp);

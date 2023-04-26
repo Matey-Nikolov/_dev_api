@@ -3,6 +3,8 @@ import { html } from "../Global/globalLit.js";
 
 function tableEndpointsTemplate(endpoints){
 
+    // console.log(endpoints);
+
     return html`
     <div class="container text-center">
         <div class="row">
@@ -28,6 +30,7 @@ function tableEndpointsTemplate(endpoints){
                 <table class="table">
                     <thead>
                     <tr>
+                        <th>Name machine</th>
                         <th>Type</th>
                         <th>Health</th>
                         <th>LastSeenAt</th>
@@ -36,9 +39,10 @@ function tableEndpointsTemplate(endpoints){
                     <tbody id="table-body">
                         ${endpoints.items.map((value) => html`
                             <tr>
-                            <td>${value.type}</td>
-                            <td>${value.health.overall}</td>
-                            <td>${value.lastSeenAt}</td>
+                                <td>${value.associatedPerson.name}</td>
+                                <td>${value.type}</td>
+                                <td>${value.health.overall}</td>
+                                <td>${value.lastSeenAt}</td>
                             </tr>`)}
                         
                     </tbody>

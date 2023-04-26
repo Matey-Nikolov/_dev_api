@@ -50,8 +50,8 @@ const btnRegister = (event) =>{
     btn.addEventListener('click', (event) =>{
         event.preventDefault();
 
-        const username = inputFirstName.value + ' ' + inputLastName.value;
-        validationInput(username.trim(), inputPassword.value, inputRole.value, inputClient_id.value, inputClient_secret.value);
+        const username = inputFirstName.value.trim() + ' ' + inputLastName.value.trim();
+        validationInput(username, inputPassword.value, inputRole.value, inputClient_id.value, inputClient_secret.value);
     });
 };
 

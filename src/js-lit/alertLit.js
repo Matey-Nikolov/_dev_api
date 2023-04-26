@@ -3,7 +3,7 @@ import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from 
 
 function tableAlertTemplate(alerts){
 
-    // console.log(alerts);
+    console.log(alerts);
 
     return html`
         <div class="container text-center">

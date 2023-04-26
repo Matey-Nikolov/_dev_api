@@ -5,7 +5,7 @@ function authorization(idTenetGet, apiHostGet){
     id = idTenetGet;
     apiHost = apiHostGet;
     
-    console.log(id, apiHost);
+    // console.log(id, apiHost);
 };
 
 function setGlobal(){

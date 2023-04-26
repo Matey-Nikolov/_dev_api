@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebas
 import { addDoc, doc, getDocs, getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 
-import { welcomePage, render, layoutSidenav } from "../Global/globalLit.js";
+import { welcomePage, render, loginInfo } from "../Global/globalLit.js";
 import { divApp, welcomeNavigator } from '../Global/globalInport.js'
 
 // import { divApp } from "../src/controller/homeController.js";
@@ -56,7 +56,7 @@ async function loginUser(usernameInput, passwordInput){
             
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
-            render(welcomePage(undefined, roleDb), divApp);
+            render(welcomePage(loginInfo(), roleDb), divApp);
             // welcomeNavigator();
         }
     });
