@@ -1,4 +1,5 @@
-import { setGlobal, setGlobalPOST, apiHost, pagesTable } from './global.js';
+import { setGlobal, apiHost, pagesTable, id } from './global.js';
+import { eventRouter } from '../Global/globalInport.js';
 
 // const regex = /https?:\/\/(?<website>(?:[-\w.]|(?:%[\da-fA-F]{2}))+)/g;
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
@@ -59,6 +60,33 @@ async function getEvents(){
 };
 //)
 
+function setAllowPOST(valueURL){
+    const myHeaders = new Headers();
+    myHeaders.append('X-Tenant-ID', id);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    
+    const addLocalSite = 
+    {
+        tags: [
+            "ALLOW"
+        ],
+        url: valueURL,
+        comment: "Added by Matey"
+    };
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      redirect: 'follow',
+      body: JSON.stringify(addLocalSite)
+    };
+  
+    return requestOptions;
+  };
+  
+
 const handleButtonClick = (event) => {
     if (event.target.classList.contains('btn-outline-success')) {
         const type = event.target.dataset.type;
@@ -66,13 +94,13 @@ const handleButtonClick = (event) => {
     }
 };
   
-const btnAllowWebsite = async (value) =>{
+const btnAllowWebsite = async (valueURL) =>{
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+    valueURL = valueURL.match(regexWebsite)[1];
 
-    value = value.match(regexWebsite)[1];
-    
-    // setGlobalPOST();    
-    console.log(value);
+    await fetch(url, setAllowPOST(valueURL));
 
+    eventRouter();
 };
 
 export { callEvents, btnAllowWebsite, handleButtonClick };
