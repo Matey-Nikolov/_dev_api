@@ -3,13 +3,13 @@ import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from 
 
 function tableAlertTemplate(alerts){
 
-    // console.log(alerts);
+    console.log(alerts);
 
     return html`
         <div class="container text-center">
-            <div class="row">
-                <div class="col">
-                    <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+            <div class="row no-gutters">
+                <div class="col-2">
+                    <div class="flex-shrink-0 p-3 bg-white">
 
                         <span class="fs-5 fw-semibold">Filters</span>
                         <ul class="list-unstyled ps-0">
@@ -40,7 +40,7 @@ function tableAlertTemplate(alerts){
                         </ul>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-8">
                     <div class="container mt-5">
                         <h2>User - ${alerts.items[0].tenant.name}</h2>
                         <table class="table">
@@ -70,7 +70,7 @@ function tableAlertTemplate(alerts){
     
 }
 
-function empty(){
+function emptyAlert(){
     return html`
     <main id="main">
         <div class="container-fluid px-4">
@@ -91,4 +91,4 @@ function empty(){
     </main>`;
 }
 
-export { tableAlertTemplate, empty };
+export { tableAlertTemplate, emptyAlert };

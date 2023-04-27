@@ -6,21 +6,6 @@ myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 //myHeaders.append("headers", { 'Content-type': 'application/json' });
 //myHeaders.append("Access-Control-Allow-Origin", "*");
 
-/*
-const urlencoded = new URLSearchParams();
-urlencoded.append('grant_type', 'client_credentials');
-urlencoded.append('scope', 'token');
-urlencoded.append('client_id', client_idDb);
-urlencoded.append('client_secret', client_secretDb);
-
-const requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: urlencoded,
-  redirect: 'follow',
-  //mode: 'no-cors'
-};
-*/
 async function post(){
 
   // console.log(client_idDb);

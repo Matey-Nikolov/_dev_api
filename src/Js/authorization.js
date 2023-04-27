@@ -1,6 +1,6 @@
 import { authorization } from './global.js'
-
-
+import { render, welcomePage, afterAuthorization } from '../Global/globalLit.js';
+import { divApp } from '../controller/homeController.js';
 
 async function whoIam(){
 
@@ -18,7 +18,7 @@ async function whoIam(){
     .then(result => {
       
         authorization(result.id, result['apiHosts'].dataRegion);
-
+        render(welcomePage(afterAuthorization()), divApp);
     })
     .catch(error => console.log('error', error));
 

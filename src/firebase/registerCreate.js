@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebas
 import { addDoc, doc, getDocs, getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 
-import { welcomePage, render, layoutSidenav } from "../Global/globalLit.js";
+import { welcomePage, render, loginInfo } from "../Global/globalLit.js";
 import { divApp, welcomeNavigator } from '../Global/globalInport.js'
 
 // import { divApp } from "../src/controller/homeController.js";
@@ -19,6 +19,15 @@ const db = getFirestore(app);
 let client_idDb = '';
 let client_secretDb = '';
 
+function validationInput(username, inputPassword, inputRole, inputClient_id, inputClient_secret){
+    if (!username || !inputPassword || !inputRole || !inputClient_id || !inputClient_secret) {
+        alert('Please fill in all fields.');
+    }
+    else{
+        createUser(event, username, username, inputPassword, inputRole, inputClient_id, inputClient_secret);
+    }
+}
+
 async function createUser(event, username, inputPassword, inputRole, inputClient_id, inputClient_secret){
     event.preventDefault();
 
@@ -34,31 +43,23 @@ async function createUser(event, username, inputPassword, inputRole, inputClient
 };
 
 async function loginUser(usernameInput, passwordInput){
-    
     const querySnapshot = await getDocs(collection(db, 'User'));
 
-
     querySnapshot.forEach((doc) => {
-
 
         let userDb = doc.data().username;
         let passwordDb = doc.data().password;
 
         let roleDb = doc.data().role;
 
-
-
         if (userDb === usernameInput && passwordDb === passwordInput) {
             
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
-            render(welcomePage(undefined, roleDb), divApp);
+            render(welcomePage(loginInfo(), roleDb), divApp);
             // welcomeNavigator();
-            return true;
         }
     });
-    
-    return false;
 }
 
-export { createUser, loginUser, client_idDb, client_secretDb }
+export { validationInput, createUser, loginUser, client_idDb, client_secretDb }

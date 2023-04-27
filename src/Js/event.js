@@ -1,15 +1,11 @@
-import { setGlobal, setGlobalPOST, apiHost, pagesTable } from './global.js';
+import { setGlobal, apiHost, pagesTable, id } from './global.js';
+import { eventRouter } from '../Global/globalInport.js';
 
 // const regex = /https?:\/\/(?<website>(?:[-\w.]|(?:%[\da-fA-F]{2}))+)/g;
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)/;
 const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
-
-let getWebsite = '';
-let matchWebSite = '';
-
 let setAllowSite = new Set(); 
-let setBlockSite = new Set();
 
 let events = 
 {
@@ -35,7 +31,7 @@ async function allowWebSite(){
     });
 
     // console.log(setAllowSite);
-};
+}
 
 //(
 async function getEvents(){
@@ -53,7 +49,7 @@ async function getEvents(){
     //Web filter - still in progress
     events.has_more = eventData.has_more;
     events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
-    events.items = eventData.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
+    events.items = events.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
     events.next_cursor = eventData.next_cursor;
 
     // console.log(events);
@@ -64,10 +60,47 @@ async function getEvents(){
 };
 //)
 
-const btnAllowWebsite = async (event) =>{
-    event.preventDefault();
+function setAllowPOST(valueURL){
+    const myHeaders = new Headers();
+    myHeaders.append('X-Tenant-ID', id);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    
+    const addLocalSite = 
+    {
+        tags: [
+            "ALLOW"
+        ],
+        url: valueURL,
+        comment: "Added by Matey"
+    };
 
-    console.log(event);
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      redirect: 'follow',
+      body: JSON.stringify(addLocalSite)
+    };
+  
+    return requestOptions;
+  };
+  
+
+const handleButtonClick = (event) => {
+    if (event.target.classList.contains('btn-outline-success')) {
+        const type = event.target.dataset.type;
+        btnAllowWebsite(type);
+    }
+};
+  
+const btnAllowWebsite = async (valueURL) =>{
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+    valueURL = valueURL.match(regexWebsite)[1];
+
+    await fetch(url, setAllowPOST(valueURL));
+
+    eventRouter();
 };
 
-export { callEvents, btnAllowWebsite };
+export { callEvents, btnAllowWebsite, handleButtonClick };
