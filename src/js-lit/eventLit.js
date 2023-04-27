@@ -4,8 +4,8 @@ import { btnAllowWebsite, handleButtonClick } from "../Global/globalInport.js";
 function tableEventTemplate(events){
     return html`
         <div class="row no-gutters">
-            <div class="col-6 col-md-4">
-                <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+            <div class="col-2">
+                <div class="flex-shrink-0 p-3 bg-white">
                     <p><b>Filters</b></p>
                     <ul class="list-unstyled ps-0">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
@@ -35,7 +35,7 @@ function tableEventTemplate(events){
                     </ul>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-8">
+            <div class="col-9">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>

@@ -41,7 +41,7 @@ function setGlobalPOST(){
 function pagesTable(){
   $(document).ready(function() {
       let tableBody = $('#table-body');
-      let rowsPerPage = 5; // 10
+      let rowsPerPage = 10; // 10
       let currentPage = 1;
       let totalRows = tableBody.find('tr').length;
       let totalPages = Math.ceil(totalRows / rowsPerPage);
