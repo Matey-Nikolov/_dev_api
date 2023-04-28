@@ -39,7 +39,7 @@ const welcomePage = (data, role) =>{
         staticRole = role;
 
         return html`
-        ${navBar()}
+        ${navBar(staticRole)}
         <div id="layoutSidenav">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
