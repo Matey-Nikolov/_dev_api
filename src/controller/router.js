@@ -9,25 +9,25 @@ import { tableAlertTemplate, emptyAlert } from '../Global/globalLit.js';
 
 let alerts = {};
 
-// ---------------------eventRouter--------------------------------------
+// ---------------------eventRouter-------------------------------------
 const eventRouter = async () =>{
     page.redirect('/events');
     let events = await callEvents();
 
     render(welcomePage(tableEventTemplate(events)), divApp);
 };
-// ---------------------------------------------------------------------
+// --------------------------------------------------------------------
 
-// -----------------------endpointsRoute---------------------------------
+// -----------------------endpointsRoute-------------------------------
 const endpointsRoute = async () =>{
     page.redirect('/endpoints/');
     let getEndpoints = await endpoints();
     // console.log(getEndpoints);
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
 };
-// ---------------------------------------------------------------------
+// --------------------------------------------------------------------
 
-// -----------------------alertRouter-----------------------------------
+// -----------------------alertRouter----------------------------------
 const alertRouter = async () =>{
     page.redirect('/alerts/');
     alerts = await getAlerts();
@@ -60,9 +60,9 @@ const alertHighRouter = async () =>{
 
     render(welcomePage(tableAlertTemplate(alerts)), divApp);
 };
-// --------------------------------------------------------------------
+// -------------------------------------------------------------------
 
-// -----------------------logOutRouter---------------------------------
+// -----------------------logOutRouter--------------------------------
 const logOutRouter = () => {
     logOut();
     page.redirect('/home');
@@ -72,17 +72,26 @@ const logOut = () => {
     sessionStorage.removeItem('token');
     render(welcomePage(undefined, 'true'), divApp);
 };
-// --------------------------------------------------------------------
+// -------------------------------------------------------------------
 
+// -----------------------RegisterRouter------------------------------
 const registerRouter = () => {
     page.redirect('/create');
     render(welcomePage(registerTemplate()), divApp);
 };
 
+page('/createUser', () =>{
+    render(welcomePage(registerTemplate()), divApp);
+});
+// -------------------------------------------------------------------
+
+// ---------------LoginRouter-----------------------------------------
 const loginRouter = () => {
     page.redirect('/login');
 };
+// -------------------------------------------------------------------
 
+// ---------------------WelcomeNavigator------------------------------
 const welcomeNavigator = () => {
     page.redirect('/home');
 };
@@ -90,12 +99,9 @@ const welcomeNavigator = () => {
 page('/home', () => {
     render(welcomePage(), divApp);
 });
+// -------------------------------------------------------------------
 
-page('/createUser', () =>{
-    render(welcomePage(registerTemplate()), divApp);
-});
-
-
+// Start page.js
 page();
 
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter };

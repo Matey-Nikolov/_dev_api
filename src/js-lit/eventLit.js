@@ -1,5 +1,5 @@
 import { html } from "../Global/globalLit.js";
-import { btnAllowWebsite, handleButtonClick } from "../Global/globalInport.js";
+import { handleButtonClick } from "../Global/globalInport.js";
 
 function tableEventTemplate(events){
     return html`

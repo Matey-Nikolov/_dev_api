@@ -27,8 +27,8 @@ import { tableEventTemplate } from '../js-lit/eventLit.js';
 // --------------------------------------------------------------
 
 // ---------------------mainInfo--------------------------------
-import { loginInfo } from '../js-lit/mainInfo/afterLogin.js';
-import { afterAuthorization } from '../js-lit/mainInfo/afterAuthorization.js';
+import { loginInfo } from '../js-lit/mainInfo/afterLoginLit.js';
+import { afterAuthorization } from '../js-lit/mainInfo/afterAuthorizationLit.js';
 // --------------------------------------------------------------
 
 

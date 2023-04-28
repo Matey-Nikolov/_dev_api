@@ -96,7 +96,7 @@ const layoutSidenav = (role) =>{
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div>y
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
                         ${role}

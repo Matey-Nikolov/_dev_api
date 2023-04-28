@@ -5,12 +5,9 @@ import { firebaseConfig } from "./firebaseConfig.js";
 import { welcomePage, render, loginInfo } from "../Global/globalLit.js";
 import { divApp, welcomeNavigator } from '../Global/globalInport.js'
 
-// import { divApp } from "../src/controller/homeController.js";
-// import { html, render } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
-
 const app = initializeApp(firebaseConfig);
 let docRef;
-let docSnap;
+// let docSnap;
 
 //https://firebase.google.com/docs/firestore/query-data/get-data#web-version-9_3
 // single

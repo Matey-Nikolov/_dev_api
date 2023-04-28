@@ -10,6 +10,7 @@ function getTypeId(typeId){
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
 
+// ---------------------Login button-----------------------------------
 const btnLogin = (event) =>{
     event.preventDefault();
 
@@ -31,7 +32,9 @@ const btnLogin = (event) =>{
         inputPassword.value = '';
     });
 };
+// --------------------------------------------------------------------
 
+// ---------------------Register button--------------------------------
 const btnRegister = (event) =>{
     event.preventDefault();
 
@@ -54,7 +57,10 @@ const btnRegister = (event) =>{
         validationInput(username, inputPassword.value, inputRole.value, inputClient_id.value, inputClient_secret.value);
     });
 };
+// --------------------------------------------------------------------
 
+// ------------------Render main data----------------------------------
 render(welcomePage(), divApp);
+// --------------------------------------------------------------------
 
 export { divApp, navBar, btnLogin, btnRegister };
