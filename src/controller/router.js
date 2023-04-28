@@ -5,7 +5,7 @@ import { endpoints, callEvents } from '../Global/globalInport.js';
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
 import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
-import { tableAlertTemplate, emptyAlert } from '../Global/globalLit.js';
+import { tableAlertTemplate, errorAlert } from '../Global/globalLit.js';
 
 let alerts = {};
 
@@ -33,32 +33,39 @@ const alertRouter = async () =>{
     alerts = await getAlerts();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(emptyAlert()), divApp);
+        render(welcomePage(errorAlert('No alerts')), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
-
 };
 
 const alertLowRouter = async () =>{
     page.redirect('/alerts/low');
     alerts = await filterLow();
 
-    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    render(welcomePage(tableAlertTemplate(alerts, 'No alerts from type low!')), divApp);
 };
 
 const alertMediumRouter = async () =>{
     page.redirect('/alerts/medium');
     alerts = await filterMedium();
 
-    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    if (alerts.items.length  === 0 ) {
+        render(welcomePage(errorAlert('No alerts from type medium!')), divApp);
+    }else{
+        render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    }
 };
 
 const alertHighRouter = async () =>{
     page.redirect('/alerts/high');
     alerts = await filterHigh();
 
-    render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    if (alerts.items.length  === 0 ) {
+        render(welcomePage(errorAlert('No alerts from type high!')), divApp);
+    }else{
+        render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    }
 };
 // -------------------------------------------------------------------
 

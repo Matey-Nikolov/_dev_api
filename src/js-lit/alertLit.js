@@ -1,10 +1,10 @@
 import { html } from "../Global/globalLit.js";
 import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from "../Global/globalInport.js";
 
-function tableAlertTemplate(alerts){
+//https://lit.dev/docs/templates/expressions/#removing-attribute
+function tableAlertTemplate(alerts, error){
 
     // console.log(alerts);
-
     return html`
         <div class="container text-center">
             <div class="row no-gutters">
@@ -64,13 +64,27 @@ function tableAlertTemplate(alerts){
                             <ul class="pagination justify-content-center" id="pagination"></ul>
                         </nav>
                     </div>
+                    ${error !== undefined ?? html`
+                        ${error}`
+                    }
                 </div>
             </div>
-        </div>`;
-    
-}
+        </div>
+    `;
+};
 
-function emptyAlert(){
+function errorAlert(typeError){
+
+    return html`
+        <main id="main">
+            <div class="toast fade show" id="myToast">
+                <div class="toast-body">
+                    It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
+                </div>
+            </div>
+        </main>
+    `;
+    /*
     return html`
     <main id="main">
         <div class="container-fluid px-4">
@@ -80,7 +94,7 @@ function emptyAlert(){
                         <div class="col-lg-5">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4">No alerts</h3>
+                                    <h3 class="text-center font-weight-light my-4">${typeError}</h3>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +103,7 @@ function emptyAlert(){
             </div>
         </div>
     </main>`;
-}
+    */
+};
 
-export { tableAlertTemplate, emptyAlert };
+export { tableAlertTemplate, errorAlert };
