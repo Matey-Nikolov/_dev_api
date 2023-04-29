@@ -29,7 +29,7 @@ const endpointsRoute = async () =>{
 
 // -----------------------alertRouter----------------------------------
 const alertRouter = async () =>{
-    page.redirect('/alerts/');
+    page.redirect('/alerts/all');
     alerts = await getAlerts();
 
     if (alerts.items.length  === 0 ) {
@@ -43,7 +43,11 @@ const alertLowRouter = async () =>{
     page.redirect('/alerts/low');
     alerts = await filterLow();
 
-    render(welcomePage(tableAlertTemplate(alerts, 'No alerts from type low!')), divApp);
+    if (alerts.items.length  === 0 ) {
+        render(welcomePage(tableAlertTemplate(alerts, errorAlert('No alerts from type low!'))), divApp);
+    }else{
+        render(welcomePage(tableAlertTemplate(alerts)), divApp);
+    }
 };
 
 const alertMediumRouter = async () =>{
@@ -51,7 +55,7 @@ const alertMediumRouter = async () =>{
     alerts = await filterMedium();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(errorAlert('No alerts from type medium!')), divApp);
+        render(welcomePage(tableAlertTemplate(alerts, errorAlert('No alerts from type medium!'))), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
@@ -62,7 +66,7 @@ const alertHighRouter = async () =>{
     alerts = await filterHigh();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(errorAlert('No alerts from type high!')), divApp);
+        render(welcomePage(tableAlertTemplate(alerts, errorAlert('No alerts from type high!'))), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }

@@ -41,50 +41,42 @@ function tableAlertTemplate(alerts, error){
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="container mt-5">
-                        <h2>User - ${alerts.items[0].tenant.name}</h2>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Severity</th>
-                                <th>RaisedAt</th>
-                            </tr>
-                            </thead>
-                            <tbody id="table-body">
-                                ${alerts.items.map((value) => html`
+                    ${error !== undefined ? html`
+                            ${error}` : 
+                        html`
+                            <div class="container mt-5">
+                                <h2>User - ${alerts.items[0].tenant.name}</h2>
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td>${value.product}</td>
-                                        <td>${value.severity}</td>
-                                        <td>${value.raisedAt}</td>
-                                    </tr>`)}
-                            </tbody>
-                        </table>
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center" id="pagination"></ul>
-                        </nav>
-                    </div>
-                    ${error !== undefined ?? html`
-                        ${error}`
+                                        <th>Product</th>
+                                        <th>Severity</th>
+                                        <th>RaisedAt</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                        ${alerts.items.map((value) => html`
+                                            <tr>
+                                                <td>${value.product}</td>
+                                                <td>${value.severity}</td>
+                                                <td>${value.raisedAt}</td>
+                                            </tr>`)}
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                                </nav>
+                            </div>
+                        `
                     }
+                    </div>
                 </div>
             </div>
         </div>
     `;
 };
 
-function errorAlert(typeError){
-
-    return html`
-        <main id="main">
-            <div class="toast fade show" id="myToast">
-                <div class="toast-body">
-                    It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
-                </div>
-            </div>
-        </main>
-    `;
-    /*
+function errorAlert(typeError){ 
     return html`
     <main id="main">
         <div class="container-fluid px-4">
@@ -103,7 +95,6 @@ function errorAlert(typeError){
             </div>
         </div>
     </main>`;
-    */
 };
 
 export { tableAlertTemplate, errorAlert };
