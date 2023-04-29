@@ -41,6 +41,7 @@ async function createUser(event, username, inputPassword, inputRole, inputClient
 
 async function loginUser(usernameInput, passwordInput){
     const querySnapshot = await getDocs(collection(db, 'User'));
+    let trueFalse = true;
 
     querySnapshot.forEach((doc) => {
 
@@ -54,9 +55,13 @@ async function loginUser(usernameInput, passwordInput){
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
             render(welcomePage(loginInfo(), roleDb), divApp);
-            // welcomeNavigator();
+            trueFalse = false;
         }
     });
+    
+    if (trueFalse) {
+        alert('Incorrect name or password!');
+    }
 }
 
 export { validationInput, createUser, loginUser, client_idDb, client_secretDb }

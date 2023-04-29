@@ -3,7 +3,6 @@ import { render, welcomePage, afterAuthorization } from '../Global/globalLit.js'
 import { divApp } from '../controller/homeController.js';
 
 async function whoIam(){
-
   let myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
 
@@ -13,7 +12,7 @@ async function whoIam(){
     redirect: 'follow'
   };
 
-    let responseData = await fetch(`https://api.central.sophos.com/whoami/v1`, requestOptions)
+    await fetch(`https://api.central.sophos.com/whoami/v1`, requestOptions)
     .then(response => response.json())
     .then(result => {
       
@@ -21,7 +20,6 @@ async function whoIam(){
         render(welcomePage(afterAuthorization()), divApp);
     })
     .catch(error => console.log('error', error));
-
 };
 
 

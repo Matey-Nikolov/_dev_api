@@ -14,12 +14,11 @@ const divApp = getTypeId('app');
 const btnLogin = (event) =>{
     event.preventDefault();
 
-
     render(welcomePage(loginTemplate()), divApp);
 
     const btn = getTypeId('loginBtn');
 
-    btn.addEventListener('click', (event) =>{
+    btn.addEventListener('click', async (event) =>{
 
         event.preventDefault();
 

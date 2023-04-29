@@ -4,7 +4,7 @@ import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from 
 //https://lit.dev/docs/templates/expressions/#removing-attribute
 function tableAlertTemplate(alerts, error){
 
-    // console.log(alerts);
+    console.log(alerts);
     return html`
         <div class="container text-center">
             <div class="row no-gutters">
@@ -51,6 +51,7 @@ function tableAlertTemplate(alerts, error){
                                     <tr>
                                         <th>Product</th>
                                         <th>Severity</th>
+                                        <th>Description</th>
                                         <th>RaisedAt</th>
                                     </tr>
                                     </thead>
@@ -59,6 +60,7 @@ function tableAlertTemplate(alerts, error){
                                             <tr>
                                                 <td>${value.product}</td>
                                                 <td>${value.severity}</td>
+                                                <td>${value.description}</td>
                                                 <td>${value.raisedAt}</td>
                                             </tr>`)}
                                     </tbody>
