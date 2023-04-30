@@ -5,12 +5,9 @@ import { firebaseConfig } from "./firebaseConfig.js";
 import { welcomePage, render, loginInfo } from "../Global/globalLit.js";
 import { divApp, welcomeNavigator } from '../Global/globalInport.js'
 
-// import { divApp } from "../src/controller/homeController.js";
-// import { html, render } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
-
 const app = initializeApp(firebaseConfig);
 let docRef;
-let docSnap;
+// let docSnap;
 
 //https://firebase.google.com/docs/firestore/query-data/get-data#web-version-9_3
 // single
@@ -44,6 +41,7 @@ async function createUser(event, username, inputPassword, inputRole, inputClient
 
 async function loginUser(usernameInput, passwordInput){
     const querySnapshot = await getDocs(collection(db, 'User'));
+    let trueFalse = true;
 
     querySnapshot.forEach((doc) => {
 
@@ -57,9 +55,13 @@ async function loginUser(usernameInput, passwordInput){
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
             render(welcomePage(loginInfo(), roleDb), divApp);
-            // welcomeNavigator();
+            trueFalse = false;
         }
     });
+    
+    if (trueFalse) {
+        alert('Incorrect name or password!');
+    }
 }
 
 export { validationInput, createUser, loginUser, client_idDb, client_secretDb }

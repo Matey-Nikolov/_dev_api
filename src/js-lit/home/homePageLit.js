@@ -2,10 +2,10 @@
 //import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 import { html } from "../../Global/globalLit.js";
 
-import { navBar } from "./navBar.js";
-import { layoutSidenav } from "./layoutSidenav.js";
-import { mainPage } from "./mainPage.js";
-import { footerTemplate } from "./footer.js";
+import { navBar } from "./navBarLit.js";
+import { layoutSidenav } from "./layoutSidenavLit.js";
+import { mainPage } from "./mainPageLit.js";
+import { footerTemplate } from "./footerLit.js";
 
 let staticRole = '';
 
@@ -39,7 +39,7 @@ const welcomePage = (data, role) =>{
         staticRole = role;
 
         return html`
-        ${navBar()}
+        ${navBar(staticRole)}
         <div id="layoutSidenav">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
@@ -49,7 +49,7 @@ const welcomePage = (data, role) =>{
         </div>`;
     }else if(staticRole !== role){
         return html`
-        ${navBar()}
+        ${navBar(staticRole)}
         <div id="layoutSidenav">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">

@@ -1,10 +1,10 @@
 import { html } from "../Global/globalLit.js";
 import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from "../Global/globalInport.js";
 
-function tableAlertTemplate(alerts){
+//https://lit.dev/docs/templates/expressions/#removing-attribute
+function tableAlertTemplate(alerts, error){
 
     console.log(alerts);
-
     return html`
         <div class="container text-center">
             <div class="row no-gutters">
@@ -41,36 +41,44 @@ function tableAlertTemplate(alerts){
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="container mt-5">
-                        <h2>User - ${alerts.items[0].tenant.name}</h2>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Severity</th>
-                                <th>RaisedAt</th>
-                            </tr>
-                            </thead>
-                            <tbody id="table-body">
-                                ${alerts.items.map((value) => html`
+                    ${error !== undefined ? html`
+                            ${error}` : 
+                        html`
+                            <div class="container mt-5">
+                                <h2>User - ${alerts.items[0].tenant.name}</h2>
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td>${value.product}</td>
-                                        <td>${value.severity}</td>
-                                        <td>${value.raisedAt}</td>
-                                    </tr>`)}
-                            </tbody>
-                        </table>
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center" id="pagination"></ul>
-                        </nav>
+                                        <th>Product</th>
+                                        <th>Severity</th>
+                                        <th>Description</th>
+                                        <th>RaisedAt</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                        ${alerts.items.map((value) => html`
+                                            <tr>
+                                                <td>${value.product}</td>
+                                                <td>${value.severity}</td>
+                                                <td>${value.description}</td>
+                                                <td>${value.raisedAt}</td>
+                                            </tr>`)}
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                                </nav>
+                            </div>
+                        `
+                    }
                     </div>
                 </div>
             </div>
-        </div>`;
-    
-}
+        </div>
+    `;
+};
 
-function emptyAlert(){
+function errorAlert(typeError){ 
     return html`
     <main id="main">
         <div class="container-fluid px-4">
@@ -80,7 +88,7 @@ function emptyAlert(){
                         <div class="col-lg-5">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4">No alerts</h3>
+                                    <h3 class="text-center font-weight-light my-4">${typeError}</h3>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +97,6 @@ function emptyAlert(){
             </div>
         </div>
     </main>`;
-}
+};
 
-export { tableAlertTemplate, emptyAlert };
+export { tableAlertTemplate, errorAlert };
