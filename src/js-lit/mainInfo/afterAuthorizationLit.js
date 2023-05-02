@@ -15,12 +15,6 @@ const afterAuthorization = () =>{
                             </p>
                         </div>
                     </div>
-                    <div class="row justify-content-left">
-                        <div class="col-lg-5 card shadow-lg border-0 rounded-lg mt-5">
-                            <h3 class="text-center font-weight-light my-4">Chart alerts</h3>
-                            <canvas id="myChart"></canvas>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

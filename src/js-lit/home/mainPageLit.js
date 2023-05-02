@@ -44,7 +44,7 @@ const mainPage = (data, role) =>{
                         </div>
                         <div class="row justify-content-left">
                             <div class="col-lg-5 card shadow-lg border-0 rounded-lg mt-5">
-                                <h3 class="text-center font-weight-light my-4">Chart alerts</h3>
+                                <h3 class="text-center font-weight-light my-4">alerts severity</h3>
                                 <canvas id="myChart"></canvas>
                             </div>
                         </div>
