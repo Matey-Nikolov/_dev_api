@@ -8,31 +8,30 @@ let highCount = 0;
 const chartAlerts = async () =>{
     const getChart = document.getElementById('myChart');
 
-    let alertsLowCount = await filterLow();
-    console.log(alertsLowCount.items.length);
+    let data = await filterLow();
+    lowCount = data.items.length;
     
-    let alertsMediumCount = await filterMedium();
-    console.log(alertsMediumCount.items.length);
+    data = await filterMedium();
+    mediumCount = data.items.length;
 
-    let alertsHighCount = await filterHigh();
-    
-    console.log(alertsHighCount.items.length);
+    data = await filterHigh();
+    highCount = data.items.length;
 
     new Chart(getChart, {
             type: 'pie',
             data: {
-                labels: ['High', 'Low', 'Medium'],
+                labels: ['Low', 'Medium', 'High'],
                 datasets: [{
                     label: 'Severity',
                     data: [
-                        alertsLowCount.items.length, 
-                        alertsMediumCount.items.length, 
-                        alertsHighCount.items.length
+                        lowCount,
+                        mediumCount,
+                        highCount
                     ],
                     backgroundColor: [
-                        'rgb(255, 99, 132)',
+                        'rgb(255, 205, 86)',
                         'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)'
+                        'rgb(255, 99, 132)',
                     ],
                     hoverOffset: 4
                 }]
