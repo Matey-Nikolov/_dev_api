@@ -4,7 +4,7 @@ import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from 
 //https://lit.dev/docs/templates/expressions/#removing-attribute
 function tableAlertTemplate(alerts, error){
 
-    console.log(alerts);
+    // console.log(alerts);
     return html`
         <div class="container text-center">
             <div class="row no-gutters">

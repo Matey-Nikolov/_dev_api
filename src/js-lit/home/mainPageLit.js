@@ -35,13 +35,17 @@ const mainPage = (data, role) =>{
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header">
-                                        <h3 class="text-center font-weight-light my-4">Welcome to API center</h3>
-                                        <p class="text-center font-weight-light my-4">
-                                            You have access to alerts, endpoints and events.
-                                        </p>
-                                    </div>
+                                    <h3 class="text-center font-weight-light my-4">Welcome to API center</h3>
+                                    <p class="text-center font-weight-light my-4">
+                                        You have access to alerts, endpoints and events.
+                                    </p>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-left">
+                            <div class="col-lg-5 card shadow-lg border-0 rounded-lg mt-5">
+                                <h3 class="text-center font-weight-light my-4">Chart alerts</h3>
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
                     </div>
