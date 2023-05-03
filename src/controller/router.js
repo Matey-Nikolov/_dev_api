@@ -6,6 +6,7 @@ import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalI
 
 import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
 import { tableAlertTemplate, errorAlert } from '../Global/globalLit.js';
+import { chartAlerts } from '../Js/Charts/alertChart.js';
 
 let alerts = {};
 
@@ -109,6 +110,7 @@ const welcomeNavigator = () => {
 
 page('/home', () => {
     render(welcomePage(), divApp);
+    chartAlerts();
 });
 // -------------------------------------------------------------------
 
