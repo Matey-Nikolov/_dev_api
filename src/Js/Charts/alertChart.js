@@ -38,8 +38,8 @@ const chartAlerts = async () =>{
             },
             options: {
                 maintainAspectRatio: true,
-                width: 200,
-                height: 200
+                width: 150,
+                height: 150
             }
         });
 };
