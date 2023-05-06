@@ -20,8 +20,13 @@ import { endpoints } from '../Js/endpoints.js';
 // --------------------------------------------------------------------
 
 // -----------------------event----------------------------------------
-import { callEvents, btnAllowWebsite, handleButtonClick } from '../Js/event.js';
+import { callEvents } from '../Js/event.js';
 // --------------------------------------------------------------------
+
+// -----------------------webSite----------------------------------------
+import { btnAllowWebsite, handleButtonClick } from '../Js/webSite.js';
+// --------------------------------------------------------------------
+
 
 // ---------------------------------Firebase---------------------------
 import { loginUser, validationInput } from '../firebase/registerCreate.js';
@@ -36,6 +41,7 @@ export { endpoints };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
-export { callEvents, btnAllowWebsite, handleButtonClick };
+export { callEvents };
+export { btnAllowWebsite, handleButtonClick };
 
 export { loginUser, validationInput };

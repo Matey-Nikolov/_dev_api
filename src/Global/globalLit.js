@@ -26,6 +26,10 @@ import { tableAlertTemplate, errorAlert } from '../js-lit/alertLit.js';
 import { tableEventTemplate } from '../js-lit/eventLit.js';
 // --------------------------------------------------------------
 
+// ----------------------Allow website-----------------------------------
+import { tableAllowWebsiteTemplate } from '../js-lit/webSiteLit.js';
+// --------------------------------------------------------------
+
 // ---------------------mainInfo--------------------------------
 import { loginInfo } from '../js-lit/mainInfo/afterLoginLit.js';
 import { afterAuthorization } from '../js-lit/mainInfo/afterAuthorizationLit.js';
@@ -40,3 +44,4 @@ export { tableEndpointsTemplate };
 export { tableAlertTemplate, errorAlert };
 export { tableEventTemplate };
 export { loginInfo, afterAuthorization };
+export { tableAllowWebsiteTemplate };

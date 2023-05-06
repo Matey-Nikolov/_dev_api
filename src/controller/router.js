@@ -8,6 +8,8 @@ import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.
 import { tableAlertTemplate, errorAlert } from '../Global/globalLit.js';
 import { chartAlerts } from '../Js/Charts/alertChart.js';
 
+import { tableAllowWebsiteTemplate } from '../Global/globalLit.js';
+
 let alerts = {};
 
 // ---------------------eventRouter-------------------------------------
@@ -114,9 +116,18 @@ page('/home', () => {
 });
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+const websiteRouter = async () => {
+    page.redirect('/website');
+    render(welcomePage(tableAllowWebsiteTemplate()), divApp);
+};
+// -------------------------------------------------------------------
+
+
 // Start page.js
 page();
 
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter };
 
-export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
+export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter, websiteRouter};
