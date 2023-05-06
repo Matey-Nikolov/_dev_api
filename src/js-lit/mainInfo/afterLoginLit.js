@@ -2,7 +2,6 @@ import { html } from '../../Global/globalLit.js';
 
 const loginInfo = () =>{
     return html`
-    <main id="main">
         <div class="container-fluid px-4">
             <div>
                 <div class="container">
@@ -21,7 +20,6 @@ const loginInfo = () =>{
                 </div>
             </div>
         </div>
-    </main>
     `;
 }
 
