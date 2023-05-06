@@ -9,8 +9,19 @@ import { tableAlertTemplate, errorAlert } from '../Global/globalLit.js';
 import { chartAlerts } from '../Js/Charts/alertChart.js';
 
 import { tableAllowWebsiteTemplate } from '../Global/globalLit.js';
+import { allowWebSite } from '../Global/globalInport.js';
 
 let alerts = {};
+let websites = new Set(); 
+
+// -----------------------allow website router--------------------------
+const websitesRouter = async () => {
+    page.redirect('/websites');
+    websites = await allowWebSite();
+    websites = [...websites];
+    render(welcomePage(tableAllowWebsiteTemplate(websites)), divApp);
+};
+// ---------------------------------------------------------------------
 
 // ---------------------eventRouter-------------------------------------
 const eventRouter = async () =>{
@@ -116,18 +127,9 @@ page('/home', () => {
 });
 // -------------------------------------------------------------------
 
-// -------------------------------------------------------------------
-
-const websiteRouter = async () => {
-    page.redirect('/website');
-    render(welcomePage(tableAllowWebsiteTemplate()), divApp);
-};
-// -------------------------------------------------------------------
-
-
 // Start page.js
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter };
 
-export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter, websiteRouter};
+export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };

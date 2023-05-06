@@ -44,12 +44,23 @@ function setAllowPOST(valueURL){
     return requestOptions;
 };
 
-const handleButtonClick = (event) => {
+const handleButtonClickBlock = (event) => {
+    if (event.target.classList.contains('btn btn-outline-danger')) {
+        const type = event.target.dataset.type;
+        btnAllowWebsite(type);
+    }
+};
+
+const handleButtonClickAllow = (event) => {
     if (event.target.classList.contains('btn-outline-success')) {
         const type = event.target.dataset.type;
         btnAllowWebsite(type);
     }
 };
+
+const btnBlockWebsite = async () =>{
+    // Add
+}
   
 const btnAllowWebsite = async (valueURL) =>{
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
@@ -60,4 +71,4 @@ const btnAllowWebsite = async (valueURL) =>{
     eventRouter();
 };
 
-export { allowWebSite, btnAllowWebsite, handleButtonClick };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };

@@ -1,5 +1,5 @@
 import { html } from "../Global/globalLit.js";
-import { handleButtonClick } from "../Global/globalInport.js";
+import { handleButtonClickAllow } from "../Global/globalInport.js";
 
 function tableEventTemplate(events){
     return html`
@@ -45,7 +45,7 @@ function tableEventTemplate(events){
                             <th>Allow</th>
                         </tr>
                         </thead>
-                        <tbody id="table-body" @click=${handleButtonClick}>
+                        <tbody id="table-body" @click=${handleButtonClickAllow}>
                             ${events.items.map((value) => html`
                                 <tr>
                                 <td>${value.name}</td>

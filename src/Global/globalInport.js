@@ -3,7 +3,7 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------Routers----------------------------
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter } from '../controller/router.js';
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter } from '../controller/router.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------alerts-----------------------------
@@ -24,7 +24,7 @@ import { callEvents } from '../Js/event.js';
 // --------------------------------------------------------------------
 
 // -----------------------webSite----------------------------------------
-import { btnAllowWebsite, handleButtonClick } from '../Js/webSite.js';
+import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock } from '../Js/webSite.js';
 // --------------------------------------------------------------------
 
 
@@ -33,7 +33,7 @@ import { loginUser, validationInput } from '../firebase/registerCreate.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter };
 
 export { post };
 export { endpoints };
@@ -42,6 +42,6 @@ export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
 export { callEvents };
-export { btnAllowWebsite, handleButtonClick };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };
 
 export { loginUser, validationInput };

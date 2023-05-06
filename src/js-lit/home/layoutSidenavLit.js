@@ -1,7 +1,7 @@
 import { html } from "../../Global/globalLit.js";
 import { post, btnLogin, btnRegister } from '../../Global/globalInport.js';
 
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter } from '../../Global/globalInport.js';
+import { websitesRouter, endpointsRoute, eventRouter } from '../../Global/globalInport.js';
 
 import { alertRouter } from "../../Global/globalInport.js"; 
 
@@ -26,7 +26,7 @@ const layoutSidenav = (role) =>{
                 </nav>
             </div>
         `;
-    }else if(role === 'admin'){ // === 'admin'
+    }else{ // === 'admin'
         return html`
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -38,14 +38,19 @@ const layoutSidenav = (role) =>{
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 who I'am
                             </a>
-
-                            <div class="sb-sidenav-menu-heading">Register</div>
 
                             <!-- registerRouter -->
-                            <a class="nav-link" @click=${btnRegister}>
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                new user
-                            </a>
+                            <!-- FIX - if admin -> true? -->
+                            ${role === 'admin' ??
+                                html`
+                                    <div class="sb-sidenav-menu-heading">Register</div>
+
+                                    <a class="nav-link" @click=${btnRegister}>
+                                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                        new user
+                                    </a>
+                                `
+                            }
 
                             <div class="sb-sidenav-menu-heading">Nesho</div>
 
@@ -53,46 +58,13 @@ const layoutSidenav = (role) =>{
                                 Commands
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" @click=${endpointsRoute}>endpoints</a>
-                                    <a class="nav-link" @click=${alertRouter}>alerts</a>
-                                    <a class="nav-link" @click=${eventRouter}>events</a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        ${role}
-                    </div>
-                </nav>
-            </div>
-        `;
-    }else{
-        return html`
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
                             
-                            <a class="nav-link" @click=${post}>
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                who I'am
-                            </a>
-
-                            <div class="sb-sidenav-menu-heading">Nesho</div>
-
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                Commands
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
                             <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" @click=${endpointsRoute}>endpoints</a>
                                     <a class="nav-link" @click=${alertRouter}>alerts</a>
                                     <a class="nav-link" @click=${eventRouter}>events</a>
+                                    <a class="nav-link" @click=${websitesRouter}>websites allow</a>
                                 </nav>
                             </div>
                         </div>
@@ -105,7 +77,6 @@ const layoutSidenav = (role) =>{
             </div>
         `;
     }
-
 };
 
 export { layoutSidenav };

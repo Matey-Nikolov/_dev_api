@@ -1,7 +1,8 @@
 import { html } from "../Global/globalLit.js";
-import { handleButtonClick } from "../Global/globalInport.js";
+import { handleButtonClickBlock } from "../Global/globalInport.js";
 
-function tableAllowWebsiteTemplate(events){
+function tableAllowWebsiteTemplate(webSite){
+    console.log(webSite);
     return html`
         <div class="row no-gutters">
             <div class="col-2">
@@ -17,11 +18,11 @@ function tableAllowWebsiteTemplate(events){
                             <th>Block</th>
                         </tr>
                         </thead>
-                        <tbody id="table-body" @click=${handleButtonClick}>
-                            ${events.items.map((value) => html`
+                        <tbody id="table-body" @click=${handleButtonClickBlock}>
+                            ${webSite.map((value) => html`
                                 <tr>
-                                <td>${value.name}</td>
-                                <td><button data-type=${value.name}} class="btn btn-outline-success">block</button></td>
+                                    <td><a href="$https://{value}">${value}</a></td>
+                                    <td><button data-type=${value}} class="btn btn-outline-danger">block</button></td>
                                 </tr>`)}
                             
                         </tbody>
