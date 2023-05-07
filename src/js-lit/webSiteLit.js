@@ -2,7 +2,7 @@ import { html } from "../Global/globalLit.js";
 import { handleButtonClickBlock } from "../Global/globalInport.js";
 
 function tableAllowWebsiteTemplate(webSite){
-    console.log(webSite);
+    // console.log(webSite);
     return html`
         <div class="row no-gutters">
             <div class="col-2">
@@ -21,8 +21,8 @@ function tableAllowWebsiteTemplate(webSite){
                         <tbody id="table-body" @click=${handleButtonClickBlock}>
                             ${webSite.map((value) => html`
                                 <tr>
-                                    <td><a href="https://${value}">${value}</a></td>
-                                    <td><button data-type=${value} class="btn btn-outline-danger">block</button></td>
+                                    <td><a href="https://${value.url}">${value.url}</a></td>
+                                    <td><button data-type=${value.id} class="btn btn-outline-danger">block</button></td>
                                 </tr>`)}
                             
                         </tbody>

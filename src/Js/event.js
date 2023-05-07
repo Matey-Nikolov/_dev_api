@@ -1,5 +1,5 @@
-import { setGlobal, apiHost, pagesTable, id } from './global.js';
-import { eventRouter } from '../Global/globalInport.js';
+import { setGlobal, apiHost, pagesTable } from './global.js';
+// import { eventRouter } from '../Global/globalInport.js';
 
 // ----------------------WebSite.js-----------------------------------
 import { allowWebSite } from './webSite.js';
@@ -39,6 +39,9 @@ async function getEvents(){
     //Web filter - still in progress
     events.has_more = eventData.has_more;
     events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
+
+    // console.log(setAllowSite);
+
     events.items = events.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
 
     // events.items = events.items.filter(x => x.name.match(regexWebsite)[1] && x.name.match(regexWebsite)[3]);

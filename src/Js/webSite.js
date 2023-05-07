@@ -1,4 +1,5 @@
-import { setGlobal, apiHost, pagesTable, id } from './global.js';
+import { eventRouter } from '../controller/router.js';
+import { setGlobal, apiHost, id, pagesTable } from './global.js';
 
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)\/?([\w\d-]+\/?[\w\d-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+)' ([\w+ ]*['\w' ()]*)/;
 
@@ -19,11 +20,34 @@ async function allowWebSite(){
     getWebsiteData = await getWebsite();
 
     getWebsiteData.items.map((value) => {
-        setwebsite.add(value.url);
+
+        let data = 
+        { 
+            id: value.id,
+            url: value.url   
+        };
+
+        setwebsite.add(data);
     });
 
     return setwebsite;
 };
+
+function setDelete(){
+    const myHeaders = new Headers();
+    myHeaders.append('X-Tenant-ID', id);
+    // myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    return requestOptions;
+}
 
 function setAllowPOST(valueURL){
     const myHeaders = new Headers();
@@ -55,8 +79,8 @@ const handleButtonClickBlock = (event) => {
     if (event.target.classList.contains('btn-outline-danger')) {
         const type = event.target.dataset.type;
 
-        console.log(type);
-        console.log('ok');
+        // console.log(type);
+        btnBlockWebsite(type);
     }
 };
 
@@ -67,8 +91,10 @@ const handleButtonClickAllow = (event) => {
     }
 };
 
-const btnBlockWebsite = async () =>{
-    // Add
+const btnBlockWebsite = async (id) =>{
+
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${id}`);
+    await fetch(url, setDelete());
 };
   
 const btnAllowWebsite = async (valueURL) =>{
