@@ -1,22 +1,29 @@
 import { setGlobal, apiHost, pagesTable, id } from './global.js';
 
+const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)\/?([\w\d-]+\/?[\w\d-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+)' ([\w+ ]*['\w' ()]*)/;
 
 let setwebsite = new Set(); 
+let getWebsiteData = {};
 
-async function allowWebSite(){
+async function getWebsite(){
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`);
- 
-    const allowWebSiteData = await fetch(url, setGlobal())
+
+    const getData = await fetch(url, setGlobal())
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
-    allowWebSiteData.items.map((value) => {
+    return getData;
+};
+
+async function allowWebSite(){
+    getWebsiteData = await getWebsite();
+
+    getWebsiteData.items.map((value) => {
         setwebsite.add(value.url);
     });
 
     return setwebsite;
-}
-
+};
 
 function setAllowPOST(valueURL){
     const myHeaders = new Headers();
@@ -45,9 +52,11 @@ function setAllowPOST(valueURL){
 };
 
 const handleButtonClickBlock = (event) => {
-    if (event.target.classList.contains('btn btn-outline-danger')) {
+    if (event.target.classList.contains('btn-outline-danger')) {
         const type = event.target.dataset.type;
-        btnAllowWebsite(type);
+
+        console.log(type);
+        console.log('ok');
     }
 };
 
@@ -60,7 +69,7 @@ const handleButtonClickAllow = (event) => {
 
 const btnBlockWebsite = async () =>{
     // Add
-}
+};
   
 const btnAllowWebsite = async (valueURL) =>{
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);

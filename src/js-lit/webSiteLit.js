@@ -21,8 +21,8 @@ function tableAllowWebsiteTemplate(webSite){
                         <tbody id="table-body" @click=${handleButtonClickBlock}>
                             ${webSite.map((value) => html`
                                 <tr>
-                                    <td><a href="$https://{value}">${value}</a></td>
-                                    <td><button data-type=${value}} class="btn btn-outline-danger">block</button></td>
+                                    <td><a href="https://${value}">${value}</a></td>
+                                    <td><button data-type=${value} class="btn btn-outline-danger">block</button></td>
                                 </tr>`)}
                             
                         </tbody>
