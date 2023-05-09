@@ -19,16 +19,21 @@ import { tableEndpointsTemplate } from '../js-lit/endpointsLit.js';
 // --------------------------------------------------------------
 
 // -----------------------alerts---------------------------------
-import { tableAlertTemplate, errorAlert } from '../js-lit/alertLit.js';
+import { tableAlertTemplate } from '../js-lit/alertLit.js';
 // --------------------------------------------------------------
 
 // ----------------------event-----------------------------------
 import { tableEventTemplate } from '../js-lit/eventLit.js';
 // --------------------------------------------------------------
 
+// ----------------------Allow website-----------------------------------
+import { tableAllowWebsiteTemplate } from '../js-lit/webSiteLit.js';
+// --------------------------------------------------------------
+
 // ---------------------mainInfo--------------------------------
 import { loginInfo } from '../js-lit/mainInfo/afterLoginLit.js';
 import { afterAuthorization } from '../js-lit/mainInfo/afterAuthorizationLit.js';
+import { emptyError } from '../js-lit/mainInfo/emptyError.js';
 // --------------------------------------------------------------
 
 
@@ -37,6 +42,7 @@ export { welcomePage, mainPage, layoutSidenav };
 export { loginTemplate };
 export { registerTemplate };
 export { tableEndpointsTemplate };
-export { tableAlertTemplate, errorAlert };
+export { tableAlertTemplate };
 export { tableEventTemplate };
-export { loginInfo, afterAuthorization };
+export { loginInfo, afterAuthorization, emptyError };
+export { tableAllowWebsiteTemplate };

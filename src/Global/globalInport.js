@@ -3,7 +3,7 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------Routers----------------------------
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter } from '../controller/router.js';
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter } from '../controller/router.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------alerts-----------------------------
@@ -20,15 +20,20 @@ import { endpoints } from '../Js/endpoints.js';
 // --------------------------------------------------------------------
 
 // -----------------------event----------------------------------------
-import { callEvents, btnAllowWebsite, handleButtonClick } from '../Js/event.js';
+import { callEvents } from '../Js/event.js';
 // --------------------------------------------------------------------
+
+// -----------------------webSite----------------------------------------
+import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock } from '../Js/webSite.js';
+// --------------------------------------------------------------------
+
 
 // ---------------------------------Firebase---------------------------
 import { loginUser, validationInput } from '../firebase/registerCreate.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter };
 
 export { post };
 export { endpoints };
@@ -36,6 +41,7 @@ export { endpoints };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
-export { callEvents, btnAllowWebsite, handleButtonClick };
+export { callEvents };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };
 
 export { loginUser, validationInput };
