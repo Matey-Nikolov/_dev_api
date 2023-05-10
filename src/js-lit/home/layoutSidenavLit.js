@@ -41,16 +41,13 @@ const layoutSidenav = (role) =>{
 
                             <!-- registerRouter -->
                             <!-- FIX - if admin -> true? -->
-                            ${role === 'admin' ??
-                                html`
-                                    <div class="sb-sidenav-menu-heading">Register</div>
+                                <div class="sb-sidenav-menu-heading">Register</div>
 
-                                    <a class="nav-link" @click=${btnRegister}>
-                                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                        new user
-                                    </a>
-                                `
-                            }
+                                <a class="nav-link" @click=${btnRegister}>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    new user
+                                </a>
+
 
                             <div class="sb-sidenav-menu-heading">Nesho</div>
 
