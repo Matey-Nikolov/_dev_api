@@ -1,4 +1,4 @@
-import { eventRouter } from '../controller/router.js';
+import { eventRouter, websitesRouter } from '../controller/router.js';
 import { setGlobal, apiHost, id, pagesTable } from './global.js';
 
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)\/?([\w\d-]+\/?[\w\d-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+)' ([\w+ ]*['\w' ()]*)/;
@@ -18,6 +18,7 @@ async function getWebsite(){
 
 async function allowWebSite(){
     getWebsiteData = await getWebsite();
+    setwebsite.clear();
 
     getWebsiteData.items.map((value) => {
 
@@ -92,9 +93,11 @@ const handleButtonClickAllow = (event) => {
 };
 
 const btnBlockWebsite = async (id) =>{
+    console.log(id);
 
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${id}`);
     await fetch(url, setDelete());
+    websitesRouter();
 };
   
 const btnAllowWebsite = async (valueURL) =>{
