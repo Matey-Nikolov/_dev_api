@@ -30,7 +30,12 @@ const eventRouter = async () =>{
     page.redirect('/events');
     let events = await callEvents();
 
-    render(welcomePage(tableEventTemplate(events, emptyError('No events from past 24 hours.'))), divApp);
+
+    if (events.items.length  === 0 ) {
+        render(welcomePage(tableEventTemplate(events, emptyError('No events from past 24 hours.'))), divApp);
+    }else{
+        render(welcomePage(tableEventTemplate(events)), divApp);
+    }
 };
 // --------------------------------------------------------------------
 
