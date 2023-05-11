@@ -21,7 +21,13 @@ const websitesRouter = async () => {
     page.redirect('/websites');
     websites = await allowWebSite();
     websites = [...websites];
-    render(welcomePage(tableAllowWebsiteTemplate(websites)), divApp);
+    console.log(websites.length);
+    if (websites.length === 0) {
+        render(welcomePage(tableAllowWebsiteTemplate(websites, emptyError('The exclusion list of allowed sites to visit is empty.'))), divApp);
+        
+    }else{
+        render(welcomePage(tableAllowWebsiteTemplate(websites)), divApp);
+    }
 };
 // ---------------------------------------------------------------------
 
@@ -30,7 +36,12 @@ const eventRouter = async () =>{
     page.redirect('/events');
     let events = await callEvents();
 
-    render(welcomePage(tableEventTemplate(events, emptyError('No events from past 24 hours.'))), divApp);
+
+    if (events.items.length  === 0 ) {
+        render(welcomePage(tableEventTemplate(events, emptyError('No events from past 24 hours.'))), divApp);
+    }else{
+        render(welcomePage(tableEventTemplate(events)), divApp);
+    }
 };
 // --------------------------------------------------------------------
 

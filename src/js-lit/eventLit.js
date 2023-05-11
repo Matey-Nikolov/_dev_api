@@ -2,12 +2,11 @@ import { html } from "../Global/globalLit.js";
 import { handleButtonClickAllow } from "../Global/globalInport.js";
 
 function tableEventTemplate(events, error){
+
+    console.log(events);
     return html`
         <div class="row no-gutters">
             <div class="col-2">
-
-                ${error === undefined ?? 
-                    html`
                     <div class="flex-shrink-0 p-3 bg-white">
                         <p><b>Filters</b></p>
                         <ul class="list-unstyled ps-0">
@@ -37,8 +36,6 @@ function tableEventTemplate(events, error){
                             </li>
                         </ul>
                     </div>
-                    `
-                }
             </div>
             <div class="col-9">
                 ${error !== undefined ? html`
