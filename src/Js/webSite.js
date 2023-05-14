@@ -46,7 +46,7 @@ async function allowWebSite(type){
         
         break
     }
-    
+
     return setwebsite;
 };
 
@@ -109,8 +109,6 @@ const handleButtonClickAllow = (event) => {
 };
 
 const btnBlockWebsite = async (id) =>{
-    console.log(id);
-
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${id}`);
     await fetch(url, setDelete());
     websitesRouter();

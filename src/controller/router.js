@@ -21,7 +21,7 @@ const websitesRouter = async () => {
     page.redirect('/websites');
     websites = await allowWebSite();
     websites = [...websites];
-    console.log(websites.length);
+
     if (websites.length === 0) {
         render(welcomePage(tableAllowWebsiteTemplate(websites, emptyError('The exclusion list of allowed sites to visit is empty.'))), divApp);
         

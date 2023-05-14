@@ -2,8 +2,6 @@ import { html } from "../Global/globalLit.js";
 import { handleButtonClickAllow } from "../Global/globalInport.js";
 
 function tableEventTemplate(events, error){
-
-    console.log(events);
     return html`
         <div class="row no-gutters">
             <div class="col-2">
