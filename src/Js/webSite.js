@@ -16,21 +16,37 @@ async function getWebsite(){
     return getData;
 };
 
-async function allowWebSite(){
+async function allowWebSite(type){
     getWebsiteData = await getWebsite();
+
     setwebsite.clear();
 
-    getWebsiteData.items.map((value) => {
+    switch(type){
+        case 'allow':
+            const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`);
+ 
+            const allowWebSiteData = await fetch(url, setGlobal())
+            .then(response => response.json())
+            .catch(error => console.log('error', error));
+            allowWebSiteData.items.map((value) => {
+                setwebsite.add(value.url);
+            });
+        break
+        default:
+            getWebsiteData.items.map((value) => {
 
-        let data = 
-        { 
-            id: value.id,
-            url: value.url   
-        };
-
-        setwebsite.add(data);
-    });
-
+                let data = 
+                { 
+                    id: value.id,
+                    url: value.url   
+                };
+        
+                setwebsite.add(data);
+            });
+        
+        break
+    }
+    
     return setwebsite;
 };
 
