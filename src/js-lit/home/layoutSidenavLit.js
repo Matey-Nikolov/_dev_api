@@ -1,5 +1,5 @@
 import { html } from "../../Global/globalLit.js";
-import { post, btnLogin, btnRegister } from '../../Global/globalInport.js';
+import { refresh, btnLogin, btnRegister } from '../../Global/globalInport.js';
 
 import { websitesRouter, endpointsRoute, eventRouter } from '../../Global/globalInport.js';
 
@@ -34,9 +34,9 @@ const layoutSidenav = (role) =>{
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
                             
-                            <a class="nav-link" @click=${post}>
+                            <a class="nav-link" @click=${refresh}>
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                who I'am
+                                refresh token
                             </a>
 
                             <!-- registerRouter -->

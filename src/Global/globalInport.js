@@ -15,6 +15,10 @@ import { getAlerts, filterLow, filterMedium, filterHigh, severityFilter } from '
 import { post } from '../Js/authentication.js';
 // --------------------------------------------------------------------
 
+// ----------------------refresh token--------------------------------
+import { refresh } from '../Js/refreshToken.js';
+// --------------------------------------------------------------------
+
 // ---------------------endpoint---------------------------------------
 import { endpoints } from '../Js/endpoints.js';
 // --------------------------------------------------------------------
@@ -36,6 +40,7 @@ export { divApp, btnLogin, btnRegister };
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter };
 
 export { post };
+export { refresh };
 export { endpoints };
 
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};

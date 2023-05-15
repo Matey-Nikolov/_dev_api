@@ -3,7 +3,7 @@ import { addDoc, doc, getDocs, getFirestore, collection, getDoc } from "https://
 import { firebaseConfig } from "./firebaseConfig.js";
 
 import { welcomePage, render, loginInfo } from "../Global/globalLit.js";
-import { divApp, welcomeNavigator } from '../Global/globalInport.js'
+import { divApp, post, welcomeNavigator } from '../Global/globalInport.js'
 
 const app = initializeApp(firebaseConfig);
 let docRef;
@@ -55,6 +55,7 @@ async function loginUser(usernameInput, passwordInput){
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
             render(welcomePage(loginInfo(), roleDb), divApp);
+            post();
             trueFalse = false;
         }
     });
