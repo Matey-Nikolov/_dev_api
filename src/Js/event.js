@@ -21,7 +21,7 @@ let events =
 };
 
 async function callEvents(){
-    setAllowSite = await allowWebSite();
+    setAllowSite = await allowWebSite('allow');
     return await getEvents();
 };
 

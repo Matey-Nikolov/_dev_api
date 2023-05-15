@@ -16,20 +16,31 @@ async function getWebsite(){
     return getData;
 };
 
-async function allowWebSite(){
+async function allowWebSite(type){
     getWebsiteData = await getWebsite();
+
     setwebsite.clear();
 
-    getWebsiteData.items.map((value) => {
+    switch(type){
+        case 'allow':
+            getWebsiteData.items.map((value) => {
+                setwebsite.add(value.url);
+            });
+        break
+        default:
+            getWebsiteData.items.map((value) => {
 
-        let data = 
-        { 
-            id: value.id,
-            url: value.url   
-        };
-
-        setwebsite.add(data);
-    });
+                let data = 
+                { 
+                    id: value.id,
+                    url: value.url   
+                };
+        
+                setwebsite.add(data);
+            });
+        
+        break
+    }
 
     return setwebsite;
 };
@@ -93,8 +104,6 @@ const handleButtonClickAllow = (event) => {
 };
 
 const btnBlockWebsite = async (id) =>{
-    console.log(id);
-
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${id}`);
     await fetch(url, setDelete());
     websitesRouter();
