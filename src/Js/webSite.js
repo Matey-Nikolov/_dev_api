@@ -23,12 +23,7 @@ async function allowWebSite(type){
 
     switch(type){
         case 'allow':
-            const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`);
- 
-            const allowWebSiteData = await fetch(url, setGlobal())
-            .then(response => response.json())
-            .catch(error => console.log('error', error));
-            allowWebSiteData.items.map((value) => {
+            getWebsiteData.items.map((value) => {
                 setwebsite.add(value.url);
             });
         break
