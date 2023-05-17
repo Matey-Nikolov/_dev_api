@@ -1,6 +1,8 @@
 import { html } from "../Global/globalLit.js";
 import { handleButtonClickAllow, eventAllRouter, eventWebsiteRouter } from "../Global/globalInport.js";
 
+const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
+
 function tableEventTemplate(events, error){
     return html`
         <div class="row no-gutters">
@@ -43,10 +45,15 @@ function tableEventTemplate(events, error){
                                 <tbody id="table-body" @click=${handleButtonClickAllow}>
                                     ${events.items.map((value) => html`
                                         <tr>
-                                        <td>${value.name}</td>
-                                        <td><button data-type=${value.name}} class="btn btn-outline-success">allow</button></td>
-                                        </tr>`)}
-                                    
+                                            <td>${value.name}</td>
+                                            ${value.type.match(filterRegex)[2] === 'WebControlViolation' ? 
+                                            html`
+                                                <td><button data-type=${value.name}} class="btn btn-outline-success">allow</button></td>
+                                            `
+                                            : 
+                                            html``}
+                                        </tr>`)
+                                    }
                                 </tbody>
                             </table>
                             <nav aria-label="Page navigation">
