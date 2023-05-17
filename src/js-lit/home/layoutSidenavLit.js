@@ -1,7 +1,7 @@
 import { html } from "../../Global/globalLit.js";
 import { refresh, btnLogin, btnRegister } from '../../Global/globalInport.js';
 
-import { websitesRouter, endpointsRoute, eventRouter } from '../../Global/globalInport.js';
+import { websitesRouter, endpointsRoute, eventAllRouter } from '../../Global/globalInport.js';
 
 import { alertRouter } from "../../Global/globalInport.js"; 
 
@@ -60,7 +60,7 @@ const layoutSidenav = (role) =>{
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" @click=${endpointsRoute}>endpoints</a>
                                     <a class="nav-link" @click=${alertRouter}>alerts</a>
-                                    <a class="nav-link" @click=${eventRouter}>events</a>
+                                    <a class="nav-link" @click=${eventAllRouter}>events</a>
                                     <a class="nav-link" @click=${websitesRouter}>websites allow</a>
                                 </nav>
                             </div>

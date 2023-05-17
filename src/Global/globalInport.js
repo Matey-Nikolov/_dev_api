@@ -3,7 +3,8 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------Routers----------------------------
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter } from '../controller/router.js';
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter } from '../controller/router.js';
+import { eventAllRouter, eventWebsiteRouter } from '../controller/router.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------alerts-----------------------------
@@ -24,7 +25,7 @@ import { endpoints } from '../Js/endpoints.js';
 // --------------------------------------------------------------------
 
 // -----------------------event----------------------------------------
-import { callEvents } from '../Js/event.js';
+import { callAllEvents, callFilterWebsiteEvents } from '../Js/event.js';
 // --------------------------------------------------------------------
 
 // -----------------------webSite----------------------------------------
@@ -37,7 +38,8 @@ import { loginUser, validationInput } from '../firebase/registerCreate.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
+export { eventAllRouter, eventWebsiteRouter };
 
 export { post };
 export { refresh };
@@ -46,7 +48,7 @@ export { endpoints };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
-export { callEvents };
+export { callAllEvents, callFilterWebsiteEvents };
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };
 
 export { loginUser, validationInput };
