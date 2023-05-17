@@ -54,8 +54,8 @@ async function loginUser(usernameInput, passwordInput){
             
             client_idDb = doc.data().client_id;
             client_secretDb = doc.data().client_secret;
-            render(welcomePage(loginInfo(), roleDb), divApp);
             post();
+            render(welcomePage(loginInfo(), roleDb), divApp);
             trueFalse = false;
         }
     });
