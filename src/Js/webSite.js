@@ -115,7 +115,7 @@ const btnAllowWebsite = async (valueURL) =>{
 
     await fetch(url, setAllowPOST(valueURL));
 
-    eventRouter();
+    eventAllRouter();
 };
 
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };

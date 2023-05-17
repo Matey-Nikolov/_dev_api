@@ -39,14 +39,13 @@ const layoutSidenav = (role) =>{
                                 refresh token
                             </a>
 
-                            <!-- registerRouter -->
                             ${role === 'admin' ? html`
-                                div class="sb-sidenav-menu-heading">Register</div>
+                                <div class="sb-sidenav-menu-heading">Register</div>
                                 <a class="nav-link" @click=${btnRegister}>
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    new user
-                                </a>`
-                                : html``
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                new user
+                                </a>` :
+                                html``
                             }
 
                             <div class="sb-sidenav-menu-heading">Nesho</div>
