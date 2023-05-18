@@ -1,7 +1,7 @@
 import { html } from "../../Global/globalLit.js";
 import { refresh, btnLogin, btnRegister } from '../../Global/globalInport.js';
 
-import { websitesRouter, endpointsRoute, eventRouter } from '../../Global/globalInport.js';
+import { websitesRouter, endpointsRoute, eventAllRouter } from '../../Global/globalInport.js';
 
 import { alertRouter } from "../../Global/globalInport.js"; 
 
@@ -39,15 +39,14 @@ const layoutSidenav = (role) =>{
                                 refresh token
                             </a>
 
-                            <!-- registerRouter -->
-                            <!-- FIX - if admin -> true? -->
+                            ${role === 'admin' ? html`
                                 <div class="sb-sidenav-menu-heading">Register</div>
-
                                 <a class="nav-link" @click=${btnRegister}>
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    new user
-                                </a>
-
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                new user
+                                </a>` :
+                                html``
+                            }
 
                             <div class="sb-sidenav-menu-heading">Nesho</div>
 
@@ -60,7 +59,7 @@ const layoutSidenav = (role) =>{
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" @click=${endpointsRoute}>endpoints</a>
                                     <a class="nav-link" @click=${alertRouter}>alerts</a>
-                                    <a class="nav-link" @click=${eventRouter}>events</a>
+                                    <a class="nav-link" @click=${eventAllRouter}>events</a>
                                     <a class="nav-link" @click=${websitesRouter}>websites allow</a>
                                 </nav>
                             </div>

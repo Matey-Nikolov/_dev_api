@@ -11,7 +11,7 @@ const loginInfo = () =>{
                                 <div class="card-header">
                                     <h3 class="text-center font-weight-light my-4">Welcome to API center</h3>
                                     <p class="text-center font-weight-light my-4">
-                                        How to start: click the who I'm to authorization.
+                                        Due to Cross-origin resource, you were not provided with a token.
                                     </p>
                                 </div>
                             </div>

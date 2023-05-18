@@ -20,13 +20,33 @@ let events =
     next_cursor: ''
 };
 
-async function callEvents(){
-    setAllowSite = await allowWebSite('allow');
+async function callAllEvents(){
     return await getEvents();
 };
 
-//(
+async function callFilterWebsiteEvents(){
+    setAllowSite = await allowWebSite('allow');
+    return await websiteFilterEvents();
+};
+
 async function getEvents(){
+    const url = new URL(`${apiHost}/siem/v1/events`);
+
+    const eventData = await fetch(url, setGlobal())
+    .then(response => response.json())
+    .catch(error => console.log('error', error));
+
+    events.has_more = eventData.has_more;
+    events.items = eventData.items;
+    events.items = events.items;
+    events.next_cursor = eventData.next_cursor;
+
+    pagesTable();
+    return events;
+}
+
+//(
+async function websiteFilterEvents(){
     const url = new URL(`${apiHost}/siem/v1/events`);
 
     // url.searchParams.append('pageTotal', 'true'); 
@@ -53,4 +73,4 @@ async function getEvents(){
 //)
 
 
-export { callEvents };
+export { callAllEvents, callFilterWebsiteEvents };

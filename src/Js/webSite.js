@@ -1,4 +1,4 @@
-import { eventRouter, websitesRouter } from '../controller/router.js';
+import { eventAllRouter, websitesRouter } from '../controller/router.js';
 import { setGlobal, apiHost, id, pagesTable } from './global.js';
 
 const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)\/?([\w\d-]+\/?[\w\d-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+)' ([\w+ ]*['\w' ()]*)/;
@@ -115,7 +115,7 @@ const btnAllowWebsite = async (valueURL) =>{
 
     await fetch(url, setAllowPOST(valueURL));
 
-    eventRouter();
+    eventAllRouter();
 };
 
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };

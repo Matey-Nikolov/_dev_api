@@ -1,7 +1,7 @@
 import { btnRegister, divApp } from './homeController.js';
 import { registerTemplate, render, welcomePage, mainPage } from '../Global/globalLit.js';
 
-import { endpoints, callEvents } from '../Global/globalInport.js';
+import { endpoints, callAllEvents, callFilterWebsiteEvents } from '../Global/globalInport.js';
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
 import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
@@ -32,13 +32,24 @@ const websitesRouter = async () => {
 // ---------------------------------------------------------------------
 
 // ---------------------eventRouter-------------------------------------
-const eventRouter = async () =>{
-    page.redirect('/events');
-    let events = await callEvents();
+const eventAllRouter = async () =>{
+    page.redirect('/events/all');
+    let events = await callAllEvents();
 
 
     if (events.items.length  === 0 ) {
         render(welcomePage(tableEventTemplate(events, emptyError('No events from past 24 hours.'))), divApp);
+    }else{
+        render(welcomePage(tableEventTemplate(events)), divApp);
+    }
+};
+
+const eventWebsiteRouter = async () =>{
+    page.redirect('/events/websites');
+    let events = await callFilterWebsiteEvents();
+
+    if (events.items.length  === 0 ) {
+        render(welcomePage(tableEventTemplate(events, emptyError('No events from type web.'))), divApp);
     }else{
         render(welcomePage(tableEventTemplate(events)), divApp);
     }
@@ -71,7 +82,7 @@ const alertLowRouter = async () =>{
     alerts = await filterLow();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type low!'))), divApp);
+        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type low.'))), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
@@ -82,7 +93,7 @@ const alertMediumRouter = async () =>{
     alerts = await filterMedium();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type medium!'))), divApp);
+        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type medium.'))), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
@@ -93,7 +104,7 @@ const alertHighRouter = async () =>{
     alerts = await filterHigh();
 
     if (alerts.items.length  === 0 ) {
-        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type high!'))), divApp);
+        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type high.'))), divApp);
     }else{
         render(welcomePage(tableAlertTemplate(alerts)), divApp);
     }
@@ -143,6 +154,7 @@ page('/home', () => {
 // Start page.js
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, eventRouter, websitesRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
 
+export { eventAllRouter, eventWebsiteRouter };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };
