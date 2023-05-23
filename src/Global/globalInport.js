@@ -29,7 +29,7 @@ import { callAllEvents, callFilterWebsiteEvents } from '../Js/event.js';
 // --------------------------------------------------------------------
 
 // -----------------------webSite----------------------------------------
-import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, setAllowPOST } from '../Js/webSite.js';
+import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite } from '../Js/webSite.js';
 // --------------------------------------------------------------------
 
 
@@ -49,6 +49,6 @@ export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
 export { callAllEvents, callFilterWebsiteEvents };
-export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, setAllowPOST };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite };
 
 export { loginUser, validationInput };
