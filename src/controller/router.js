@@ -10,7 +10,8 @@ import { chartAlerts } from '../Js/Charts/alertChart.js';
 
 import { emptyError } from '../Global/globalLit.js';
 
-import { tableAllowWebsiteTemplate } from '../Global/globalLit.js';
+import { tableAllowWebsiteTemplate, addNewWebsite } from '../Global/globalLit.js';
+import { setAllowPOST } from '../Global/globalInport.js'; 
 import { allowWebSite } from '../Global/globalInport.js';
 
 let alerts = {};
@@ -28,6 +29,13 @@ const websitesRouter = async () => {
     }else{
         render(welcomePage(tableAllowWebsiteTemplate(websites)), divApp);
     }
+};
+
+const websiteAddRouter = async () =>{
+    //page.redirect('/add');
+    render(welcomePage(addNewWebsite()), divApp);
+    const getWebsite = document.getElementById('allowWebsite');
+    console.log(getWebsite);
 };
 // ---------------------------------------------------------------------
 
@@ -154,7 +162,7 @@ page('/home', () => {
 // Start page.js
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
-
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute };
+export { websitesRouter, websiteAddRouter };
 export { eventAllRouter, eventWebsiteRouter };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };

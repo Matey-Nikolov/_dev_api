@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "firebase": "^9.18.0"
+    "firebase": "^9.18.0",
+    "lit": "^2.7.4"
   },
   "name": "apischool",
   "description": "Simple start",

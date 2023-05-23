@@ -118,4 +118,4 @@ const btnAllowWebsite = async (valueURL) =>{
     eventAllRouter();
 };
 
-export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, setAllowPOST };

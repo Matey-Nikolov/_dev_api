@@ -4,7 +4,7 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 
 // ---------------------------------Routers----------------------------
 import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter } from '../controller/router.js';
-import { eventAllRouter, eventWebsiteRouter } from '../controller/router.js';
+import { eventAllRouter, eventWebsiteRouter, websiteAddRouter } from '../controller/router.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------alerts-----------------------------
@@ -29,7 +29,7 @@ import { callAllEvents, callFilterWebsiteEvents } from '../Js/event.js';
 // --------------------------------------------------------------------
 
 // -----------------------webSite----------------------------------------
-import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock } from '../Js/webSite.js';
+import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, setAllowPOST } from '../Js/webSite.js';
 // --------------------------------------------------------------------
 
 
@@ -39,7 +39,7 @@ import { loginUser, validationInput } from '../firebase/registerCreate.js';
 
 export { divApp, btnLogin, btnRegister };
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
-export { eventAllRouter, eventWebsiteRouter };
+export { eventAllRouter, eventWebsiteRouter, websiteAddRouter };
 
 export { post };
 export { refresh };
@@ -49,6 +49,6 @@ export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
 export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
 export { callAllEvents, callFilterWebsiteEvents };
-export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, setAllowPOST };
 
 export { loginUser, validationInput };
