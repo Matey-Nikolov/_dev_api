@@ -143,10 +143,9 @@ const logOut = () => {
 };
 // -------------------------------------------------------------------
 
-// -----------------------RegisterRouter------------------------------
+// -----------------------RegisterRouter-Still in progress-----------------------------
 const registerRouter = () => {
-    page.redirect('/create');
-    render(welcomePage(registerTemplate()), divApp);
+    page.redirect('/createuser');
 };
 
 page('/createUser', () =>{
