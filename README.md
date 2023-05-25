@@ -1,8 +1,9 @@
 # Final_Project_Demo
 This is a single-page application using [Sophos Central APIs](https://developer.sophos.com/).
 
-## Resources
+> **Warning:** This project won't work because of  [cors policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), so you need to put an extension. Uses a real environment and may not work sometimes flaws a malfunction in the environment itself.
 
+## Resources
 Here are some used for the project.
 
 - [Sophos](https://developer.sophos.com/) - Open API.
@@ -14,17 +15,18 @@ Here are some used for the project.
 - [Firebase](https://firebase.google.com/) - Storege.
 - JavaScript, HTML and CSS
 
-
 ## Usage
-
 To use this project, follow these steps:
 
-1. Step 1: Clone the repository.
+Step 1: Clone the repository.
    ```shell
    git clone https://github.com/your-username/your-repository.git
-2. Step 2. Install lite-server
+   ```
+Step 2. Install lite-server
    ```shell
    npm i lite-server
-3. Step 3. Run the project.
+   ```
+Step 3. Run the project.
    ```shell
    npm run start
+   ```
