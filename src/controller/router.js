@@ -31,10 +31,14 @@ const websiteAddRouter = async () =>{
         event.preventDefault();
         const getWebsiteURL = document.getElementById('website').value;
 
-        console.log(getWebsiteURL);
-        await addAlloWebsite(getWebsiteURL);
-
-        page.redirect('/websites');
+        let alreadyAdd = await addAlloWebsite(getWebsiteURL);
+        
+        if (alreadyAdd) {
+            page.redirect('/websites');
+        }
+        else{
+            render(welcomePage(addNewWebsite('You already have it as an exception.')), divApp);
+        }  
     });
 };
 

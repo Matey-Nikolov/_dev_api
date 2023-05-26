@@ -1,7 +1,7 @@
 import { eventAllRouter, websitesRouter } from '../controller/router.js';
 import { setGlobal, apiHost, id, pagesTable } from './global.js';
 
-const regexWebsite = /(?:https?:\/\/)*((?:[-\w.]|(?:%[\da-fA-F]{2}))+)\/?([\w\d-]+\/?[\w\d-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+\/?[\w\d_-]+)' ([\w+ ]*['\w' ()]*)/;
+const regexWebsite = /(?:https?\/\/www\.)*(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/g;
 
 let setwebsite = new Set(); 
 let getWebsiteData = {};
@@ -16,12 +16,12 @@ async function getWebsite(){
     return getData;
 };
 
-async function allowWebSite(type){
+async function allowWebSite(typeName){
     getWebsiteData = await getWebsite();
 
     setwebsite.clear();
 
-    switch(type){
+    switch(typeName){
         case 'allow':
             getWebsiteData.items.map((value) => {
                 setwebsite.add(value.url);
@@ -105,8 +105,16 @@ const handleButtonClickAllow = (event) => {
 
 const addAlloWebsite = async (valueURL) =>{
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
-    // valueURL = valueURL.match(regexWebsite)[1];
-    await fetch(url, setAllowPOST(valueURL));
+    setwebsite = await allowWebSite('allow');
+    let urlExtract = (regexWebsite.exec(valueURL) || [])[1];
+
+    if (setwebsite.has(urlExtract)){
+        return true;
+    }else{
+        await fetch(url, setAllowPOST(urlExtract));
+    }
+
+    return false;
 };
 
 const btnBlockWebsite = async (id) =>{
@@ -117,8 +125,8 @@ const btnBlockWebsite = async (id) =>{
   
 const btnAllowWebsite = async (valueURL) =>{
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
-    valueURL = valueURL.match(regexWebsite)[1];
 
+    valueURL = (regexWebsite.exec(valueURL) || [])[1];
     await fetch(url, setAllowPOST(valueURL));
 
     eventAllRouter();

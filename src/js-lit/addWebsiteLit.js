@@ -1,7 +1,7 @@
 import { html } from "../Global/globalLit.js";
 import { websitesRouter } from "../Global/globalInport.js"; 
 
-const addNewWebsite = () =>{
+const addNewWebsite = (data) =>{
     return html`
     <div class="container-fluid px-4">
         <div>
@@ -25,6 +25,11 @@ const addNewWebsite = () =>{
                                         </div>
                                     </form>
                                 </div>
+                                <div class="card-body">
+                                    ${data !== undefined ? html`
+                                    ${data}`
+                                    : html``}
+                                </div>   
                             </div>
                         </div>
                     </div>
