@@ -103,6 +103,12 @@ const handleButtonClickAllow = (event) => {
     }
 };
 
+const addAlloWebsite = async (valueURL) =>{
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+    // valueURL = valueURL.match(regexWebsite)[1];
+    await fetch(url, setAllowPOST(valueURL));
+};
+
 const btnBlockWebsite = async (id) =>{
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${id}`);
     await fetch(url, setDelete());
@@ -118,4 +124,4 @@ const btnAllowWebsite = async (valueURL) =>{
     eventAllRouter();
 };
 
-export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock };
+export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, setAllowPOST, addAlloWebsite };

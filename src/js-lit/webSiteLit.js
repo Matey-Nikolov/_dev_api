@@ -1,12 +1,20 @@
 import { html } from "../Global/globalLit.js";
 import { handleButtonClickBlock } from "../Global/globalInport.js";
+import { websiteAddRouter } from "../Global/globalInport.js"; 
 
 function tableAllowWebsiteTemplate(webSite, error){
     // console.log(webSite);
     return html`
         <div class="row no-gutters">
             <div class="col-2">
-                <!-- Filter section -->
+                <div class="flex-shrink-0 p-3 bg-white">
+                    <span class="fs-5 fw-semibold">Filters</span>
+                    <ul class="list-unstyled ps-0">
+                        <button @click=${websiteAddRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+                           Add website
+                        </button>
+                    </ul>
+                </div>
             </div>
             <div class="col-9">
             ${error !== undefined ? html`

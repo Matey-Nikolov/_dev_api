@@ -28,6 +28,7 @@ import { tableEventTemplate } from '../js-lit/eventLit.js';
 
 // ----------------------Allow website-----------------------------------
 import { tableAllowWebsiteTemplate } from '../js-lit/webSiteLit.js';
+import { addNewWebsite } from '../js-lit/addWebsiteLit.js';
 // --------------------------------------------------------------
 
 // ---------------------mainInfo--------------------------------
@@ -44,5 +45,5 @@ export { registerTemplate };
 export { tableEndpointsTemplate };
 export { tableAlertTemplate };
 export { tableEventTemplate };
+export { tableAllowWebsiteTemplate, addNewWebsite };
 export { loginInfo, afterAuthorization, emptyError };
-export { tableAllowWebsiteTemplate };

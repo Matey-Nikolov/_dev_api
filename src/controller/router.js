@@ -1,7 +1,7 @@
 import { btnRegister, divApp } from './homeController.js';
 import { registerTemplate, render, welcomePage, mainPage } from '../Global/globalLit.js';
 
-import { endpoints, callAllEvents, callFilterWebsiteEvents } from '../Global/globalInport.js';
+import { endpoints, callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
 import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
@@ -10,7 +10,7 @@ import { chartAlerts } from '../Js/Charts/alertChart.js';
 
 import { emptyError } from '../Global/globalLit.js';
 
-import { tableAllowWebsiteTemplate } from '../Global/globalLit.js';
+import { tableAllowWebsiteTemplate, addNewWebsite } from '../Global/globalLit.js';
 import { allowWebSite } from '../Global/globalInport.js';
 
 let alerts = {};
@@ -19,6 +19,26 @@ let websites = new Set();
 // -----------------------allow website router--------------------------
 const websitesRouter = async () => {
     page.redirect('/websites');
+};
+
+const websiteAddRouter = async () =>{
+    page.redirect('/add');
+
+    render(welcomePage(addNewWebsite()), divApp);
+
+    const btnWebsite = document.getElementById('allowWebsite');
+    btnWebsite.addEventListener('click', async (event) =>{
+        event.preventDefault();
+        const getWebsiteURL = document.getElementById('website').value;
+
+        console.log(getWebsiteURL);
+        await addAlloWebsite(getWebsiteURL);
+
+        page.redirect('/websites');
+    });
+};
+
+page('/websites', async () => {
     websites = await allowWebSite();
     websites = [...websites];
 
@@ -28,7 +48,7 @@ const websitesRouter = async () => {
     }else{
         render(welcomePage(tableAllowWebsiteTemplate(websites)), divApp);
     }
-};
+});
 // ---------------------------------------------------------------------
 
 // ---------------------eventRouter-------------------------------------
@@ -123,10 +143,9 @@ const logOut = () => {
 };
 // -------------------------------------------------------------------
 
-// -----------------------RegisterRouter------------------------------
+// -----------------------RegisterRouter-Still in progress-----------------------------
 const registerRouter = () => {
-    page.redirect('/create');
-    render(welcomePage(registerTemplate()), divApp);
+    page.redirect('/createuser');
 };
 
 page('/createUser', () =>{
@@ -154,7 +173,7 @@ page('/home', () => {
 // Start page.js
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
-
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute };
+export { websitesRouter, websiteAddRouter };
 export { eventAllRouter, eventWebsiteRouter };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };
