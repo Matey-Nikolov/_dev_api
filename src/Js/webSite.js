@@ -1,7 +1,7 @@
 import { eventAllRouter, websitesRouter } from '../controller/router.js';
 import { setGlobal, apiHost, id, pagesTable } from './global.js';
 
-const regexWebsite = /(?:https?\/\/www\.)*(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/g;
+const regexWebsite = /(?:https?\/\/www\.)*(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
 
 let setwebsite = new Set(); 
 let getWebsiteData = {};
@@ -105,16 +105,20 @@ const handleButtonClickAllow = (event) => {
 
 const addAlloWebsite = async (valueURL) =>{
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+
     setwebsite = await allowWebSite('allow');
-    let urlExtract = (regexWebsite.exec(valueURL) || [])[1];
+
+    let match = regexWebsite.exec(valueURL);
+    let urlExtract = match ? match[1] : null;
 
     if (setwebsite.has(urlExtract)){
         return true;
-    }else{
+    }else if (urlExtract !== null){
         await fetch(url, setAllowPOST(urlExtract));
+        return false;
     }
 
-    return false;
+    return null;
 };
 
 const btnBlockWebsite = async (id) =>{
