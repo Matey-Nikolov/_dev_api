@@ -48,12 +48,12 @@ function tableAlertTemplate(alerts, error){
                                 <h2>User - ${alerts.items[0].tenant.name}</h2>
                                 <table class="table">
                                     <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Severity</th>
-                                        <th>Description</th>
-                                        <th>RaisedAt</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Severity</th>
+                                            <th>Description</th>
+                                            <th>RaisedAt</th>
+                                        </tr>
                                     </thead>
                                     <tbody id="table-body">
                                         ${alerts.items.map((value) => html`

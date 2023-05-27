@@ -5,6 +5,7 @@ const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
 function tableEventTemplate(events, error){
     return html`
+    <div class="container text-center">
         <div class="row no-gutters">
             <div class="col-2">
                 <div class="flex-shrink-0 p-3 bg-white">
@@ -36,11 +37,10 @@ function tableEventTemplate(events, error){
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                <tr>
-                                    <th>Messages</th>
-                                    <!-- <th>Group</th> -->
-                                    <th>Allow</th>
-                                </tr>
+                                    <tr>
+                                        <th>Messages</th>
+                                        <th>Allow</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="table-body" @click=${handleButtonClickAllow}>
                                     ${events.items.map((value) => html`
@@ -64,7 +64,7 @@ function tableEventTemplate(events, error){
                 }                          
             </div>
         </div>
-    `;
+    </div>`;
 };
 
 export { tableEventTemplate };

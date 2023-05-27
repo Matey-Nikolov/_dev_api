@@ -33,7 +33,8 @@ async function allowWebSite(typeName){
                 let data = 
                 { 
                     id: value.id,
-                    url: value.url   
+                    url: value.url,
+                    comment: value.comment   
                 };
         
                 setwebsite.add(data);
