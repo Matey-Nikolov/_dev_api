@@ -27,14 +27,26 @@ const websiteAddRouter = async () =>{
     render(welcomePage(addNewWebsite()), divApp);
 
     const btnWebsite = document.getElementById('allowWebsite');
+    const getWebsiteURL = document.getElementById('website');
+
     btnWebsite.addEventListener('click', async (event) =>{
         event.preventDefault();
-        const getWebsiteURL = document.getElementById('website').value;
+    
+        let alreadyAdd = await addAlloWebsite(getWebsiteURL.value.trim());
 
-        console.log(getWebsiteURL);
-        await addAlloWebsite(getWebsiteURL);
-
-        page.redirect('/websites');
+        if (alreadyAdd) {
+            getWebsiteURL.value = '';
+            render(welcomePage(addNewWebsite('You already have it as an exception.')), divApp);
+        }
+        else{
+            if (getWebsiteURL.value.trim() === '') {
+                render(welcomePage(addNewWebsite('Please enter the url.')), divApp);
+            }else if(alreadyAdd === null){
+                render(welcomePage(addNewWebsite('Please enter the valid url.')), divApp);
+            }else{
+                page.redirect('/websites');
+            }
+        }  
     });
 };
 
