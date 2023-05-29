@@ -13,7 +13,7 @@ import { getAlerts, filterLow, filterMedium, filterHigh, severityFilter } from '
 // --------------------------------------------------------------------
 
 // ----------------------authentication--------------------------------
-import { post } from '../Js/authentication.js';
+import { authenticationClass } from '../Js/authentication.js';
 // --------------------------------------------------------------------
 
 // ----------------------refresh token--------------------------------
@@ -34,14 +34,14 @@ import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClic
 
 
 // ---------------------------------Firebase---------------------------
-import { loginUser, validationInput } from '../firebase/registerCreate.js';
+import { loginUser, validationInput, newAccess_token } from '../firebase/registerCreate.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
 export { eventAllRouter, eventWebsiteRouter, websiteAddRouter };
 
-export { post };
+export { authenticationClass };
 export { refresh };
 export { endpoints };
 
@@ -51,4 +51,4 @@ export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
 export { callAllEvents, callFilterWebsiteEvents };
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite };
 
-export { loginUser, validationInput };
+export { loginUser, validationInput, newAccess_token };

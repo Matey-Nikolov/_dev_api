@@ -1,10 +1,11 @@
 let id;
 let apiHost;
+let access_token;
 
-function authorization(idTenetGet, apiHostGet){
+function authorization(idTenetGet, apiHostGet, token){
   id = idTenetGet;
   apiHost = apiHostGet;
-  
+  access_token = token;
     // console.log(id, apiHost);
 };
 
@@ -12,7 +13,7 @@ function setGlobal(){
   const myHeaders = new Headers();
   myHeaders.append('X-Tenant-ID', id);
   myHeaders.append('Accept', 'application/json');
-  myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+  myHeaders.append('Authorization', 'Bearer ' + access_token);
 
   const requestOptions = {
     method: 'GET',
@@ -27,7 +28,7 @@ function setGlobalPOST(){
   const myHeaders = new Headers();
   myHeaders.append('X-Tenant-ID', id);
   myHeaders.append('Accept', 'application/json');
-  myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+  myHeaders.append('Authorization', 'Bearer ' + access_token);
   
   const requestOptions = {
     method: 'POST',
