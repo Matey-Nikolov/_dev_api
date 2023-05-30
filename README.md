@@ -30,3 +30,10 @@ Step 3. Run the project.
    ```shell
    npm run start
    ```
+Step 4. Login
+   ```
+   Username - Test
+   Password - 12312
+   
+   You can only read the information.
+   ```
