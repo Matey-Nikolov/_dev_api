@@ -1,5 +1,5 @@
 import { eventAllRouter, websitesRouter } from '../controller/router.js';
-import { setGlobal, apiHost, id, pagesTable } from './global.js';
+import { setGlobal, apiHost, id, access_token } from './global.js';
 
 const regexWebsite = /(?:https?\/\/www\.)*(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
 
@@ -51,7 +51,7 @@ function setDelete(){
     myHeaders.append('X-Tenant-ID', id);
     // myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Accept', 'application/json');
-    myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    myHeaders.append('Authorization', 'Bearer ' + access_token);
 
     const requestOptions = {
         method: 'DELETE',
@@ -67,7 +67,7 @@ function setAllowPOST(valueURL){
     myHeaders.append('X-Tenant-ID', id);
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Accept', 'application/json');
-    myHeaders.append('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    myHeaders.append('Authorization', 'Bearer ' + access_token);
     
     const addLocalSite = 
     {

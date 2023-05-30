@@ -75,4 +75,5 @@ function pagesTable(){
   });
 };
 
-export { setGlobal, setGlobalPOST, authorization, id, apiHost, pagesTable }
+export { setGlobal, setGlobalPOST, authorization, pagesTable };
+export { id, apiHost, access_token };
