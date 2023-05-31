@@ -1,23 +1,39 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-import { addDoc, doc, getDocs, getFirestore, collection, getDoc, updateDoc, runTransaction  } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+import { addDoc, doc, getDocs, getFirestore, collection, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 
-import { welcomePage, render, loginInfo } from "../Global/globalLit.js";
+import { welcomePage, render, loginInfo, afterAuthorization } from "../Global/globalLit.js";
 import { divApp, authenticationClass, welcomeNavigator } from '../Global/globalInport.js'
 import { whoIam } from "../Js/authorization.js";
+import { authorization } from "../Js/global.js";
 
 const app = initializeApp(firebaseConfig);
 let docRef;
-// let docSnap;
-
 //https://firebase.google.com/docs/firestore/query-data/get-data#web-version-9_3
-// single
-
 
 const db = getFirestore(app);
+let idDoc = '';
 let client_idDb = '';
 let client_secretDb = '';
 let newAccess_token = '';
+
+async function refresh(){
+    const refreshToken = new authenticationClass();
+  
+    refreshToken.postToken()
+    .then(async (accessToken) => {
+        newAccess_token = await accessToken;
+        const docToUpdate = doc(db, 'User', idDoc);
+
+        updateDoc(docToUpdate, {
+            access_token: newAccess_token
+        });
+
+        authorization(undefined, undefined, newAccess_token);
+
+        render(welcomePage(afterAuthorization('Renew token.')), divApp);
+    });
+};
 
 function validationInput(username, inputPassword, inputRole, inputClient_id, inputClient_secret){
     if (!username || !inputPassword || !inputRole || !inputClient_id || !inputClient_secret) {
@@ -48,7 +64,7 @@ async function loginUser(usernameInput, passwordInput){
     const querySnapshot = await getDocs(collection(db, 'User'));
 
     let trueFalse = true;
-    let idDoc = '';
+
     let userDb = '';
     let passwordDb = '';
     let roleDb = '';
@@ -70,11 +86,11 @@ async function loginUser(usernameInput, passwordInput){
                 newAccess_token = await accessToken;
                 const docToUpdate = doc(db, 'User', idDoc);
 
-                updateDoc(docToUpdate, {
+                await updateDoc(docToUpdate, {
                     access_token: newAccess_token
                 });
 
-                await whoIam();
+                await whoIam(newAccess_token);
             });
 
             render(welcomePage(loginInfo(), roleDb), divApp);
@@ -87,7 +103,7 @@ async function loginUser(usernameInput, passwordInput){
     if (trueFalse) {
         alert('Incorrect name or password!');
     }
-}
+};
 
-export { validationInput, createUser, loginUser };
-export { newAccess_token, client_idDb, client_secretDb }
+export { validationInput, createUser, loginUser, refresh };
+export { client_idDb, client_secretDb }

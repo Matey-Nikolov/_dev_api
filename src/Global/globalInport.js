@@ -16,10 +16,6 @@ import { getAlerts, filterLow, filterMedium, filterHigh, severityFilter } from '
 import { authenticationClass } from '../Js/authentication.js';
 // --------------------------------------------------------------------
 
-// ----------------------refresh token--------------------------------
-import { refresh } from '../Js/refreshToken.js';
-// --------------------------------------------------------------------
-
 // ---------------------endpoint---------------------------------------
 import { endpoints } from '../Js/endpoints.js';
 // --------------------------------------------------------------------
@@ -32,9 +28,8 @@ import { callAllEvents, callFilterWebsiteEvents } from '../Js/event.js';
 import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite } from '../Js/webSite.js';
 // --------------------------------------------------------------------
 
-
 // ---------------------------------Firebase---------------------------
-import { loginUser, validationInput, newAccess_token } from '../firebase/registerCreate.js';
+import { loginUser, validationInput, refresh } from '../firebase/registerCreate.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
@@ -42,7 +37,6 @@ export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsR
 export { eventAllRouter, eventWebsiteRouter, websiteAddRouter };
 
 export { authenticationClass };
-export { refresh };
 export { endpoints };
 
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
@@ -51,4 +45,4 @@ export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
 export { callAllEvents, callFilterWebsiteEvents };
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite };
 
-export { loginUser, validationInput, newAccess_token };
+export { loginUser, validationInput, refresh };

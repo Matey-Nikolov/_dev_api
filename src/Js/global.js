@@ -3,10 +3,14 @@ let apiHost;
 let access_token;
 
 function authorization(idTenetGet, apiHostGet, token){
-  id = idTenetGet;
-  apiHost = apiHostGet;
-  access_token = token;
-    // console.log(id, apiHost);
+
+  if (idTenetGet === undefined && apiHostGet === undefined) {
+    access_token = token;
+  }else{
+    id = idTenetGet;
+    apiHost = apiHostGet;
+    access_token = token;
+  }
 };
 
 function setGlobal(){
