@@ -150,7 +150,6 @@ const logOutRouter = () => {
 };
 
 const logOut = () => {
-    sessionStorage.removeItem('token');
     render(welcomePage(undefined, 'true'), divApp);
 };
 // -------------------------------------------------------------------
