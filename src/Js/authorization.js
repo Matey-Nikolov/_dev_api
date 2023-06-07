@@ -16,7 +16,7 @@ async function whoIam(newAccess_token){
   .then(response => response.json())
   .then(result => {
     authorization(result.id, result['apiHosts'].dataRegion, newAccess_token);
-    render(welcomePage(afterAuthorization('You are authorized! You are authorized. This takes about an hour. Therefore, you are required to renew it every hour.')), divApp);
+    render(welcomePage(afterAuthorization('You are authorized. This takes about an hour. Therefore, you are required to renew it every hour.')), divApp);
   })
   .catch(error => console.log('error', error));
 };

@@ -37,7 +37,7 @@ const mainPage = (data, role) =>{
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <h3 class="text-center font-weight-light my-4">Welcome to API center</h3>
                                     <p class="text-center font-weight-light my-4">
-                                        You have access to alerts, endpoints and events.
+                                        You have access to alerts, endpoints, events and allow websites.
                                     </p>
                                 </div>
                             </div>
