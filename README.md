@@ -16,7 +16,10 @@ Here are some used for the project.
 - JavaScript, HTML and CSS
 
 ## Online usage
-Use this link online
+Use this link online. Hosting with Firebase.
+For login use
+- username - Test
+- password - 12312
 ```
 https://apischool-29b4b.web.app/
 ```
