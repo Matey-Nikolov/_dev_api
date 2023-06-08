@@ -15,6 +15,12 @@ Here are some used for the project.
 - [Firebase](https://firebase.google.com/) - Storege.
 - JavaScript, HTML and CSS
 
+## Online usage
+Use this link online
+```
+https://apischool-29b4b.web.app/
+```
+
 ## Usage
 To use this project, follow these steps:
 
