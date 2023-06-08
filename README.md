@@ -12,7 +12,7 @@ Here are some used for the project.
 - [Lite-server](https://www.npmjs.com/package/lite-server) - Starting application.
 - [Bootstrap](https://getbootstrap.com/) - For visual style.
 - [Bootstrap table](https://getbootstrap.com/docs/4.0/content/tables/) - For visual style - tables.
-- [Firebase](https://firebase.google.com/) - Storege.
+- [Firebase](https://firebase.google.com/) - Firestore database and hosting.
 - JavaScript, HTML and CSS
 
 ## Online usage
