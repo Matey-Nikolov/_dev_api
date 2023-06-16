@@ -13,7 +13,7 @@ const mainPage = (data, role) =>{
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header">
                                         <h3 class="text-center font-weight-light my-4">Welcome to API center</h3>
-                                        <h5 class="text-center font-weight-light my-4">To view all website, please <a @click=${btnLogin}><b>login</b></a></h5>
+                                        <h5 class="text-center font-weight-light my-4">To view all website, please <a role="button" @click=${btnLogin}><b>login</b></a></h5>
                                     </div>
                                 </div>
                             </div>

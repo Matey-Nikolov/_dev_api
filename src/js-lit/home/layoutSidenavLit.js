@@ -14,7 +14,7 @@ const layoutSidenav = (role) =>{
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">New user</div>
-                            <a class="nav-link" @click=${btnLogin}>
+                            <a class="nav-link" role="button" @click=${btnLogin}>
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Sign in
                             </a>
@@ -34,14 +34,14 @@ const layoutSidenav = (role) =>{
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
                             
-                            <a class="nav-link" @click=${refresh}>
+                            <a class="nav-link" role="button" @click=${refresh}>
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 refresh token
                             </a>
 
                             ${role === 'admin' ? html`
                                 <div class="sb-sidenav-menu-heading">Register</div>
-                                <a class="nav-link" @click=${btnRegister}>
+                                <a class="nav-link" role="button" @click=${btnRegister}>
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 new user
                                 </a>` :
@@ -50,17 +50,17 @@ const layoutSidenav = (role) =>{
 
                             <div class="sb-sidenav-menu-heading">Nesho</div>
 
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                            <a class="nav-link collapsed" role="button" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                                 Commands
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             
                             <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" @click=${endpointsRoute}>endpoints</a>
-                                    <a class="nav-link" @click=${alertRouter}>alerts</a>
-                                    <a class="nav-link" @click=${eventAllRouter}>events</a>
-                                    <a class="nav-link" @click=${websitesRouter}>websites allow</a>
+                                    <a class="nav-link" role="button" @click=${endpointsRoute}>endpoints</a>
+                                    <a class="nav-link" role="button" @click=${alertRouter}>alerts</a>
+                                    <a class="nav-link" role="button" @click=${eventAllRouter}>events</a>
+                                    <a class="nav-link" role="button" @click=${websitesRouter}>websites allow</a>
                                 </nav>
                             </div>
                         </div>

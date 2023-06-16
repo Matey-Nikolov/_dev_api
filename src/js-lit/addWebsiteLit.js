@@ -12,7 +12,7 @@ const addNewWebsite = (data) =>{
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
                                     <h3 class="text-center font-weight-light my-4">Add website</h3>
-                                    <h6 @click=${websitesRouter} class="text-left font-weight-light my-4"><i class="fas fa-arrow-left"></i>Back</h6>
+                                    <h6 role="button" @click=${websitesRouter} class="text-left font-weight-light my-4"><i class="fas fa-arrow-left"></i>Back</h6>
                                 </div>
                                 <div class="card-body">
                                     <form>
