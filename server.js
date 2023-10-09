@@ -12,20 +12,35 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', `${apiHost}/endpoint/v1/endpoints`],
-  methods: 'GET, PUT, POST, DELETE',
+  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', `${apiHost}/endpoint/v1/endpoints`, `${apiHost}/siem/v1/events`],
+  methods: 'GET, PUT, POST, DELETE'
 };
 
 app.use(cors(corsOptions));
 
 app.use(express.static('public'));
 
-// Define an API routes
 // Define routes for your SPA
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html')); // Use path.join to construct the file path
 });
 
+
+// Define an API routes
+// ------------------/events----------------------------------------
+app.get('/events', async (request, res) => {
+  const url = new URL(`${apiHost}/siem/v1/events`);
+  // url.searchParams.append('pageTotal', 'true'); 
+  // //url.searchParams.append('pageSize', '1'); 
+
+  let events = await fetch(url, setGlobal());
+  const eventsResult = await events.json();
+
+  res.json(eventsResult);
+});
+// --------------------------------------------------------------------
+
+// ----------------------/endpoints------------------------------------
 app.get('/endpoints', async (request, res) => {
 
   const url = new URL(`${apiHost}/endpoint/v1/endpoints`);
@@ -38,7 +53,9 @@ app.get('/endpoints', async (request, res) => {
 
   res.json(result);
 });
+// --------------------------------------------------------------------
 
+// ---------------------/whoIam/:access--------------------------------
 app.get('/whoIam/:access', async (request, res) => {
   const access = request.params.access.replace(':', '');
 
@@ -58,8 +75,9 @@ app.get('/whoIam/:access', async (request, res) => {
 
   res.json(result);
 });
+// --------------------------------------------------------------------
 
-
+// ---------------------/token/:client/:access-------------------------
 app.get('/token/:client/:access', async (request, res) => {
   const client = request.params.client.replace(':', ''); // Remove ":" from client parameter
   const access = request.params.access.replace(':', ''); // Remove ":" from access parameter
@@ -88,7 +106,7 @@ app.get('/token/:client/:access', async (request, res) => {
   const data = { token: accessToken };
   res.json(data);
 });
-
+// --------------------------------------------------------------------
 
 
 app.listen(port, () => {

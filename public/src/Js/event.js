@@ -1,5 +1,4 @@
 import { setGlobal, apiHost, pagesTable } from './global.js';
-// import { eventRouter } from '../Global/globalInport.js';
 
 // ----------------------WebSite.js-----------------------------------
 import { allowWebSite } from './webSite.js';
@@ -30,9 +29,7 @@ async function callFilterWebsiteEvents(){
 };
 
 async function getEvents(){
-    const url = new URL(`${apiHost}/siem/v1/events`);
-
-    const eventData = await fetch(url, setGlobal())
+    const eventData = await fetch('/events')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
@@ -42,25 +39,20 @@ async function getEvents(){
     events.next_cursor = eventData.next_cursor;
 
     pagesTable();
+    
     return events;
 }
 
-//(
 async function websiteFilterEvents(){
-    const url = new URL(`${apiHost}/siem/v1/events`);
-
-    // url.searchParams.append('pageTotal', 'true'); 
-    // //url.searchParams.append('pageSize', '1'); 
-
-    const eventData = await fetch(url, setGlobal())
+    const eventData = await fetch('/events')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
-    //Web filter - still in progress
+    //Web filter - still in progress - soon v2.0
     events.has_more = eventData.has_more;
     events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
 
-    // console.log(setAllowSite);
+
 
     events.items = events.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
 
@@ -70,7 +62,5 @@ async function websiteFilterEvents(){
     pagesTable();
     return events;
 };
-//)
-
 
 export { callAllEvents, callFilterWebsiteEvents };

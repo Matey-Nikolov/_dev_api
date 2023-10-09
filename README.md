@@ -1,4 +1,4 @@
-# Final_Project_Demo
+# Clone_dev_api_sophos
 This is a single-page application using [Sophos Central APIs](https://developer.sophos.com/).
 
 > **Warning:** This project won't work because of  [cors policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), so you need to put an extension. Uses a real environment and may not work sometimes flaws a malfunction in the environment itself.
