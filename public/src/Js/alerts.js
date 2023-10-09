@@ -1,14 +1,12 @@
-import { setGlobal, apiHost, pagesTable } from "./global.js";
+import { pagesTable } from "./global.js";
 import { render, tableAlertTemplate } from '../Global/globalLit.js';
 import { divApp } from '../Global/globalInport.js';
 
 async function getAlerts(){
-    let url = new URL(`${apiHost}/common/v1/alerts`);
-
-    const alertsData = await fetch(url, setGlobal())
+    const alertsData = await fetch('/alerts')
     .then(response => response.json())
     .catch(error => console.log('error', error));
-    
+
     pagesTable();
 
     return alertsData;

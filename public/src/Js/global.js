@@ -1,6 +1,7 @@
 let id;
 let apiHost;
 let access_token;
+let websiteURL = '';
 
 function authorization(idTenetGet, apiHostGet, token){
 
@@ -28,6 +29,52 @@ function setGlobal(){
   return requestOptions;
 };
 
+function getWebsiteAllow(URL){
+  websiteURL = URL;
+};
+
+function setAllowPOST(valueURL){
+  const myHeaders = new Headers();
+  myHeaders.append('X-Tenant-ID', id);
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Accept', 'application/json');
+  myHeaders.append('Authorization', 'Bearer ' + access_token);
+  
+  const addLocalSite = 
+  {
+      tags: [
+          "ALLOW"
+      ],
+      url: valueURL,
+      comment: "Added by Matey"
+  };
+
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    redirect: 'follow',
+    body: JSON.stringify(addLocalSite)
+  };
+
+  return requestOptions;
+};
+
+function setDelete(){
+  const myHeaders = new Headers();
+  myHeaders.append('X-Tenant-ID', id);
+  myHeaders.append('Accept', 'application/json');
+  myHeaders.append('Authorization', 'Bearer ' + access_token);
+
+  const requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+  };
+
+  return requestOptions;
+}
+
+/*
 function setGlobalPOST(){
   const myHeaders = new Headers();
   myHeaders.append('X-Tenant-ID', id);
@@ -42,6 +89,7 @@ function setGlobalPOST(){
 
   return requestOptions;
 };
+*/
 
 function pagesTable(){
   $(document).ready(function() {
@@ -79,5 +127,6 @@ function pagesTable(){
   });
 };
 
-export { setGlobal, setGlobalPOST, authorization, pagesTable };
-export { id, apiHost, access_token };
+export { setGlobal, authorization, pagesTable, setDelete, setAllowPOST };
+export { getWebsiteAllow };
+export { id, apiHost, access_token, websiteURL };

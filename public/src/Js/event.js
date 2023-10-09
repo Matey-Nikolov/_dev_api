@@ -1,4 +1,4 @@
-import { setGlobal, apiHost, pagesTable } from './global.js';
+import { pagesTable } from './global.js';
 
 // ----------------------WebSite.js-----------------------------------
 import { allowWebSite } from './webSite.js';

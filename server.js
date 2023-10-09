@@ -3,7 +3,7 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-import { setGlobal, apiHost, authorization } from './public/src/Js/global.js';
+import { setGlobal, apiHost, authorization, setDelete, setAllowPOST, websiteURL } from './public/src/Js/global.js';
 
 const __filename = fileURLToPath(import.meta.url); // Convert the current module's URL to a file path
 const __dirname = path.dirname(__filename); // Derive the directory name
@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', `${apiHost}/endpoint/v1/endpoints`, `${apiHost}/siem/v1/events`],
+  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', `${apiHost}/endpoint/v1/endpoints`, `${apiHost}/siem/v1/events`, `${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`, `${apiHost}/common/v1/alerts`, `${apiHost}/endpoint/v1/settings/web-control/local-sites`],
   methods: 'GET, PUT, POST, DELETE'
 };
 
@@ -25,18 +25,62 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html')); // Use path.join to construct the file path
 });
 
-
 // Define an API routes
+// ------------------/alerts--------------------------------------
+app.get('/alerts', async (request, res) => {
+  const url = new URL(`${apiHost}/common/v1/alerts`);
+
+  let websites = await fetch(url, setGlobal())
+  .then(response => response.json())
+  .catch(error => console.log('error', error));
+
+  res.json(websites);
+});
+// -----------------------------------------------------------------
+
+// ------------------/websites--------------------------------------
+app.get('/websites', async (request, res) => {
+  const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`);
+
+  let websites = await fetch(url, setGlobal())
+  .then(response => response.json())
+  .catch(error => console.log('error', error));
+
+  res.json(websites);
+});
+
+// /post
+app.get('/websites/post', async (request, res) => {
+  const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
+
+  await fetch(url, setAllowPOST(websiteURL))
+  .then(response => response.json())
+  .catch(error => console.log('error', error));
+});
+
+// /delete
+app.get('/websites/delete/:id', async (request, res) => {
+  const getIdWebsite = request.params.id.replace(':', '');
+
+  const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${getIdWebsite}`);
+
+  await fetch(url, setDelete())
+  .then(response => response.json())
+  .catch(error => console.log('error', error));
+});
+// -----------------------------------------------------------------
+
 // ------------------/events----------------------------------------
 app.get('/events', async (request, res) => {
   const url = new URL(`${apiHost}/siem/v1/events`);
   // url.searchParams.append('pageTotal', 'true'); 
   // //url.searchParams.append('pageSize', '1'); 
 
-  let events = await fetch(url, setGlobal());
-  const eventsResult = await events.json();
+  let events = await fetch(url, setGlobal())
+  .then(response => response.json())
+  .catch(error => console.log('error', error));
 
-  res.json(eventsResult);
+  res.json(events);
 });
 // --------------------------------------------------------------------
 
@@ -47,11 +91,11 @@ app.get('/endpoints', async (request, res) => {
   url.searchParams.append('pageTotal', 'true'); 
   //url.searchParams.append('pageSize', '1'); 
   
-  let endpoints = await fetch(url, setGlobal());
+  let endpoints = await fetch(url, setGlobal())
+  .then(response => response.json())
+  .catch(error => console.log('error', error));
 
-  const result = await endpoints.json();
-
-  res.json(result);
+  res.json(endpoints);
 });
 // --------------------------------------------------------------------
 
@@ -80,7 +124,7 @@ app.get('/whoIam/:access', async (request, res) => {
 // ---------------------/token/:client/:access-------------------------
 app.get('/token/:client/:access', async (request, res) => {
   const client = request.params.client.replace(':', ''); // Remove ":" from client parameter
-  const access = request.params.access.replace(':', ''); // Remove ":" from access parameter
+  const access = request.params.access.replace(':', '');
 
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
