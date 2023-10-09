@@ -3,6 +3,8 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
+import { setGlobal, apiHost, authorization } from './public/src/Js/global.js';
+
 const __filename = fileURLToPath(import.meta.url); // Convert the current module's URL to a file path
 const __dirname = path.dirname(__filename); // Derive the directory name
 
@@ -10,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', 'https://api.central.sophos.com/whoami/v1'],
+  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', `${apiHost}/endpoint/v1/endpoints`],
   methods: 'GET, PUT, POST, DELETE',
 };
 
@@ -18,14 +20,28 @@ app.use(cors(corsOptions));
 
 app.use(express.static('public'));
 
+// Define an API routes
 // Define routes for your SPA
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html')); // Use path.join to construct the file path
 });
 
+app.get('/endpoints', async (request, res) => {
+
+  const url = new URL(`${apiHost}/endpoint/v1/endpoints`);
+  url.searchParams.append('pageTotal', 'true'); 
+  //url.searchParams.append('pageSize', '1'); 
+  
+  let endpoints = await fetch(url, setGlobal());
+
+  const result = await endpoints.json();
+
+  res.json(result);
+});
+
 app.get('/whoIam/:access', async (request, res) => {
   const access = request.params.access.replace(':', '');
-  
+
   const myHeaders = new Headers();
   myHeaders.append('Authorization', 'Bearer ' + access);
 
@@ -38,10 +54,12 @@ app.get('/whoIam/:access', async (request, res) => {
   const response = await fetch(`https://api.central.sophos.com/whoami/v1`, requestOptions)
   const result = await response.json();
 
+  authorization(result.id, result['apiHosts'].dataRegion, access);
+
   res.json(result);
 });
 
-// Define an API route
+
 app.get('/token/:client/:access', async (request, res) => {
   const client = request.params.client.replace(':', ''); // Remove ":" from client parameter
   const access = request.params.access.replace(':', ''); // Remove ":" from access parameter
