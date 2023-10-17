@@ -59,9 +59,17 @@ function tableAlertTemplate(alerts, error){
                                         ${alerts.items.map((value) => html`
                                             <tr>
                                                 <td>${value.product}</td>
-                                                <td>${value.severity}</td>
+                                                <td>
+                                                    ${value.severity === 'low' ? html`<span class="badge badge-success">low</span>` 
+                                                    : value.severity === 'medium' ? html `<span class="badge badge-warning">medium</span>`
+                                                    : value.severity === 'high' ? html `<span class="badge badge-pill badge-danger">high</span>`
+                                                    : ''
+                                                    }
+                                                </td>
                                                 <td>${value.description}</td>
                                                 <td>${value.raisedAt}</td>
+                                                <td></td>
+                                                
                                             </tr>`)}
                                     </tbody>
                                 </table>

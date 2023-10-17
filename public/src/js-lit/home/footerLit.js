@@ -2,7 +2,7 @@ import { html } from "../../Global/globalLit.js";
 
 const footerTemplate = () =>{
     return html`
-        <footer class="py-4 bg-light mt-auto">
+        <footer class="py-2 bg-light">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-muted"><span class="mb-3 mb-md-0 text-muted">&copy; 2023 ApiSchool, Inc</span></div>
