@@ -45,37 +45,51 @@ function tableAlertTemplate(alerts, error){
                             ${error}` : 
                         html`
                             <div class="container mt-5">
-                                <h2>User - ${alerts.items[0].tenant.name}</h2>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Severity</th>
-                                            <th>Description</th>
-                                            <th>RaisedAt</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="table-body">
-                                        ${alerts.items.map((value) => html`
-                                            <tr>
-                                                <td>${value.product}</td>
-                                                <td>
-                                                    ${value.severity === 'low' ? html`<span class="badge badge-success">low</span>` 
-                                                    : value.severity === 'medium' ? html `<span class="badge badge-warning">medium</span>`
-                                                    : value.severity === 'high' ? html `<span class="badge badge-pill badge-danger">high</span>`
-                                                    : ''
-                                                    }
-                                                </td>
-                                                <td>${value.description}</td>
-                                                <td>${value.raisedAt}</td>
-                                                <td></td>
-                                                
-                                            </tr>`)}
-                                    </tbody>
-                                </table>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center" id="pagination"></ul>
-                                </nav>
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <div class="card bg-dark shadow-2-strong">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <!-- <h2>User - ${alerts.items[0].tenant.name}</h2> -->
+                                                        
+                                                        <table class="table table-dark table-borderless mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Product</th>
+                                                                    <th scope="col">Severity</th>
+                                                                    <th scope="col">Description</th>
+                                                                    <th scope="col">RaisedAt</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="table-body">
+                                                                ${alerts.items.map((value) => html`
+                                                                    <tr>
+                                                                        <td>${value.product}</td>
+                                                                        <td>
+                                                                            ${value.severity === 'low' ? html`<span class="badge badge-success">low</span>` 
+                                                                            : value.severity === 'medium' ? html `<span class="badge badge-warning">medium</span>`
+                                                                            : value.severity === 'high' ? html `<span class="badge badge-pill badge-danger">high</span>`
+                                                                            : ''
+                                                                            }
+                                                                        </td>
+                                                                        <td>${value.description}</td>
+                                                                        <td>${value.raisedAt}</td>
+                                                                        <td></td>
+                                                                        
+                                                                    </tr>`)}
+                                                            </tbody>
+
+                                                            <nav aria-label="Page navigation">
+                                                                <ul class="pagination justify-content-center" id="pagination"></ul>
+                                                            </nav>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         `
                     }

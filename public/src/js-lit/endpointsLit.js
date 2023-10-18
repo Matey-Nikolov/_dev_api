@@ -34,30 +34,43 @@ function tableEndpointsTemplate(endpoints){
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name machine</th>
-                                    <th>Type</th>
-                                    <th>Health</th>
-                                    <th>LastSeenAt</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-body">
-                                ${endpoints.items.map((value) => html`
-                                    <tr>
-                                        <td>${value.associatedPerson.name}</td>
-                                        <td>${value.type}</td>
-                                        <td>${value.health.overall}</td>
-                                        <td>${value.lastSeenAt}</td>
-                                    </tr>`)}
-                                
-                            </tbody>
-                        </table>
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center" id="pagination"></ul>
-                        </nav>
+                    <div class="container mt-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="card bg-dark shadow-2-strong">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-dark table-borderless mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name machine</th>
+                                                            <th scope="col">Type</th>
+                                                            <th scope="col">Health</th>
+                                                            <th scope="col">LastSeenAt</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table-body">
+                                                        ${endpoints.items.map((value) => html`
+                                                            <tr>
+                                                                <td>${value.associatedPerson.name}</td>
+                                                                <td>${value.type}</td>
+                                                                <td>${value.health.overall}</td>
+                                                                <td>${value.lastSeenAt}</td>
+                                                            </tr>`)}
+                                                    </tbody>
+
+                                                    <nav aria-label="Page navigation">
+                                                        <ul class="pagination justify-content-center" id="pagination"></ul>
+                                                    </nav>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

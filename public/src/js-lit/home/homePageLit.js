@@ -28,7 +28,7 @@ const welcomePage = (data, role) =>{
     if (staticRole === '' && role === undefined) {
         return html`
         ${navBar()}
-        <div id="layoutSidenav">
+        <div id="layoutSidenav" class="gradient-custom">
             ${layoutSidenav()}
             <div id="layoutSidenav_content">
                 ${mainPage(data)}
@@ -40,7 +40,7 @@ const welcomePage = (data, role) =>{
 
         return html`
         ${navBar(staticRole)}
-        <div id="layoutSidenav">
+        <div id="layoutSidenav" class="gradient-custom">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
                 ${mainPage(data, staticRole)}
@@ -50,7 +50,7 @@ const welcomePage = (data, role) =>{
     }else if(staticRole !== role){
         return html`
         ${navBar(staticRole)}
-        <div id="layoutSidenav">
+        <div id="layoutSidenav" class="gradient-custom">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
                 ${mainPage(data, staticRole)}
