@@ -2,11 +2,17 @@ import { pagesTable } from "./global.js";
 import { render, tableAlertTemplate } from '../Global/globalLit.js';
 import { divApp } from '../Global/globalInport.js';
 
+let allAlerts = {
+    'items': {},
+    'pages': {}
+};
+
 async function getAlerts(){
     const alertsData = await fetch('/alerts')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
+    allAlerts = alertsData;
     pagesTable();
 
     return alertsData;
@@ -40,28 +46,31 @@ async function severityFilter(severityFilter){
 };
 
 async function filterLow(){
-    const data = await getAlerts();
 
-    filtered.items = data.items.filter(x => x.severity === 'low');
-    filtered.pages = data.pages;
+    filtered.items = allAlerts.items.filter(x => x.severity === 'low');
+    filtered.pages = allAlerts.pages;
+
+    pagesTable();
 
     return filtered;
 };
 
 async function filterMedium(){
-    const data = await getAlerts();
 
-    filtered.items = data.items.filter(x => x.severity === 'medium');
-    filtered.pages = data.pages;
+    filtered.items = allAlerts.items.filter(x => x.severity === 'medium');
+    filtered.pages = allAlerts.pages;
+
+    pagesTable();
 
     return filtered;
 };
 
 async function filterHigh(){
-    const data = await getAlerts();
 
-    filtered.items = data.items.filter(x => x.severity === 'high');
-    filtered.pages = data.pages;
+    filtered.items = allAlerts.items.filter(x => x.severity === 'high');
+    filtered.pages = allAlerts.pages;
+
+    pagesTable();
 
     return filtered;
 };
