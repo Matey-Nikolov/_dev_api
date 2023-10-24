@@ -14,4 +14,23 @@ Here are some used for the project.
 - JavaScript, HTML and CSS
 
 
-Working...
+For starting the SPA
+- clone repo.
+- Open terminal in directory 'C:\\...\GitHub\Clone_dev_api_sophos'
+- In terminal write this
+   ```shell
+    node server.js
+   ```
+- Went you start in terminal show this massage
+    ```shell
+      Server is running on port {port}
+   ```
+- To view website
+   ```shell
+   http://localhost:{port}
+   ```
+- For login
+   ```shell
+   Usrername - Matey
+   Password - 1233
+   ```
