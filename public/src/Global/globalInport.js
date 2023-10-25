@@ -9,7 +9,7 @@ import { eventAllRouter, eventWebsiteRouter, websiteAddRouter } from '../control
 
 // ---------------------------------alerts-----------------------------
 import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from '../controller/router.js';
-import { getAlerts, filterLow, filterMedium, filterHigh, severityFilter } from '../Js/alerts.js';
+import { getAlerts, filterLow, filterMedium, filterHigh } from '../Js/alerts.js';
 // --------------------------------------------------------------------
 
 // ----------------------authentication--------------------------------
@@ -41,7 +41,7 @@ export { endpoints };
 
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
-export { getAlerts, filterLow, filterMedium, filterHigh, severityFilter };
+export { getAlerts, filterLow, filterMedium, filterHigh };
 export { callAllEvents, callFilterWebsiteEvents };
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite };
 
