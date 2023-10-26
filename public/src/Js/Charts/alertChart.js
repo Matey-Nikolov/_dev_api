@@ -1,9 +1,10 @@
-import { filterLow, filterMedium, filterHigh } from "../../Global/globalInport.js";
+import { getAlerts, filterLow, filterMedium, filterHigh } from "../../Global/globalInport.js";
 
 let lowCount = 0;
 let mediumCount = 0;
 let highCount = 0;
 
+let isFirst = true;
 
 const chartAlerts = async () =>{
     const getChart = document.getElementById('myChart');
@@ -12,6 +13,11 @@ const chartAlerts = async () =>{
         return;
     }
 
+    if(isFirst){
+        await getAlerts();
+        isFirst = false;
+    }
+    
     let data = await filterLow();
     lowCount = data.items.length;
     
@@ -42,8 +48,8 @@ const chartAlerts = async () =>{
         },
         options: {
             maintainAspectRatio: true,
-            width: 150,
-            height: 150
+            width: 100,
+            height: 100
         }
     });
 };
