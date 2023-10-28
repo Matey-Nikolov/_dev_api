@@ -1,65 +1,72 @@
 import { html } from '../Global/globalLit.js';
 
-const registerTemplate = () =>{
-return html`
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-7">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" />
-                                                    <label for="inputFirstName">First name</label>
+function registerTemplate (error){
+    return html`
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" />
+                                                        <label for="inputUsername">Username</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" id="inputRole" type="text" placeholder="Enter your role" />
+                                                        <label for="inputRole">Role</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating">
-                                                    <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" />
-                                                    <label for="inputLastName">Last name</label>
+
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="client_Id" type="password" placeholder="Create a password" />
+                                                        <label for="client_Id">Client id</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="client_Secret" type="password" placeholder="Confirm password" />
+                                                        <label for="client_Secret">Client secret</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input id="role" class="form-control" type="text" placeholder="guest or admin" />
-                                            <label for="role">Role</label>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="client_id" type="password" placeholder="Create a password" />
-                                                    <label for="client_id">Client_id</label>
-                                                </div>
+                                            <div class="form-floating mb-3">
+                                                <input id="password" class="form-control" type="password" placeholder="guest or admin" />
+                                                <label for="password">Password</label>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="client_secret" type="password" placeholder="Confirm password" />
-                                                    <label for="client_secret">Client secret</label>
-                                                </div>
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid"><button id="registerPage" class="btn btn-primary btn-block">Create Account</button></div>
                                             </div>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input id="password" class="form-control" type="password" placeholder="guest or admin" />
-                                            <label for="password">Password</label>
-                                        </div>
-                                        <div class="mt-4 mb-0">
-                                            <div class="d-grid"><button id="registerPage" class="btn btn-primary btn-block">Create Account</button></div>
-                                        </div>
-                                    </form>
+                                        </form>
+
+                                        
+                                        ${error !== undefined ? html`
+                                        
+                                            <div class="mt-4 mb-0">
+                                                ${error}
+                                            </div>
+                                            ` 
+                                            : html``
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
-    `;
+                </main>
+            </div>
+        `;
 };
 
 /*

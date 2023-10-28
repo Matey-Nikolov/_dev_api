@@ -7,24 +7,26 @@ const loginTemplate = () =>{
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-12 col-md-6 col-lg-4" style="margin-top: 10vh;">
-                        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5" style="border-radius: 1rem;">
                             <div class="card-body p-3 text-center">
                                 <div class="mb-3 mt-2">
 
-                                    <h2 class="font-weight-light my-4 text-uppercase">Login</h2>
-                                    <p class="text-white-50 mb-3">Please enter your username and password!</p>
+                                    <h2 class="font-weight-light text-uppercase">Login</h2>
+                                    <p class="font-weight-light mb-3">Please enter your username and password!</p>
 
-                                    <div class="font-weight-light my-4">
+                                    <div class="font-weight-light">
                                         <label class="form-label" for="username">Username</label>
                                         <input id="username" type="text" class="form-control" />
                                     </div>
 
-                                    <div class="font-weight-light my-4">
+                                    <div class="font-weight-light">
                                         <label class="form-label" for="password">Password</label>
                                         <input id="password" type="password" class="form-control" />
                                     </div>
 
-                                    <button id="loginBtn" class="btn btn-outline-light btn-lg px-4" type="submit">Login</button>
+                                    <div class="mt-4 mb-0">
+                                        <button id="loginBtn" class="btn btn-primary btn-block" type="submit">Login</button>
+                                    </div>
                                 
                                 </div>
                             </div>

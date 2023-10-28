@@ -29,7 +29,8 @@ import { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClic
 // --------------------------------------------------------------------
 
 // ---------------------------------Firebase---------------------------
-import { loginUser, validationInput, refresh } from '../firebase/registerCreate.js';
+import { refresh } from '../firebase/firebase_RegisterLogin.js';
+import { getInformation_Register } from '../firebase/validationRegister.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
@@ -45,4 +46,5 @@ export { getAlerts, filterLow, filterMedium, filterHigh };
 export { callAllEvents, callFilterWebsiteEvents };
 export { allowWebSite, btnAllowWebsite, handleButtonClickAllow, handleButtonClickBlock, addAlloWebsite };
 
-export { loginUser, validationInput, refresh };
+export { refresh };
+export { getInformation_Register }

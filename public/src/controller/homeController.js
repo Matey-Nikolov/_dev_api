@@ -1,6 +1,9 @@
 import { loginTemplate, render, welcomePage, registerTemplate } from '../Global/globalLit.js';
 
-import { loginUser, validationInput } from '../Global/globalInport.js';
+import { getInformation_Register } from '../Global/globalInport.js';
+import { loginUser, createUser } from '../firebase/firebase_RegisterLogin.js';
+
+import { registerRouter } from '../Global/globalInport.js';
 
 function getTypeId(typeId){
     const type = document.getElementById(typeId);
@@ -9,6 +12,9 @@ function getTypeId(typeId){
 
 const navBar = getTypeId('navBar');
 const divApp = getTypeId('app');
+
+let inputUsername;
+let inputPassword;
 
 // ---------------------Login button-----------------------------------
 const btnLogin = (event) =>{
@@ -22,8 +28,8 @@ const btnLogin = (event) =>{
 
         event.preventDefault();
 
-        const inputUsername = getTypeId('username');
-        const inputPassword = getTypeId('password');
+        inputUsername = getTypeId('username');
+        inputPassword = getTypeId('password');
 
         loginUser(inputUsername.value, inputPassword.value);
 
@@ -41,19 +47,30 @@ const btnRegister = (event) =>{
 
     const btn = getTypeId('registerPage');
 
-    const inputFirstName = getTypeId('inputFirstName');
-    const inputLastName = getTypeId('inputLastName');
-    const inputRole = getTypeId('role');
-    const inputClient_id = getTypeId('client_id');
-    const inputClient_secret = getTypeId('client_secret');
+    const inputUsername = getTypeId('inputUsername');
+
+    const inputRole = getTypeId('inputRole');
+
+    const inputClient_Id = getTypeId('client_Id');
+    const inputClient_Secret = getTypeId('client_Secret');
 
     const inputPassword = getTypeId('password');
+
+    registerRouter();
 
     btn.addEventListener('click', (event) =>{
         event.preventDefault();
 
-        const username = inputFirstName.value.trim() + ' ' + inputLastName.value.trim();
-        validationInput(username, inputPassword.value, inputRole.value, inputClient_id.value, inputClient_secret.value);
+        getInformation_Register.username = inputUsername.value.trim();
+
+        getInformation_Register.role = inputRole.value.trim();
+
+        getInformation_Register.client_Id = inputClient_Id.value.trim();
+        getInformation_Register.Client_Secret = inputClient_Secret.value.trim();
+
+        getInformation_Register.password = inputPassword.value.trim();
+
+        createUser(event);
     });
 };
 // --------------------------------------------------------------------

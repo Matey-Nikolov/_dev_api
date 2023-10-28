@@ -1,4 +1,4 @@
-import { client_idDb, client_secretDb } from '../firebase/registerCreate.js';
+import { client_idDb, client_secretDb } from '../firebase/firebase_RegisterLogin.js';
 
 class authenticationClass {
   async postToken() {

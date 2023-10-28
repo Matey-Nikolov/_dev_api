@@ -34,9 +34,12 @@ import { addNewWebsite } from '../js-lit/addWebsiteLit.js';
 // ---------------------mainInfo--------------------------------
 import { loginInfo } from '../js-lit/mainInfo/afterLoginLit.js';
 import { afterAuthorization } from '../js-lit/mainInfo/afterAuthorizationLit.js';
-import { emptyError } from '../js-lit/mainInfo/emptyError.js';
 // --------------------------------------------------------------
 
+// ---------------------errors--------------------------------
+import { emptyError } from '../js-lit/erros/emptyError.js';
+import { alertError } from '../js-lit/erros/alertError.js';
+// --------------------------------------------------------------
 
 export { html, css , render, LitElement};
 export { welcomePage, mainPage, layoutSidenav };
@@ -46,4 +49,5 @@ export { tableEndpointsTemplate };
 export { tableAlertTemplate };
 export { tableEventTemplate };
 export { tableAllowWebsiteTemplate, addNewWebsite };
-export { loginInfo, afterAuthorization, emptyError };
+export { loginInfo, afterAuthorization };
+export { emptyError, alertError};
