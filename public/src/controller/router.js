@@ -1,5 +1,5 @@
 import { btnRegister, divApp } from './homeController.js';
-import { registerTemplate, render, welcomePage, mainPage } from '../Global/globalLit.js';
+import { registerTemplate, render, welcomePage } from '../Global/globalLit.js';
 
 import { endpoints, callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
