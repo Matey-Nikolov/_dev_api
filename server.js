@@ -1,157 +1,27 @@
 import express from 'express';
 import cors from 'cors';
-import { fileURLToPath } from 'url';
 import path from 'path';
+import router from './apiRouting.js';
 
-import { setGlobal, apiHost, authorization, setDelete, setAllowPOST, websiteURL } from './public/src/Js/global.js';
-
-const __filename = fileURLToPath(import.meta.url); // Convert the current module's URL to a file path
-const __dirname = path.dirname(__filename); // Derive the directory name
+import { fileURLToPath } from 'url';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://api.central.sophos.com/whoami/v1', `${apiHost}/endpoint/v1/endpoints`, `${apiHost}/siem/v1/events`, `${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`, `${apiHost}/common/v1/alerts`, `${apiHost}/endpoint/v1/settings/web-control/local-sites`],
+  origin: ['http://localhost:3000', 'http://localhost:3000/api'],
   methods: 'GET, PUT, POST, DELETE'
 };
 
 app.use(cors(corsOptions));
 
-app.use(express.static('public'));
 
-// Define routes for your SPA
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Use path.join to construct the file path
-});
+const __filename = fileURLToPath(import.meta.url); // Convert the current module's URL to a file path
+const __dirname = path.dirname(__filename); // Derive the directory name
 
-// Define an API routes
-// ------------------/alerts--------------------------------------
-app.get('/alerts', async (request, res) => {
-  const url = new URL(`${apiHost}/common/v1/alerts`);
+app.use(express.static(path.join(__dirname, 'public')));
 
-  let websites = await fetch(url, setGlobal())
-  .then(response => response.json())
-  .catch(error => console.log('error', error));
-
-  res.json(websites);
-});
-// -----------------------------------------------------------------
-
-// ------------------/websites--------------------------------------
-app.get('/websites', async (request, res) => {
-  const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites?pageTotal=true`);
-
-  let websites = await fetch(url, setGlobal())
-  .then(response => response.json())
-  .catch(error => console.log('error', error));
-
-  res.json(websites);
-});
-
-// /post
-app.get('/websites/post', async (request, res) => {
-  const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
-
-  await fetch(url, setAllowPOST(websiteURL))
-  .then(response => response.json())
-  .catch(error => console.log('error', error));
-});
-
-// /delete
-app.get('/websites/delete/:id', async (request, res) => {
-  const getIdWebsite = request.params.id.replace(':', '');
-
-  const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${getIdWebsite}`);
-
-  await fetch(url, setDelete())
-  .then(response => response.json())
-  .catch(error => console.log('error', error));
-});
-// -----------------------------------------------------------------
-
-// ------------------/events----------------------------------------
-app.get('/events', async (request, res) => {
-  const url = new URL(`${apiHost}/siem/v1/events`);
-  // url.searchParams.append('pageTotal', 'true'); 
-  // //url.searchParams.append('pageSize', '1'); 
-
-  let events = await fetch(url, setGlobal())
-  .then(response => response.json())
-  .catch(error => console.log('error', error));
-
-  res.json(events);
-});
-// --------------------------------------------------------------------
-
-// ----------------------/endpoints------------------------------------
-app.get('/endpoints', async (request, res) => {
-
-  const url = new URL(`${apiHost}/endpoint/v1/endpoints`);
-  url.searchParams.append('pageTotal', 'true'); 
-  //url.searchParams.append('pageSize', '1'); 
-  
-  let endpoints = await fetch(url, setGlobal())
-  .then(response => response.json())
-  .catch(error => console.log('error', error));
-
-  res.json(endpoints);
-});
-// --------------------------------------------------------------------
-
-// ---------------------/whoIam/:access--------------------------------
-app.get('/whoIam/:access', async (request, res) => {
-  const access = request.params.access.replace(':', '');
-
-  const myHeaders = new Headers();
-  myHeaders.append('Authorization', 'Bearer ' + access);
-
-  const requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow'
-  };
-
-  const response = await fetch(`https://api.central.sophos.com/whoami/v1`, requestOptions)
-  const result = await response.json();
-
-  authorization(result.id, result['apiHosts'].dataRegion, access);
-
-  res.json(result);
-});
-// --------------------------------------------------------------------
-
-// ---------------------/token/:client/:access-------------------------
-app.get('/token/:client/:access', async (request, res) => {
-  const client = request.params.client.replace(':', ''); // Remove ":" from client parameter
-  const access = request.params.access.replace(':', '');
-
-  const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-
-  const urlencoded = new URLSearchParams();
-  urlencoded.append('grant_type', 'client_credentials');
-  urlencoded.append('scope', 'token');
-  urlencoded.append('client_id', client);
-  urlencoded.append('client_secret', access);
-
-
-  const requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: urlencoded,
-    redirect: 'follow',
-  };
-
-  const response = await fetch('https://id.sophos.com/api/v2/oauth2/token', requestOptions);
-  const result = await response.json();
-  const accessToken = result.access_token;
-
-  const data = { token: accessToken };
-  res.json(data);
-});
-// --------------------------------------------------------------------
-
+app.use('/', router);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
