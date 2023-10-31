@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebas
 import { addDoc, doc, getDocs, getFirestore, collection, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 
-import { welcomePage, render, loginInfo, afterAuthorization } from "../Global/globalLit.js";
+import { welcomePage, render, loginInfo, afterAuthorization, loginTemplate, alertError } from "../Global/globalLit.js";
 import { divApp, authenticationClass, welcomeNavigator } from '../Global/globalInport.js'
 
 import { whoIam } from "../Js/authorization.js";
@@ -96,7 +96,7 @@ async function loginUser(usernameInput, passwordInput){
     });
 
     if (trueFalse) {
-        alert('Incorrect name or password!');
+        render(welcomePage(loginTemplate(alertError('Your username or password is invalid!'))), divApp); 
     }
 };
 
