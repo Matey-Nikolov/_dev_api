@@ -1,7 +1,10 @@
 import { btnRegister, divApp } from './homeController.js';
-import { registerTemplate, render, welcomePage } from '../Global/globalLit.js';
+import { alertError, registerTemplate, render, welcomePage } from '../Global/globalLit.js';
 
-import { endpoints, callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
+import { endpoints, endpointsTypeServer, endpointsTypeComputer} from '../Global/globalInport.js';
+
+import { callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
+
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
 import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
@@ -89,10 +92,28 @@ const eventWebsiteRouter = async () =>{
 // --------------------------------------------------------------------
 
 // -----------------------endpointsRoute-------------------------------
+let getEndpoints = {};
+
 const endpointsRoute = async () =>{
-    page.redirect('/endpoints/');
-    let getEndpoints = await endpoints();
-    // console.log(getEndpoints);
+    page.redirect('/endpoints/all');
+    getEndpoints = await endpoints();
+
+    render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
+};
+
+const endpointsTypeServerRouter = async () =>{
+    page.redirect('/endpoints/servers');
+
+    getEndpoints = await endpointsTypeServer();
+
+    render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
+};
+
+const endpointsTypeComputerRouter = async () =>{
+    page.redirect('/endpoints/computers');
+
+    getEndpoints = await endpointsTypeComputer();
+    
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
 };
 // --------------------------------------------------------------------
@@ -177,14 +198,18 @@ const welcomeNavigator = () => {
 
 page('/home', () => {
     render(welcomePage(), divApp);
-    chartAlerts();
+
+    if(chartAlerts() !== null){
+        render(welcomePage(undefined, undefined, alertError('No alerts to create chart.')), divApp);   
+    }
 });
 // -------------------------------------------------------------------
 
 // Start page.js
 page();
 
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter };
+export { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter };
 export { websitesRouter, websiteAddRouter };
 export { eventAllRouter, eventWebsiteRouter };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };
