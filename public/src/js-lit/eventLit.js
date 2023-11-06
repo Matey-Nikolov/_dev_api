@@ -7,8 +7,8 @@ function tableEventTemplate(events, error){
     return html`
     <div class="container text-center">
         <div class="row no-gutters">
-            <div class="col-2">
-                <div class="flex-shrink-0 p-3 bg-white">
+            <div class="col-3">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <span class="fs-5 fw-semibold">Filters</span>
                     <ul class="list-unstyled ps-0">
                         <button @click=${eventAllRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">

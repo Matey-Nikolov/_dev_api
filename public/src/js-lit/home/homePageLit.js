@@ -9,7 +9,7 @@ import { footerTemplate } from "./footerLit.js";
 
 let staticRole = '';
 
-const welcomePage = (data, role) =>{
+const welcomePage = (data, role, error) =>{
 
     if(role === 'true'){
         staticRole = '';
@@ -53,7 +53,7 @@ const welcomePage = (data, role) =>{
         <div id="layoutSidenav" class="gradient-custom">
             ${layoutSidenav(staticRole)}
             <div id="layoutSidenav_content">
-                ${mainPage(data, staticRole)}
+                ${mainPage(data, staticRole, error)}
                 ${footerTemplate()}
             </div>
         </div>`;

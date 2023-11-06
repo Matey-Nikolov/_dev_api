@@ -38,6 +38,7 @@ let filteredAlerts = {
     'pages': {}
 };
 
+// fix - name - alersFilterLow or filterAlers_Low_By_Severity
 async function filterLow(){
 
     filteredAlerts.items = sortedAlerts.items.filter(x => x.severity === 'low');

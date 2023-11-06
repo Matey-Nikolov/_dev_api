@@ -79,7 +79,10 @@ const addAlloWebsite = async (valueURL) =>{
 };
 
 const btnBlockWebsite = async (id) =>{
-    await fetch(`/websites/delete/:${id}`);
+    await fetch(`/websites/delete/${id}`, {
+        method: 'DELETE',
+    });
+    
     websitesRouter();
 };
 

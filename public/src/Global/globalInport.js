@@ -3,7 +3,8 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------Routers----------------------------
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter } from '../controller/router.js';
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter,  websitesRouter } from '../controller/router.js';
+import { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter } from '../controller/router.js';
 import { eventAllRouter, eventWebsiteRouter, websiteAddRouter } from '../controller/router.js';
 // --------------------------------------------------------------------
 
@@ -17,7 +18,7 @@ import { authenticationClass } from '../Js/authentication.js';
 // --------------------------------------------------------------------
 
 // ---------------------endpoint---------------------------------------
-import { endpoints } from '../Js/endpoints.js';
+import { endpoints, endpointsTypeServer, endpointsTypeComputer } from '../Js/endpoints.js';
 // --------------------------------------------------------------------
 
 // -----------------------event----------------------------------------
@@ -34,11 +35,12 @@ import { getInformation_Register } from '../firebase/validationRegister.js';
 //---------------------------------------------------------------------
 
 export { divApp, btnLogin, btnRegister };
-export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, endpointsRoute, websitesRouter };
+export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, websitesRouter };
+export { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter };
 export { eventAllRouter, eventWebsiteRouter, websiteAddRouter };
 
 export { authenticationClass };
-export { endpoints };
+export { endpoints, endpointsTypeServer, endpointsTypeComputer };
 
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
 
