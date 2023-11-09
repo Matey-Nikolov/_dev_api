@@ -1,5 +1,3 @@
-import { pagesTable } from './global.js';
-
 // ----------------------WebSite.js-----------------------------------
 import { allowWebSite } from './webSite.js';
 // -------------------------------------------------------------------
@@ -37,8 +35,6 @@ async function getEvents(){
     events.items = eventData.items;
     events.items = events.items;
     events.next_cursor = eventData.next_cursor;
-
-    pagesTable();
     
     return events;
 }
@@ -59,7 +55,6 @@ async function websiteFilterEvents(){
     // events.items = events.items.filter(x => x.name.match(regexWebsite)[1] && x.name.match(regexWebsite)[3]);
     events.next_cursor = eventData.next_cursor;
 
-    pagesTable();
     return events;
 };
 

@@ -49,7 +49,7 @@ function tableAlertTemplate(alerts, error){
                                         <div class="col-12">
                                             <div class="card bg-dark shadow-2-strong">
                                                 <div class="card-body">
-                                                    <div class="table-responsive">
+                                                    <div id="alert" class="table-responsive">
                                                         <!-- <h2>User - ${alerts.items[0].tenant.name}</h2> -->
                                                         
                                                         <table class="table table-dark table-borderless mb-0">

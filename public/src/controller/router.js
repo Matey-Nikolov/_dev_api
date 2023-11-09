@@ -3,6 +3,9 @@ import { alertError, registerTemplate, render, welcomePage } from '../Global/glo
 
 import { endpoints, endpointsTypeServer, endpointsTypeComputer} from '../Global/globalInport.js';
 
+import { tableEndpointsDetailsTemplate } from '../js-lit/Endpoint/endpointsDetailLit.js';
+
+
 import { callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
 
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
@@ -15,6 +18,7 @@ import { emptyError } from '../Global/globalLit.js';
 
 import { tableAllowWebsiteTemplate, addNewWebsite } from '../Global/globalLit.js';
 import { allowWebSite } from '../Global/globalInport.js';
+import { pagesTable } from '../Js/global.js';
 
 let alerts = {};
 let websites = new Set(); 
@@ -71,6 +75,7 @@ const eventAllRouter = async () =>{
     page.redirect('/events/all');
     let events = await callAllEvents();
 
+    pagesTable('event');
 
     if (events.items.length  === 0 ) {
         render(welcomePage(tableEventTemplate(events, emptyError('No events from past 24 hours.'))), divApp);
@@ -82,6 +87,8 @@ const eventAllRouter = async () =>{
 const eventWebsiteRouter = async () =>{
     page.redirect('/events/websites');
     let events = await callFilterWebsiteEvents();
+
+    pagesTable('event');
 
     if (events.items.length  === 0 ) {
         render(welcomePage(tableEventTemplate(events, emptyError('No events from type web.'))), divApp);
@@ -98,6 +105,8 @@ const endpointsRoute = async () =>{
     page.redirect('/endpoints/all');
     getEndpoints = await endpoints();
 
+    pagesTable('endpoint');
+
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
 };
 
@@ -105,6 +114,8 @@ const endpointsTypeServerRouter = async () =>{
     page.redirect('/endpoints/servers');
 
     getEndpoints = await endpointsTypeServer();
+
+    pagesTable('endpoint');
 
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
 };
@@ -114,7 +125,17 @@ const endpointsTypeComputerRouter = async () =>{
 
     getEndpoints = await endpointsTypeComputer();
     
+    pagesTable('endpoint');
+
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
+};
+
+const endpointDetailsRouter = async (hostName, machineDetailsAssignedProducts, machineDetailsHealth) =>{
+    page.redirect(`/endpoints/details/${hostName}`);
+    
+    pagesTable('health_Check');
+    
+    render(welcomePage(tableEndpointsDetailsTemplate(machineDetailsAssignedProducts, machineDetailsHealth)), divApp);
 };
 // --------------------------------------------------------------------
 
@@ -122,6 +143,8 @@ const endpointsTypeComputerRouter = async () =>{
 const alertRouter = async () =>{
     page.redirect('/alerts/all');
     alerts = await getAlerts();
+
+    pagesTable('alert');
 
     if (alerts.items.length  === 0 ) {
         render(welcomePage(emptyError('No alerts')), divApp);
@@ -134,6 +157,8 @@ const alertLowRouter = async () =>{
     page.redirect('/alerts/low');
     alerts = await filterLow();
 
+    pagesTable('alert');
+
     if (alerts.items.length  === 0 ) {
         render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type low.'))), divApp);
     }else{
@@ -144,6 +169,8 @@ const alertLowRouter = async () =>{
 const alertMediumRouter = async () =>{
     page.redirect('/alerts/medium');
     alerts = await filterMedium();
+
+    pagesTable('alert');
 
     if (alerts.items.length  === 0 ) {
         render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type medium.'))), divApp);
@@ -209,7 +236,7 @@ page('/home', () => {
 page();
 
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter };
-export { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter };
+export { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter, endpointDetailsRouter };
 export { websitesRouter, websiteAddRouter };
 export { eventAllRouter, eventWebsiteRouter };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };

@@ -40,7 +40,7 @@ function tableEventTemplate(events, error){
                                     <div class="col-12">
                                         <div class="card bg-dark shadow-2-strong">
                                             <div class="card-body">
-                                                <div class="table-responsive">
+                                                <div id="event" class="table-responsive">
 
                                                     <table class="table table-dark table-borderless mb-0">
                                                         <thead>

@@ -18,7 +18,7 @@ import { authenticationClass } from '../Js/authentication.js';
 // --------------------------------------------------------------------
 
 // ---------------------endpoint---------------------------------------
-import { endpoints, endpointsTypeServer, endpointsTypeComputer } from '../Js/endpoints.js';
+import { endpoints, endpointsTypeServer, endpointsTypeComputer } from '../Js/endpoint/endpoints.js';
 // --------------------------------------------------------------------
 
 // -----------------------event----------------------------------------

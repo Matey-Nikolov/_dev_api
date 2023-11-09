@@ -91,9 +91,10 @@ function setGlobalPOST(){
 };
 */
 
-function pagesTable(){
+function pagesTable(tableId){
   $(document).ready(function() {
-    let tableBody = $('#table-body');
+    let tableBody = $('#' + tableId + ' #table-body');
+    //let tableBody = $('#table-body');
     let rowsPerPage = 5; // 10
     let currentPage = 1;
     let totalRows = tableBody.find('tr').length;
@@ -109,7 +110,7 @@ function pagesTable(){
     }
   
     function renderPagination() {
-      let pagination = $('#pagination');
+      let pagination = $('#' + tableId + ' #pagination');
       pagination.empty();
       for (let i = 1; i <= totalPages; i++) {
         let li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
