@@ -1,7 +1,7 @@
 import { html } from "../../Global/globalLit.js";
 import { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter } from "../../Global/globalInport.js";
 
-import { handleButtonClickShowDetails } from "../../Js/endpoints.js";
+import { handleButtonClickShowDetails } from "../../Js/endpoint/endpoints.js";
 
 function tableEndpointsTemplate(endpoints){
     return html`
@@ -48,7 +48,7 @@ function tableEndpointsTemplate(endpoints){
                                 <div class="col-12">
                                     <div class="card bg-dark shadow-2-strong">
                                         <div class="card-body">
-                                            <div class="table-responsive">
+                                            <div id="endpoint" class="table-responsive">
 
                                                 <table class="table table-dark table-borderless mb-0">
                                                     <thead>
