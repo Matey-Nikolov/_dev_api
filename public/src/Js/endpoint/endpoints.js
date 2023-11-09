@@ -1,5 +1,3 @@
-import { pagesTable } from './global.js';
-
 import { endpointMachineDetails } from './endpointsDetails.js';
 
 let endpointsData = {
@@ -19,7 +17,7 @@ async function endpoints(){
 
   endpointsData = endpoints;
 
-  pagesTable();
+  //pagesTable();
 
   return endpointsData;
 };
@@ -28,7 +26,7 @@ async function endpointsTypeServer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'server');
   endpointsFilter.pages = endpointsData.pages;
   
-  pagesTable();
+  //pagesTable();
 
   return endpointsFilter;
 }
@@ -37,7 +35,7 @@ async function endpointsTypeComputer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'computer');
   endpointsFilter.pages = endpointsData.pages;
 
-  pagesTable();
+  //pagesTable();
 
   return endpointsFilter;
 };
