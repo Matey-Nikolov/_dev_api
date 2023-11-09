@@ -29,7 +29,7 @@ async function callFilterWebsiteEvents(){
 };
 
 async function getEvents(){
-    const eventData = await fetch('/events')
+    const eventData = await fetch('/data/events')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
@@ -44,7 +44,7 @@ async function getEvents(){
 }
 
 async function websiteFilterEvents(){
-    const eventData = await fetch('/events')
+    const eventData = await fetch('/data/events')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 

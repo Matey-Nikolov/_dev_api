@@ -7,7 +7,7 @@ let setwebsite = new Set();
 let getWebsiteData = {};
 
 async function getWebsite(){
-    const getData = await fetch('/websites')
+    const getData = await fetch('/data/websites')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
@@ -71,7 +71,7 @@ const addAlloWebsite = async (valueURL) =>{
     if (setwebsite.has(urlExtract)){
         return true;
     }else if (urlExtract !== null){
-        await fetch('/websites/post');
+        await fetch('/data/websites/post');
         return false;
     }
 
@@ -79,7 +79,7 @@ const addAlloWebsite = async (valueURL) =>{
 };
 
 const btnBlockWebsite = async (id) =>{
-    await fetch(`/websites/delete/${id}`, {
+    await fetch(`/data/websites/delete/:${id}`, {
         method: 'DELETE',
     });
     

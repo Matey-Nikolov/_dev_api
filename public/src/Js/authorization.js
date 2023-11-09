@@ -3,7 +3,7 @@ import { render, welcomePage, afterAuthorization } from '../Global/globalLit.js'
 import { divApp } from '../Global/globalInport.js';
 
 async function whoIam(newAccess_token){
-  const response = await fetch(`/whoIam/:${newAccess_token}`);
+  const response = await fetch(`/data/whoIam/:${newAccess_token}`);
 
   if (!response.ok) {
     throw new Error(`API request failed with status: ${response.status}`);

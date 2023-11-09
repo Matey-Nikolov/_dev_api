@@ -1,6 +1,4 @@
 import { pagesTable } from "./global.js";
-import { render, tableAlertTemplate } from '../Global/globalLit.js';
-import { divApp } from '../Global/globalInport.js';
 
 let sortedAlerts = {
     'items': {},
@@ -8,7 +6,7 @@ let sortedAlerts = {
 };
 
 async function getAlerts(){
-    const alertsData = await fetch('/alerts')
+    const alertsData = await fetch('/data/alerts')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 

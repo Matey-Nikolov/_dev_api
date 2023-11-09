@@ -15,7 +15,7 @@ import { registerTemplate } from '../js-lit/RegisterLit.js';
 // --------------------------------------------------------------
 
 // ---------------------endpoints--------------------------------
-import { tableEndpointsTemplate } from '../js-lit/endpointsLit.js';
+import { tableEndpointsTemplate } from '../js-lit/Endpoint/endpointsLit.js';
 // --------------------------------------------------------------
 
 // -----------------------alerts---------------------------------

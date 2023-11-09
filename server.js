@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename); // Derive the directory name
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', router);
+app.use('/data', router);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
