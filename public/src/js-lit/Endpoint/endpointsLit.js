@@ -1,5 +1,7 @@
-import { html } from "../Global/globalLit.js";
-import { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter } from "../Global/globalInport.js";
+import { html } from "../../Global/globalLit.js";
+import { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter } from "../../Global/globalInport.js";
+
+import { handleButtonClickShowDetails } from "../../Js/endpoints.js";
 
 function tableEndpointsTemplate(endpoints){
     return html`
@@ -58,7 +60,7 @@ function tableEndpointsTemplate(endpoints){
                                                             <th scope="col">LastSeenAt</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="table-body">
+                                                    <tbody id="table-body" @click=${handleButtonClickShowDetails}>
                                                         ${endpoints.items.map((value) => html`
                                                             <tr>
                                                                 <td>${value.associatedPerson.name}</td>
@@ -66,6 +68,8 @@ function tableEndpointsTemplate(endpoints){
                                                                 <td>${value.health.overall}</td>
                                                                 <td>${value.health.services.status}</td>
                                                                 <td>${value.lastSeenAt}</td>
+
+                                                                <td><button data-type=${value.id} class="btn btn btn-info">show more</button></td>
                                                             </tr>`)}
                                                     </tbody>
 
