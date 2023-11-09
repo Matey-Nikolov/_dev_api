@@ -49,12 +49,12 @@ router.get('/websites/post', async (request, res) => {
 });
 
 // /delete
-router.delete('websites/delete/:id', async (request, res) => {
+router.get('websites/delete/:id', async (request, res) => {
     const getIdWebsite = request.params.id.replace(':', '');
 
     console.log(getIdWebsite);
 
-    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${getIdWebsite}`);
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/:${getIdWebsite}`);
 
     await fetch(url, setDelete())
     .then(response => response.json())
@@ -88,6 +88,19 @@ router.get('/endpoints', async (request, res) => {
     .catch(error => console.log('error', error));
 
     res.json(endpoints);
+});
+
+router.get('/endpoints/details/:endpointId', async (request, res) => {
+    const id = request.params.endpointId.replace(':', '');
+
+    const url = new URL(`${apiHost}/endpoint/v1/endpoints/${id}`);
+    url.searchParams.append('pageTotal', 'true'); 
+
+    let endpointDetails = await fetch(url, setGlobal())
+    .then(response => response.json())
+    .catch(error => console.log('error', error));
+
+    res.json(endpointDetails);
 });
 // --------------------------------------------------------------------
 
