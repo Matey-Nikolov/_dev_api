@@ -1,16 +1,14 @@
-import { btnRegister, divApp } from './homeController.js';
+import { divApp } from './homeController.js';
 import { alertError, registerTemplate, render, welcomePage } from '../Global/globalLit.js';
-
-import { endpoints, endpointsTypeServer, endpointsTypeComputer} from '../Global/globalInport.js';
-
-import { tableEndpointsDetailsTemplate } from '../js-lit/Endpoint/endpointsDetailLit.js';
-
 
 import { callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
 
+
+
+
 import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
 
-import { tableEventTemplate, tableEndpointsTemplate } from '../Global/globalLit.js';
+import { tableEventTemplate } from '../Global/globalLit.js';
 import { tableAlertTemplate } from '../Global/globalLit.js';
 import { chartAlerts } from '../Js/Charts/alertChart.js';
 
@@ -19,6 +17,9 @@ import { emptyError } from '../Global/globalLit.js';
 import { tableAllowWebsiteTemplate, addNewWebsite } from '../Global/globalLit.js';
 import { allowWebSite } from '../Global/globalInport.js';
 import { pagesTable } from '../Js/global.js';
+
+import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter, endpointReturnRouter, endpointDetailsRouter } from './routers/endpointRouter/endpoit.js';
+
 
 let alerts = {};
 let websites = new Set(); 
@@ -98,46 +99,6 @@ const eventWebsiteRouter = async () =>{
 };
 // --------------------------------------------------------------------
 
-// -----------------------endpointsRoute-------------------------------
-let getEndpoints = {};
-
-const endpointsRoute = async () =>{
-    page.redirect('/endpoints/all');
-    getEndpoints = await endpoints();
-
-    pagesTable('endpoint');
-
-    render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
-};
-
-const endpointsTypeServerRouter = async () =>{
-    page.redirect('/endpoints/servers');
-
-    getEndpoints = await endpointsTypeServer();
-
-    pagesTable('endpoint');
-
-    render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
-};
-
-const endpointsTypeComputerRouter = async () =>{
-    page.redirect('/endpoints/computers');
-
-    getEndpoints = await endpointsTypeComputer();
-    
-    pagesTable('endpoint');
-
-    render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
-};
-
-const endpointDetailsRouter = async (hostName, machineDetailsAssignedProducts, machineDetailsHealth) =>{
-    page.redirect(`/endpoints/details/${hostName}`);
-    
-    pagesTable('health_Check');
-    
-    render(welcomePage(tableEndpointsDetailsTemplate(machineDetailsAssignedProducts, machineDetailsHealth)), divApp);
-};
-// --------------------------------------------------------------------
 
 // -----------------------alertRouter----------------------------------
 const alertRouter = async () =>{
@@ -227,7 +188,7 @@ page('/home', () => {
     render(welcomePage(), divApp);
 
     if(chartAlerts() !== null){
-        render(welcomePage(undefined, undefined, alertError('No alerts to create chart.')), divApp);   
+        render(welcomePage(undefined, undefined, alertError('No alerts to create chart.')), divApp);
     }
 });
 // -------------------------------------------------------------------
@@ -236,7 +197,9 @@ page('/home', () => {
 page();
 
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter };
-export { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter, endpointDetailsRouter };
+
+export { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter, endpointReturnRouter, endpointDetailsRouter };
+
 export { websitesRouter, websiteAddRouter };
 export { eventAllRouter, eventWebsiteRouter };
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter };
