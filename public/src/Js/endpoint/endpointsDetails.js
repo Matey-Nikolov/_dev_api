@@ -2,22 +2,21 @@ import { endpointDetailsRouter } from "../../controller/router.js";
 
 let machineDetailsAssignedProducts = {};
 let machineDetailsHealth = {};
+let machineDetails_Os = {};
 
 function endpointMachineDetails(machineDetails){
 
     machineDetails = [machineDetails];
 
-    console.log(machineDetails);
-
     machineDetails.map((value) =>{
         machineDetailsAssignedProducts = value.assignedProducts;
         machineDetailsHealth = value.health.services.serviceDetails;
-
+        machineDetails_Os = value.os;
     });
 
-    console.log(machineDetailsHealth);
+    machineDetails_Os = [machineDetails_Os];
 
-    endpointDetailsRouter(machineDetails[0].hostname, machineDetailsAssignedProducts, machineDetailsHealth);
+    endpointDetailsRouter(machineDetails[0].hostname, machineDetailsAssignedProducts, machineDetailsHealth, machineDetails_Os);
 };
 
 

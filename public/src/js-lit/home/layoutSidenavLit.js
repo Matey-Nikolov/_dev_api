@@ -1,7 +1,7 @@
 import { html } from "../../Global/globalLit.js";
 import { refresh, btnLogin, btnRegister } from '../../Global/globalInport.js';
 
-import { websitesRouter, endpointsRoute, eventAllRouter } from '../../Global/globalInport.js';
+import { websitesRouter, endpointsRouter, eventAllRouter } from '../../Global/globalInport.js';
 
 import { alertRouter } from "../../Global/globalInport.js"; 
 
@@ -57,7 +57,7 @@ const layoutSidenav = (role) =>{
                             
                             <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" role="button" @click=${endpointsRoute}>endpoints</a>
+                                    <a class="nav-link" role="button" @click=${endpointsRouter}>endpoints</a>
                                     <a class="nav-link" role="button" @click=${alertRouter}>alerts</a>
                                     <a class="nav-link" role="button" @click=${eventAllRouter}>events</a>
                                     <a class="nav-link" role="button" @click=${websitesRouter}>websites allow</a>

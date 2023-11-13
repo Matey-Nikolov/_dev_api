@@ -1,5 +1,5 @@
 import { html } from "../../Global/globalLit.js";
-import { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter } from "../../Global/globalInport.js";
+import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter } from "../../Global/globalInport.js";
 
 import { handleButtonClickShowDetails } from "../../Js/endpoint/endpoints.js";
 
@@ -12,7 +12,7 @@ function tableEndpointsTemplate(endpoints){
                     <span class="fs-5 fw-semibold">Filters</span>
                     <ul class="list-unstyled ps-0">
                         <li class="mb-1">
-                            <button @click=${endpointsRoute} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                            <button @click=${endpointsRouter} class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                                 Show all
                             </button>
                             <div class="collapse show" id="home-collapse">
@@ -41,43 +41,42 @@ function tableEndpointsTemplate(endpoints){
                     </ul>
                 </div>
             </div>
-                <div class="col-8">
-                    <div class="container mt-5">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-12">
-                                    <div class="card bg-dark shadow-2-strong">
-                                        <div class="card-body">
-                                            <div id="endpoint" class="table-responsive">
+            <div class="col-8">
+                <div class="container mt-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12">
+                                <div class="card bg-dark shadow-2-strong">
+                                    <div class="card-body">
+                                        <div id="endpoint" class="table-responsive">
 
-                                                <table class="table table-dark table-borderless mb-0">
-                                                    <thead>
+                                            <table class="table table-dark table-borderless mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name machine</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Health</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">LastSeenAt</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table-body" @click=${handleButtonClickShowDetails}>
+                                                    ${endpoints.items.map((value) => html`
                                                         <tr>
-                                                            <th scope="col">Name machine</th>
-                                                            <th scope="col">Type</th>
-                                                            <th scope="col">Health</th>
-                                                            <th scope="col">Status</th>
-                                                            <th scope="col">LastSeenAt</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="table-body" @click=${handleButtonClickShowDetails}>
-                                                        ${endpoints.items.map((value) => html`
-                                                            <tr>
-                                                                <td>${value.associatedPerson.name}</td>
-                                                                <td>${value.type}</td>
-                                                                <td>${value.health.overall}</td>
-                                                                <td>${value.health.services.status}</td>
-                                                                <td>${value.lastSeenAt}</td>
+                                                            <td>${value.associatedPerson.name}</td>
+                                                            <td>${value.type}</td>
+                                                            <td>${value.health.overall}</td>
+                                                            <td>${value.health.services.status}</td>
+                                                            <td>${value.lastSeenAt}</td>
 
-                                                                <td><button data-type=${value.id} class="btn btn btn-info">show more</button></td>
-                                                            </tr>`)}
-                                                    </tbody>
+                                                            <td><button data-type=${value.id} class="btn btn btn-info">show more</button></td>
+                                                        </tr>`)}
+                                                </tbody>
 
-                                                    <nav aria-label="Page navigation">
-                                                        <ul class="pagination justify-content-center" id="pagination"></ul>
-                                                    </nav>
-                                                </table>
-                                            </div>
+                                                <nav aria-label="Page navigation">
+                                                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                                                </nav>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -86,6 +85,7 @@ function tableEndpointsTemplate(endpoints){
                     </div>
                 </div>
             </div>
+        </div>
     </div>`
 };
 

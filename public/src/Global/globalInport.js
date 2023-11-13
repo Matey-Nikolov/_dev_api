@@ -4,7 +4,7 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 
 // ---------------------------------Routers----------------------------
 import { welcomeNavigator, loginRouter, registerRouter, logOutRouter,  websitesRouter } from '../controller/router.js';
-import { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter } from '../controller/router.js';
+import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter } from '../controller/router.js';
 import { eventAllRouter, eventWebsiteRouter, websiteAddRouter } from '../controller/router.js';
 // --------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ import { getInformation_Register } from '../firebase/validationRegister.js';
 
 export { divApp, btnLogin, btnRegister };
 export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, websitesRouter };
-export { endpointsRoute, endpointsTypeServerRouter, endpointsTypeComputerRouter };
+export { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter };
 export { eventAllRouter, eventWebsiteRouter, websiteAddRouter };
 
 export { authenticationClass };
