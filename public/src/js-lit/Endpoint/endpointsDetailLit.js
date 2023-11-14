@@ -1,5 +1,5 @@
 import { html } from "../../Global/globalLit.js";
-
+import { endpointsRouter } from "../../Global/globalInport.js";
 
 function tableEndpointsDetailsTemplate(nameMachine, machineDetailsAssignedProducts, machineDetailsHealth, machineDetails_Os){
     return html`
@@ -116,7 +116,7 @@ function tableEndpointsDetailsTemplate(nameMachine, machineDetailsAssignedProduc
                         <div class="col-12">
                             <div class="card bg-dark shadow-2-strong mx-2 my-2">
                                 <div class="card-body">
-                                    <!-- Your Fourth Table Content -->
+                                    <button @click=${endpointsRouter} class="btn btn btn-info">Return to all endpoints</button>
                                 </div>
                             </div>
                         </div>

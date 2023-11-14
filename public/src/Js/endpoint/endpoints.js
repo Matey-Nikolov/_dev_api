@@ -17,8 +17,6 @@ async function endpoints(){
 
   endpointsData = endpoints;
 
-  //pagesTable();
-
   return endpointsData;
 };
 
@@ -26,8 +24,6 @@ async function endpointsTypeServer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'server');
   endpointsFilter.pages = endpointsData.pages;
   
-  //pagesTable();
-
   return endpointsFilter;
 }
 
@@ -35,13 +31,10 @@ async function endpointsTypeComputer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'computer');
   endpointsFilter.pages = endpointsData.pages;
 
-  //pagesTable();
-
   return endpointsFilter;
 };
 
 const handleButtonClickShowDetails = (event) => {
-
   if (event.target.classList.contains('btn-info')) {
     const id = event.target.dataset.type;
 
@@ -59,4 +52,40 @@ const btnDetails = async (id) =>{
   endpointMachineDetails(endpointDetails);
 };
 
-export { endpoints, endpointsTypeServer, endpointsTypeComputer, handleButtonClickShowDetails };
+/////////////////////////////////In progress//////////////////////////////////////////////
+
+function ScanButton(buttonId) {
+  let checkboxes = document.querySelectorAll('.form-check-input');
+  let submitButton = document.getElementById(`${buttonId}`);
+
+  checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', updateButtonState);
+  });
+
+  function updateButtonState() {
+    let atLeastOneChecked = Array
+    .from(checkboxes)
+    .some(function (checkbox) {
+      return checkbox.checked;
+    });
+
+    submitButton.disabled = !atLeastOneChecked;
+  };
+};
+
+
+const handleButtonClickSendScanRequest = (event) => {
+
+  if (event.target.classList.contains('form-check-input')) {
+    const id = event.target.dataset.type;
+
+    console.log(id);
+  }
+};
+
+
+
+
+
+
+export { endpoints, endpointsTypeServer, endpointsTypeComputer, handleButtonClickShowDetails, ScanButton, handleButtonClickSendScanRequest };

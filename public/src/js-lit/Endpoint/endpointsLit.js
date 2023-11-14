@@ -1,7 +1,7 @@
 import { html } from "../../Global/globalLit.js";
 import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter } from "../../Global/globalInport.js";
 
-import { handleButtonClickShowDetails } from "../../Js/endpoint/endpoints.js";
+import { handleButtonClickShowDetails, handleButtonClickSendScanRequest } from "../../Js/endpoint/endpoints.js";
 
 function tableEndpointsTemplate(endpoints){
     return html`
@@ -58,9 +58,11 @@ function tableEndpointsTemplate(endpoints){
                                                         <th scope="col">Health</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">LastSeenAt</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"><button id="ScanButton" type="button" class="btn btn-primary mt-3" disabled>Scan</button></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="table-body" @click=${handleButtonClickShowDetails}>
+                                                <tbody id="table-body" @click=${handleButtonClickShowDetails, handleButtonClickSendScanRequest}>
                                                     ${endpoints.items.map((value) => html`
                                                         <tr>
                                                             <td>${value.associatedPerson.name}</td>
@@ -70,6 +72,8 @@ function tableEndpointsTemplate(endpoints){
                                                             <td>${value.lastSeenAt}</td>
 
                                                             <td><button data-type=${value.id} class="btn btn btn-info">show more</button></td>
+
+                                                            <td><input data-type=${value.id} class="form-check-input" type="checkbox"/><td>
                                                         </tr>`)}
                                                 </tbody>
 

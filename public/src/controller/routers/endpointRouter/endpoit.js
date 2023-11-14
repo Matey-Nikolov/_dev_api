@@ -9,6 +9,8 @@ import { tableEndpointsTemplate } from '../../../Global/globalLit.js';
 
 import { pagesTable } from '../../../Js/global.js';
 
+import { ScanButton } from '../../../Js/endpoint/endpoints.js';
+
 // -----------------------endpointsRouter-------------------------------
 let getEndpoints = {};
 
@@ -56,8 +58,10 @@ page('/endpoints/all', async () =>{
     getEndpoints = await endpoints();
 
     pagesTable('endpoint');
-
+    
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
+
+    ScanButton('ScanButton');
 });
 
 export { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter, endpointReturnRouter, endpointDetailsRouter };
