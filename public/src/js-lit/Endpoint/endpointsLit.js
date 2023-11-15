@@ -62,7 +62,7 @@ function tableEndpointsTemplate(endpoints){
                                                         <th scope="col"><button id="ScanButton" type="button" class="btn btn-primary mt-3" disabled>Scan</button></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="table-body" @click=${handleButtonClickShowDetails, handleButtonClickSendScanRequest}>
+                                                <tbody id="table-body">
                                                     ${endpoints.items.map((value) => html`
                                                         <tr>
                                                             <td>${value.associatedPerson.name}</td>
@@ -71,9 +71,9 @@ function tableEndpointsTemplate(endpoints){
                                                             <td>${value.health.services.status}</td>
                                                             <td>${value.lastSeenAt}</td>
 
-                                                            <td><button data-type=${value.id} class="btn btn btn-info">show more</button></td>
+                                                            <td><button @click=${handleButtonClickShowDetails} data-type=${value.id} class="btn btn btn-info">show more</button></td>
 
-                                                            <td><input data-type=${value.id} class="form-check-input" type="checkbox"/><td>
+                                                            <td><input @click=${handleButtonClickSendScanRequest} data-type=${value.id} class="form-check-input" type="checkbox"/><td>
                                                         </tr>`)}
                                                 </tbody>
 
