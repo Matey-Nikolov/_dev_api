@@ -10,6 +10,8 @@ let endpointsFilter = {
   'pages': {}
 };
 
+let urls = new Set(); 
+
 async function endpoints(){
   const endpoints = await fetch('/data/endpoints')
   .then(response => response.json())
@@ -24,12 +26,16 @@ async function endpointsTypeServer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'server');
   endpointsFilter.pages = endpointsData.pages;
   
+  urls.clear();
+
   return endpointsFilter;
 }
 
 async function endpointsTypeComputer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'computer');
   endpointsFilter.pages = endpointsData.pages;
+
+  urls.clear();
 
   return endpointsFilter;
 };
@@ -53,33 +59,51 @@ const btnDetails = async (id) =>{
 };
 
 /////////////////////////////////In progress//////////////////////////////////////////////
+let checkboxes;
+let submitButton;
+
+function updateButtonState() {
+  let atLeastOneChecked = Array
+  .from(checkboxes)
+  .some(function (checkbox) {
+    return checkbox.checked;
+  });
+
+  submitButton.disabled = !atLeastOneChecked;
+
+  if(!atLeastOneChecked){
+    urls.clear();
+  };
+};
 
 function ScanButton(buttonId) {
-  let checkboxes = document.querySelectorAll('.form-check-input');
-  let submitButton = document.getElementById(`${buttonId}`);
+  checkboxes = document.querySelectorAll('.form-check-input');
+  submitButton = document.getElementById(`${buttonId}`);
 
   checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', updateButtonState);
   });
 
-  function updateButtonState() {
-    let atLeastOneChecked = Array
-    .from(checkboxes)
-    .some(function (checkbox) {
-      return checkbox.checked;
+  submitButton.addEventListener('click', () =>{
+    console.log(urls);
+    
+    checkboxes.forEach(function (checkbox) {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+      }
     });
 
-    submitButton.disabled = !atLeastOneChecked;
-  };
+    urls.clear();
+    updateButtonState(); 
+  });
 };
-
 
 const handleButtonClickSendScanRequest = (event) => {
 
   if (event.target.classList.contains('form-check-input')) {
-    const id = event.target.dataset.type;
+    const endpointId = event.target.dataset.type;
 
-    console.log(id);
+    urls.add(`https://api-{dataRegion}.central.sophos.com/endpoint/v1/endpoints/:${endpointId}/scans`);
   }
 };
 
