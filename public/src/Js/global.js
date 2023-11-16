@@ -74,22 +74,23 @@ function setDelete(){
   return requestOptions;
 }
 
-/*
 function setGlobalPOST(){
   const myHeaders = new Headers();
+
   myHeaders.append('X-Tenant-ID', id);
+  myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Accept', 'application/json');
   myHeaders.append('Authorization', 'Bearer ' + access_token);
-  
+
   const requestOptions = {
     method: 'POST',
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: 'follow',
+    body: JSON.stringify({})
   };
 
   return requestOptions;
 };
-*/
 
 function pagesTable(tableId){
   $(document).ready(function() {
@@ -128,6 +129,6 @@ function pagesTable(tableId){
   });
 };
 
-export { setGlobal, authorization, pagesTable, setDelete, setAllowPOST };
+export { setGlobal, authorization, pagesTable, setDelete, setAllowPOST, setGlobalPOST };
 export { getWebsiteAllow };
 export { id, apiHost, access_token, websiteURL };
