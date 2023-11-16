@@ -61,7 +61,7 @@ const btnDetails = async (id) =>{
 /////////////////////////////////In progress//////////////////////////////////////////////
 let checkboxes;
 let submitButton;
-
+//https://www.banjocode.com/post/javascript/fetch-multiple-urls-same-time
 function updateButtonState() {
   let atLeastOneChecked = Array
   .from(checkboxes)
@@ -80,21 +80,26 @@ function ScanButton(buttonId) {
   checkboxes = document.querySelectorAll('.form-check-input');
   submitButton = document.getElementById(`${buttonId}`);
 
-  checkboxes.forEach(function (checkbox) {
+  checkboxes.forEach((checkbox) =>{
     checkbox.addEventListener('change', updateButtonState);
   });
 
-  submitButton.addEventListener('click', () =>{
-    console.log(urls);
-    
-    checkboxes.forEach(function (checkbox) {
+  submitButton.addEventListener('click', async () =>{
+
+    let fromSetToArrayIds = [...urls];
+
+    checkboxes.forEach((checkbox) =>{
       if (checkbox.checked) {
         checkbox.checked = false;
       }
     });
 
+    updateButtonState();
+
+    const promises = fromSetToArrayIds.map(id => fetch(`/data/endpoints/scan/${id}`));
+    await Promise.all(promises);
+
     urls.clear();
-    updateButtonState(); 
   });
 };
 
@@ -103,13 +108,8 @@ const handleButtonClickSendScanRequest = (event) => {
   if (event.target.classList.contains('form-check-input')) {
     const endpointId = event.target.dataset.type;
 
-    urls.add(`https://api-{dataRegion}.central.sophos.com/endpoint/v1/endpoints/:${endpointId}/scans`);
+    urls.add(endpointId);
   }
 };
-
-
-
-
-
 
 export { endpoints, endpointsTypeServer, endpointsTypeComputer, handleButtonClickShowDetails, ScanButton, handleButtonClickSendScanRequest };

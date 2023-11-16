@@ -1,7 +1,7 @@
 import path from 'path';
 import express from 'express';
 
-import { setGlobal, apiHost, authorization, setDelete, setAllowPOST, websiteURL } from './public/src/Js/global.js';
+import { setGlobal, apiHost, authorization, setDelete, setAllowPOST, websiteURL, setGlobalPOST } from './public/src/Js/global.js';
 
 import { fileURLToPath } from 'url';
 
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 // Define an API routes
-// ------------------/alerts--------------------------------------
+// -----------------------------------------------------------------
 router.get('/alerts', async (request, res) => {
     const url = new URL(`${apiHost}/common/v1/alerts`);
 
@@ -60,9 +60,9 @@ router.get('websites/delete/:id', async (request, res) => {
     .then(response => response.json())
     .catch(error => console.log('error', error));
 });
-// -----------------------------------------------------------------
+// --------------------------------------------------------------------
 
-// ------------------/events----------------------------------------
+// --------------------------------------------------------------------
 router.get('/events', async (request, res) => {
     const url = new URL(`${apiHost}/siem/v1/events`);
     // url.searchParams.append('pageTotal', 'true'); 
@@ -76,7 +76,24 @@ router.get('/events', async (request, res) => {
 });
 // --------------------------------------------------------------------
 
-// ----------------------/endpoints------------------------------------
+// --------------------------------------------------------------------
+router.get('/endpoints/scan/:endpointId', async (request, res) => {
+    const getIdForScan = request.params.endpointId.replace(':', '');;
+
+    let url = new URL(`${apiHost}/endpoint/v1/endpoints/${getIdForScan}/scans`);
+
+    console.log(url);
+
+    try {
+        let endpoints = await fetch(url, setGlobalPOST());
+        let data = await endpoints.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error during fetch:', error);
+    }
+      
+});
+
 router.get('/endpoints', async (request, res) => {
 
     const url = new URL(`${apiHost}/endpoint/v1/endpoints`);
@@ -91,9 +108,9 @@ router.get('/endpoints', async (request, res) => {
 });
 
 router.get('/endpoints/details/:endpointId', async (request, res) => {
-    const id = request.params.endpointId.replace(':', '');
+    const getIdForDetails = request.params.endpointId.replace(':', '');
 
-    const url = new URL(`${apiHost}/endpoint/v1/endpoints/${id}`);
+    const url = new URL(`${apiHost}/endpoint/v1/endpoints/${getIdForDetails}`);
     url.searchParams.append('pageTotal', 'true'); 
 
     let endpointDetails = await fetch(url, setGlobal())
