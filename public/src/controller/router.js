@@ -114,9 +114,9 @@ const alertRouter = async () =>{
     }
 };
 
-const alertLowRouter = async () =>{
+const alertLowRouter = () =>{
     page.redirect('/alerts/low');
-    alerts = await filterLow();
+    alerts = filterLow();
 
     pagesTable('alert');
 
@@ -127,9 +127,9 @@ const alertLowRouter = async () =>{
     }
 };
 
-const alertMediumRouter = async () =>{
+const alertMediumRouter = () =>{
     page.redirect('/alerts/medium');
-    alerts = await filterMedium();
+    alerts = filterMedium();
 
     pagesTable('alert');
 
@@ -140,9 +140,11 @@ const alertMediumRouter = async () =>{
     }
 };
 
-const alertHighRouter = async () =>{
+const alertHighRouter = () =>{
     page.redirect('/alerts/high');
-    alerts = await filterHigh();
+    alerts = filterHigh();
+
+    pagesTable('alert');
 
     if (alerts.items.length  === 0 ) {
         render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type high.'))), divApp);

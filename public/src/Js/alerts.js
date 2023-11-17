@@ -1,5 +1,3 @@
-import { pagesTable } from "./global.js";
-
 let sortedAlerts = {
     'items': {},
     'pages': {}
@@ -12,8 +10,6 @@ async function getAlerts(){
 
     sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
     sortedAlerts.pages = alertsData.pages;
-
-    pagesTable();
 
     return sortedAlerts;
 };
@@ -37,32 +33,26 @@ let filteredAlerts = {
 };
 
 // fix - name - alersFilterLow or filterAlers_Low_By_Severity
-async function filterLow(){
+function filterLow(){
 
     filteredAlerts.items = sortedAlerts.items.filter(x => x.severity === 'low');
     filteredAlerts.pages = sortedAlerts.pages;
 
-    pagesTable();
-
     return filteredAlerts;
 };
 
-async function filterMedium(){
+function filterMedium(){
 
     filteredAlerts.items = sortedAlerts.items.filter(x => x.severity === 'medium');
     filteredAlerts.pages = sortedAlerts.pages;
 
-    pagesTable();
-
     return filteredAlerts;
 };
 
-async function filterHigh(){
+function filterHigh(){
 
     filteredAlerts.items = sortedAlerts.items.filter(x => x.severity === 'high');
     filteredAlerts.pages = sortedAlerts.pages;
-
-    pagesTable();
 
     return filteredAlerts;
 };
