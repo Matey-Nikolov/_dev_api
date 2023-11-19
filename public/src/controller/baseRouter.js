@@ -3,13 +3,7 @@ import { alertError, registerTemplate, render, welcomePage } from '../Global/glo
 
 import { callAllEvents, callFilterWebsiteEvents, addAlloWebsite } from '../Global/globalInport.js';
 
-
-
-
-import { getAlerts, filterLow, filterMedium, filterHigh} from '../Global/globalInport.js';
-
 import { tableEventTemplate } from '../Global/globalLit.js';
-import { tableAlertTemplate } from '../Global/globalLit.js';
 import { chartAlerts } from '../Js/Charts/alertChart.js';
 
 import { emptyError } from '../Global/globalLit.js';
@@ -19,17 +13,16 @@ import { allowWebSite } from '../Global/globalInport.js';
 import { pagesTable } from '../Js/global.js';
 
 import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter, endpointReturnRouter, endpointDetailsRouter } from './routers/endpointRouter/endpoit.js';
+import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from './routers/alertRouter.js';
 
-
-let alerts = {};
 let websites = new Set(); 
 
 // -----------------------allow website router--------------------------
-const websitesRouter = async () => {
+const websitesRouter = () => {
     page.redirect('/websites');
 };
 
-const websiteAddRouter = async () =>{
+const websiteAddRouter = () =>{
     page.redirect('/add');
 
     render(welcomePage(addNewWebsite()), divApp);
@@ -39,15 +32,16 @@ const websiteAddRouter = async () =>{
 
     btnWebsite.addEventListener('click', async (event) =>{
         event.preventDefault();
-    
-        let alreadyAdd = await addAlloWebsite(getWebsiteURL.value.trim());
+
+        let websiteURL = getWebsiteURL.value.trim();
+        let alreadyAdd = await addAlloWebsite(websiteURL);
 
         if (alreadyAdd) {
             getWebsiteURL.value = '';
             render(welcomePage(addNewWebsite('You already have it as an exception.')), divApp);
         }
         else{
-            if (getWebsiteURL.value.trim() === '') {
+            if (websiteURL === '') {
                 render(welcomePage(addNewWebsite('Please enter the url.')), divApp);
             }else if(alreadyAdd === null){
                 render(welcomePage(addNewWebsite('Please enter the valid url.')), divApp);
@@ -98,61 +92,6 @@ const eventWebsiteRouter = async () =>{
     }
 };
 // --------------------------------------------------------------------
-
-
-// -----------------------alertRouter----------------------------------
-const alertRouter = async () =>{
-    page.redirect('/alerts/all');
-    alerts = await getAlerts();
-
-    pagesTable('alert');
-
-    if (alerts.items.length  === 0 ) {
-        render(welcomePage(emptyError('No alerts')), divApp);
-    }else{
-        render(welcomePage(tableAlertTemplate(alerts)), divApp);
-    }
-};
-
-const alertLowRouter = () =>{
-    page.redirect('/alerts/low');
-    alerts = filterLow();
-
-    pagesTable('alert');
-
-    if (alerts.items.length  === 0 ) {
-        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type low.'))), divApp);
-    }else{
-        render(welcomePage(tableAlertTemplate(alerts)), divApp);
-    }
-};
-
-const alertMediumRouter = () =>{
-    page.redirect('/alerts/medium');
-    alerts = filterMedium();
-
-    pagesTable('alert');
-
-    if (alerts.items.length  === 0 ) {
-        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type medium.'))), divApp);
-    }else{
-        render(welcomePage(tableAlertTemplate(alerts)), divApp);
-    }
-};
-
-const alertHighRouter = () =>{
-    page.redirect('/alerts/high');
-    alerts = filterHigh();
-
-    pagesTable('alert');
-
-    if (alerts.items.length  === 0 ) {
-        render(welcomePage(tableAlertTemplate(alerts, emptyError('No alerts from type high.'))), divApp);
-    }else{
-        render(welcomePage(tableAlertTemplate(alerts)), divApp);
-    }
-};
-// -------------------------------------------------------------------
 
 // -----------------------logOutRouter--------------------------------
 const logOutRouter = () => {
