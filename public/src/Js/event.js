@@ -10,7 +10,7 @@ const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
 let setAllowSite = new Set(); 
 
-let events = 
+let DataEvents = 
 {
     has_more: Boolean,
     items: {},
@@ -23,39 +23,41 @@ async function callAllEvents(){
 
 async function callFilterWebsiteEvents(){
     setAllowSite = await allowWebSite('allow');
-    return await websiteFilterEvents();
+    return websiteFilterEvents();
 };
 
 async function getEvents(){
-    const eventData = await fetch('/data/events')
+    const getDataForEvents = await fetch('/data/events')
     .then(response => response.json())
     .catch(error => console.log('error', error));
 
-    events.has_more = eventData.has_more;
-    events.items = eventData.items;
-    events.items = events.items;
-    events.next_cursor = eventData.next_cursor;
+    DataEvents.has_more = getDataForEvents.has_more;
+    DataEvents.items = getDataForEvents.items;
+    DataEvents.next_cursor = getDataForEvents.next_cursor;
     
-    return events;
+    return DataEvents;
 }
 
-async function websiteFilterEvents(){
-    const eventData = await fetch('/data/events')
-    .then(response => response.json())
-    .catch(error => console.log('error', error));
+let filteredEvents = 
+{
+    has_more: Boolean,
+    items: {},
+    next_cursor: ''
+};
 
+function websiteFilterEvents(){
     //Web filter - still in progress - soon v2.0
-    events.has_more = eventData.has_more;
-    events.items = eventData.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
+    filteredEvents.has_more = DataEvents.has_more;
+    filteredEvents.items = DataEvents.items.filter(x => x.type.match(filterRegex)[2] === 'WebControlViolation');
 
 
 
-    events.items = events.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
+    filteredEvents.items = filteredEvents.items.filter(x => !setAllowSite.has(x.name.match(regexWebsite)[1]));
 
     // events.items = events.items.filter(x => x.name.match(regexWebsite)[1] && x.name.match(regexWebsite)[3]);
-    events.next_cursor = eventData.next_cursor;
+    filteredEvents.next_cursor = DataEvents.next_cursor;
 
-    return events;
+    return filteredEvents;
 };
 
 export { callAllEvents, callFilterWebsiteEvents };

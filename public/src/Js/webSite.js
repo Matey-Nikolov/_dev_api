@@ -1,4 +1,4 @@
-import { eventAllRouter, websitesRouter } from '../controller/router.js';
+import { eventAllRouter, websitesRouter } from '../controller/baseRouter.js';
 import { getWebsiteAllow } from './global.js';
 
 const regexWebsite = /(?:https?\/\/www\.)*(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;

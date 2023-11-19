@@ -1,4 +1,4 @@
-import { endpointDetailsRouter } from "../../controller/router.js";
+import { endpointDetailsRouter } from "../../controller/baseRouter.js";
 
 let machineDetailsAssignedProducts = {};
 let machineDetailsHealth = {};

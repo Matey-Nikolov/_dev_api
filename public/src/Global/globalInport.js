@@ -3,13 +3,13 @@ import { divApp, btnLogin, btnRegister } from '../controller/homeController.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------Routers----------------------------
-import { welcomeNavigator, loginRouter, registerRouter, logOutRouter,  websitesRouter } from '../controller/router.js';
-import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter } from '../controller/router.js';
-import { eventAllRouter, eventWebsiteRouter, websiteAddRouter } from '../controller/router.js';
+import { welcomeNavigator, loginRouter, registerRouter, logOutRouter,  websitesRouter } from '../controller/baseRouter.js';
+import { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter } from '../controller/baseRouter.js';
+import { eventAllRouter, eventWebsiteRouter, websiteAddRouter } from '../controller/baseRouter.js';
 // --------------------------------------------------------------------
 
 // ---------------------------------alerts-----------------------------
-import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from '../controller/router.js';
+import { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter } from '../controller/baseRouter.js';
 import { getAlerts, filterLow, filterMedium, filterHigh } from '../Js/alerts.js';
 // --------------------------------------------------------------------
 

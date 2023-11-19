@@ -82,16 +82,10 @@ router.get('/endpoints/scan/:endpointId', async (request, res) => {
 
     let url = new URL(`${apiHost}/endpoint/v1/endpoints/${getIdForScan}/scans`);
 
-    console.log(url);
+    await fetch(url, setGlobalPOST());      
 
-    try {
-        let endpoints = await fetch(url, setGlobalPOST());
-        let data = await endpoints.json();
-        console.log(data);
-    } catch (error) {
-        console.error('Error during fetch:', error);
-    }
-      
+    console.log('Work 2222');
+
 });
 
 router.get('/endpoints', async (request, res) => {
