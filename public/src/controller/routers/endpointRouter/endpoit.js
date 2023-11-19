@@ -30,7 +30,7 @@ const endpointReturnRouter = () =>{
     page.redirect('/endpoints/all');
 };
 
-const endpointDetailsRouter = async (hostName, machineDetailsAssignedProducts, machineDetailsHealth, machineDetails_Os) =>{
+const endpointDetailsRouter = (hostName, machineDetailsAssignedProducts, machineDetailsHealth, machineDetails_Os) =>{
     page.redirect(`/endpoints/details/${hostName}`);
     
     pagesTable('health_Check');
@@ -38,16 +38,16 @@ const endpointDetailsRouter = async (hostName, machineDetailsAssignedProducts, m
     render(welcomePage(tableEndpointsDetailsTemplate(hostName, machineDetailsAssignedProducts, machineDetailsHealth, machineDetails_Os)), divApp);
 };
 
-page('/endpoints/computers', async () =>{
-    getEndpoints = await endpointsTypeComputer();
+page('/endpoints/computers', () =>{
+    getEndpoints = endpointsTypeComputer();
     
     pagesTable('endpoint');
 
     render(welcomePage(tableEndpointsTemplate(getEndpoints)), divApp);
 });
 
-page('/endpoints/servers', async () =>{
-    getEndpoints = await endpointsTypeServer();
+page('/endpoints/servers', () =>{
+    getEndpoints = endpointsTypeServer();
 
     pagesTable('endpoint');
 

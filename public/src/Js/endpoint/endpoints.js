@@ -22,7 +22,7 @@ async function endpoints(){
   return endpointsData;
 };
 
-async function endpointsTypeServer(){
+function endpointsTypeServer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'server');
   endpointsFilter.pages = endpointsData.pages;
   
@@ -31,7 +31,7 @@ async function endpointsTypeServer(){
   return endpointsFilter;
 }
 
-async function endpointsTypeComputer(){
+function endpointsTypeComputer(){
   endpointsFilter.items = endpointsData.items.filter(x => x.type === 'computer');
   endpointsFilter.pages = endpointsData.pages;
 
