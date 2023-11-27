@@ -66,12 +66,16 @@ const addAlloWebsite = async (valueURL) =>{
     let match = regexWebsite.exec(valueURL);
     let urlExtract = match ? match[1] : null;
 
-    getWebsiteAllow(urlExtract);
 
     if (setwebsite.has(urlExtract)){
         return true;
     }else if (urlExtract !== null){
-        await fetch('/data/websites/post');
+
+        console.log('WORK');
+        getWebsiteAllow(urlExtract);
+
+        await fetch(`/data/websites/post`);
+
         return false;
     }
 
@@ -79,11 +83,9 @@ const addAlloWebsite = async (valueURL) =>{
 };
 
 const btnBlockWebsite = async (id) =>{
-    await fetch(`/data/websites/delete/:${id}`, {
-        method: 'DELETE',
-    });
-    
     websitesRouter();
+    
+    await fetch(`/data/websites/delete/${id}`);
 };
 
 // This is from filter events to add allow
@@ -91,7 +93,7 @@ const btnAllowWebsite = async (valueURL) =>{
     valueURL = (regexWebsite.exec(valueURL) || [])[1];
     getWebsiteAllow(valueURL);
 
-    await fetch('/websites/post');
+    await fetch('/data/websites/post');
 
     eventAllRouter();
 };

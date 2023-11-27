@@ -43,18 +43,18 @@ router.get('/websites', async (request, res) => {
 router.get('/websites/post', async (request, res) => {
     const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites`);
 
+    console.log(websiteURL);
+
     await fetch(url, setAllowPOST(websiteURL))
     .then(response => response.json())
     .catch(error => console.log('error', error));
 });
 
 // /delete
-router.get('websites/delete/:id', async (request, res) => {
+router.get('/websites/delete/:id', async (request, res) => {
     const getIdWebsite = request.params.id.replace(':', '');
 
-    console.log(getIdWebsite);
-
-    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/:${getIdWebsite}`);
+    const url = new URL(`${apiHost}/endpoint/v1/settings/web-control/local-sites/${getIdWebsite}`);
 
     await fetch(url, setDelete())
     .then(response => response.json())
