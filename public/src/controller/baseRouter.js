@@ -24,7 +24,9 @@ const websitesRouter = () => {
 
 const websiteAddRouter = () =>{
     page.redirect('/add');
+};
 
+page('/add', async () => {
     render(welcomePage(addNewWebsite()), divApp);
 
     const btnWebsite = document.getElementById('allowWebsite');
@@ -50,15 +52,16 @@ const websiteAddRouter = () =>{
             }
         }  
     });
-};
+});
 
 page('/websites', async () => {
     websites = await allowWebSite();
     websites = [...websites];
 
+    pagesTable('website');
+
     if (websites.length === 0) {
         render(welcomePage(tableAllowWebsiteTemplate(websites, emptyError('The exclusion list of allowed sites to visit is empty.'))), divApp);
-        
     }else{
         render(welcomePage(tableAllowWebsiteTemplate(websites)), divApp);
     }
@@ -128,7 +131,10 @@ const welcomeNavigator = () => {
 page('/home', () => {
     render(welcomePage(), divApp);
 
-    if(chartAlerts() !== null){
+    if(chartAlerts()){
+        render(welcomePage(), divApp);
+    }
+    else{
         render(welcomePage(undefined, undefined, alertError('No alerts to create chart.')), divApp);
     }
 });

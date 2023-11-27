@@ -18,14 +18,18 @@ const chartAlerts = async () =>{
         isFirst = false;
     }
     
-    let data = await filterLow();
+    let data = filterLow();
     lowCount = data.items.length;
     
-    data = await filterMedium();
+    data = filterMedium();
     mediumCount = data.items.length;
 
-    data = await filterHigh();
+    data = filterHigh();
     highCount = data.items.length;
+
+    if (lowCount === 0 && mediumCount === 0 && highCount === 0) {
+        return false;
+    }
 
     new Chart(getChart, {
         type: 'pie',
@@ -52,6 +56,8 @@ const chartAlerts = async () =>{
             height: 100
         }
     });
+
+    return true;
 };
 
 export { chartAlerts };
