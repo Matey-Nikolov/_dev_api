@@ -114,7 +114,7 @@ function pagesTable(tableId){
       let pagination = $('#' + tableId + ' #pagination');
       pagination.empty();
       for (let i = 1; i <= totalPages; i++) {
-        let li = $('<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>');
+        let li = $('<li class="page-item"><a class="page-link">' + i + '</a></li>');
         if (i === currentPage) {
           li.addClass('active');
         }

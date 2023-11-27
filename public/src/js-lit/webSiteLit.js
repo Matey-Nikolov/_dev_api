@@ -42,7 +42,7 @@ function tableAllowWebsiteTemplate(webSite, error){
                                                         </tr>
 
                                                     </thead>
-                                                    <tbody id="table-body" @click=${handleButtonClickBlock}>
+                                                    <tbody id="website" @click=${handleButtonClickBlock}>
                                                         ${webSite.map((value) => html`
                                                             <tr>
                                                                 <td><a href="https://${value.url}">${value.url}</a></td>
