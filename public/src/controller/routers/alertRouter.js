@@ -8,7 +8,7 @@ import { pagesTable } from '../../Js/global.js';
 
 let alerts = {};
 
-const alertRouter = async () =>{
+const alertRouter = () =>{
     page.redirect('/alerts/all');
 };
 
