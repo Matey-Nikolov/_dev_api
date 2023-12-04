@@ -2,11 +2,11 @@ import { html } from "../../Global/globalLit.js";
 import { welcomeNavigator, logOutRouter } from '../../Global/globalInport.js';
 
 const navBar = (role) =>{
-    if (role === 'admin' || role === 'guest') {
-        return html`
-            <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <!-- Navbar Brand-->
-                <a class="navbar-brand ps-3" role="button" @click=${welcomeNavigator}>Welcome</a>
+    return html`
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" role="button" @click=${welcomeNavigator}>Welcome</a>
+            ${role === 'admin' || role === 'guest' ? html`
                 <!-- Sidebar Toggle-->
                 <!-- <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button> -->
                 <!-- Navbar-->
@@ -21,16 +21,9 @@ const navBar = (role) =>{
                         </ul>
                     </li>
                 </ul>
-            </nav>
-        `;
-    }else{
-        return html`
-            <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <!-- Navbar Brand-->
-                <a class="navbar-brand ps-3" role="button" @click=${welcomeNavigator}>Welcome</a>
-            </nav>
-        `;
-    }
+            ` : ''}
+        </nav>
+    `;
 };
 
 export { navBar };

@@ -3,7 +3,7 @@ import { addDoc, doc, getDocs, getFirestore, collection, getDoc, updateDoc } fro
 import { firebaseConfig } from "./firebaseConfig.js";
 
 import { welcomePage, render, loginInfo, afterAuthorization, loginTemplate, alertError } from "../Global/globalLit.js";
-import { divApp, authenticationClass, welcomeNavigator } from '../Global/globalInport.js'
+import { divApp, AuthenticationClass, welcomeNavigator } from '../Global/globalInport.js'
 
 import { whoIam } from "../Js/authorization.js";
 import { authorization } from "../Js/global.js";
@@ -20,11 +20,11 @@ let client_secretDb = '';
 let newAccess_token = '';
 
 async function refresh(){
-    const refreshToken = new authenticationClass();
+    const refreshToken = new AuthenticationClass();
   
-    refreshToken.postToken()
-    .then(async (accessToken) => {
-        newAccess_token = await accessToken;
+    refreshToken.refreshAccessToken()
+    .then((accessToken) => {
+        newAccess_token = accessToken;
         const docToUpdate = doc(db, 'User', idDoc);
 
         updateDoc(docToUpdate, {
@@ -55,7 +55,8 @@ async function createUser(event){
 };
 
 async function loginUser(usernameInput, passwordInput){
-    const postAccessToken = new authenticationClass();
+    const accessTokenFromClass = AuthenticationClass.getInstance();
+
     const querySnapshot = await getDocs(collection(db, 'User'));
 
     let trueFalse = true;
@@ -64,29 +65,29 @@ async function loginUser(usernameInput, passwordInput){
     let passwordDb = '';
     let roleDb = '';
 
-    querySnapshot.forEach(function(docInterator) {
-
+    querySnapshot.forEach(async function (docInterator) {
         userDb = docInterator.data().username;
         passwordDb = docInterator.data().password;
         roleDb = docInterator.data().role;
-
-        if (userDb === usernameInput && passwordDb === passwordInput){
+      
+        if (userDb === usernameInput && passwordDb === passwordInput) {
             idDoc = docInterator.id;
 
             client_idDb = docInterator.data().client_id;
             client_secretDb = docInterator.data().client_secret;
-            
-            postAccessToken.postToken()
-            .then(async (accessToken) => {
-                newAccess_token = await accessToken;
+
+            if (accessTokenFromClass.tokenExpirationTime > Date.now()) {
+                newAccess_token = docInterator.data().access_token;
+            } else {
+                newAccess_token = await accessTokenFromClass.postToken();
                 const docToUpdate = doc(db, 'User', idDoc);
 
                 await updateDoc(docToUpdate, {
-                    access_token: newAccess_token
+                    access_token: newAccess_token,
                 });
-
-                await whoIam(newAccess_token);
-            });
+            }
+    
+            await whoIam(newAccess_token);
 
             render(welcomePage(loginInfo(), roleDb), divApp);
 

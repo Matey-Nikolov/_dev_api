@@ -14,7 +14,7 @@ import { getAlerts, filterLow, filterMedium, filterHigh } from '../Js/alerts.js'
 // --------------------------------------------------------------------
 
 // ----------------------authentication--------------------------------
-import { authenticationClass } from '../Js/authentication.js';
+import { AuthenticationClass } from '../Js/authentication.js';
 // --------------------------------------------------------------------
 
 // ---------------------endpoint---------------------------------------
@@ -39,7 +39,7 @@ export { welcomeNavigator, loginRouter, registerRouter, logOutRouter, websitesRo
 export { endpointsRouter, endpointsTypeServerRouter, endpointsTypeComputerRouter };
 export { eventAllRouter, eventWebsiteRouter, websiteAddRouter };
 
-export { authenticationClass };
+export { AuthenticationClass };
 export { endpoints, endpointsTypeServer, endpointsTypeComputer };
 
 export { alertRouter, alertLowRouter, alertMediumRouter, alertHighRouter};
