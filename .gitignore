@@ -12,3 +12,4 @@ Tests/routing/js/datatables-simple-demo.js
 Tests/routing/js/scripts.js
 Tests/chart/charts.js
 Tests/chart/index.html
+Tests/firebase/firebaseConfig.js

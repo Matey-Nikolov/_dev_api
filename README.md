@@ -1,7 +1,5 @@
-# Final_Project_Demo
+# Clone_dev_api_sophos
 This is a single-page application using [Sophos Central APIs](https://developer.sophos.com/).
-
-> **Warning:** This project won't work because of  [cors policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), so you need to put an extension. Uses a real environment and may not work sometimes flaws a malfunction in the environment itself.
 
 ## Resources
 Here are some used for the project.
@@ -15,34 +13,24 @@ Here are some used for the project.
 - [Firebase](https://firebase.google.com/) - Firestore database and hosting.
 - JavaScript, HTML and CSS
 
-## Online usage
-Use this link online. Hosting with Firebase.
-For login use
-- username - Test
-- password - 12312
-```
-https://apischool-29b4b.web.app/
-```
 
-## Usage
-To use this project, follow these steps:
-
-Step 1: Clone the repository.
+For starting the SPA
+- clone repo.
+- Open terminal in directory 'C:\\...\GitHub\Clone_dev_api_sophos'
+- In terminal write this
    ```shell
-   git clone https://github.com/your-username/your-repository.git
+    node server.js
    ```
-Step 2. Install lite-server
+- Went you start in terminal show this massage
+    ```shell
+      Server is running on port {port}
+   ```
+- To view website
    ```shell
-   npm i lite-server
+   http://localhost:{port}
    ```
-Step 3. Run the project.
+- For login
    ```shell
-   npm run start
-   ```
-Step 4. Login
-   ```
-   Username - Test
-   Password - 12312
-   
-   You can only read the information.
+   Usrername - Matey
+   Password - 1233
    ```
