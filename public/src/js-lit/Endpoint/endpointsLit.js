@@ -90,6 +90,18 @@ function tableEndpointsTemplate(endpoints){
                 </div>
             </div>
         </div>
+
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" id="myToast">
+            <div class="toast-header">
+            <strong class="mr-auto">Bootstrap Toast</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="toast-body">
+            This is a Bootstrap toast example. You can customize the content and appearance as needed.
+            </div>
+        </div>
     </div>`
 };
 

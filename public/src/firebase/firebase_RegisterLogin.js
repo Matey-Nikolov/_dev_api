@@ -15,14 +15,16 @@ let docRef;
 
 const db = getFirestore(app);
 let idDoc = '';
-let client_idDb = '';
-let client_secretDb = '';
+
+let client_Id_Db = '';
+let client_secret_Db = '';
+
 let newAccess_token = '';
 
 async function refresh(){
     const refreshToken = new AuthenticationClass();
   
-    refreshToken.refreshAccessToken()
+    refreshToken.refreshAccessToken(client_Id_Db, client_secret_Db)
     .then((accessToken) => {
         newAccess_token = accessToken;
         const docToUpdate = doc(db, 'User', idDoc);
@@ -54,52 +56,47 @@ async function createUser(event){
     }
 };
 
-async function loginUser(usernameInput, passwordInput){
+async function loginUser(usernameInput, passwordInput) {
     const accessTokenFromClass = AuthenticationClass.getInstance();
 
     const querySnapshot = await getDocs(collection(db, 'User'));
 
-    let trueFalse = true;
+    let foundUser;
 
-    let userDb = '';
-    let passwordDb = '';
-    let roleDb = '';
+    await Promise.all(querySnapshot.docs.map(async (docIterator) => {
+        const userDb = docIterator.data().username;
+        const passwordDb = docIterator.data().password;
 
-    querySnapshot.forEach(async function (docInterator) {
-        userDb = docInterator.data().username;
-        passwordDb = docInterator.data().password;
-        roleDb = docInterator.data().role;
-      
         if (userDb === usernameInput && passwordDb === passwordInput) {
-            idDoc = docInterator.id;
-
-            client_idDb = docInterator.data().client_id;
-            client_secretDb = docInterator.data().client_secret;
-
-            if (accessTokenFromClass.tokenExpirationTime > Date.now()) {
-                newAccess_token = docInterator.data().access_token;
-            } else {
-                newAccess_token = await accessTokenFromClass.postToken();
-                const docToUpdate = doc(db, 'User', idDoc);
-
-                await updateDoc(docToUpdate, {
-                    access_token: newAccess_token,
-                });
-            }
-    
-            await whoIam(newAccess_token);
-
-            render(welcomePage(loginInfo(), roleDb), divApp);
-
-            trueFalse = false;
-            return;
+            foundUser = docIterator;
         }
-    });
+    }));
 
-    if (trueFalse) {
-        render(welcomePage(loginTemplate(alertError('Your username or password is invalid!'))), divApp); 
+    if (!foundUser) {
+        render(welcomePage(loginTemplate(alertError('Your username or password is invalid!'))), divApp);
+        return;
     }
-};
+
+    idDoc = foundUser.id;
+    const roleDb = foundUser.data().role;
+
+    const accessTokenExpiration = accessTokenFromClass.tokenExpirationTime;
+
+    client_Id_Db = foundUser.data().client_id;
+    client_secret_Db = foundUser.data().client_secret;
+
+    if (accessTokenExpiration > Date.now()) {
+        newAccess_token = foundUser.data().access_token;
+    } else {
+        newAccess_token = await accessTokenFromClass.postToken(client_Id_Db, client_secret_Db);
+        const docToUpdate = doc(db, 'User', idDoc);
+
+        await updateDoc(docToUpdate, { access_token : newAccess_token });
+    }
+
+    await whoIam(newAccess_token);
+    render(welcomePage(loginInfo(), roleDb), divApp);
+}
+
 
 export { createUser, loginUser, refresh };
-export { client_idDb, client_secretDb }

@@ -1,5 +1,3 @@
-import { client_idDb, client_secretDb } from '../firebase/firebase_RegisterLogin.js';
-
 export class AuthenticationClass {
   static instance;
 
@@ -16,14 +14,8 @@ export class AuthenticationClass {
     return AuthenticationClass.instance;
   };
 
-  async postToken() {
-
-    // if (this.accessToken !== undefined && this.tokenExpirationTime > Date.now()) {
-    //   console.log('Work (from cache)');
-    //   return this.accessToken;
-    // }
-
-    const response = await fetch(`/data/token/:${client_idDb}/:${client_secretDb}`);
+  async postToken(client_Id_Db, client_secret_Db) {
+    const response = await fetch(`/data/token/:${client_Id_Db}/:${client_secret_Db}`);
 
     if (!response.ok) {
       throw new Error(`API request failed with status: ${response.status}`);
@@ -38,8 +30,8 @@ export class AuthenticationClass {
   };
 
 
-  async refreshAccessToken() {
-    const response = await fetch(`/data/token/:${client_idDb}/:${client_secretDb}`);
+  async refreshAccessToken(client_Id_Db, client_secret_Db) {
+    const response = await fetch(`/data/token/:${client_Id_Db}/:${client_secret_Db}`);
 
     if (!response.ok) {
       throw new Error(`API request failed with status: ${response.status}`);
