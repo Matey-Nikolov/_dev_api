@@ -31,6 +31,6 @@ For starting the SPA
    ```
 - For login
    ```shell
-   Usrername - Matey
-   Password - 1233
+   Usrername - TestUsername
+   Password - 1(*#dfj2
    ```
