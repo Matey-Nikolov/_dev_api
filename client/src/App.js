@@ -11,6 +11,7 @@ import AlertTable from './component/alert/alert';
 import useToken from './Services/useToken';
 import EndpointPage from './component/endpoint/endpointPage';
 import EventTable from './component/events/eventTable';
+import WebsiteTable from './component/website/websiteTable';
 
 function App() {
   const { token, setToken } = useToken();
@@ -32,6 +33,7 @@ function App() {
                 <Route path='/alerts' element={<AlertTable />} />
                 <Route path='/endpoints' element={<EndpointPage />} />
                 <Route path='/events' element={<EventTable />} />
+                <Route path='/websites' element={<WebsiteTable />} />
               </Routes>
             </div>
           </div>
