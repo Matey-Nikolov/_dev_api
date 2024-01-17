@@ -9,6 +9,7 @@ import whoIAmRouter from './Router/authorizationRouter.js';
 import alertRouter from './Router/alertRouter.js';
 import endpointRouter from './Router/endpointRouter.js';
 import getEvents from './Router/eventRouter.js';
+import websiteRouter from './Router/websiteRouter.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,6 +44,8 @@ app.use('/alert', alertRouter);
 app.use('/endpoint', endpointRouter);
 
 app.use('/events', getEvents);
+
+app.use('/website', websiteRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
