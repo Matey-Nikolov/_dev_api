@@ -1,37 +1,46 @@
 import { auth, signInWithEmailAndPassword, db } from '../firebase/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
 
-import { setGlobalStage, useGlobalState } from '../hooks';
+import { setGlobalState } from '../hooks';
 
-const usersCollectionRef = collection(db, 'User');
-let accessToken = '';
+class AuthLogin {
+  constructor(email, password) {
+    this.email = email;
+    this.password = password;
+    this.accessToken = '';
+    this.usersCollectionRef = collection(db, 'User');
+  };
 
-const signInWithEmail =  async (email, password) =>{
-  await signInWithEmailAndPassword(auth, email, password)
-  .then(async (userCredential) => {
+  async signIn() {
+    await signInWithEmailAndPassword(auth, this.email, this.password)
+      .then(async (userCredential) => {
+        this.accessToken = userCredential.user.accessToken;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
-    await findUserByEmail(userCredential.user.email);
+    return this.accessToken;
+  };
 
-    accessToken = userCredential.user.accessToken;
-  })
-  .catch((error) => {
+  async findUserByEmail(userEmail) {
+    const data = await getDocs(this.usersCollectionRef);
+    let returnData = {};
 
-  });
+    data.docs.map((doc) => {
+      if(doc.data().email === userEmail){
+        setGlobalState('client_Id_Db', doc.data().client_id);
+        setGlobalState('client_secret_Db', doc.data().client_secret);
 
-  return accessToken;
+        returnData = {
+          clientId: doc.data().client_id,
+          client_secret_Id: doc.data().client_secret
+        };
+      }
+    });
+
+    return returnData;
+  };
 };
 
-const findUserByEmail = async (userEmail) =>{
-  const data = await getDocs(usersCollectionRef);
-
-  data.docs.map((doc) => { 
-
-    //console.log(doc.data().email === userEmail);
-
-    if(doc.data().email === userEmail){
-      
-    };
-  });
-};
-
-export { signInWithEmail };
+export { AuthLogin };
