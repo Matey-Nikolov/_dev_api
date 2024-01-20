@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Table, Button, Alert, Container } from 'react-bootstrap';
 
 import WebsiteService from '../../Services/websiteService';
 
@@ -14,15 +14,17 @@ const WebsiteTable = () => {
 
   const websiteServiceInstance = new WebsiteService(tokenTenat, tenetId);
 
+  const [useWebsites, setWebsites] = useState([]);
 
-  const [useWebsites, setWebsite] = useState([]);
+  const [successAlert, setSuccessAlert] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const websiteData = await websiteServiceInstance.allowWebsite();
 
-        setWebsite([...websiteData]);
+        setWebsites([...websiteData]);
       } catch (error) {
         console.error('Error fetching websites:', error);
         throw error;
@@ -30,35 +32,56 @@ const WebsiteTable = () => {
     };
 
     fetchData();
-  }, []);
+  }, [setWebsites]);
    
+  const memoizedWebsites = useMemo(() => useWebsites, [useWebsites]);
+
+  async function handleButtonClickBlock(website_Id){
+    const isDeleted = await websiteServiceInstance.btnBlockWebsite(website_Id);
+
+    setWebsites((prevWebsites) => prevWebsites.filter((website) => website.id !== website_Id));
+
+    setSuccessAlert(isDeleted);
+
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
+  };
+
   return (
-    <Table responsive bordered hover>
-      <thead>
-        <tr>
-          <th scope="col">Site</th>
-          <th scope="col">Comment</th>
-          <th scope="col">Block</th>
-        </tr>
-      </thead>
-      <tbody id="website">
-        {useWebsites.map((items) => (
-          <tr key={items.id}>
-            <td>
-              <a href={`https://${items.url}`} target="_blank" rel="noopener noreferrer">
-                {items.url}
-              </a>
-            </td>
-            <td>{items.comment}</td>
-            <td>
-              <Button>
-                Block
-              </Button>
-            </td>
+    <Container className="mt-5">
+      {successAlert && (
+        <Alert variant="info" onClose={() => setSuccessAlert(false)} dismissible>
+          Block website successfully!
+        </Alert>
+      )}
+      <Table responsive bordered hover>
+        <thead>
+          <tr>
+            <th scope="col">Site</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Block</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody id="website">
+          {memoizedWebsites.map((items) => (
+            <tr key={items.id}>
+              <td>
+                <a href={`https://${items.url}`} target="_blank" rel="noopener noreferrer">
+                  {items.url}
+                </a>
+              </td>
+              <td>{items.comment}</td>
+              <td>
+                <Button onClick={() => handleButtonClickBlock(items.id)} variant="info">
+                  Block
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
   );
 };
   
