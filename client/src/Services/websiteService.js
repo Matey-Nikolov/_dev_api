@@ -7,6 +7,7 @@ class WebsiteService {
       this.regexWebsite = /(?:https?:\/\/www\.)?(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
       this.accessToken = accessToken;
       this.id = id;
+      this.isDeleted = false;
     }
 
     getWebsiteData = async () => {
@@ -70,10 +71,12 @@ class WebsiteService {
   
     btnBlockWebsite = async (website_Id) => {
       try {
-        await ApiWebsite.deleteRequest();
+        this.isDeleted = await apiRequestWebsite.deleteRequest(this.accessToken, this.id, website_Id);
       } catch (error) {
         console.error('Error blocking website:', error);
-      }
+      };
+
+      return this.isDeleted.data;
     };
   
     // btnAllowWebsite = async (valueURL) => {

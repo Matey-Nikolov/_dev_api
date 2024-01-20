@@ -7,7 +7,8 @@ class ApiWebsite {
             'accessToken': '',
             'access_Id': '',
         };
-    }
+        this.isDeleted = false;
+    };
 
     // setCredentials(getAccessToken, getAccess_Id){
     //     console.log(getAccessToken);
@@ -32,27 +33,27 @@ class ApiWebsite {
             this.website = response.data;
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
-        }
+        };
 
         return this.website;
-    }
+    };
 
-    async deleteRequest(website_Id){
-        // try {
-        //     const response = await api.get('/website/delete', {
-        //         params: {
-        //             accessToken,
-        //             access_Id
-        //         },
-        //     });
+    async deleteRequest(accessToken, access_Id, website_Id){
+        try {
+            this.isDeleted = await api.get('/website/delete', {
+                params: {
+                    accessToken,
+                    access_Id,
+                    website_Id
+                },
+            });
 
-        //     this.website = response.data;
-        // } catch (error) {
-        //     console.error('Error:', error.response ? error.response.data : error.message);
-        // }
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        }
 
-        // return this.website;
-    }
-}
+        return this.isDeleted;
+    };
+};
 
 export default ApiWebsite;
