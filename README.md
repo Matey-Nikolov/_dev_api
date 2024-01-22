@@ -20,7 +20,7 @@ Here are some used for the project.
 
 ## How to setup client application folder
 
-In terminal (../client) install this packages 
+In terminal (../client) install this packages:
 - react
 - axios
 - react-bootstrap and bootstrap (for now)
@@ -43,5 +43,18 @@ To run the client application you must be on port 3001. Otherwise you will not h
 ```
 npm start
 ```
+## Server part
 
+In terminal (../server) install this packages:
+- cors
+- axios
+- express
+- express-rate-limit
+- express-validator
+- helmet
 
+For the server part of the code, it is used as a correspondence between the client application and the rest of the Internet.
+To run this:
+```
+npm run start
+```
