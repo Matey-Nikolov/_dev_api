@@ -2,26 +2,12 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Container } from 'react-bootstrap';
 
 import fetchAlerts from '../../Services/alertService';
+import FilterButtons from './FilterButtonsAlerts'; 
 
 import { useGlobalState } from '../../hooks';
-
-const filterOptions = [
-  { label: 'get alerts', value: '' },
-  { label: 'All', value: 'all' },
-  { label: 'Low', value: 'low', variant: 'success' },
-  { label: 'Medium', value: 'medium', variant: 'warning' },
-  { label: 'High', value: 'high', variant: 'danger' }
-];
-
-function FilterButton({ label, value, variant, onClick }) {
-  return (
-    <Button onClick={() => onClick(value)} variant={variant} className="me-2">
-      {label}
-    </Button>
-  );
-}
 
 function AlertTable() {
   const [tenetId] = useGlobalState('tenetId');
@@ -30,8 +16,9 @@ function AlertTable() {
   
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
 
+  const [searchTerm, setSearchTerm] = useState('');
+  
   const fetchData = useCallback(async () => {
     await fetchAlerts(filter, useDataGetAlerts, setData, setFilter);
   }, [filter, useDataGetAlerts]);
@@ -88,70 +75,78 @@ function AlertTable() {
   }, [data, searchTerm, filter]);
 
   if (!data) {
-    return <p>Loading...</p>;
-  }
-
-  return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-9">
-          <div className="card bg-dark shadow-2-strong">
-            <div className="card-body">
-                <div className="mb-1">
-                  {filterOptions.map((option) => (
-                    <FilterButton
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                      variant={option.variant}
-                      onClick={handleFilterChange}
-                    />
-                  ))}
-                  <Form.Control
-                    type="text"
-                    placeholder="Search..."
-                    className="w-auto d-inline-block"
-                    onChange={handleSearch}
-                    value={searchTerm}
-                  />
+    return(
+      <>
+        <div className="container-fluid px-4">
+          <div>
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-lg-5">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h5 className="text-center font-weight-light my-4">
+                        Loading alerts from database.
+                      </h5>
+                    </div>
+                  </div>
                 </div>
-                <Table responsive bordered striped className="mt-2">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Product</th>
-                      <th>Severity</th>
-                      <th>Description</th>
-                      <th>RaisedAt</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredData.map((value, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{value.product}</td>
-                        <td>
-                          {value.severity === 'low' ? (
-                            <span className="badge bg-success">low</span>
-                          ) : value.severity === 'medium' ? (
-                            <span className="badge bg-warning">medium</span>
-                          ) : value.severity === 'high' ? (
-                            <span className="badge bg-danger">high</span>
-                          ) : (
-                            ''
-                          )}
-                        </td>
-                        <td>{value.description}</td>
-                        <td>{value.raisedAt}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </>
+    );
+  }
+
+  return (
+    <Container className="mt-5">
+      <FilterButtons
+        filterType={filter}
+        handleFilterChange={handleFilterChange}
+      />
+
+      <Form.Control
+          type="text"
+          placeholder="Search..."
+          className="w-auto d-inline-block"
+          onChange={handleSearch}
+          value={searchTerm}
+      />
+
+      <Table responsive bordered striped className="mt-2">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Severity</th>
+            <th>Description</th>
+            <th>RaisedAt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData.map((value, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{value.product}</td>
+              <td>
+                {value.severity === 'low' ? (
+                  <span className="badge bg-success">low</span>
+                ) : value.severity === 'medium' ? (
+                  <span className="badge bg-warning">medium</span>
+                ) : value.severity === 'high' ? (
+                  <span className="badge bg-danger">high</span>
+                ) : (
+                  ''
+                )}
+              </td>
+              <td>{value.description}</td>
+              <td>{value.raisedAt}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
+
   );
 }
 
