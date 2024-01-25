@@ -3,11 +3,14 @@ import { Table, Button, Alert, Container } from 'react-bootstrap';
 
 import WebsiteService from '../../Services/websiteService';
 
+import { useNavigate } from "react-router-dom";
+
 import { useGlobalState } from '../../hooks';
 
 
 
 const WebsiteTable = () => {
+  const navigate = useNavigate();
 
   const [tenetId] = useGlobalState('tenetId');
   const [tokenTenat] = useGlobalState('tokenTenat');
@@ -17,7 +20,6 @@ const WebsiteTable = () => {
   const [useWebsites, setWebsites] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +38,7 @@ const WebsiteTable = () => {
    
   const memoizedWebsites = useMemo(() => useWebsites, [useWebsites]);
 
-  async function handleButtonClickBlock(website_Id){
+  async function handleButtonClickBlockWebsite(website_Id){
     const isDeleted = await websiteServiceInstance.btnBlockWebsite(website_Id);
 
     setWebsites((prevWebsites) => prevWebsites.filter((website) => website.id !== website_Id));
@@ -48,8 +50,36 @@ const WebsiteTable = () => {
     }, 4000);
   };
 
+  if (!memoizedWebsites) {
+    return(
+      <>
+        <div className="container-fluid px-4">
+          <div>
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-lg-5">
+                  <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                      <h3 className="text-center font-weight-light my-4">Welcome to API center</h3>
+                      <h5 className="text-center font-weight-light my-4">
+                        Loading website from database.
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <Container className="mt-5">
+      <Button onClick={() => navigate('/addwebsite')} variant="info">
+        Add website
+      </Button>
       {successAlert && (
         <Alert variant="info" onClose={() => setSuccessAlert(false)} dismissible>
           Block website successfully!
@@ -73,7 +103,7 @@ const WebsiteTable = () => {
               </td>
               <td>{items.comment}</td>
               <td>
-                <Button onClick={() => handleButtonClickBlock(items.id)} variant="info">
+                <Button onClick={() => handleButtonClickBlockWebsite(items.id)} variant="info">
                   Block
                 </Button>
               </td>

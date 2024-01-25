@@ -8,6 +8,10 @@ class ApiWebsite {
             'access_Id': '',
         };
         this.isDeleted = false;
+        this.isAddWebsite = {
+            'status': -1,
+            'information': { }
+        };
     };
 
     // setCredentials(getAccessToken, getAccess_Id){
@@ -27,7 +31,7 @@ class ApiWebsite {
                 params: {
                     accessToken,
                     access_Id
-                },
+                }
             });
             
             this.website = response.data;
@@ -45,7 +49,7 @@ class ApiWebsite {
                     accessToken,
                     access_Id,
                     website_Id
-                },
+                }
             });
 
         } catch (error) {
@@ -53,6 +57,23 @@ class ApiWebsite {
         }
 
         return this.isDeleted;
+    };
+
+    async addWebsiteRequest(accessToken, access_Id, url){
+        try {
+            this.isAddWebsite = await api.get('/website/add', {
+                params: {
+                    accessToken,
+                    access_Id,
+                    url
+                }
+            });
+
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isAddWebsite;
     };
 };
 
