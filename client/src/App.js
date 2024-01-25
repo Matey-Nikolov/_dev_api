@@ -11,7 +11,9 @@ const LoginPage = lazy(() => import('./component/auth/Login'));
 const AlertPage = lazy(() => import('./component/alert/Alert'));
 const EndpointPage = lazy(() => import('./component/endpoint/endpointPage'));
 const EventTable = lazy(() => import('./component/events/eventTable'));
+
 const WebsiteTable = lazy(() => import('./component/website/websiteTable'));
+const AddWebsite = lazy(() => import('./component/website/websiteAdd'));
 
 function App() {
   const { token, setToken } = useToken();
@@ -35,6 +37,7 @@ function App() {
                   <Route path="/endpoints" element={<EndpointPage />} />
                   <Route path="/events" element={<EventTable />} />
                   <Route path="/websites" element={<WebsiteTable />} />
+                  <Route path="/addwebsite" element={<AddWebsite />} />
                 </Routes>
               </Suspense>
             </div>
