@@ -8,7 +8,7 @@ import useToken from './Services/useToken';
 const HomePage = lazy(() => import('./component/HomePage'));
 const LoginPage = lazy(() => import('./component/auth/Login'));
 // const RegisterPage = lazy(() => import('./component/register'));
-const AlertPage = lazy(() => import('./component/alert/Alert'));
+const AlertPage = lazy(() => import('./component/alert/alert'));
 const EndpointPage = lazy(() => import('./component/endpoint/endpointPage'));
 const EventTable = lazy(() => import('./component/events/eventTable'));
 
