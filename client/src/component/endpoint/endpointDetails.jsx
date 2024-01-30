@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
+
+import secureStorage   from 'react-secure-storage';
+
 import { Table } from 'react-bootstrap';
 
 import { fetchEndpointDetails } from '../../Services/endpointsService';
-import { useGlobalState } from '../../hooks';
+// import { useGlobalState } from '../../hooks';
+
+
 
 const EndpointDetails = ({ machine_Id, onBackClick  }) => {
   const setMachineId = new Set();
 
-  const [tenetId] = useGlobalState('tenetId');
-  const [tokenTenat] = useGlobalState('tokenTenat');
+  const tenetId = secureStorage.getItem('tenetId');
+  const tokenTenat = secureStorage.getItem('tokenTenat');
+  
   const [useDataGetEndpoints] = useState({ tenetId, tokenTenat });
 
   const [endpointDetailsMap, setEndpointDetailsMap] = useState({});

@@ -105,4 +105,11 @@ class WebsiteService {
   };
 };
   
-export default WebsiteService;
+let instance = null;
+
+export default function getWebsiteServiceInstance(accessToken, id) {
+  if (!instance) {
+    instance = new WebsiteService(accessToken, id);
+  }
+  return instance;
+};

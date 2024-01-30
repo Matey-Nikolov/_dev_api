@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchEndpoints, fetchEndpointScan } from '../../Services/endpointsService';
 import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
 
-import { useGlobalState } from '../../hooks';
+//import { useGlobalState } from '../../hooks';
+import secureStorage   from 'react-secure-storage';
 
 import FilterButtons from './filterEndpointsButtons';
 
@@ -12,9 +13,9 @@ const EndpointTable = ({ onEndpointDetailsClick }) => {
 
   const [successAlert, setSuccessAlert] = useState(false);
 
-  const [tenetId] = useGlobalState('tenetId');
-  const [tokenTenat] = useGlobalState('tokenTenat');
-
+  const tenetId = secureStorage.getItem('tenetId');
+  const tokenTenat = secureStorage.getItem('tokenTenat');
+  
   const [useDataGetEndpoints] = useState({ tenetId, tokenTenat });
 
   const [filterType, setFilterType] = useState('all');

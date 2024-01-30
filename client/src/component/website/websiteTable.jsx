@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Table, Button, Alert, Container } from 'react-bootstrap';
 
-import WebsiteService from '../../Services/websiteService';
+import getWebsiteServiceInstance from '../../Services/websiteService';
 
 import { useNavigate } from "react-router-dom";
 
-import { useGlobalState } from '../../hooks';
-
-
+// import { useGlobalState } from '../../hooks';
+import secureStorage   from 'react-secure-storage';
 
 const WebsiteTable = () => {
   const navigate = useNavigate();
 
-  const [tenetId] = useGlobalState('tenetId');
-  const [tokenTenat] = useGlobalState('tokenTenat');
-
-  const websiteServiceInstance = new WebsiteService(tokenTenat, tenetId);
+  const tenetId = secureStorage.getItem('tenetId');
+  const tokenTenat = secureStorage.getItem('tokenTenat');
+  
+  // return class 
+  const websiteService = new getWebsiteServiceInstance(tokenTenat, tenetId);
 
   const [useWebsites, setWebsites] = useState([]);
 
@@ -24,22 +24,21 @@ const WebsiteTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const websiteData = await websiteServiceInstance.allowWebsite();
-
+        const websiteData = await websiteService.allowWebsite();
         setWebsites([...websiteData]);
       } catch (error) {
         console.error('Error fetching websites:', error);
         throw error;
       }
     };
-
+  
     fetchData();
-  }, [setWebsites]);
-   
+  }, [websiteService]);
+  
   const memoizedWebsites = useMemo(() => useWebsites, [useWebsites]);
-
+  
   async function handleButtonClickBlockWebsite(website_Id){
-    const isDeleted = await websiteServiceInstance.btnBlockWebsite(website_Id);
+    const isDeleted = await websiteService.btnBlockWebsite(website_Id);
 
     setWebsites((prevWebsites) => prevWebsites.filter((website) => website.id !== website_Id));
 

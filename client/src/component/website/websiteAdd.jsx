@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { Button, Card, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-import WebsiteService from '../../Services/websiteService';
+import getWebsiteServiceInstance from '../../Services/websiteService';
 
-import { useGlobalState } from '../../hooks';
+// import { useGlobalState } from '../../hooks';
+import secureStorage   from 'react-secure-storage';
 
 const AddWebsite = () => {
 
-  const [tenetId] = useGlobalState('tenetId');
-  const [tokenTenat] = useGlobalState('tokenTenat');
+  const tenetId = secureStorage.getItem('tenetId');
+  const tokenTenat = secureStorage.getItem('tokenTenat');
   
-  const websiteServiceInstance = new WebsiteService(tokenTenat, tenetId);
+  // return class 
+  const websiteService = new getWebsiteServiceInstance(tokenTenat, tenetId);
+
   const navigate = useNavigate();
 
   const [successAddWebsite, setSuccessAddWebsite] = useState(false);
@@ -22,7 +25,7 @@ const AddWebsite = () => {
 
     const websiteUrl = e.target.elements.url.value;
 
-    const isAddWebsite = await websiteServiceInstance.btnAllowWebsite(websiteUrl);
+    const isAddWebsite = await websiteService.btnAllowWebsite(websiteUrl);
 
     setSuccessAddWebsite(isAddWebsite === 200);
     setErrorAddWebsite(isAddWebsite === -1);
