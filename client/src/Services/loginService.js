@@ -1,7 +1,7 @@
 import { auth, signInWithEmailAndPassword, db } from '../firebase/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
 
-import { setGlobalState } from '../hooks';
+import secureStorage from 'react-secure-storage';
 
 class AuthLogin {
   constructor(email, password) {
@@ -29,8 +29,9 @@ class AuthLogin {
 
     data.docs.map((doc) => {
       if(doc.data().email === userEmail){
-        setGlobalState('client_Id_Db', doc.data().client_id);
-        setGlobalState('client_secret_Db', doc.data().client_secret);
+        
+        secureStorage.setItem('client_Id_Db', doc.data().client_id);
+        secureStorage.setItem('client_secret_Db', doc.data().client_secret);
 
         returnData = {
           clientId: doc.data().client_id,

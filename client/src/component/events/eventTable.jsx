@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-
-import { useGlobalState } from '../../hooks';
+import secureStorage   from 'react-secure-storage';
 
 import { fetchEvents } from '../../Services/eventsService';
 
 const EventTable = () => {
-  const [tenetId] = useGlobalState('tenetId');
-  const [tokenTenat] = useGlobalState('tokenTenat');
+  const tenetId = secureStorage.getItem('tenetId');
+  const tokenTenat = secureStorage.getItem('tokenTenat');
 
   const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 

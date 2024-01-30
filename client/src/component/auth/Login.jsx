@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import secureStorage   from 'react-secure-storage';
 
 import { AuthLogin } from '../../Services/loginService';
 import { postToken } from '../../axiosrequests/apiToken';
 import { whoIAm } from '../../axiosrequests/apiAuth';
-import { setGlobalState } from '../../hooks';
+
+// import { setGlobalState } from '../../hooks';
 
 class LoginPage extends React.Component {
   static propTypes = {
@@ -41,9 +43,9 @@ class LoginPage extends React.Component {
         let setAuthToken = await postToken(infoUser);
         let tenetId = await whoIAm(setAuthToken);
 
-        setGlobalState('tenetId', tenetId);
-        setGlobalState('tokenTenat', setAuthToken);
-
+        secureStorage.setItem('tenetId', tenetId);
+        secureStorage.setItem('tokenTenat', setAuthToken);
+        
       } catch (error) {
         console.error('Error:', error.message);
       }

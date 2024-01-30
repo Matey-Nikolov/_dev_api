@@ -7,11 +7,13 @@ import { Container } from 'react-bootstrap';
 import fetchAlerts from '../../Services/alertService';
 import FilterButtons from './FilterButtonsAlerts'; 
 
-import { useGlobalState } from '../../hooks';
+//import { useGlobalState } from '../../hooks';
+import secureStorage   from 'react-secure-storage';
 
 function AlertTable() {
-  const [tenetId] = useGlobalState('tenetId');
-  const [tokenTenat] = useGlobalState('tokenTenat');
+  const tenetId = secureStorage.getItem('tenetId');
+  const tokenTenat = secureStorage.getItem('tokenTenat');
+
   const [useDataGetAlerts] = useState({ tenetId, tokenTenat });
   
   const [data, setData] = useState(null);
