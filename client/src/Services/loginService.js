@@ -17,7 +17,7 @@ class AuthLogin {
         this.accessToken = userCredential.user.accessToken;
       })
       .catch((error) => {
-        console.error(error);
+        return this.accessToken = false;
       });
 
     return this.accessToken;

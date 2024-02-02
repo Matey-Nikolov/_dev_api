@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container } from 'react-bootstrap';
 
-import fetchAlerts from '../../Services/alertService';
+import { fetchAlerts } from '../../Services/alertService';
 import FilterButtons from './FilterButtonsAlerts'; 
 
 //import { useGlobalState } from '../../hooks';
 import secureStorage   from 'react-secure-storage';
 
 function AlertTable() {
+  
   const tenetId = secureStorage.getItem('tenetId');
   const tokenTenat = secureStorage.getItem('tokenTenat');
 
@@ -150,6 +150,6 @@ function AlertTable() {
     </Container>
 
   );
-}
+};
 
 export default AlertTable;

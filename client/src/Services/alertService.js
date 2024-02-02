@@ -19,6 +19,24 @@ function compareByTime(a, b) {
     return timeB - timeA;
 }
 
+async function countAlerts(dataAccess){
+    await getAlers(dataAccess);
+
+    let countLowAlerts = sortedAlerts.items.filter(x => x.severity === 'low').length;
+    let countMediumAlerts = sortedAlerts.items.filter(x => x.severity === 'medium').length;
+    let countHighAlerts = sortedAlerts.items.filter(x => x.severity === 'high').length;
+
+    console.log(countLowAlerts);
+    console.log(countMediumAlerts);
+    console.log(countHighAlerts);
+
+    return { 
+        'low': countLowAlerts, 
+        'medium': countMediumAlerts, 
+        'high': countHighAlerts 
+    };
+}
+
 function filterAlerts(source, severity) {
     if (severity === 'all') {
         return source;
@@ -56,4 +74,4 @@ const fetchAlerts = async (filter, useDataGetAlerts, setData) => {
     }
 };
 
-export default fetchAlerts;
+export { fetchAlerts, countAlerts };
