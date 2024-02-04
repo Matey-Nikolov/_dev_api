@@ -6,6 +6,10 @@ import { Container } from 'react-bootstrap';
 import { fetchAlerts } from '../../Services/alertService';
 import FilterButtons from './FilterButtonsAlerts'; 
 
+
+import Pagination from '../Table/Pagination';
+import usePagination from '../../Services/Table/PaginationLogic';
+
 //import { useGlobalState } from '../../hooks';
 import secureStorage   from 'react-secure-storage';
 
@@ -76,6 +80,15 @@ function AlertTable() {
     );
   }, [data, searchTerm, filter]);
 
+  const {
+    currentPage,
+    itemsPerPage,
+    setCurrentPage,
+    getPaginatedItems,
+  } = usePagination();
+
+  const currentItems = getPaginatedItems(filteredData);
+
   if (!data) {
     return(
       <>
@@ -115,7 +128,7 @@ function AlertTable() {
           value={searchTerm}
       />
 
-      <Table responsive bordered striped className="mt-2">
+      <Table id="alertTable" responsive bordered striped className="mt-2">
         <thead>
           <tr>
             <th>#</th>
@@ -126,7 +139,7 @@ function AlertTable() {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((value, index) => (
+          {currentItems.map((value, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{value.product}</td>
@@ -147,6 +160,14 @@ function AlertTable() {
           ))}
         </tbody>
       </Table>
+      
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredData.length}
+        setCurrentPage={setCurrentPage}
+      />
+
     </Container>
 
   );
