@@ -1,11 +1,13 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import './App.css';
+
 import Navbar from './component/navbar/Navbar';
 import Footer from './component/Footer/Footer';
 import useToken from './Services/useToken';
 
-const HomePage = lazy(() => import('./component/HomePage'));
+const HomePage = lazy(() => import('./component/Home/HomePage'));
 const LoginPage = lazy(() => import('./component/auth/Login'));
 // const RegisterPage = lazy(() => import('./component/register'));
 const AlertPage = lazy(() => import('./component/alert/alert'));
@@ -20,15 +22,11 @@ function App() {
 
   if (!token) {
     return <LoginPage setToken={setToken} />;
-  }
+  };
 
   return (
     <Router>
-      <div className="App">
         <Navbar />
-        <div className="container-fluid">
-          <div className="row">
-            <div>
               <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
@@ -40,11 +38,7 @@ function App() {
                   <Route path="/addwebsite" element={<AddWebsite />} />
                 </Routes>
               </Suspense>
-            </div>
-          </div>
-        </div>
         <Footer />
-      </div>
     </Router>
   );
 }

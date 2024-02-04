@@ -1,14 +1,3 @@
-.full-screen {
-    height: auto;
-    width: auto;
-    padding: 20;
-    margin: 20;
-}
-
-.login-page {
-    background: linear-gradient(120deg, #84fab0 20%, #8fd3f4 66%);
-}
-
 .website-info {
     color: #fff;
     text-align: center;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-import { countAlerts } from '../Services/alertService';
+import { countAlerts } from '../../Services/alertService';
 
 import secureStorage from 'react-secure-storage';
 import { useNavigate } from "react-router-dom";
