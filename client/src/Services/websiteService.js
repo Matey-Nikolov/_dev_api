@@ -31,6 +31,10 @@ class WebsiteService {
   allowWebsite = async (typeName) => {
     const websiteData = await this.getWebsiteData();
 
+    // lazy way - soon fix
+    this.setWebsiteInformation.clear();
+    this.setWebsiteURL.clear();
+
     switch(typeName){
       case 'allow':
         websiteData.map((value) => {
@@ -79,7 +83,17 @@ class WebsiteService {
 
   btnBlockWebsite = async (website_Id) => {
     try {
+
       this.isDeleted = await apiRequestWebsite.deleteRequest(this.accessToken, this.id, website_Id);
+      
+      if (this.isDeleted) {
+
+        const deletedURL = Array.from(this.setWebsiteInformation).find(item => item.id === website_Id);
+        this.setWebsiteURL.delete(deletedURL.url);
+
+        this.setWebsiteInformation.delete(website_Id);
+      };
+
     } catch (error) {
       console.error('Error blocking website:', error);
     };
@@ -93,12 +107,20 @@ class WebsiteService {
     console.log(this.setWebsiteURL);
 
     if (!this.setWebsiteURL.has(extractedURL)) {
-      this.isAddWebsite = await apiRequestWebsite.addWebsiteRequest(this.accessToken, this.id, extractedURL);
-    }
 
-    if (this.isAddWebsite.status === 200) {
-      this.setWebsiteURL.add(this.isAddWebsite.information.url);
-      this.setWebsiteInformation.add(this.isAddWebsite.information);
+      try {
+        this.isAddWebsite = await apiRequestWebsite.addWebsiteRequest(this.accessToken, this.id, extractedURL);
+      } catch (error) {
+        console.error('Error adding website:', error);
+      }
+
+      console.log(this.isAddWebsite);
+      let url = this.isAddWebsite.data.information.url;
+
+      if (this.isAddWebsite.status === 200) {
+        this.setWebsiteURL.add(url);
+        this.setWebsiteInformation.add(url);
+      };
     };
 
     return this.isAddWebsite.status;
