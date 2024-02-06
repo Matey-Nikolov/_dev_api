@@ -7,7 +7,8 @@ import { Table } from 'react-bootstrap';
 import { fetchEndpointDetails } from '../../Services/endpointsService';
 // import { useGlobalState } from '../../hooks';
 
-
+import Pagination from '../Table/Pagination';
+import usePagination from '../../Services/Table/PaginationLogic';
 
 const EndpointDetails = ({ machine_Id, onBackClick  }) => {
   const setMachineId = new Set();
@@ -26,14 +27,13 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
     try {
       const endpointData = await fetchEndpointDetails(useDataGetEndpoints, machine_Id);
 
-      console.log(endpointData);
-
       setEndpointDetailsMap((prevDetails) => ({
         ...prevDetails,
         [machine_Id]: endpointData,
       }));
 
       setAssignedProducts(endpointData.assignedProducts || []);
+
       setDetailsOS([endpointData.os] || []);
       setDetailsHealth(endpointData.health.services.serviceDetails || []);
     } catch (error) {
@@ -49,6 +49,15 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
     }
   }, [machine_Id, useDataGetEndpoints]);
 
+  const {
+    currentPage,
+    itemsPerPage,
+    setCurrentPage,
+    getPaginatedItems,
+  } = usePagination();
+
+  const currentItems = getPaginatedItems(detailsHealth);
+
   const endpointDetails = useMemo(() => endpointDetailsMap[machine_Id], [endpointDetailsMap, machine_Id]);
 
   if (endpointDetails) {
@@ -60,11 +69,11 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
         <div className="row">
           {/* Table 1 (Top Left) */}
           <div className="col-md-6 mb-4">
-            <div className="card bg-dark shadow-2-strong">
+            <div className="card bg-secondary shadow-2-strong">
               <div className="card-body">
                 <div className="table-responsive">
                   <h4 className="font-weight-light text-light">Assigned products</h4>
-                  <Table striped bordered responsive className="table table-dark table-borderless mb-0">
+                  <Table striped bordered responsive>
                     <thead>
                       <tr>
                         <th scope="col">Code</th>
@@ -73,7 +82,7 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
                       </tr>
                     </thead>
                     <tbody id="table-body">
-                      {assignedProducts == [] ? (
+                      {assignedProducts != [] ? (
                         <tr>
                           <td colSpan="3" className="text-center">No information</td>
                         </tr>
@@ -95,11 +104,11 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
   
           {/* Table 2 (Top Right) */}
           <div className="col-md-6 mb-4">
-            <div className="card bg-dark shadow-2-strong">
+            <div className="card bg-secondary shadow-2-strong">
               <div className="card-body">
                 <div className="table-responsive">
                   <h4 className="font-weight-light text-light">Os</h4>
-                  <Table striped bordered responsive className="table table-dark table-borderless mb-0">
+                  <Table striped bordered responsive>
                     <thead>
                       <tr>
                         <th scope="col">Name</th>
@@ -124,11 +133,11 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
   
           {/* Table 3 (Bottom Left) */}
           <div className="col-md-12">
-            <div className="card bg-dark shadow-2-strong">
+            <div className="card bg-secondary shadow-2-strong">
               <div className="card-body">
                 <div className="table-responsive">
                   <h4 className="font-weight-light text-light">Health check</h4>
-                  <Table striped bordered responsive className="table table-dark table-borderless mb-0">
+                  <Table striped bordered responsive>
                     <thead>
                       <tr>
                         <th scope="col">Name</th>
@@ -136,12 +145,12 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
                       </tr>
                     </thead>
                     <tbody id="table-body">
-                      {detailsHealth == []  ? (
+                      {currentItems == []  ? (
                         <tr>
                           <td colSpan="3" className="text-center">No information</td>
                         </tr>
                       ) : (
-                        detailsHealth.map((health) => (
+                        currentItems.map((health) => (
                           <tr key={health.code}>
                             <td>{health.name}</td>
                             <td>{health.status}</td>
@@ -150,6 +159,12 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
                       )}
                     </tbody>
                   </Table>
+                  <Pagination
+                    currentPage={currentPage}
+                    itemsPerPage={itemsPerPage}
+                    totalItems={detailsHealth.length}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
               </div>
             </div>

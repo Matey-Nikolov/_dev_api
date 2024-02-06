@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import { countAlerts } from '../../Services/alertService';
+import { hasEvents } from '../../Services/eventsService';
 
 import secureStorage from 'react-secure-storage';
 import { useNavigate } from "react-router-dom";
@@ -13,17 +14,25 @@ const HomePage = () => {
 
   const tenetId = secureStorage.getItem('tenetId');
   const tokenTenat = secureStorage.getItem('tokenTenat');
-  const [useDataGetAlerts] = useState({ tenetId, tokenTenat });
+  const [useDataUser] = useState({ tenetId, tokenTenat });
 
-  const [counters, setCounters] = useState({ low: 0, medium: 0, high: 0 });
+  const [useCounters, setCounters] = useState({ low: 0, medium: 0, high: 0 });
+
+  const [useEvents, setEvents] = useState([]);
 
   const fetchData = useMemo(() => async () => {
-    const data = await countAlerts(useDataGetAlerts);
+    const data = await countAlerts(useDataUser);
     setCounters(data);
-  }, [useDataGetAlerts]);
+
+    const event = await hasEvents(useDataUser);
+
+    setEvents(event);
+
+  }, [useDataUser]);
 
   useEffect(() => {
     fetchData();
+    
   }, [fetchData]);
 
   return (
@@ -36,19 +45,19 @@ const HomePage = () => {
               
               <span className="badge bg-success" onClick={() => navigate('/alerts')}>
                 <h5 className="text-center font-weight-light my-1">
-                  Low - {counters.low}
+                  Low - {useCounters.low}
                 </h5>
               </span>
 
               <span className="badge bg-warning">
                 <h5 className="text-center font-weight-light my-1" onClick={() => navigate('/alerts')}>
-                  Medium - {counters.medium}
+                  Medium - {useCounters.medium}
                 </h5>
               </span>
               
               <span className="badge bg-danger">
                 <h5 className="text-center font-weight-light my-1" onClick={() => navigate('/alerts')}>
-                  High - {counters.high}
+                  High - {useCounters.high}
                 </h5>
               </span>
 
@@ -58,9 +67,16 @@ const HomePage = () => {
         <Col lg={3}>
           <div className="card shadow-lg border-0 rounded-lg mt-5">
             <div className="card-header">
-              <h3 className="text-center font-weight-light my-4">Welcome to API center</h3>
+              <h3 className="text-center font-weight-light my-4">From past 24 h</h3>
               <h5 className="text-center font-weight-light my-4">
-                Hello world
+                { useEvents === -1  ?
+                  (
+                    <p>No events.</p>
+                  ) : 
+                  ( 
+                    <p>New events - {useEvents} </p>
+                  )
+                }
               </h5>
             </div>
           </div>

@@ -11,4 +11,10 @@ const fetchEvents = async (dataAccess) => {
     }
 };
 
-export { fetchEvents };
+const hasEvents = async (dataAccess) => {
+  const events = await  fetchEvents(dataAccess); 
+
+  return events.items != [] ?  -1 : events.items.length;
+};
+
+export { fetchEvents, hasEvents };

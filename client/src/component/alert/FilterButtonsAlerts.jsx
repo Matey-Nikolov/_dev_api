@@ -11,7 +11,7 @@ const FilterButtons = ({ filterType, handleFilterChange }) => {
     ];
 
   return (
-    <ButtonGroup className="mb-3">
+    <ButtonGroup className="mb-3 d-flex justify-content-center">
       {filterOptions.map((option) => (
         <ToggleButton
           key={option.value}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 import { fetchAlerts } from '../../Services/alertService';
 import FilterButtons from './FilterButtonsAlerts'; 
@@ -91,25 +91,19 @@ function AlertTable() {
 
   if (!data) {
     return(
-      <>
-        <div className="container-fluid px-4">
-          <div>
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-lg-5">
-                  <div className="card shadow-lg border-0 rounded-lg mt-5">
-                    <div className="card-header">
-                      <h5 className="text-center font-weight-light my-4">
-                        Loading alerts from database.
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
+      <Container fluid className="px-4">
+        <Row className="justify-content-center">
+          <Col lg={5}>
+            <Card className="shadow-lg border-0 rounded-lg mt-5">
+              <Card.Header>
+                <h5 className="text-center font-weight-light my-4">
+                  No events from past 24 h.
+                </h5>
+              </Card.Header>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 
