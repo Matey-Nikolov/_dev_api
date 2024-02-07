@@ -6,28 +6,18 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { fetchAlerts } from '../../Services/alertService';
 import FilterButtons from './FilterButtonsAlerts'; 
 
-
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
-//import { useGlobalState } from '../../hooks';
-import secureStorage   from 'react-secure-storage';
-
 function AlertTable() {
-  
-  const tenetId = secureStorage.getItem('tenetId');
-  const tokenTenat = secureStorage.getItem('tokenTenat');
-
-  const [useDataGetAlerts] = useState({ tenetId, tokenTenat });
-  
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState('');
 
   const [searchTerm, setSearchTerm] = useState('');
   
   const fetchData = useCallback(async () => {
-    await fetchAlerts(filter, useDataGetAlerts, setData, setFilter);
-  }, [filter, useDataGetAlerts]);
+    await fetchAlerts(filter, setData, setFilter);
+  }, [filter]);
 
   const handleFilterChange = useCallback(
     (newFilter) => {
@@ -37,14 +27,12 @@ function AlertTable() {
   );
 
   useEffect(() => {
-    useDataGetAlerts.tenetId = tenetId;
-    useDataGetAlerts.tokenTenat = tokenTenat;
     fetchData();
 
     return () => {
       setData(null);
     };
-  }, [tenetId, tokenTenat, fetchData, useDataGetAlerts]);
+  }, [fetchData]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -97,7 +85,7 @@ function AlertTable() {
             <Card className="shadow-lg border-0 rounded-lg mt-5">
               <Card.Header>
                 <h5 className="text-center font-weight-light my-4">
-                  No events from past 24 h.
+                  No alerts from past one week.
                 </h5>
               </Card.Header>
             </Card>

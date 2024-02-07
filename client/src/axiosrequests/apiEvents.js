@@ -1,6 +1,6 @@
 import { api } from "./apiConfig";
 
-export const getEvents = async (accessToken, access_Id) => {
+export const getEvents = async () => {
     let events = {};
 
     await api.get('/events')

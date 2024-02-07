@@ -1,8 +1,8 @@
 import { getEvents } from "../axiosrequests/apiEvents";
 
-const fetchEvents = async (dataAccess) => {
+const fetchEvents = async () => {
     try {
-      const events = await getEvents(dataAccess.tokenTenat, dataAccess.tenetId);
+      const events = await getEvents();
       
       return events;
     } catch (error) {
@@ -11,8 +11,8 @@ const fetchEvents = async (dataAccess) => {
     }
 };
 
-const hasEvents = async (dataAccess) => {
-  const events = await  fetchEvents(dataAccess); 
+const hasEvents = async () => {
+  const events = await  fetchEvents(); 
 
   return events.items != [] ?  -1 : events.items.length;
 };

@@ -3,11 +3,8 @@ import ApiWebsite from '../axiosrequests/apiWebsite.js';
 const apiRequestWebsite = new ApiWebsite();
 
 class WebsiteService {
-  constructor(accessToken, id) {
+  constructor() {
     this.regexWebsite = /(?:https?:\/\/www\.)?(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
-    
-    this.accessToken = accessToken;
-    this.id = id;
     
     this.setWebsiteInformation = new Set();
     this.setWebsiteURL = new Set();
@@ -23,7 +20,7 @@ class WebsiteService {
   getWebsiteData = async () => {
     //apiRequestWebsite.setCredentials();
 
-    const data = await apiRequestWebsite.getWebsite(this.accessToken, this.id);
+    const data = await apiRequestWebsite.getWebsite();
 
     return data.items;
   };
@@ -84,7 +81,7 @@ class WebsiteService {
   btnBlockWebsite = async (website_Id) => {
     try {
 
-      this.isDeleted = await apiRequestWebsite.deleteRequest(this.accessToken, this.id, website_Id);
+      this.isDeleted = await apiRequestWebsite.deleteRequest(website_Id);
       
       if (this.isDeleted) {
 
@@ -109,7 +106,7 @@ class WebsiteService {
     if (!this.setWebsiteURL.has(extractedURL)) {
 
       try {
-        this.isAddWebsite = await apiRequestWebsite.addWebsiteRequest(this.accessToken, this.id, extractedURL);
+        this.isAddWebsite = await apiRequestWebsite.addWebsiteRequest(extractedURL);
       } catch (error) {
         console.error('Error adding website:', error);
       }
@@ -129,9 +126,11 @@ class WebsiteService {
   
 let instance = null;
 
-export default function getWebsiteServiceInstance(accessToken, id) {
+export default function getWebsiteServiceInstance() {
+  
   if (!instance) {
-    instance = new WebsiteService(accessToken, id);
-  }
+    instance = new WebsiteService();
+  };
+
   return instance;
 };

@@ -1,22 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-import secureStorage   from 'react-secure-storage';
-
 import { Table } from 'react-bootstrap';
 
 import { fetchEndpointDetails } from '../../Services/endpointsService';
-// import { useGlobalState } from '../../hooks';
 
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
 const EndpointDetails = ({ machine_Id, onBackClick  }) => {
   const setMachineId = new Set();
-
-  const tenetId = secureStorage.getItem('tenetId');
-  const tokenTenat = secureStorage.getItem('tokenTenat');
-  
-  const [useDataGetEndpoints] = useState({ tenetId, tokenTenat });
 
   const [endpointDetailsMap, setEndpointDetailsMap] = useState({});
   const [assignedProducts, setAssignedProducts] = useState([]);
@@ -25,7 +17,7 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
 
   const fetchData = async () => {
     try {
-      const endpointData = await fetchEndpointDetails(useDataGetEndpoints, machine_Id);
+      const endpointData = await fetchEndpointDetails(machine_Id);
 
       setEndpointDetailsMap((prevDetails) => ({
         ...prevDetails,
@@ -47,7 +39,7 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
 
       setMachineId.add(machine_Id);
     }
-  }, [machine_Id, useDataGetEndpoints]);
+  }, [machine_Id]);
 
   const {
     currentPage,

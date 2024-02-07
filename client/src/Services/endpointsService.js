@@ -1,8 +1,8 @@
 import { getEndpoints, getEndpointDetails, endpointScan } from "../axiosrequests/apiEndpoint";
 
-const fetchEndpoints = async (dataAccess) => {
+const fetchEndpoints = async () => {
   try {
-    const endpoins = await getEndpoints(dataAccess.tokenTenat, dataAccess.tenetId);
+    const endpoins = await getEndpoints();
 
     return endpoins;
   } catch (error) {
@@ -11,9 +11,9 @@ const fetchEndpoints = async (dataAccess) => {
   }
 };
 
-const fetchEndpointDetails = async (dataAccess, machine_Id ) => {
+const fetchEndpointDetails = async (machine_Id ) => {
   try {
-    const endpoinDetails = await getEndpointDetails(dataAccess.tokenTenat, dataAccess.tenetId, machine_Id);
+    const endpoinDetails = await getEndpointDetails(machine_Id);
     
     return endpoinDetails;
   } catch (error) {
@@ -22,9 +22,9 @@ const fetchEndpointDetails = async (dataAccess, machine_Id ) => {
   }
 };
   
-const fetchEndpointScan = async (dataAccess, machine_Id) => {
+const fetchEndpointScan = async (machine_Id) => {
   try {
-    const returnStatus = await endpointScan(dataAccess.tokenTenat, dataAccess.tenetId, machine_Id);
+    const returnStatus = await endpointScan(machine_Id);
     
     return returnStatus;
   } catch (error) {
@@ -34,4 +34,3 @@ const fetchEndpointScan = async (dataAccess, machine_Id) => {
 };
 
 export { fetchEndpoints, fetchEndpointDetails, fetchEndpointScan };
-  

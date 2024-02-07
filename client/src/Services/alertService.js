@@ -1,10 +1,11 @@
 import { getAlerts } from "../axiosrequests/apiAlert";
+
 let sortedAlerts = {
     'items': {},
 };
 
-async function getAlers(dataAccess) {
-    const alertsData = await getAlerts(dataAccess.tokenTenat, dataAccess.tenetId);
+async function getAlers() {
+    const alertsData = await getAlerts();
 
     sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
     //sortedAlerts.pages = alertsData.pages;
@@ -19,8 +20,8 @@ function compareByTime(a, b) {
     return timeB - timeA;
 }
 
-async function countAlerts(dataAccess){
-    await getAlers(dataAccess);
+async function countAlerts(){
+    await getAlers();
 
     let countLowAlerts = sortedAlerts.items.filter(x => x.severity === 'low').length;
     let countMediumAlerts = sortedAlerts.items.filter(x => x.severity === 'medium').length;
@@ -49,7 +50,7 @@ function filterAlerts(source, severity) {
     return result;
 }
 
-const fetchAlerts = async (filter, useDataGetAlerts, setData) => {
+const fetchAlerts = async (filter, setData) => {
     try {
         let alertsData;
 
@@ -64,7 +65,7 @@ const fetchAlerts = async (filter, useDataGetAlerts, setData) => {
                 alertsData = filterAlerts(sortedAlerts, filter);
                 break;
             default:
-                alertsData = await getAlers(useDataGetAlerts);
+                alertsData = await getAlers();
                 break;
         }
 

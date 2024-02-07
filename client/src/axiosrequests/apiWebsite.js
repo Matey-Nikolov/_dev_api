@@ -17,7 +17,7 @@ class ApiWebsite {
         };
     };
 
-    async getWebsite(accessToken, access_Id) {
+    async getWebsite() {
         try {
             const response = await api.get('/website');
             
@@ -29,7 +29,7 @@ class ApiWebsite {
         return this.website;
     };
 
-    async deleteRequest(accessToken, access_Id, website_Id){
+    async deleteRequest(website_Id){
         try {
             this.isDeleted = await api.get('/website/delete', {
                 params: {
@@ -44,7 +44,7 @@ class ApiWebsite {
         return this.isDeleted;
     };
 
-    async addWebsiteRequest(accessToken, access_Id, url){
+    async addWebsiteRequest(url){
         try {
             this.isAddWebsite = await api.get('/website/add', {
                 params: {

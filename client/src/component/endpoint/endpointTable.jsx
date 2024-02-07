@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { fetchEndpoints, fetchEndpointScan } from '../../Services/endpointsService';
 import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
 
-//import { useGlobalState } from '../../hooks';
-import secureStorage   from 'react-secure-storage';
-
+import { fetchEndpoints, fetchEndpointScan } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
-
 
 const EndpointTable = ({ onEndpointDetailsClick }) => {
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
-
-  const tenetId = secureStorage.getItem('tenetId');
-  const tokenTenat = secureStorage.getItem('tokenTenat');
-  
-  const [useDataGetEndpoints] = useState({ tenetId, tokenTenat });
 
   const [filterType, setFilterType] = useState('all');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -25,7 +16,7 @@ const EndpointTable = ({ onEndpointDetailsClick }) => {
 
   const fetchData = async () => {
     try {
-      const endpoins = await fetchEndpoints(useDataGetEndpoints);
+      const endpoins = await fetchEndpoints();
       setEndpoints(endpoins);
     } catch (error) {
       console.error('Error fetching endpoints:', error);
@@ -56,7 +47,7 @@ const EndpointTable = ({ onEndpointDetailsClick }) => {
     try {
 
       await Promise.all(ids.map(async (id) => {
-        await fetchEndpointScan(useDataGetEndpoints, id);
+        await fetchEndpointScan(id);
       }));
 
       setSuccessAlert(true);

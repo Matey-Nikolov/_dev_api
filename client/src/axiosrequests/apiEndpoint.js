@@ -11,11 +11,10 @@ const getEndpoints = async () => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
 
-    console.log(endponts);
     return endponts;
 };
 
-const getEndpointDetails = async (accessToken, access_Id, machine_Id) => {
+const getEndpointDetails = async (machine_Id) => {
     let endpontDetails = {};
 
     await api.get('/endpoint/details', {
@@ -33,7 +32,7 @@ const getEndpointDetails = async (accessToken, access_Id, machine_Id) => {
     return endpontDetails;
 };
 
-const endpointScan = async (accessToken, access_Id, machine_Id) => {
+const endpointScan = async (machine_Id) => {
     try {
         const response = await api.get('/endpoint/scan', {
             params: {

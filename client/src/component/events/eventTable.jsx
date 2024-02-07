@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Card } from 'react-bootstrap';
-import secureStorage   from 'react-secure-storage';
 
 import { fetchEvents } from '../../Services/eventsService';
 
 const EventTable = () => {
-  const tenetId = secureStorage.getItem('tenetId');
-  const tokenTenat = secureStorage.getItem('tokenTenat');
-
   const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
-
-  const [useDataGetEvents] = useState({ tenetId, tokenTenat });
 
   const [useEvents, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const eventsData = await fetchEvents(useDataGetEvents);
+        const eventsData = await fetchEvents();
 
         setEvents(eventsData.items);
       } catch (error) {
         console.error('Error fetching events:', error);
         throw error;
-      }
+      };
     };
 
     fetchData();
