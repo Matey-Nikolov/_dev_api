@@ -3,12 +3,7 @@ import { api } from "./apiConfig";
 export const getEvents = async (accessToken, access_Id) => {
     let events = {};
 
-    await api.get('/events', {
-        params: {
-            accessToken,
-            access_Id
-        },
-    })
+    await api.get('/events')
     .then((response) => {
         events =  response.data;
     })

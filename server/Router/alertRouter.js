@@ -8,7 +8,7 @@ router.get(
     '/',
     [
         query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('id').isLength({ min: 1 }).trim().escape()
+        query('access_Id').isLength({ min: 1 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -18,11 +18,11 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { accessToken, id } = req.query;
+        const { accessToken, access_Id } = req.query;
 
         const axiosConfig = {
             headers: {
-              'X-Tenant-ID': id,
+              'X-Tenant-ID': access_Id,
               'Authorization': `Bearer ${accessToken}`
             }
         };

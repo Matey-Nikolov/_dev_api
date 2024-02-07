@@ -1,16 +1,11 @@
 import { api } from "./apiConfig";
 
-export const getAlerts = async (accessToken, id) => {
+export const getAlerts = async () => {
     let alerts = {
         'items': {}
     };
 
-    await api.get('/alert', {
-        params: {
-            accessToken,
-            id
-        }
-    })
+    await api.get('/alert')
     .then((response) => {
         alerts.items = response.data;
     })

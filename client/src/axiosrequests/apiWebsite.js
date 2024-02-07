@@ -3,36 +3,23 @@ import { api } from "./apiConfig";
 class ApiWebsite {
     constructor() {
         this.website = {};
+
         this.paramsWebsite ={
             'accessToken': '',
             'access_Id': '',
         };
+
         this.isDeleted = false;
+
         this.isAddWebsite = {
             'status': -1,
             'information': { }
         };
     };
 
-    // setCredentials(getAccessToken, getAccess_Id){
-    //     console.log(getAccessToken);
-    //     this.params.accessToken = getAccessToken;
-    //     this.params.access_Id = getAccess_Id;
-    // }
-
     async getWebsite(accessToken, access_Id) {
         try {
-            // const response = await api.get('/website', {
-            //     params: this.paramsWebsite
-            // });
-
-            
-            const response = await api.get('/website', {
-                params: {
-                    accessToken,
-                    access_Id
-                }
-            });
+            const response = await api.get('/website');
             
             this.website = response.data;
         } catch (error) {
@@ -46,8 +33,6 @@ class ApiWebsite {
         try {
             this.isDeleted = await api.get('/website/delete', {
                 params: {
-                    accessToken,
-                    access_Id,
                     website_Id
                 }
             });
@@ -63,8 +48,6 @@ class ApiWebsite {
         try {
             this.isAddWebsite = await api.get('/website/add', {
                 params: {
-                    accessToken,
-                    access_Id,
                     url
                 }
             });

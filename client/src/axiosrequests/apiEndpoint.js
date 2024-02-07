@@ -1,14 +1,9 @@
 import { api } from "./apiConfig";
 
-const getEndpoints = async (accessToken, access_Id) => {
+const getEndpoints = async () => {
     let endponts = {};
 
-    await api.get('/endpoint', {
-        params: {
-            accessToken,
-            access_Id
-        },
-    })
+    await api.get('/endpoint')
     .then((response) => {
         endponts = response.data;
     })
@@ -25,8 +20,6 @@ const getEndpointDetails = async (accessToken, access_Id, machine_Id) => {
 
     await api.get('/endpoint/details', {
         params: {
-            accessToken,
-            access_Id,
             machine_Id
         },
     })
@@ -44,8 +37,6 @@ const endpointScan = async (accessToken, access_Id, machine_Id) => {
     try {
         const response = await api.get('/endpoint/scan', {
             params: {
-                accessToken,
-                access_Id,
                 machine_Id
             }
         });
