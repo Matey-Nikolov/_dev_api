@@ -2,7 +2,7 @@ import { express, axios } from '../globalImports.js';
 
 import { query, validationResult } from 'express-validator';
 
-import { pageSolution } from './pageSolution.js';
+import { pageSolution } from '.././help/pageSolution.js';
 
 const router = express.Router();
 

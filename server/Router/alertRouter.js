@@ -1,6 +1,7 @@
 import { express } from '../globalImports.js';
-import { pageSolution } from './pageSolution.js';
 import { query, validationResult } from 'express-validator';
+
+import { pageSolution } from '.././help/pageSolution.js';
 
 const router = express.Router();
 
@@ -36,9 +37,9 @@ router.get(
         try{       
             const url = `https://api-eu01.central.sophos.com/common/v1/alerts`; 
 
-             const response = await pageSolution(url, params, axiosConfig);
+            const response = await pageSolution(url, params, axiosConfig);
  
-             res.json(response);
+            res.json(response);
         }
         catch(error){
             console.error('Error posting data to external URL:', error.message);

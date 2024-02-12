@@ -4,16 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import getWebsiteServiceInstance from '../../Services/websiteService';
 
-// import { useGlobalState } from '../../hooks';
-import secureStorage   from 'react-secure-storage';
-
 const AddWebsite = () => {
 
-  const tenetId = secureStorage.getItem('tenetId');
-  const tokenTenat = secureStorage.getItem('tokenTenat');
-  
   // return class 
-  const websiteService = new getWebsiteServiceInstance(tokenTenat, tenetId);
+  const websiteService = new getWebsiteServiceInstance();
 
   const navigate = useNavigate();
 

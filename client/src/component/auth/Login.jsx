@@ -59,6 +59,9 @@ class LoginPage extends React.Component {
     if (accessToken === undefined || accessToken === '' ||  accessToken === false) {
       this.setState({ error: 'Invalid username or password!' });
       
+      this.state.email = '';
+      this.state.password = '';
+
       return;
     };
 

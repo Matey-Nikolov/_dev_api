@@ -3,12 +3,7 @@ import { api } from "./apiConfig";
 class ApiWebsite {
     constructor() {
         this.website = {};
-
-        this.paramsWebsite ={
-            'accessToken': '',
-            'access_Id': '',
-        };
-
+        
         this.isDeleted = false;
 
         this.isAddWebsite = {
