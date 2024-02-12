@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
+import ButtonsArchive from './ButtonsArchive';
+import { findByArchiveButton } from '../../Services/archiveService';
+
 import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
 
@@ -34,6 +37,11 @@ const HomePage = () => {
     fetchData();
     
   }, [fetchData]);
+
+  const handleBackUpChange = (value) => {
+
+    findByArchiveButton(value);
+  };
 
   return (
     <Container fluid className="px-4">
@@ -86,7 +94,9 @@ const HomePage = () => {
             <div className="card-header">
               <h3 className="text-center font-weight-light my-4">Welcome to API center</h3>
               <h5 className="text-center font-weight-light my-4">
-                Hello world
+                <ButtonsArchive
+                  handleBackUpChange={handleBackUpChange}
+                />
               </h5>
             </div>
           </div>
