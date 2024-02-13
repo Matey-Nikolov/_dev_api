@@ -1,12 +1,12 @@
 import fs from 'fs';
 
-export default async function createFileForBackUp(backUp) {
-  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
-  const dataToWrite = typeof backUp === 'object' ? JSON.stringify(backUp, null, 2) : backUp;
+export default async function createFileForBackup(backupData, fileName) {
+  const dataToWrite = typeof backupData === 'object' ? JSON.stringify(backupData, null, 2) : backupData;
 
-  // Write data to a file
+  const namefile = `${fileName}.json`;
+
   try {
-    fs.writeFileSync('newfile.json', dataToWrite);
+    fs.writeFileSync(namefile, dataToWrite);
 
     // set file in read only function for all
     //fs.chmodSync('newfile.json', '444');

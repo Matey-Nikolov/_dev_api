@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-import ButtonsArchive from './ButtonsArchive';
-import { findByArchiveButton } from '../../Services/archiveService';
+import ButtonsArchive from './ButtonsBackup';
+import { findByArchiveButton } from '../../Services/backupService';
 
 import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
