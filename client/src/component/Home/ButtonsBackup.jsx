@@ -4,8 +4,8 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 const ButtonsArchive = ({ handleBackUpChange }) => {
     const filterOptions = [
         { label: 'Back up items', value: 'items' },
+        { label: 'Back up block items', value: 'block items' },
         { label: 'Back up policies', value: 'policies'},
-        // { label: 'Back up ', value: 'items' }
     ];
 
   return (

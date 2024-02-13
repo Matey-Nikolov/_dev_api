@@ -4,8 +4,11 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
+import setupInfomation from './configs/api/setupInfomationRouter.js';
+
 import tokenRouter from './Router/authenticationRouter.js';
 import whoIAmRouter from './Router/authorizationRouter.js';
+
 import alertRouter from './Router/alertRouter.js';
 import endpointRouter from './Router/endpointRouter.js';
 import getEvents from './Router/eventRouter.js';
@@ -36,6 +39,8 @@ app.use(
 
 app.use(bodyParser.json());
 
+app.use('/configuration', setupInfomation);
+
 app.use('/token', tokenRouter);
 
 app.use('/access', whoIAmRouter);
@@ -48,7 +53,7 @@ app.use('/events', getEvents);
 
 app.use('/website', websiteRouter);
 
-app.use('/archive', archiveRouter);
+app.use('/backup', archiveRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

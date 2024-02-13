@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import ButtonsArchive from './ButtonsBackup';
-import { findByArchiveButton } from '../../Services/backupService';
+import findByBackupButton from '../../Services/backupService';
 
 import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
@@ -40,7 +40,7 @@ const HomePage = () => {
 
   const handleBackUpChange = (value) => {
 
-    findByArchiveButton(value);
+    findByBackupButton(value);
   };
 
   return (

@@ -1,45 +1,26 @@
 import { express } from '../globalImports.js';
-import { query, validationResult } from 'express-validator';
 
+import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
 
 const router = express.Router();
+const api = getApiConfigurationInstance();
+
+const pathFromURL = `common/v1/alerts`; 
+
+const addParams = {
+    "pageSize": 10
+};
 
 router.get(
     '/',
-    [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('access_Id').isLength({ min: 1 }).trim().escape()
-    ],
     async (req, res) => {
-        
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        
-        const { accessToken, access_Id } = req.query;
-
-        const axiosConfig = {
-            headers: {
-              'X-Tenant-ID': access_Id,
-              'Authorization': `Bearer ${accessToken}`
-            }
-        };
-
-        let params = {
-            "pageSize": 10,
-           // "product": "firewall",
-           // "category": "connectivity"
-        };
+        const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
 
         try{       
-            const url = `https://api-eu01.central.sophos.com/common/v1/alerts`; 
+            const allAlerts = await pageSolution(apiAlert);
 
-            const response = await pageSolution(url, params, axiosConfig);
- 
-            res.json(response);
+            res.json(allAlerts);
         }
         catch(error){
             console.error('Error posting data to external URL:', error.message);

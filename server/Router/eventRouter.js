@@ -1,37 +1,25 @@
 import { express, axios } from '../globalImports.js';
 
-import { query, validationResult } from 'express-validator';
+import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const getEvents = express.Router();
+const api = getApiConfigurationInstance();
+
+const pathFromURL = `/siem/v1/events`; 
+
+// const addParams = {
+//     "pageSize": 10
+// };
 
 getEvents.get(
     '/',
-    [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('access_Id').isLength({ min: 1 }).trim().escape()
-    ],
-    async (req, res) => {
-        
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        
-        const { accessToken, access_Id } = req.query;
-
-        const axiosConfig = {
-            headers: {
-              'X-Tenant-ID': access_Id,
-              'Authorization': `Bearer ${accessToken}`
-            }
-        };
+    async (req, res) => {        
+        const apiEvents = api.apiGetConfiguration(pathFromURL);
 
         try{
-            // https://api-eu01.central.sophos.com
-            const response = await axios.get(`https://api-eu01.central.sophos.com/siem/v1/events`, axiosConfig);
+            const allEvents = await apiEvents.get();
         
-            res.json(response.data);
+            res.json(allEvents.data);
         }
         catch(error){
             console.error('Error posting data to external URL:', error.message);

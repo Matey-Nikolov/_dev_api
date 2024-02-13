@@ -7,7 +7,7 @@ class ApiBackup {
 
     async backupByItems() {
         try {
-            const response = await api.get('/archive/items');
+            const response = await api.get('/backup/items');
 
             this.isCreateFileWithData = response.data;
         } catch (error) {
@@ -17,13 +17,21 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    // async backupBlockItems(){
+    async backupBlockItems(){
+        try {
+            const response = await api.get('/backup/items/blocks');
 
-    // };
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isCreateFileWithData;
+    };
 
     async backupPolicies(){
         try {
-            const response = await api.get('/archive/policies');
+            const response = await api.get('/backup/policies');
 
             this.isCreateFileWithData = response.data;
         } catch (error) {

@@ -2,16 +2,18 @@ import { express, axios } from '../globalImports.js';
 
 import { query, validationResult } from 'express-validator';
 
+import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
 
 const router = express.Router();
+const api = getApiConfigurationInstance();
+
+let pathFromURL = ``;
 
 router.get(
     '/scan',
     [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('access_Id').isLength({ min: 1 }).trim().escape(),
-        query('machine_Id').isLength({ min: 1 }).trim().escape()
+        query('machine_Id').isLength({ min: 6 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -21,36 +23,24 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { accessToken, access_Id, machine_Id } = req.query;
+        const { machine_Id } = req.query;
 
-        const axiosConfig = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: `https://api-eu01.central.sophos.com/endpoint/v1/endpoints/${machine_Id}/scans`,
-            headers: {
-              'X-Tenant-ID': access_Id,
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json'
-            },
-            data : JSON.stringify({})
-        };
+        pathFromURL = `endpoint/v1/endpoints/${machine_Id}/scans`; 
 
-        await axios.request(axiosConfig)
-        .then((response) => {
-            res.json(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        await api.postApiConfiguration(pathFromURL, JSON.stringify({}))
+            .then((response) => {
+                res.json(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 );
 
 router.get(
     '/details',
     [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('access_Id').isLength({ min: 1 }).trim().escape(),
-        query('machine_Id').isLength({ min: 1 }).trim().escape()
+        query('machine_Id').isLength({ min: 6 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -60,20 +50,17 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { accessToken, access_Id, machine_Id } = req.query;
+        const { machine_Id } = req.query;
 
-        const axiosConfig = {
-            headers: {
-              'X-Tenant-ID': access_Id,
-              'Authorization': `Bearer ${accessToken}`
-            }
-        };
+        pathFromURL = `endpoint/v1/endpoints/${machine_Id}`;
+
+
+        const apiDetailsEndpoint = api.apiGetConfiguration(pathFromURL);
 
         try{
-            // https://api-eu01.central.sophos.com
-            const response = await axios.get(`https://api-eu01.central.sophos.com/endpoint/v1/endpoints/${machine_Id}`, axiosConfig);
+            const details = await apiDetailsEndpoint.get();
         
-            res.json(response.data);
+            res.json(details.data);
         }
         catch(error){
             console.error('Error posting data to external URL:', error.message);
@@ -85,48 +72,24 @@ router.get(
 
 router.get(
     '/',
-    [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('access_Id').isLength({ min: 1 }).trim().escape()
-    ],
     async (req, res) => {
-        
-        const errors = validationResult(req);
 
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        
-        const { accessToken, access_Id } = req.query;
+        pathFromURL = `endpoint/v1/endpoints`;
 
-        const axiosConfig = {
-            headers: {
-              'X-Tenant-ID': access_Id,
-              'Authorization': `Bearer ${accessToken}`
-            }
+        const addParams = {
+            "pageSize": 2
         };
 
-        let params = {
-            "pageSize": 2,
-           // "product": "firewall",
-           // "category": "connectivity"
-        };
+        const apiAllEndpoints = api.apiGetConfiguration(pathFromURL, addParams);
 
         try{
-            // https://api-eu01.central.sophos.com
-            const url = `https://api-eu01.central.sophos.com/endpoint/v1/endpoints`; 
+            const endpoints = await pageSolution(apiAllEndpoints);
 
-
-           // const response = await axios.get(url, axiosConfig);
-
-            const response = await pageSolution(url, params, axiosConfig);
-
-            res.json(response);
+            res.json(endpoints);
         }
         catch(error){
             console.error('Error posting data to external URL:', error.message);
-  
-            // Handle errors as needed
+
             res.status(500).json({ success: false, message: 'Error getting data to external URL' });
         };
     }

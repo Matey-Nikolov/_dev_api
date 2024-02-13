@@ -7,13 +7,10 @@ const router = express.Router();
 router.post(
   '/',
   [
-    // Validate and sanitize input
     body('client_Id_Db').isLength({ min: 1 }).trim().escape(),
     body('client_secret_Db').isLength({ min: 1 }).trim().escape(),
-    // Add validation for other fields
   ],
   async  (req, res) => {
-    // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -29,10 +26,6 @@ router.post(
     };
 
     try {
-      // const apiUrl = process.env.REACT_APP_API_BASE_URL;
-      
-      // console.log(apiUrl);
-
       const response = await axios.post('https://id.sophos.com/api/v2/oauth2/token', dataToSend, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

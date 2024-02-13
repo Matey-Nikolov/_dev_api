@@ -8,6 +8,7 @@ import './css/LoginPage.css'
 import { AuthLogin } from '../../Services/loginService';
 import { postToken } from '../../axiosrequests/apiToken';
 import { whoIAm } from '../../axiosrequests/apiAuth';
+import { setupInformation } from '../../axiosrequests/apiSetupInfo';
 
 class LoginPage extends React.Component {
   static propTypes = {
@@ -83,8 +84,10 @@ class LoginPage extends React.Component {
       
       const tenantId = await whoIAm(setAuthToken);
 
-      secureStorage.setItem('tenetId', tenantId);
-      secureStorage.setItem('tokenTenat', setAuthToken);
+      await setupInformation(setAuthToken, tenantId);
+
+      // secureStorage.setItem('tenetId', tenantId);
+      // secureStorage.setItem('tokenTenat', setAuthToken);
 
     } catch (error) {
       console.error('Error:', error.message);
