@@ -27,10 +27,6 @@ async function countAlerts(){
     let countMediumAlerts = sortedAlerts.items.filter(x => x.severity === 'medium').length;
     let countHighAlerts = sortedAlerts.items.filter(x => x.severity === 'high').length;
 
-    console.log(countLowAlerts);
-    console.log(countMediumAlerts);
-    console.log(countHighAlerts);
-
     return { 
         'low': countLowAlerts, 
         'medium': countMediumAlerts, 

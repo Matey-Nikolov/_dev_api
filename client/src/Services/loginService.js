@@ -1,8 +1,6 @@
 import { auth, signInWithEmailAndPassword, db } from '../firebase/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
 
-import secureStorage from 'react-secure-storage';
-
 class AuthLogin {
   constructor(email, password) {
     this.email = email;
@@ -29,9 +27,6 @@ class AuthLogin {
 
     data.docs.map((doc) => {
       if(doc.data().email === userEmail){
-        
-        secureStorage.setItem('client_Id_Db', doc.data().client_id);
-        secureStorage.setItem('client_secret_Db', doc.data().client_secret);
 
         returnData = {
           clientId: doc.data().client_id,

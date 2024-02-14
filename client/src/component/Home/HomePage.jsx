@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Alert } from 'react-bootstrap';
 
 import ButtonsArchive from './ButtonsBackup';
 import findByBackupButton from '../../Services/backupService';
@@ -14,33 +14,48 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const navigate = useNavigate();
 
+  const [useSuccessBackup, setSuccessBackup] = useState(false);
+  const [useErrorBackup, setErrorBackup] = useState(false);
 
-  const tenetId = secureStorage.getItem('tenetId');
-  const tokenTenat = secureStorage.getItem('tokenTenat');
-  const [useDataUser] = useState({ tenetId, tokenTenat });
+  const [useFileName, setFileName] = useState('');
 
   const [useCounters, setCounters] = useState({ low: 0, medium: 0, high: 0 });
 
   const [useEvents, setEvents] = useState([]);
 
   const fetchData = useMemo(() => async () => {
-    const data = await countAlerts(useDataUser);
+    const data = await countAlerts();
     setCounters(data);
 
-    const event = await hasEvents(useDataUser);
+    const event = await hasEvents();
 
     setEvents(event);
 
-  }, [useDataUser]);
+  }, []);
 
   useEffect(() => {
     fetchData();
     
   }, [fetchData]);
 
-  const handleBackUpChange = (value) => {
+  const handleBackUpChange = async (value) => {
+    const statusAndFileName = await findByBackupButton(value);
 
-    findByBackupButton(value);
+    isBackup(statusAndFileName);
+  };
+
+  const isBackup = (statusAndFileName) => {
+    setSuccessBackup(statusAndFileName.status === 201);
+    setErrorBackup(!statusAndFileName || statusAndFileName.status === 500);
+
+    if (statusAndFileName.status === 201) {
+      setFileName(statusAndFileName.fileName);
+    }
+
+    setTimeout(() => {
+      setSuccessBackup(false);
+      setErrorBackup(false);
+    }, 4000);
   };
 
   return (
@@ -98,6 +113,19 @@ const HomePage = () => {
                   handleBackUpChange={handleBackUpChange}
                 />
               </h5>
+
+              {useSuccessBackup && (
+                <Alert variant="info" onClose={() => setSuccessBackup(false)} dismissible>
+                  Backup {useFileName} successfully!
+                </Alert>
+              )}
+
+              {useErrorBackup && (
+                <Alert variant="danger" onClose={() => setErrorBackup(false)} dismissible>
+                  Back up error!
+                </Alert>
+              )}
+
             </div>
           </div>
         </Col>

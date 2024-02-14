@@ -26,7 +26,8 @@ router.get(
             
             res.json(
                 { 
-                    'status': 201
+                    'status': 201,
+                    'fileName': 'items'
                 }
             );
         }
@@ -52,7 +53,8 @@ router.get(
             
             res.json(
                 { 
-                    'status': 201
+                    'status': 201,
+                    'fileName': 'block items'
                 }
             );
         }
@@ -79,7 +81,8 @@ router.get(
             
             res.json(
                 { 
-                    'status': 201
+                    'status': 201,
+                    'fileName': 'policies'
                 }
             );
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import secureStorage from 'react-secure-storage';
+
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 
 import './css/LoginPage.css'
@@ -85,9 +85,6 @@ class LoginPage extends React.Component {
       const tenantId = await whoIAm(setAuthToken);
 
       await setupInformation(setAuthToken, tenantId);
-
-      // secureStorage.setItem('tenetId', tenantId);
-      // secureStorage.setItem('tokenTenat', setAuthToken);
 
     } catch (error) {
       console.error('Error:', error.message);

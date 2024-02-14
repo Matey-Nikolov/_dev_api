@@ -1,36 +1,39 @@
 import ApiBackup from '../axiosrequests/apiBackup.js';
 
 const apiRequestBackup = new ApiBackup();
+let statusCodeAndName = {};
 
-export default function findByBackupButton(value) {
+export default async function findByBackupButton(value) {
     switch (value){
         case 'items':
-            createBackupItems();
+            statusCodeAndName = await createBackupItems();
         break;
         case 'block items':
-            createBackupBlockItems();
+            statusCodeAndName = await createBackupBlockItems();
         break;
         case 'policies':
-            createBackupPolicies();
+            statusCodeAndName = await createBackupPolicies();
         break;
     };
+    
+    return statusCodeAndName;
 };
 
 
 async function createBackupItems(){
     const backUpItemsCheck = await apiRequestBackup.backupByItems();
 
-    console.log(backUpItemsCheck);
+    return backUpItemsCheck;
 };
 
 async function createBackupBlockItems(){
     const backUpBlockItemsCheck = await apiRequestBackup.backupBlockItems();
 
-    console.log(backUpBlockItemsCheck);
+    return backUpBlockItemsCheck;
 };
 
 async function createBackupPolicies(){
     const backUpPoliciesCheck = await apiRequestBackup.backupPolicies();
 
-    console.log(backUpPoliciesCheck);
+    return backUpPoliciesCheck;
 };
