@@ -4,7 +4,7 @@ let sortedAlerts = {
     'items': {},
 };
 
-async function getAlers() {
+async function getAlersFromApi() {
     const alertsData = await getAlerts();
 
     sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
@@ -20,12 +20,11 @@ function compareByTime(a, b) {
     return timeB - timeA;
 }
 
-async function countAlerts(){
-    await getAlers();
+function countAlerts(alertsData){
 
-    let countLowAlerts = sortedAlerts.items.filter(x => x.severity === 'low').length;
-    let countMediumAlerts = sortedAlerts.items.filter(x => x.severity === 'medium').length;
-    let countHighAlerts = sortedAlerts.items.filter(x => x.severity === 'high').length;
+    let countLowAlerts = alertsData.items.filter(x => x.severity === 'low').length;
+    let countMediumAlerts = alertsData.items.filter(x => x.severity === 'medium').length;
+    let countHighAlerts = alertsData.items.filter(x => x.severity === 'high').length;
 
     return { 
         'low': countLowAlerts, 
@@ -61,7 +60,7 @@ const fetchAlerts = async (filter, setData) => {
                 alertsData = filterAlerts(sortedAlerts, filter);
                 break;
             default:
-                alertsData = await getAlers();
+                alertsData = await getAlersFromApi();
                 break;
         }
 
@@ -71,4 +70,4 @@ const fetchAlerts = async (filter, setData) => {
     }
 };
 
-export { fetchAlerts, countAlerts };
+export { getAlersFromApi, fetchAlerts, countAlerts };

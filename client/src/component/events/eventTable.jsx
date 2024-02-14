@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Card } from 'react-bootstrap';
 
-import { fetchEvents } from '../../Services/eventsService';
+import { useContext } from 'react';
+import { UseCreatedContex } from '../../contex/setupInfamation';
 
 const EventTable = () => {
+  const { loading, useEvents } = useContext(UseCreatedContex);
+
   const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
-  const [useEvents, setEvents] = useState([]);
+  const [useAllEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const eventsData = await fetchEvents();
-
-        setEvents(eventsData.items);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-        throw error;
-      };
+    if (!loading) {
+      setEvents(useEvents.items);
     };
-
-    fetchData();
-  }, []);
+  }, [useEvents]);
   
-  if(useEvents != []){
+  if(useAllEvents != []){
     return(
       <Container fluid className="px-4">
         <Row className="justify-content-center">
@@ -51,7 +45,7 @@ const EventTable = () => {
           </tr>
         </thead>
         <tbody>
-          {useEvents.map((value) => (
+          {useAllEvents.map((value) => (
             <tr key={value.name}>
               <td>{value.name}</td>
               <td>

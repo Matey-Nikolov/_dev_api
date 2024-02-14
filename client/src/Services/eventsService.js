@@ -11,9 +11,7 @@ const fetchEvents = async () => {
     }
 };
 
-const hasEvents = async () => {
-  const events = await  fetchEvents(); 
-
+const hasEvents = (events) => {
   return events.items != [] ?  -1 : events.items.length;
 };
 

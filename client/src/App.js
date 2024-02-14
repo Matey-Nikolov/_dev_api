@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import { ContextProvider } from './contex/setupInfamation';
+
 import './App.css';
 
 import Navbar from './component/navbar/Navbar';
@@ -25,21 +27,23 @@ function App() {
   };
 
   return (
-    <Router>
+    <ContextProvider>
+      <Router>
         <Navbar />
-              <Suspense fallback={<div>Loading...</div>}>
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  {/* <Route path='/register' element={<RegisterPage />} /> */}
-                  <Route path="/alerts" element={<AlertPage />} />
-                  <Route path="/endpoints" element={<EndpointPage />} />
-                  <Route path="/events" element={<EventTable />} />
-                  <Route path="/websites" element={<WebsiteTable />} />
-                  <Route path="/addwebsite" element={<AddWebsite />} />
-                </Routes>
-              </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              {/* <Route path='/register' element={<RegisterPage />} /> */}
+              <Route path="/alerts" element={<AlertPage />} />
+              <Route path="/endpoints" element={<EndpointPage />} />
+              <Route path="/events" element={<EventTable />} />
+              <Route path="/websites" element={<WebsiteTable />} />
+              <Route path="/addwebsite" element={<AddWebsite />} />
+            </Routes>
+          </Suspense>
         <Footer />
-    </Router>
+      </Router>
+    </ContextProvider>
   );
 }
 

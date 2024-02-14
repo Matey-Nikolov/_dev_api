@@ -1,18 +1,26 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 
+import { useContext } from 'react';
+import { UseCreatedContex } from '../../contex/setupInfamation';
+
+import LoadingScreen from './LoadingScreen';
+
 import ButtonsArchive from './ButtonsBackup';
 import findByBackupButton from '../../Services/backupService';
 
 import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
 
-import secureStorage from 'react-secure-storage';
 import { useNavigate } from "react-router-dom";
+
 
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  const { useAlerts, loading, useEvents } = useContext(UseCreatedContex);
+
 
   const [useSuccessBackup, setSuccessBackup] = useState(false);
   const [useErrorBackup, setErrorBackup] = useState(false);
@@ -21,22 +29,23 @@ const HomePage = () => {
 
   const [useCounters, setCounters] = useState({ low: 0, medium: 0, high: 0 });
 
-  const [useEvents, setEvents] = useState([]);
+  const [useCountEvents, setCountEvents] = useState([]);
 
-  const fetchData = useMemo(() => async () => {
-    const data = await countAlerts();
-    setCounters(data);
+  const getInfomation = async () => {
 
-    const event = await hasEvents();
+    if (!loading) {
+      const data = countAlerts(useAlerts);
+      const event = hasEvents(useEvents);
+  
+      setCounters(data);
+      setCountEvents(event);
 
-    setEvents(event);
-
-  }, []);
-
+    };
+  };
+  
   useEffect(() => {
-    fetchData();
-    
-  }, [fetchData]);
+    getInfomation();
+  }, [useAlerts]); 
 
   const handleBackUpChange = async (value) => {
     const statusAndFileName = await findByBackupButton(value);
@@ -57,6 +66,10 @@ const HomePage = () => {
       setErrorBackup(false);
     }, 4000);
   };
+
+  if (loading) {
+    return <LoadingScreen/>
+  }
 
   return (
     <Container fluid className="px-4">
@@ -92,12 +105,12 @@ const HomePage = () => {
             <div className="card-header">
               <h3 className="text-center font-weight-light my-4">From past 24 h</h3>
               <h5 className="text-center font-weight-light my-4">
-                { useEvents === -1  ?
+                { useCountEvents === -1  ?
                   (
                     <p>No events.</p>
                   ) : 
                   ( 
-                    <p>New events - {useEvents} </p>
+                    <p>New events - {useCountEvents} </p>
                   )
                 }
               </h5>

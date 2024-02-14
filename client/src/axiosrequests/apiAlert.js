@@ -13,7 +13,5 @@ export const getAlerts = async () => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
 
-    console.log(alerts);
-
     return alerts;
 };

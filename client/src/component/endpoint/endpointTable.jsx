@@ -4,7 +4,12 @@ import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
 import { fetchEndpoints, fetchEndpointScan } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
+import { useContext } from 'react';
+import { UseCreatedContex } from '../../contex/setupInfamation';
+
 const EndpointTable = ({ onEndpointDetailsClick }) => {
+  const { loading, useEndpoints } = useContext(UseCreatedContex);
+
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
@@ -14,19 +19,11 @@ const EndpointTable = ({ onEndpointDetailsClick }) => {
 
   const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
 
-  const fetchData = async () => {
-    try {
-      const endpoins = await fetchEndpoints();
-      setEndpoints(endpoins);
-    } catch (error) {
-      console.error('Error fetching endpoints:', error);
-      throw error;
-    }
-  };
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!loading) {
+      setEndpoints(useEndpoints);
+    };
+  }, [useEndpoints]);
 
   //machine_Id or endpointId
   const handleButtonClickShowDetails = (machine_Id) => {

@@ -5,30 +5,27 @@ import getWebsiteServiceInstance from '../../Services/websiteService';
 
 import { useNavigate } from "react-router-dom";
 
+import { useContext } from 'react';
+import { UseCreatedContex } from '../../contex/setupInfamation';
+
 const WebsiteTable = () => {
   const navigate = useNavigate();
+  const { loading, useWebsites } = useContext(UseCreatedContex);
 
   const websiteService = new getWebsiteServiceInstance();
 
-  const [useWebsites, setWebsites] = useState([]);
+  const [useAllWebsites, setWebsites] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const websiteData = await websiteService.allowWebsite();
-        setWebsites([...websiteData]);
-      } catch (error) {
-        console.error('Error fetching websites:', error);
-        throw error;
-      }
+    if (!loading) {
+      setWebsites([...useWebsites]);
     };
+
+  }, [websiteService, useWebsites]);
   
-    fetchData();
-  }, [websiteService]);
-  
-  const memoizedWebsites = useMemo(() => useWebsites, [useWebsites]);
+  const memoizedWebsites = useMemo(() => useAllWebsites, [useAllWebsites]);
   
   async function handleButtonClickBlockWebsite(website_Id){
     const isDeleted = await websiteService.btnBlockWebsite(website_Id);
@@ -42,7 +39,7 @@ const WebsiteTable = () => {
     }, 4000);
   };
 
-  if (!memoizedWebsites) {
+  if (!useAllWebsites) {
     return(
       <>
         <div className="container-fluid px-4">
@@ -86,7 +83,7 @@ const WebsiteTable = () => {
           </tr>
         </thead>
         <tbody id="website">
-          {memoizedWebsites.map((items) => (
+          {useAllWebsites.map((items) => (
             <tr key={items.id}>
               <td>
                 <a href={`https://${items.url}`} target="_blank" rel="noopener noreferrer">
