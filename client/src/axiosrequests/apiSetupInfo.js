@@ -13,8 +13,6 @@ export const setupInformation = async (accessToken, access_Id) => {
         }
     });
 
-    console.log(api);
-
     await api.get('/configuration')
     .then((response) => {
         isOkStatus = response;
@@ -22,6 +20,4 @@ export const setupInformation = async (accessToken, access_Id) => {
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
-
-    console.log(isOkStatus);
 };

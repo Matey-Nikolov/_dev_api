@@ -5,11 +5,10 @@ import { CreateAccount } from '../../Services/registerService';
 
 const RegisterPage = () => {
     const [form, setForm] = useState({
-        email: '',
         role: '',
         clientId: '',
         clientSecret: '',
-        password: ''
+        name: ''
     });
 
     const [successMessage, setSuccessMessage] = useState('');
@@ -37,14 +36,13 @@ const RegisterPage = () => {
         if (Object.keys(validationErrors).length === 0) {
             console.log('work');
 
-            const createAccount = new CreateAccount(form.email, form.password, form.role, form.clientId, form.clientSecret);
+            const createAccount = new CreateAccount(form.name, form.role, form.clientId, form.clientSecret);
 
             setForm({
-                email: '',
                 role: '',
                 clientId: '',
                 clientSecret: '',
-                password: ''
+                name: ''
             });
 
             setTouched({});
@@ -58,10 +56,8 @@ const RegisterPage = () => {
     function validateInputs(form) {
         let errors = {};
 
-        if (!form.email) {
-            errors.email = 'Email is required.';
-        } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-            errors.email = 'Email address is invalid.';
+        if (!form.name) {
+            errors.role = 'Name is required.';
         };
 
         if (!form.role) {
@@ -80,12 +76,6 @@ const RegisterPage = () => {
             errors.clientSecret = 'Client secret needs to be 90 characters or more.';
         };
 
-        if (!form.password) {
-            errors.password = 'Password is required.';
-        } else if (form.password.length < 6) {
-            errors.password = 'Password needs to be 6 characters or more.';
-        };
-
         return errors;
     };
 
@@ -101,27 +91,27 @@ const RegisterPage = () => {
                 <Col lg={7}>
                     <Card className="shadow-lg border-0 rounded-lg mt-5">
                         <Card.Header>
-                            <h3 className="text-center font-weight-light my-4">Create Account</h3>
+                            <h3 className="text-center font-weight-light my-4">Create client</h3>
                         </Card.Header>
                         <Card.Body>
                             <Form onSubmit={handleRegister}>
                                 <Row className="mb-3">
                                     <Col md={6}>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label htmlFor="email">Email</Form.Label>
-                                            <Form.Control id="email" type="email" placeholder="Enter your email" onChange={handleChange} isInvalid={touched.email && errors.email} value={form.email} />
-                                            {touched.email && errors.email && <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>}
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md={6}>
                                         <Form.Group>
                                             <Form.Label htmlFor="role">Select role</Form.Label>
                                             <Form.Select id="role" onChange={handleChange} isInvalid={touched.role && errors.role} value={form.role}>
                                                 <option value="">Select role</option>
-                                                <option value="admin">Admin</option>
-                                                <option value="guest">Guest</option>
+                                                <option value="R/O">R/O</option>
+                                                <option value="R/W">R/W</option>
                                             </Form.Select>
                                             {touched.role && errors.role && <Form.Control.Feedback type="invalid">{errors.role}</Form.Control.Feedback>}
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md={6}>
+                                        <Form.Group>
+                                            <Form.Label htmlFor="name">Client name</Form.Label>
+                                            <Form.Control id="name" type="text" placeholder="Set name" onChange={handleChange} isInvalid={touched.name && errors.name} value={form.name} />
+                                            {touched.name && errors.name && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -143,15 +133,9 @@ const RegisterPage = () => {
                                     </Col>
                                 </Row>
 
-                                <Form.Group className="mb-3 mb-md-0">
-                                    <Form.Label htmlFor="password">Password</Form.Label>
-                                    <Form.Control id="password" type="password" placeholder="Create a password" onChange={handleChange} isInvalid={touched.password && errors.password} value={form.password} />
-                                    {touched.password && errors.password && <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>}
-                                </Form.Group>
-
                                 <div className="mt-4 mb-0">
                                     <div className="d-grid">
-                                        <Button id="registerPage" variant="primary" type="submit" className="btn-block">Create Account</Button>
+                                        <Button id="registerPage" variant="primary" type="submit" className="btn-block">Create client</Button>
                                     </div>
                                 </div>
                             </Form>

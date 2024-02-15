@@ -1,31 +1,31 @@
-import { auth, createUserWithEmailAndPassword, db, doc, collection, setDoc } from '../firebase/firebase-config';
+import { db, doc, collection, addDoc } from '../firebase/firebase-config';
+
+import SecureStorage from 'react-secure-storage';
 
 class CreateAccount {
-    constructor(email, password, role, clientId, clientSecret) {
-        this.email = email;
-        this.password = password;
+    constructor(name, role, clientId, clientSecret) {
+        this.name = name;
         this.role = role;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
 
-        this.usersCollectionRef = collection(db, 'User');
+        this.id = SecureStorage.getItem('ref');
     };
 
     async createAccount() {
         const docData = {
+            name: this.name,
             role: this.role,
-            email: this.email,
             client_id: this.clientId,
-            client_secret: this.clientSecret,
+            client_secret: this.clientSecret
         };
 
-        await setDoc(doc(this.usersCollectionRef), docData);
+        const docRef = doc(db, 'User', this.id);
 
-        return createUserWithEmailAndPassword(auth, this.email, this.password)
-            .then((userCredential) => {
-            })
-            .catch((error) => {
-            });
+        const subCollectionRef = collection(docRef, 'accessClients');
+
+        console.log(subCollectionRef);
+        await addDoc(subCollectionRef, docData);
     };
 };
 
