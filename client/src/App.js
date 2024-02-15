@@ -1,23 +1,23 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { ContextProvider } from './contex/setupInfamation';
+import { ContextProvider } from './contex/setupInformation';
 
 import './App.css';
 
-import Navbar from './component/navbar/Navbar';
-import Footer from './component/Footer/Footer';
+import Navbar from './components/navbar/Navbar';
+import Footer from './components/Footer/Footer';
 import useToken from './Services/useToken';
 
-const HomePage = lazy(() => import('./component/Home/HomePage'));
-const LoginPage = lazy(() => import('./component/auth/Login'));
+const HomePage = lazy(() => import('./components/Home/HomePage'));
+const LoginPage = lazy(() => import('./components/auth/LoginPage'));
 // const RegisterPage = lazy(() => import('./component/register'));
-const AlertPage = lazy(() => import('./component/alert/alert'));
-const EndpointPage = lazy(() => import('./component/endpoint/endpointPage'));
-const EventTable = lazy(() => import('./component/events/eventTable'));
+const AlertPage = lazy(() => import('./components/alert/AlertPage'));
+const EndpointPage = lazy(() => import('./components/endpoint/EndpointsPages'));
+const EventTable = lazy(() => import('./components/events/EventsTablePage'));
 
-const WebsiteTable = lazy(() => import('./component/website/websiteTable'));
-const AddWebsite = lazy(() => import('./component/website/websiteAdd'));
+const WebsiteTable = lazy(() => import('./components/website/WebsiteTablePage'));
+const AddWebsite = lazy(() => import('./components/website/WebsiteAddPage'));
 
 function App() {
   const { token, setToken } = useToken();

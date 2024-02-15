@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 
 import { useContext } from 'react';
-import { UseCreatedContex } from '../../contex/setupInfamation';
+import { UseCreatedContex } from '../../contex/setupInformation';
 
 import LoadingScreen from './LoadingScreen';
 

@@ -6,7 +6,7 @@ import getWebsiteServiceInstance from '../../Services/websiteService';
 import { useNavigate } from "react-router-dom";
 
 import { useContext } from 'react';
-import { UseCreatedContex } from '../../contex/setupInfamation';
+import { UseCreatedContex } from '../../contex/setupInformation';
 
 const WebsiteTable = () => {
   const navigate = useNavigate();

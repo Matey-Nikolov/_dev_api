@@ -9,7 +9,7 @@ import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
 import { useContext } from 'react';
-import { UseCreatedContex } from '../../contex/setupInfamation';
+import { UseCreatedContex } from '../../contex/setupInformation';
 
 function AlertTable() {
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
 
-import { fetchEndpoints, fetchEndpointScan } from '../../Services/endpointsService';
+import { fetchEndpointScan } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
 import { useContext } from 'react';
-import { UseCreatedContex } from '../../contex/setupInfamation';
+import { UseCreatedContex } from '../../contex/setupInformation';
 
-const EndpointTable = ({ onEndpointDetailsClick }) => {
+const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const { loading, useEndpoints } = useContext(UseCreatedContex);
 
   const [endpoints, setEndpoints] = useState([]);
@@ -141,4 +141,4 @@ const EndpointTable = ({ onEndpointDetailsClick }) => {
 
 };
 
-export default EndpointTable;
+export default EndpointTablePage;

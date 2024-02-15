@@ -1,9 +1,9 @@
 // EndpointPage.jsx
-import React, { useState, useEffect }  from 'react';
-import EndpointTable from './endpointTable';
-import EndpointDetails from './endpointDetails';
+import React, { useState }  from 'react';
+import EndpointTablePage from './EndpointsTable';
+import EndpointDetails from './EndpointDetails';
 
-const EndpointPage = () => {
+const EndpointsPages = () => {
   // endpointId or machine_Id
   const [selectedEndpointId, setSelectedEndpointId] = useState(null);
 
@@ -24,11 +24,11 @@ const EndpointPage = () => {
           {selectedEndpointId ? (
             <EndpointDetails machine_Id={selectedEndpointId} onBackClick={handleBackClick}/>
           ) : (
-            <EndpointTable onEndpointDetailsClick={handlEndpointDetailsClick} />
+            <EndpointTablePage onEndpointDetailsClick={handlEndpointDetailsClick} />
           )}
         </div>
     </div>
   );
 };
 
-export default EndpointPage;
+export default EndpointsPages;

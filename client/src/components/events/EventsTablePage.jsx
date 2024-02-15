@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Card } from 'react-bootstrap';
 
 import { useContext } from 'react';
-import { UseCreatedContex } from '../../contex/setupInfamation';
+import { UseCreatedContex } from '../../contex/setupInformation';
 
 const EventTable = () => {
   const { loading, useEvents } = useContext(UseCreatedContex);

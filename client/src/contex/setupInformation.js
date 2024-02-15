@@ -41,6 +41,8 @@ const ContextProvider = ({ children }) => {
         const websiteData = await websiteService.allowWebsite();
         
         setWebsite(websiteData);
+
+        setLoading(false);
     };
 
     useEffect(() => {
