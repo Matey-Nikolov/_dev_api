@@ -51,18 +51,15 @@ function AlertTable() {
     let filteredItems;
 
     switch (filter) {
-      case 'all':
-        filteredItems = data.items;
-      break;
       case 'low':
       case 'medium':
       case 'high':
         filteredItems = data.items.filter((x) => x.severity === filter);
-        break;
+      break;
       default:
         filteredItems = data.items;
-        break;
-    }
+      break;
+    };
 
     return filteredItems.filter(
       (value) =>

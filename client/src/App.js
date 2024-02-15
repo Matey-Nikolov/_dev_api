@@ -11,7 +11,7 @@ import useToken from './Services/useToken';
 
 const HomePage = lazy(() => import('./components/Home/HomePage'));
 const LoginPage = lazy(() => import('./components/auth/LoginPage'));
-// const RegisterPage = lazy(() => import('./component/register'));
+const RegisterPage = lazy(() => import('./components/auth/RegisterPage'));
 const AlertPage = lazy(() => import('./components/alert/AlertPage'));
 const EndpointPage = lazy(() => import('./components/endpoint/EndpointsPages'));
 const EventTable = lazy(() => import('./components/events/EventsTablePage'));
@@ -33,7 +33,7 @@ function App() {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              {/* <Route path='/register' element={<RegisterPage />} /> */}
+              <Route path='/register' element={<RegisterPage />} />
               <Route path="/alerts" element={<AlertPage />} />
               <Route path="/endpoints" element={<EndpointPage />} />
               <Route path="/events" element={<EventTable />} />

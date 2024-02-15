@@ -1,5 +1,4 @@
-import { auth, signInWithEmailAndPassword, db } from '../firebase/firebase-config';
-import { collection, getDocs } from 'firebase/firestore';
+import { auth, signInWithEmailAndPassword, db, collection, getDocs } from '../firebase/firebase-config';
 
 class AuthLogin {
   constructor(email, password) {
