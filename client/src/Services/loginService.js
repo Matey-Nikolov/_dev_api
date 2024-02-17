@@ -1,4 +1,4 @@
-import { auth, signInWithEmailAndPassword, db, collection, getDocs, doc } from '../firebase/firebase-config';
+import { auth, signInWithEmailAndPassword, db, collection, getDocs } from '../firebase/firebase-config';
 
 import SecureStorage from 'react-secure-storage';
 
@@ -41,21 +41,6 @@ class AuthLogin {
     });
 
     return returnData;
-  };
-
-  async setupClients(){
-    const id = SecureStorage.getItem('ref');
-
-    const docRef = doc(db, 'User', id);
-    const subCollectionRef = collection(docRef, 'accessClients');
-
-    const querySnapshot = await getDocs(subCollectionRef);
-
-    querySnapshot.forEach((doc) => {
-      this.clients = doc.data();
-    });
-
-    return this.clients;
   };
 };
 

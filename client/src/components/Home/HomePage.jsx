@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Row, Col, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Alert, Table } from 'react-bootstrap';
 
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -19,8 +19,7 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const { useAlerts, loading, useEvents } = useContext(UseCreatedContex);
-
+  const { useAlerts, loading, useEvents, informationForClients } = useContext(UseCreatedContex);
 
   const [useSuccessBackup, setSuccessBackup] = useState(false);
   const [useErrorBackup, setErrorBackup] = useState(false);
@@ -31,6 +30,8 @@ const HomePage = () => {
 
   const [useCountEvents, setCountEvents] = useState([]);
 
+  const[useClientsInformation, setClientsInformation] = useState([]);
+
   const getInfomation = async () => {
 
     if (!loading) {
@@ -39,7 +40,7 @@ const HomePage = () => {
   
       setCounters(data);
       setCountEvents(event);
-
+      setClientsInformation(informationForClients);
     };
   };
   
@@ -143,7 +144,27 @@ const HomePage = () => {
           </div>
         </Col>
       </Row>
-
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name clients</th>
+              <th>Role</th>
+              <th>View machine</th>
+              <th>View alerts</th>
+              <th>View allow website</th>
+              <th>View events</th>
+            </tr>
+          </thead>
+          <tbody>
+            {useClientsInformation.map((client) => (
+              <tr key={client.id}>
+                <td>{client.name}</td>
+                <td>{client.role}</td>
+                
+              </tr>
+            ))}
+          </tbody>
+        </Table>
     </Container>
   );
 };
