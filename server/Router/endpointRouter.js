@@ -6,9 +6,9 @@ import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
 
 const router = express.Router();
-const api = getApiConfigurationInstance();
 
 let pathFromURL = ``;
+let api = getApiConfigurationInstance('owner');
 
 router.get(
     '/scan',
@@ -72,9 +72,20 @@ router.get(
 
 router.get(
     '/',
+    [
+        query('clientId').isLength({ min: 0 }).trim().escape()
+    ],
     async (req, res) => {
 
-        pathFromURL = `endpoint/v1/endpoints`;
+        const { clientId } = req.query;
+
+        console.log(clientId);
+
+        let api = getApiConfigurationInstance(clientId || 'owner');
+
+        console.log(api);
+
+        pathFromURL = `endpoint/v1/endpoints?pageSize=2&view=full`;
 
         const addParams = {
             "pageSize": 2

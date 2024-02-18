@@ -1,9 +1,13 @@
 import { api } from "./apiConfig";
 
-const getEndpoints = async () => {
+const getEndpoints = async (clientId) => {
     let endponts = {};
 
-    await api.get('/endpoint')
+    await api.get('/endpoint', {
+        params: {
+            clientId
+        }
+    })
     .then((response) => {
         endponts = response.data;
     })

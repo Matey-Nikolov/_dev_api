@@ -84,7 +84,9 @@ class LoginPage extends React.Component {
       
       const tenantId = await whoIAm(setAuthToken);
 
-      await setupInformation(setAuthToken, tenantId);
+      const isOwner = true;
+
+      await setupInformation(setAuthToken, tenantId, isOwner);
 
     } catch (error) {
       console.error('Error:', error.message);

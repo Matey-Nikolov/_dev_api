@@ -7,13 +7,14 @@ import createFileForBackup from '../help/createFile.js';
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const router = express.Router();
-const api = getApiConfigurationInstance();
+const api = getApiConfigurationInstance('owner');
 
 let pathFromURL = ``; 
 
 router.get(
     '/items',
     async (req, res) => {
+
         pathFromURL = `endpoint/v1/settings/allowed-items?pageTotal=true`;
 
         const apiItems = api.apiGetConfiguration(pathFromURL);

@@ -1,11 +1,15 @@
 import { api } from "./apiConfig";
 
-export const getAlerts = async () => {
+export const getAlerts = async (clientId) => {
     let alerts = {
         'items': {}
     };
 
-    await api.get('/alert')
+    await api.get('/alert', {
+        params: {
+            clientId
+        }
+    })
     .then((response) => {
         alerts.items = response.data;
     })

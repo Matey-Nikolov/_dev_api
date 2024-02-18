@@ -3,9 +3,9 @@ import SecureStorage from 'react-secure-storage';
 
 import { getEndpoints, getEndpointDetails, endpointScan } from "../axiosrequests/apiEndpoint";
 
-const fetchEndpoints = async () => {
+const fetchEndpoints = async (clientId) => {
   try {
-    const endpoins = await getEndpoints();
+    const endpoins = await getEndpoints(clientId);
 
     return endpoins;
   } catch (error) {

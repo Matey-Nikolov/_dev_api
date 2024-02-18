@@ -8,8 +8,9 @@ const router = express.Router();
 router.get(
     '/',
     [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
-        query('access_Id').isLength({ min: 1 }).trim().escape()
+        query('accessToken').isLength({ min: 50 }).trim().escape(),
+        query('access_Id').isLength({ min: 20 }).trim().escape(),
+        query('isOwner').isLength({ min: 0 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -19,16 +20,15 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { accessToken, access_Id } = req.query;
+        const { accessToken, access_Id, isOwner } = req.query;
 
-        const api = getApiConfigurationInstance(accessToken, access_Id);
+        const api = getApiConfigurationInstance(access_Id, accessToken, isOwner);
 
         res.json(
             { 
                 'status': 200
             }
         );
-
     }
 );
 

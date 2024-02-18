@@ -8,7 +8,7 @@ export const pageSolution = async (api) => {
 
     while (true) {
         const response = await api.get();
-
+        
         while ([429, 500, 502, 503].includes(response.status)) {
             await sleep(2);
 

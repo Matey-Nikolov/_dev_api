@@ -1,10 +1,9 @@
 import axios from "axios";
 
 class ApiConfiguration {
-    constructor(setAccesToken, setAccess_Id) {
-        this.accessToken = setAccesToken;
-        this.access_Id = setAccess_Id;
-
+    constructor(accessToken, access_Id) {
+        this.accessToken = accessToken;
+        this.access_Id = access_Id;
         this.baseURL = 'https://api-eu01.central.sophos.com/';
     };
 
@@ -52,16 +51,20 @@ class ApiConfiguration {
 
         return axios(axiosConfig);
     };
-};
+}
 
-let instance = null;
+let instances = new Map();
 
-export default function getApiConfigurationInstance(accessToken, access_Id) {
-    if (!instance) {
-        instance = new ApiConfiguration(accessToken, access_Id);
+export default function getApiConfigurationInstance(access_Id, accessToken, isOwner = false) {
+    const key = isOwner ? 'owner' : access_Id;
+
+    if (!instances.has(key)) {
+        instances.set(key, new ApiConfiguration(accessToken, access_Id));
     } else if (accessToken && access_Id) {
+        let instance = instances.get(key);
         instance.accessToken = accessToken;
         instance.access_Id = access_Id;
-    }
-    return instance;
-}
+    };
+    
+    return instances.get(key);
+};

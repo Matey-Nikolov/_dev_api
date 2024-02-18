@@ -4,8 +4,8 @@ let sortedAlerts = {
     'items': {},
 };
 
-async function getAlersFromApi() {
-    const alertsData = await getAlerts();
+async function getAlersFromApi(clientId) {
+    const alertsData = await getAlerts(clientId);
 
     sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
     //sortedAlerts.pages = alertsData.pages;

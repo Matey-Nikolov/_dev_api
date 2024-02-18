@@ -5,7 +5,7 @@ import { query, validationResult } from 'express-validator';
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const router = express.Router();
-const api = getApiConfigurationInstance();
+const api = getApiConfigurationInstance('owner');
 
 let pathFromURL = ``;
 

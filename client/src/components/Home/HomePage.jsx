@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Alert, Table } from 'react-bootstrap';
 
+import ViewButtons from './ButtonsView';
+import { viewInfomation } from '../../Services/clientSevice';
+
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
@@ -47,6 +50,10 @@ const HomePage = () => {
   useEffect(() => {
     getInfomation();
   }, [useAlerts]); 
+
+  const handleButtonClick = async (key, information) => {
+    viewInfomation(key, information);
+  };
 
   const handleBackUpChange = async (value) => {
     const statusAndFileName = await findByBackupButton(value);
@@ -149,10 +156,8 @@ const HomePage = () => {
             <tr>
               <th>Name clients</th>
               <th>Role</th>
-              <th>View machine</th>
               <th>View alerts</th>
-              <th>View allow website</th>
-              <th>View events</th>
+              {/* <th>View endpoints</th> */}
             </tr>
           </thead>
           <tbody>
@@ -160,7 +165,9 @@ const HomePage = () => {
               <tr key={client.id}>
                 <td>{client.name}</td>
                 <td>{client.role}</td>
-                
+                <td>
+                  <ViewButtons  handleButtonClick={(key) => handleButtonClick(key, client)} />
+                </td>
               </tr>
             ))}
           </tbody>

@@ -3,7 +3,7 @@ import { express, axios } from '../globalImports.js';
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const getEvents = express.Router();
-const api = getApiConfigurationInstance();
+const api = getApiConfigurationInstance('owner');
 
 const pathFromURL = `/siem/v1/events`; 
 

@@ -1,10 +1,11 @@
 import { express } from '../globalImports.js';
 
+import { query } from 'express-validator';
+
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
 
 const router = express.Router();
-const api = getApiConfigurationInstance();
 
 const pathFromURL = `common/v1/alerts`; 
 
@@ -14,7 +15,15 @@ const addParams = {
 
 router.get(
     '/',
+    [
+        query('clientId').isLength({ min: 0 }).trim().escape()
+    ],
     async (req, res) => {
+
+        const { clientId } = req.query;
+
+        const api = getApiConfigurationInstance(clientId || 'owner');
+
         const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
 
         try{       
