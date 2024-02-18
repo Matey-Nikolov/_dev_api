@@ -8,10 +8,13 @@ import FilterButtons from './FilterButtonsAlerts';
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
+import { useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 function AlertTable() {
+  const location = useLocation();
+  const passedData = location.state;
 
   const { useAlerts, loading } = useContext(UseCreatedContex);
 
@@ -21,23 +24,28 @@ function AlertTable() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+
+    // console.log(passedData);
+    if (passedData !== null && passedData.key1 == []) {
+      setData([...passedData.key1]);
+    }
+    else{
+      if (!loading) {
+        setData(useAlerts);
+      };
+    };
+    return () => {
+      setData(null);
+    };
+  }, [useAlerts]);
+
   const handleFilterChange = useCallback(
     (newFilter) => {
       setFilter(newFilter);
     },
     [setFilter]
   );
-
-  useEffect(() => {
-
-    if (!loading) {
-      setData(useAlerts);
-    };
-
-    return () => {
-      setData(null);
-    };
-  }, [useAlerts]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);

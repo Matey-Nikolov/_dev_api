@@ -83,8 +83,6 @@ router.get(
 
         let api = getApiConfigurationInstance(clientId || 'owner');
 
-        console.log(api);
-
         pathFromURL = `endpoint/v1/endpoints?pageSize=2&view=full`;
 
         const addParams = {

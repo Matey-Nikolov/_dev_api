@@ -4,10 +4,15 @@ import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
 import { fetchEndpointScan } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
+import { useLocation } from 'react-router-dom';
+
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 const EndpointTablePage = ({ onEndpointDetailsClick }) => {
+  const location = useLocation();
+  const passedData = location.state;
+  
   const { loading, useEndpoints } = useContext(UseCreatedContex);
 
   const [endpoints, setEndpoints] = useState([]);
@@ -20,9 +25,15 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
 
   useEffect(() => {
-    if (!loading) {
-      setEndpoints(useEndpoints);
+    if (passedData !== null) {
+        setEndpoints([...passedData.key1]);
+    }
+    else{
+      if (!loading) {
+        setEndpoints(useEndpoints);
+      };
     };
+
   }, [useEndpoints]);
 
   //machine_Id or endpointId

@@ -52,7 +52,13 @@ const HomePage = () => {
   }, [useAlerts]); 
 
   const handleButtonClick = async (key, information) => {
-    viewInfomation(key, information);
+    const clientInfo = await viewInfomation(key, information);
+
+    navigate(`/${key}`, {
+      state: {
+        key1: clientInfo
+      }
+    });
   };
 
   const handleBackUpChange = async (value) => {
