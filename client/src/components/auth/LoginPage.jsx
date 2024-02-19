@@ -106,7 +106,7 @@ class LoginPage extends React.Component {
       await this.findUser(instanceAuthClass);
     };
 
-    await this.setUpEnvironment();
+    // await this.setUpEnvironment();
 
     this.props.setToken(this.token);
   };

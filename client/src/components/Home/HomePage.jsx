@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Alert, Table } from 'react-bootstrap';
 
 import ViewButtons from './ButtonsView';
-import { viewInfomation } from '../../Services/clientSevice';
 
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -16,13 +15,14 @@ import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
 
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 
 
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const { useAlerts, loading, useEvents, informationForClients } = useContext(UseCreatedContex);
+  const { loading, informationForClients } = useContext(UseCreatedContex);
 
   const [useSuccessBackup, setSuccessBackup] = useState(false);
   const [useErrorBackup, setErrorBackup] = useState(false);
@@ -35,31 +35,17 @@ const HomePage = () => {
 
   const[useClientsInformation, setClientsInformation] = useState([]);
 
-  const getInfomation = async () => {
-
+  const getInfomation = () => {
     if (!loading) {
-      const data = countAlerts(useAlerts);
-      const event = hasEvents(useEvents);
-  
-      setCounters(data);
-      setCountEvents(event);
       setClientsInformation(informationForClients);
     };
+
   };
   
   useEffect(() => {
     getInfomation();
-  }, [useAlerts]); 
+  }, [informationForClients]); 
 
-  const handleButtonClick = async (key, information) => {
-    const clientInfo = await viewInfomation(key, information);
-
-    navigate(`/${key}`, {
-      state: {
-        key1: clientInfo
-      }
-    });
-  };
 
   const handleBackUpChange = async (value) => {
     const statusAndFileName = await findByBackupButton(value);
@@ -86,98 +72,43 @@ const HomePage = () => {
   }
 
   return (
-    <Container fluid className="px-4">
-      <Row className="justify-content-center">
-        <Col lg={3}>
-          <div className="card shadow-lg border-0 rounded-lg mt-5">
-            <div className="card-header">
-              <h3 className="text-center font-weight-light my-4">Counter alerts</h3>
-              
-              <span className="badge bg-success" onClick={() => navigate('/alerts')}>
-                <h5 className="text-center font-weight-light my-1">
-                  Low - {useCounters.low}
-                </h5>
-              </span>
-
-              <span className="badge bg-warning">
-                <h5 className="text-center font-weight-light my-1" onClick={() => navigate('/alerts')}>
-                  Medium - {useCounters.medium}
-                </h5>
-              </span>
-              
-              <span className="badge bg-danger">
-                <h5 className="text-center font-weight-light my-1" onClick={() => navigate('/alerts')}>
-                  High - {useCounters.high}
-                </h5>
-              </span>
-
-            </div>
-          </div>
-        </Col>
-        <Col lg={3}>
-          <div className="card shadow-lg border-0 rounded-lg mt-5">
-            <div className="card-header">
-              <h3 className="text-center font-weight-light my-4">From past 24 h</h3>
-              <h5 className="text-center font-weight-light my-4">
-                { useCountEvents === -1  ?
-                  (
-                    <p>No events.</p>
-                  ) : 
-                  ( 
-                    <p>New events - {useCountEvents} </p>
-                  )
-                }
-              </h5>
-            </div>
-          </div>
-        </Col>
-        <Col lg={3}>
-          <div className="card shadow-lg border-0 rounded-lg mt-5">
-            <div className="card-header">
-              <h3 className="text-center font-weight-light my-4">Welcome to API center</h3>
-              <h5 className="text-center font-weight-light my-4">
-                <ButtonsArchive
-                  handleBackUpChange={handleBackUpChange}
-                />
-              </h5>
-
-              {useSuccessBackup && (
-                <Alert variant="info" onClose={() => setSuccessBackup(false)} dismissible>
-                  Backup {useFileName} successfully!
-                </Alert>
-              )}
-
-              {useErrorBackup && (
-                <Alert variant="danger" onClose={() => setErrorBackup(false)} dismissible>
-                  Back up error!
-                </Alert>
-              )}
-
-            </div>
-          </div>
-        </Col>
-      </Row>
-        <Table striped bordered hover>
+    <Container fluid className="px-4 d-flex justify-content-center">
+      <h1 className="text-center my-4">🚀 Customers Dashboard 🚀</h1>
+      <Table striped bordered hover className="my-cool-table">
           <thead>
-            <tr>
-              <th>Name clients</th>
-              <th>Role</th>
-              <th>View alerts</th>
-              {/* <th>View endpoints</th> */}
-            </tr>
+              <tr>
+                  <th rowSpan="2">Client name</th>
+                  <th colSpan="3">Alerts</th>
+                  <th colSpan="2">Endpoints</th>
+              </tr>
+              <tr>
+                  <th>High</th>
+                  <th>Medium</th>
+                  <th>Low</th>
+                  <th>Computer</th>
+                  <th>Server</th>
+              </tr>
           </thead>
           <tbody>
-            {useClientsInformation.map((client) => (
-              <tr key={client.id}>
-                <td>{client.name}</td>
-                <td>{client.role}</td>
-                <td>
-                  <ViewButtons  handleButtonClick={(key) => handleButtonClick(key, client)} />
-                </td>
-              </tr>
-            ))}
+              {useClientsInformation.map((client) => (
+                  <tr key={client.id}>
+                      <td>
+                        <Link to={{
+                            pathname: "/client",
+                            state: { 'client': client }
+                        }}>
+                            {client.clientName}
+                        </Link>
+                      </td>
+                      <td>{client.alerts.items.filter(x => x.severity === 'high').length}</td>
+                      <td>{client.alerts.items.filter(x => x.severity === 'medium').length}</td>
+                      <td>{client.alerts.items.filter(x => x.severity === 'low').length}</td>
+                      <td>{client.endpoints.filter(x => x.type === 'computer').length}</td>
+                      <td>{client.endpoints.filter(x => x.type === 'server').length}</td>
+                  </tr>
+              ))}
           </tbody>
-        </Table>
+      </Table>
     </Container>
   );
 };

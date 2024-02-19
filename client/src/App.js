@@ -10,6 +10,9 @@ import Footer from './components/Footer/Footer';
 import useToken from './Services/useToken';
 
 const HomePage = lazy(() => import('./components/Home/HomePage'));
+const ClientPanel = lazy(() => import('./components/Home/ClientPanel'));
+
+
 const LoginPage = lazy(() => import('./components/auth/LoginPage'));
 const RegisterPage = lazy(() => import('./components/auth/RegisterPage'));
 const AlertPage = lazy(() => import('./components/alert/AlertPage'));
@@ -33,6 +36,7 @@ function App() {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/client" element={<ClientPanel />} />
               <Route path='/register' element={<RegisterPage />} />
               <Route path="/alerts" element={<AlertPage />} />
               <Route path="/endpoints" element={<EndpointPage />} />

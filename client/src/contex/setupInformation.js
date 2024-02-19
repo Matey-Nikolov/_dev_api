@@ -1,8 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { getAlersFromApi } from "../Services/alertService";
 import { fetchEvents } from "../Services/eventsService";
-import { fetchEndpoints, setupClients } from "../Services/endpointsService";
+import { fetchEndpoints } from "../Services/endpointsService";
 import getWebsiteServiceInstance from '../Services/websiteService';
+import { setupClients } from "../Services/clientSevice";
 
 const UseCreatedContex = createContext();
 
@@ -49,15 +50,15 @@ const ContextProvider = ({ children }) => {
     const getInfomationForClients = async () =>{
         const clients = await setupClients();
         
-        setInformationForUser([...clients]);
+        setInformationForUser(clients);
         setLoading(false);
     };
 
     useEffect(() => {
-        getAlerts();
-        getEvents();
-        getEndpoints();
-        getWebsites();
+        // getAlerts();
+        // getEvents();
+        // getEndpoints();
+        // getWebsites();
         getInfomationForClients();
     }, []);
 
