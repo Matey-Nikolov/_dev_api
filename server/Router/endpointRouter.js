@@ -56,8 +56,6 @@ router.get(
         
         const { machine_Id, clientId } = req.query;
 
-        console.log(clientId);
-        
         pathFromURL = `endpoint/v1/endpoints/${machine_Id}`;
 
         let api = getApiConfigurationInstance(clientId);

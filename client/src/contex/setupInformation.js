@@ -8,7 +8,7 @@ import { setupClients } from "../Services/clientServiceFolder/clientSevice";
 const UseCreatedContex = createContext();
 
 const ContextProvider = ({ children }) => {
-    const [useAlerts, setAlerts] = useState({});
+    const [currentAlertsForClient, setCurrentAlertsForClient] = useState({});
     const [useEvents, setEvents] = useState({});
     const [useEndpoints, setEndpoints] = useState({});
     const [useWebsites, setWebsite] = useState([]);
@@ -17,10 +17,12 @@ const ContextProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(true);
 
+    const [currentClient, setCurrentClient] = useState(null);
+
     const getAlerts = async () => {
         let alerts = await getAlersFromApi();
 
-        setAlerts(alerts);
+        setCurrentAlertsForClient(alerts);
         setLoading(false);
     };
 
@@ -64,7 +66,7 @@ const ContextProvider = ({ children }) => {
     }, []);
 
     return(
-        <UseCreatedContex.Provider value={{ useAlerts, loading, useEvents, useEndpoints, useWebsites, informationForClients }}>
+        <UseCreatedContex.Provider value={{ currentAlertsForClient, loading, useEvents, useEndpoints, useWebsites, informationForClients, setCurrentClient, currentClient }}>
             {children}
         </UseCreatedContex.Provider>
     );

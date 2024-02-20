@@ -33,4 +33,8 @@ const setupClients = async () => {
   return clients;
 };
 
-export { setupClients };
+const findClientById = (clientId) => {
+  return clients.find(client => client.uniqueId === clientId);
+};
+
+export { setupClients, findClientById };

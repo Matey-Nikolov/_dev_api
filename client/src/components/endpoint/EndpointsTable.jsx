@@ -23,7 +23,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
 
   const [useUnuniqueId, setUniqueId] = useState([]);
-  const [useRole, setRole] = useState(passedData.info.role);
+  const [useRole, setRole] = useState();
 
   useEffect(() => {
     if (passedData !== null) {
@@ -32,7 +32,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
       setUniqueId(passedData.info.uniqueId);
       setRole(passedData.info.role);
     };
-  }, []);
+  }, [passedData]);
 
   const handleButtonClickShowDetails = (machine_Id) => {
     onEndpointDetailsClick(machine_Id, useUnuniqueId);
@@ -135,7 +135,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
         <tbody>
           {currentItems.map((value) => (
             <tr key={value.id}>
-              <td>{value.associatedPerson.name}</td>
+              <td>{value.hostname}</td>
               <td>{value.type}</td>
               <td>{value.health.overall}</td>
               <td>{value.health.services.status}</td>

@@ -3,20 +3,19 @@ import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
+import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
+
 import FilterButtons from './FilterButtonsAlerts'; 
 
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
-import { useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 function AlertTable() {
-  const location = useLocation();
-  const passedData = location.state;
 
-  const { useAlerts, loading } = useContext(UseCreatedContex);
+  const { currentClient, loading } = useContext(UseCreatedContex);
 
 
   const [data, setData] = useState(null);
@@ -26,19 +25,10 @@ function AlertTable() {
 
   useEffect(() => {
 
-    // console.log(passedData);
-    if (passedData !== null && passedData.key1 == []) {
-      setData([...passedData.key1]);
-    }
-    else{
-      if (!loading) {
-        setData(useAlerts);
-      };
-    };
-    return () => {
-      setData(null);
-    };
-  }, [useAlerts]);
+    const user = findClientById(currentClient);
+    setData(user.alerts);
+    console.log(user);
+  }, []);
 
   const handleFilterChange = useCallback(
     (newFilter) => {

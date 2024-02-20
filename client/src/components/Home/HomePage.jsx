@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const { loading, informationForClients } = useContext(UseCreatedContex);
+  const { loading, informationForClients, setCurrentClient } = useContext(UseCreatedContex);
 
   const [useSuccessBackup, setSuccessBackup] = useState(false);
   const [useErrorBackup, setErrorBackup] = useState(false);
@@ -51,6 +51,8 @@ const HomePage = () => {
   };
 
   const handleClickedClientName = (value) => {
+    setCurrentClient(value.uniqueId);
+    
     navigate(
       '/endpoints',
       {
