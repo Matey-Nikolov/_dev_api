@@ -6,15 +6,13 @@ import FilterButtons from './filterEndpointsButtons';
 
 import { useLocation } from 'react-router-dom';
 
-import { useContext } from 'react';
-import { UseCreatedContex } from '../../contex/setupInformation';
+import Pagination from '../Table/Pagination';
+import usePagination from '../../Services/Table/PaginationLogic';
 
 const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const location = useLocation();
   const passedData = location.state;
   
-  const { loading, useEndpoints } = useContext(UseCreatedContex);
-
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
@@ -24,21 +22,20 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
 
   const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
 
+  const [useUnuniqueId, setUniqueId] = useState([]);
+  const [useRole, setRole] = useState(passedData.info.role);
+
   useEffect(() => {
     if (passedData !== null) {
-        setEndpoints([...passedData.key1]);
-    }
-    else{
-      if (!loading) {
-        setEndpoints(useEndpoints);
-      };
+      setEndpoints([...passedData.info.endpoints]);
+
+      setUniqueId(passedData.info.uniqueId);
+      setRole(passedData.info.role);
     };
+  }, []);
 
-  }, [useEndpoints]);
-
-  //machine_Id or endpointId
   const handleButtonClickShowDetails = (machine_Id) => {
-    onEndpointDetailsClick(machine_Id);
+    onEndpointDetailsClick(machine_Id, useUnuniqueId);
   };
 
   const handleCheckboxChange = (id) => {
@@ -55,7 +52,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
     try {
 
       await Promise.all(ids.map(async (id) => {
-        await fetchEndpointScan(id);
+        await fetchEndpointScan(id, useUnuniqueId);
       }));
 
       setSuccessAlert(true);
@@ -76,18 +73,28 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   };
 
   const filteredEndpoints = endpoints.filter((value) => {
-    //console.log(endpoints);
     if (filterType === 'all') {
       return true;
-    }
+    };
+
     return value.type === filterType;
   });
 
   const sortedEndpoints = filteredEndpoints.sort((a, b) => {
     const dateA = new Date(a.lastSeenAt);
     const dateB = new Date(b.lastSeenAt);
+
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
+
+  const {
+    currentPage,
+    itemsPerPage,
+    setCurrentPage,
+    getPaginatedItems,
+  } = usePagination();
+
+  const currentItems = getPaginatedItems(sortedEndpoints);
 
   return (
     <Container className="mt-5">
@@ -111,20 +118,22 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
             <th>Status</th>
             <th>LastSeenAt</th>
             <th></th>
-            <th>
-              <Button
-                variant="primary"
-                className="mt-3"
-                disabled={selectedEndpoints.size === 0}
-                onClick={() => handleButtonClickSendScanRequest([...selectedEndpoints])}
-              >
-                Scan
-              </Button>
-            </th>
+              {useRole === 'R/W' && (
+                <th>
+                  <Button
+                    variant="primary"
+                    className="mt-3"
+                    disabled={selectedEndpoints.size === 0}
+                    onClick={() => handleButtonClickSendScanRequest([...selectedEndpoints])}
+                  >
+                    Scan
+                  </Button>
+                </th>
+              )}
           </tr>
         </thead>
         <tbody>
-          {sortedEndpoints.map((value) => (
+          {currentItems.map((value) => (
             <tr key={value.id}>
               <td>{value.associatedPerson.name}</td>
               <td>{value.type}</td>
@@ -136,20 +145,28 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   Show Details
                 </Button>
               </td>
-              <td>
-                <Form.Check
-                  onChange={() => handleCheckboxChange(value.id)}
-                  type="checkbox"
-                  checked={selectedEndpoints.has(value.id)}
-                />
-              </td>
+                {useRole === 'R/W' && (
+                  <td>
+                    <Form.Check
+                      onChange={() => handleCheckboxChange(value.id)}
+                      type="checkbox"
+                      checked={selectedEndpoints.has(value.id)}
+                    />
+                  </td>
+                )}
             </tr>
           ))}
         </tbody>
       </Table>
+
+      <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={sortedEndpoints.length}
+          setCurrentPage={setCurrentPage}
+      />
     </Container>
   );
-
 };
 
 export default EndpointTablePage;

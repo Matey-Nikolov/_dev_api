@@ -3,7 +3,7 @@ import { getAlersFromApi } from "../Services/alertService";
 import { fetchEvents } from "../Services/eventsService";
 import { fetchEndpoints } from "../Services/endpointsService";
 import getWebsiteServiceInstance from '../Services/websiteService';
-import { setupClients } from "../Services/clientSevice";
+import { setupClients } from "../Services/clientServiceFolder/clientSevice";
 
 const UseCreatedContex = createContext();
 
@@ -12,6 +12,7 @@ const ContextProvider = ({ children }) => {
     const [useEvents, setEvents] = useState({});
     const [useEndpoints, setEndpoints] = useState({});
     const [useWebsites, setWebsite] = useState([]);
+    
     const [informationForClients, setInformationForUser] = useState([]);
 
     const [loading, setLoading] = useState(true);

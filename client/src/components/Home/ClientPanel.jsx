@@ -5,28 +5,16 @@ import { useLocation } from 'react-router-dom';
 
 const ClientPanel = () => {
     const location = useLocation();
-    const clientInfo = location.state.client;
+    const clientInfo = location.state.info;
 
 
     useEffect(() => {
-
-        	console.log(clientInfo);
-        // if (passedData !== null && passedData.key1 == []) {
-        //     setData([...passedData.key1]);
-        // }
-        // else{
-        //     if (!loading) {
-        //     setData(useAlerts);
-        //     };
-        // };
-        // return () => {
-        //     setData(null);
-        // };
+        console.log(clientInfo);
     }, []);
 
     return (
         <Container fluid className="px-4 d-flex justify-content-center">
-            {/* <h1 className="text-center my-4">🚀 Customer Dashboard: {client.clientName} 🚀</h1>
+            <h1 className="text-center my-4">🚀 Customer Dashboard: {clientInfo.clientName} 🚀</h1>
             <Table striped bordered hover className="my-cool-table">
                 <thead>
                     <tr>
@@ -39,11 +27,11 @@ const ClientPanel = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{client.endpoints.filter(x => x.type === 'computer').length}</td>
-                        <td>{client.endpoints.filter(x => x.type === 'server').length}</td>
+                        <td>{clientInfo.endpoints.filter(x => x.type === 'computer').length}</td>
+                        <td>{clientInfo.endpoints.filter(x => x.type === 'server').length}</td>
                     </tr>
                 </tbody>
-            </Table> */}
+            </Table>
         </Container>
     );
 };

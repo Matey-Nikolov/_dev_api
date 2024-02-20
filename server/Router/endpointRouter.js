@@ -13,17 +13,20 @@ let api = getApiConfigurationInstance('owner');
 router.get(
     '/scan',
     [
-        query('machine_Id').isLength({ min: 6 }).trim().escape()
+        query('machine_Id').isLength({ min: 20 }).trim().escape(),
+        query('clientId').isLength({ min: 20 }).trim().escape()
     ],
     async (req, res) => {
-        
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { machine_Id } = req.query;
+        const { machine_Id, clientId } = req.query;
+
+        let api = getApiConfigurationInstance(clientId);
+
 
         pathFromURL = `endpoint/v1/endpoints/${machine_Id}/scans`; 
 
@@ -40,7 +43,8 @@ router.get(
 router.get(
     '/details',
     [
-        query('machine_Id').isLength({ min: 6 }).trim().escape()
+        query('machine_Id').isLength({ min: 6 }).trim().escape(),
+        query('clientId').isLength({ min: 20 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -50,10 +54,13 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { machine_Id } = req.query;
+        const { machine_Id, clientId } = req.query;
 
+        console.log(clientId);
+        
         pathFromURL = `endpoint/v1/endpoints/${machine_Id}`;
 
+        let api = getApiConfigurationInstance(clientId);
 
         const apiDetailsEndpoint = api.apiGetConfiguration(pathFromURL);
 
@@ -73,15 +80,13 @@ router.get(
 router.get(
     '/',
     [
-        query('clientId').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 20 }).trim().escape()
     ],
     async (req, res) => {
 
         const { clientId } = req.query;
-
-        console.log(clientId);
-
-        let api = getApiConfigurationInstance(clientId || 'owner');
+        
+        let api = getApiConfigurationInstance(clientId);
 
         pathFromURL = `endpoint/v1/endpoints?pageSize=2&view=full`;
 

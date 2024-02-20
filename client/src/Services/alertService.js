@@ -1,7 +1,7 @@
 import { getAlerts } from "../axiosrequests/apiAlert";
 
-let sortedAlerts = {
-    'items': {},
+const sortedAlerts = {
+    'items': {}
 };
 
 async function getAlersFromApi(clientId) {
@@ -11,14 +11,14 @@ async function getAlersFromApi(clientId) {
     //sortedAlerts.pages = alertsData.pages;
 
     return sortedAlerts;
-}
+};
 
 function compareByTime(a, b) {
     const timeA = new Date(a.raisedAt);
     const timeB = new Date(b.raisedAt);
 
     return timeB - timeA;
-}
+};
 
 function countAlerts(alertsData){
 
@@ -31,19 +31,19 @@ function countAlerts(alertsData){
         'medium': countMediumAlerts, 
         'high': countHighAlerts 
     };
-}
+};
 
 function filterAlerts(source, severity) {
     if (severity === 'all') {
         return source;
-    }
+    };
 
     const result = {
         items: source.items.filter(x => x.severity === severity),
     };
 
     return result;
-}
+};
 
 const fetchAlerts = async (filter, setData) => {
     try {
@@ -62,12 +62,12 @@ const fetchAlerts = async (filter, setData) => {
             default:
                 alertsData = await getAlersFromApi();
                 break;
-        }
+        };
 
         setData(alertsData);
     } catch (error) {
         console.error('Error fetching data:', error);
-    }
+    };
 };
 
 export { getAlersFromApi, fetchAlerts, countAlerts };

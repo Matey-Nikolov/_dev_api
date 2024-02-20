@@ -55,8 +55,8 @@ class ApiConfiguration {
 
 let instances = new Map();
 
-export default function getApiConfigurationInstance(access_Id, accessToken, isOwner = false) {
-    const key = isOwner ? 'owner' : access_Id;
+export default function getApiConfigurationInstance(uniqueId, access_Id, accessToken) {
+    const key = uniqueId;
 
     if (!instances.has(key)) {
         instances.set(key, new ApiConfiguration(accessToken, access_Id));

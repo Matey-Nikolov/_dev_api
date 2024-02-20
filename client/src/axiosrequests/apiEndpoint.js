@@ -18,12 +18,13 @@ const getEndpoints = async (clientId) => {
     return endponts;
 };
 
-const getEndpointDetails = async (machine_Id) => {
+const getEndpointDetails = async (machine_Id, clientId) => {
     let endpontDetails = {};
 
     await api.get('/endpoint/details', {
         params: {
-            machine_Id
+            machine_Id,
+            clientId
         },
     })
     .then((response) => {
@@ -36,11 +37,12 @@ const getEndpointDetails = async (machine_Id) => {
     return endpontDetails;
 };
 
-const endpointScan = async (machine_Id) => {
+const endpointScan = async (machine_Id, clientId) => {
     try {
         const response = await api.get('/endpoint/scan', {
             params: {
-                machine_Id
+                machine_Id,
+                clientId
             }
         });
 

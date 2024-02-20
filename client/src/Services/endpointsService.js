@@ -11,9 +11,9 @@ const fetchEndpoints = async (clientId) => {
   }
 };
 
-const fetchEndpointDetails = async (machine_Id ) => {
+const fetchEndpointDetails = async (machine_Id, clientId) => {
   try {
-    const endpoinDetails = await getEndpointDetails(machine_Id);
+    const endpoinDetails = await getEndpointDetails(machine_Id, clientId);
     
     return endpoinDetails;
   } catch (error) {
@@ -22,9 +22,9 @@ const fetchEndpointDetails = async (machine_Id ) => {
   }
 };
   
-const fetchEndpointScan = async (machine_Id) => {
+const fetchEndpointScan = async (machine_Id, clientId) => {
   try {
-    const returnStatus = await endpointScan(machine_Id);
+    const returnStatus = await endpointScan(machine_Id, clientId);
     
     return returnStatus;
   } catch (error) {

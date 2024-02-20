@@ -16,13 +16,13 @@ const addParams = {
 router.get(
     '/',
     [
-        query('clientId').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 15 }).trim().escape()
     ],
     async (req, res) => {
 
         const { clientId } = req.query;
 
-        const api = getApiConfigurationInstance(clientId || 'owner');
+        const api = getApiConfigurationInstance(clientId);
 
         const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
 

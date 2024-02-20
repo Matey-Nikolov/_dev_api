@@ -7,7 +7,7 @@ import { fetchEndpointDetails } from '../../Services/endpointsService';
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
-const EndpointDetails = ({ machine_Id, onBackClick  }) => {
+const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
   const setMachineId = new Set();
 
   const [endpointDetailsMap, setEndpointDetailsMap] = useState({});
@@ -17,7 +17,7 @@ const EndpointDetails = ({ machine_Id, onBackClick  }) => {
 
   const fetchData = async () => {
     try {
-      const endpointData = await fetchEndpointDetails(machine_Id);
+      const endpointData = await fetchEndpointDetails(machine_Id, clientId);
 
       setEndpointDetailsMap((prevDetails) => ({
         ...prevDetails,

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = 'http://localhost:3000'; //process.env.REACT_APP_BASE_URL
 
-export const setupInformation = async (accessToken, access_Id, isOwner) => {
+export const setupInformation = async (accessToken, access_Id, uniqueId) => {
     let isOkStatus = { };
 
     const api = axios.create({
@@ -10,7 +10,7 @@ export const setupInformation = async (accessToken, access_Id, isOwner) => {
         params: {
             accessToken, 
             access_Id,
-            isOwner
+            uniqueId
         }
     });
 

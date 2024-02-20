@@ -15,9 +15,6 @@ import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
 
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
-
-
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -51,6 +48,17 @@ const HomePage = () => {
     const statusAndFileName = await findByBackupButton(value);
 
     isBackup(statusAndFileName);
+  };
+
+  const handleClickedClientName = (value) => {
+    navigate(
+      '/endpoints',
+      {
+        state: {
+          'info': value
+        }
+      }
+    );
   };
 
   const isBackup = (statusAndFileName) => {
@@ -93,12 +101,9 @@ const HomePage = () => {
               {useClientsInformation.map((client) => (
                   <tr key={client.id}>
                       <td>
-                        <Link to={{
-                            pathname: "/client",
-                            state: { 'client': client }
-                        }}>
-                            {client.clientName}
-                        </Link>
+                        <button onClick={() => handleClickedClientName(client)}>
+                          {client.clientName}
+                        </button>
                       </td>
                       <td>{client.alerts.items.filter(x => x.severity === 'high').length}</td>
                       <td>{client.alerts.items.filter(x => x.severity === 'medium').length}</td>
