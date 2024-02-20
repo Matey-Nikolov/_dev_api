@@ -25,8 +25,13 @@ In terminal (../client) install this packages:
 - axios
 - react-bootstrap and bootstrap (for now)
 - firebase
-- react-hooks-global-state
+- react-secure-storage
+- uuid
 - react-router-dom
+
+```
+npm i package
+```
 
 For firebase setup create one ```.env.local.``` inside copy this
 ```
