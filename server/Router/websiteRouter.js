@@ -1,6 +1,4 @@
-import { express, axios } from '../globalImports.js';
-
-import { query, validationResult } from 'express-validator';
+import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
@@ -32,7 +30,7 @@ router.get(
 router.get(
     '/delete',
     [
-        query('website_Id').isLength({ min: 6 }).trim().escape()
+        query('website_Id').isLength({ min: 20 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -59,7 +57,7 @@ router.get(
 router.get(
     '/add',
     [
-        query('url').isLength({ min: 1 }).trim().escape(),
+        query('url').isLength({ min: 3 }).trim().escape(),
     ],
     async (req, res) => {
         

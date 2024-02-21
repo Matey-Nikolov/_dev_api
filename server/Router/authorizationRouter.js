@@ -7,7 +7,7 @@ const router = express.Router();
 router.get(
     '/',
     [
-        query('accessToken').isLength({ min: 1 }).trim().escape(),
+        query('accessToken').isLength({ min: 800 }).trim().escape(),
     ],
     async (req, res) => {
         const errors = validationResult(req);

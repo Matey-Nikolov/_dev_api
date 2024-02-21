@@ -1,24 +1,26 @@
-import { express, axios } from '../globalImports.js';
-
-import { query, validationResult } from 'express-validator';
+import { express, query } from '../globalImports.js';
 
 import createFileForBackup from '../help/createFile.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const router = express.Router();
-const api = getApiConfigurationInstance('owner');
 
 let pathFromURL = ``; 
 
 router.get(
     '/items',
+    [
+        query('clientId').isLength({ min: 35 }).trim().escape()
+    ],
     async (req, res) => {
 
         pathFromURL = `endpoint/v1/settings/allowed-items?pageTotal=true`;
 
+        const { clientId } = req.query;
+        
+        const api = getApiConfigurationInstance(clientId);
         const apiItems = api.apiGetConfiguration(pathFromURL);
-
 
         try{
             const gettAllItems = await apiItems.get();
@@ -42,9 +44,15 @@ router.get(
 
 router.get(
     '/items/blocks',
+    [
+        query('clientId').isLength({ min: 35 }).trim().escape()
+    ],
     async (req, res) => {
         pathFromURL = `/endpoint/v1/settings/blocked-items?pageSize=50&pageTotal=true`;
 
+        const { clientId } = req.query;
+        
+        const api = getApiConfigurationInstance(clientId);
         const apiItemsBlock = api.apiGetConfiguration(pathFromURL);
 
         try{
@@ -69,10 +77,16 @@ router.get(
 
 router.get(
     '/policies',
+    [
+        query('clientId').isLength({ min: 35 }).trim().escape()
+    ],
     async (req, res) => {
 
         pathFromURL = `/endpoint/v1/policies?pageSize=100&pageTotal=true`;
 
+        const { clientId } = req.query;
+        
+        const api = getApiConfigurationInstance(clientId);
         const apiPolicies = api.apiGetConfiguration(pathFromURL);
 
         try{

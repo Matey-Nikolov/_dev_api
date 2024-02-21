@@ -1,19 +1,21 @@
-import { express, axios } from '../globalImports.js';
+import { express, query } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const getEvents = express.Router();
-const api = getApiConfigurationInstance('owner');
 
 const pathFromURL = `/siem/v1/events`; 
 
-// const addParams = {
-//     "pageSize": 10
-// };
-
 getEvents.get(
     '/',
-    async (req, res) => {        
+    [
+        query('clientId').isLength({ min: 35 }).trim().escape()
+    ],
+    async (req, res) => {       
+
+        const { clientId } = req.query;
+        
+        const api = getApiConfigurationInstance(clientId);
         const apiEvents = api.apiGetConfiguration(pathFromURL);
 
         try{

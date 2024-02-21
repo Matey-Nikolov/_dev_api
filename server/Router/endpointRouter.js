@@ -1,6 +1,4 @@
-import { express, axios } from '../globalImports.js';
-
-import { query, validationResult } from 'express-validator';
+import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
@@ -8,13 +6,12 @@ import { pageSolution } from '.././help/pageSolution.js';
 const router = express.Router();
 
 let pathFromURL = ``;
-let api = getApiConfigurationInstance('owner');
 
 router.get(
     '/scan',
     [
-        query('machine_Id').isLength({ min: 20 }).trim().escape(),
-        query('clientId').isLength({ min: 20 }).trim().escape()
+        query('machine_Id').isLength({ min: 35 }).trim().escape(),
+        query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -43,7 +40,7 @@ router.get(
 router.get(
     '/details',
     [
-        query('machine_Id').isLength({ min: 6 }).trim().escape(),
+        query('machine_Id').isLength({ min: 20 }).trim().escape(),
         query('clientId').isLength({ min: 20 }).trim().escape()
     ],
     async (req, res) => {

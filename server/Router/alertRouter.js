@@ -1,6 +1,4 @@
-import { express } from '../globalImports.js';
-
-import { query } from 'express-validator';
+import { express, query } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
@@ -16,7 +14,7 @@ const addParams = {
 router.get(
     '/',
     [
-        query('clientId').isLength({ min: 15 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
 
