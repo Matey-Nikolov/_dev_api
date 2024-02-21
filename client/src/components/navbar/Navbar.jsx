@@ -24,7 +24,7 @@ const Navbar = () => {
           {currentClient_role === 'R/W' && (
             <>
               <Link className="navbar-brand" to={`/events/${currentClient_name}`}>events</Link> 
-              <Link className="navbar-brand" to={`/website/${currentClient_name}`}>websites</Link> 
+              <Link className="navbar-brand" to={`/websites/${currentClient_name}`}>websites</Link> 
             </>
           )}
 

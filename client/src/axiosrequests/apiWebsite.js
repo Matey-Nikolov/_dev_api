@@ -1,7 +1,8 @@
 import { api } from "./apiConfig";
 
 class ApiWebsite {
-    constructor() {
+    constructor(valueId) {
+        this.clientId = valueId;
         this.website = {};
         
         this.isDeleted = false;
@@ -14,7 +15,11 @@ class ApiWebsite {
 
     async getWebsite() {
         try {
-            const response = await api.get('/website');
+            const response = await api.get('/website', {
+                params:{
+                    clientId:this.clientId
+                }
+            });
             
             this.website = response.data;
         } catch (error) {
@@ -28,7 +33,8 @@ class ApiWebsite {
         try {
             this.isDeleted = await api.get('/website/delete', {
                 params: {
-                    website_Id
+                    website_Id,
+                    clientId:this.clientId
                 }
             });
 
@@ -43,7 +49,8 @@ class ApiWebsite {
         try {
             this.isAddWebsite = await api.get('/website/add', {
                 params: {
-                    url
+                    url,
+                    clientId:this.clientId
                 }
             });
 

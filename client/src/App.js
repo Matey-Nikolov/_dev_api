@@ -34,12 +34,12 @@ function App() {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path='/register/:name' element={<RegisterPage />} />
+              <Route path='/register/' element={<RegisterPage />} />
               <Route path='/alerts/:name' element={<AlertPage />} />
               <Route path='/endpoints/:name' element={<EndpointPage />} />
               <Route path='/events/:name'element={<EventTable />} />
               <Route path='/websites/:name' element={<WebsiteTable />} />
-              <Route path='/addwebsite/:name' element={<AddWebsite />} />
+              <Route path='/addwebsite' element={<AddWebsite />} />
             </Routes>
           </Suspense>
         <Footer />

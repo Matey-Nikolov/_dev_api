@@ -1,9 +1,10 @@
 import ApiWebsite from '../axiosrequests/apiWebsite.js';
 
-const apiRequestWebsite = new ApiWebsite();
-
 class WebsiteService {
-  constructor() {
+  constructor(apiRequestWebsite) {
+    
+    this.api = apiRequestWebsite;
+
     this.regexWebsite = /(?:https?:\/\/www\.)?(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
     
     this.setWebsiteInformation = new Set();
@@ -15,20 +16,17 @@ class WebsiteService {
       'status': -1,
       'information': { }
     };
-  }
+  };
 
   getWebsiteData = async () => {
-    //apiRequestWebsite.setCredentials();
-
-    const data = await apiRequestWebsite.getWebsite();
+    const data = await this.api.getWebsite();
 
     return data.items;
   };
 
   allowWebsite = async (typeName) => {
-    const websiteData = await this.getWebsiteData();
+    const websiteData = await this.api.getWebsiteData();
 
-    // lazy way - soon fix
     this.setWebsiteInformation.clear();
     this.setWebsiteURL.clear();
 
@@ -81,7 +79,7 @@ class WebsiteService {
   btnBlockWebsite = async (website_Id) => {
     try {
 
-      this.isDeleted = await apiRequestWebsite.deleteRequest(website_Id);
+      this.isDeleted = await this.api.deleteRequest(website_Id);
       
       if (this.isDeleted) {
 
@@ -101,17 +99,13 @@ class WebsiteService {
   btnAllowWebsite = async (valueURL) => {
     const extractedURL = (this.regexWebsite.exec(valueURL) || [])[1];
 
-    console.log(this.setWebsiteURL);
-
     if (!this.setWebsiteURL.has(extractedURL)) {
-
       try {
-        this.isAddWebsite = await apiRequestWebsite.addWebsiteRequest(extractedURL);
+        this.isAddWebsite = await this.api.addWebsiteRequest(extractedURL);
       } catch (error) {
         console.error('Error adding website:', error);
-      }
+      };
 
-      console.log(this.isAddWebsite);
       let url = this.isAddWebsite.data.information.url;
 
       if (this.isAddWebsite.status === 200) {
@@ -123,13 +117,14 @@ class WebsiteService {
     return this.isAddWebsite.status;
   };
 };
-  
+
 let instance = null;
 
-export default function getWebsiteServiceInstance() {
-  
+export default function getWebsiteServiceInstance(clientId) {
+  const apiRequestWebsite = new ApiWebsite(clientId);
+
   if (!instance) {
-    instance = new WebsiteService();
+    instance = new WebsiteService(apiRequestWebsite);
   };
 
   return instance;

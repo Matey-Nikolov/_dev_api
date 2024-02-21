@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Card, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+import { UseCreatedContex } from '../../contex/setupInformation';
 
 import getWebsiteServiceInstance from '../../Services/websiteService';
 
 const AddWebsite = () => {
+  const { setCurrentClient_id } = useContext(UseCreatedContex);
 
-  // return class 
-  const websiteService = new getWebsiteServiceInstance();
+  const websiteService = new getWebsiteServiceInstance(setCurrentClient_id);
 
   const navigate = useNavigate();
 

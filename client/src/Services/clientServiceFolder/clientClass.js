@@ -4,6 +4,7 @@ import { postToken } from "../../axiosrequests/apiToken";
 import { getAlersFromApi } from "../alertService";
 import { fetchEndpoints } from '../endpointsService';
 import { fetchEvents } from '../eventsService';
+import getWebsiteServiceInstance from '../websiteService';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -71,7 +72,7 @@ class Client {
     };
 
     async getWebsites(){
-
+        return getWebsiteServiceInstance(this.uniqueId);
     };
 
     #clearPrivateProperties() {
