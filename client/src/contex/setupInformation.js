@@ -1,54 +1,16 @@
 import { createContext, useEffect, useState } from "react";
-import { getAlersFromApi } from "../Services/alertService";
-import { fetchEvents } from "../Services/eventsService";
-import { fetchEndpoints } from "../Services/endpointsService";
-import getWebsiteServiceInstance from '../Services/websiteService';
 import { setupClients } from "../Services/clientServiceFolder/clientSevice";
 
 const UseCreatedContex = createContext();
 
 const ContextProvider = ({ children }) => {
-    const [currentAlertsForClient, setCurrentAlertsForClient] = useState({});
-    const [useEvents, setEvents] = useState({});
-    const [useEndpoints, setEndpoints] = useState({});
-    const [useWebsites, setWebsite] = useState([]);
-    
     const [informationForClients, setInformationForUser] = useState([]);
 
     const [loading, setLoading] = useState(true);
 
-    const [currentClient, setCurrentClient] = useState(null);
-
-    const getAlerts = async () => {
-        let alerts = await getAlersFromApi();
-
-        setCurrentAlertsForClient(alerts);
-        setLoading(false);
-    };
-
-    const getEvents = async () =>{
-        let events = await fetchEvents();
-        setEvents(events);
-
-        setLoading(false);
-    };
-
-    const getEndpoints = async () =>{
-        let endpoins = await fetchEndpoints();
-        setEndpoints(endpoins);
-
-        setLoading(false);
-    };
-
-    const getWebsites = async () =>{
-        const websiteService = new getWebsiteServiceInstance();
-
-        const websiteData = await websiteService.allowWebsite();
-        
-        setWebsite(websiteData);
-
-        setLoading(false);
-    };
+    const [currentClient_role, setCurrentClient_role] = useState(null);
+    const [currentClient_id, setCurrentClient_id] = useState(null);
+    const [currentClient_name, setCurrentClient_name] = useState(null);
 
     const getInfomationForClients = async () =>{
         const clients = await setupClients();
@@ -58,15 +20,14 @@ const ContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        // getAlerts();
-        // getEvents();
-        // getEndpoints();
-        // getWebsites();
         getInfomationForClients();
     }, []);
 
     return(
-        <UseCreatedContex.Provider value={{ currentAlertsForClient, loading, useEvents, useEndpoints, useWebsites, informationForClients, setCurrentClient, currentClient }}>
+        <UseCreatedContex.Provider value={{ loading, informationForClients,
+                                            setCurrentClient_id, currentClient_id, 
+                                            setCurrentClient_role, currentClient_role,
+                                            setCurrentClient_name, currentClient_name }}>
             {children}
         </UseCreatedContex.Provider>
     );

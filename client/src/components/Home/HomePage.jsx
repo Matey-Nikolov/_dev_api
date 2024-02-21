@@ -14,12 +14,12 @@ import findByBackupButton from '../../Services/backupService';
 import { countAlerts } from '../../Services/alertService';
 import { hasEvents } from '../../Services/eventsService';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const { loading, informationForClients, setCurrentClient } = useContext(UseCreatedContex);
+  const { loading, informationForClients, setCurrentClient_id, setCurrentClient_role, setCurrentClient_name } = useContext(UseCreatedContex);
 
   const [useSuccessBackup, setSuccessBackup] = useState(false);
   const [useErrorBackup, setErrorBackup] = useState(false);
@@ -51,16 +51,11 @@ const HomePage = () => {
   };
 
   const handleClickedClientName = (value) => {
-    setCurrentClient(value.uniqueId);
-    
-    navigate(
-      '/endpoints',
-      {
-        state: {
-          'info': value
-        }
-      }
-    );
+    setCurrentClient_id(value.uniqueId);
+    setCurrentClient_role(value.role);
+    setCurrentClient_name(value.clientName);
+
+    navigate(`/endpoints/${value.clientName}`);
   };
 
   const isBackup = (statusAndFileName) => {

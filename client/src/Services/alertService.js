@@ -7,10 +7,12 @@ const sortedAlerts = {
 async function getAlersFromApi(clientId) {
     const alertsData = await getAlerts(clientId);
 
-    sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
-    //sortedAlerts.pages = alertsData.pages;
+    const localSortedAlerts = JSON.parse(JSON.stringify(alertsData));
 
-    return sortedAlerts;
+    localSortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
+    sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
+    
+    return localSortedAlerts;
 };
 
 function compareByTime(a, b) {
@@ -53,15 +55,12 @@ const fetchAlerts = async (filter, setData) => {
         switch (filter) {
             case 'all':
                 alertsData = filterAlerts(sortedAlerts, filter);
-                break;
+            break;
             case 'low':
             case 'medium':
             case 'high':
                 alertsData = filterAlerts(sortedAlerts, filter);
-                break;
-            default:
-                alertsData = await getAlersFromApi();
-                break;
+            break;
         };
 
         setData(alertsData);

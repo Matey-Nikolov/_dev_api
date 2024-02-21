@@ -1,8 +1,8 @@
 import { getEvents } from "../axiosrequests/apiEvents";
 
-const fetchEvents = async () => {
+const fetchEvents = async (clientId) => {
     try {
-      const events = await getEvents();
+      const events = await getEvents(clientId);
       
       return events;
     } catch (error) {

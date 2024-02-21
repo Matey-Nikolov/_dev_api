@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
+
+import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
 import { fetchEndpointScan } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
-import { useLocation } from 'react-router-dom';
-
+import { UseCreatedContex } from '../../contex/setupInformation';
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
 const EndpointTablePage = ({ onEndpointDetailsClick }) => {
-  const location = useLocation();
-  const passedData = location.state;
-  
+  const { currentClient_id } = useContext(UseCreatedContex);
+ 
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
@@ -22,20 +22,19 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
 
   const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
 
-  const [useUnuniqueId, setUniqueId] = useState([]);
   const [useRole, setRole] = useState();
 
   useEffect(() => {
-    if (passedData !== null) {
-      setEndpoints([...passedData.info.endpoints]);
-
-      setUniqueId(passedData.info.uniqueId);
-      setRole(passedData.info.role);
+    const client = findClientById(currentClient_id);
+    
+    if (client !== -1) {
+      setEndpoints(client.endpoints);
+      setRole(client.role);
     };
-  }, [passedData]);
+  });
 
   const handleButtonClickShowDetails = (machine_Id) => {
-    onEndpointDetailsClick(machine_Id, useUnuniqueId);
+    onEndpointDetailsClick(machine_Id, currentClient_id);
   };
 
   const handleCheckboxChange = (id) => {
@@ -43,7 +42,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
 
     if (!selectedEndpoints.has(id)) {
       updatedSelectedEndpoints.add(id);
-    }
+    };
 
     setSelectedEndpoints(updatedSelectedEndpoints);
   };
@@ -52,7 +51,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
     try {
 
       await Promise.all(ids.map(async (id) => {
-        await fetchEndpointScan(id, useUnuniqueId);
+        await fetchEndpointScan(id, currentClient_id);
       }));
 
       setSuccessAlert(true);

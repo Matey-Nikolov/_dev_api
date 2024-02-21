@@ -1,9 +1,13 @@
 import { api } from "./apiConfig";
 
-export const getEvents = async () => {
+export const getEvents = async (clientId) => {
     let events = {};
 
-    await api.get('/events')
+    await api.get('/events', {
+        params: {
+            clientId
+        }
+    })
     .then((response) => {
         events =  response.data;
     })

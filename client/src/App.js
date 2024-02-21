@@ -10,8 +10,6 @@ import Footer from './components/Footer/Footer';
 import useToken from './Services/useToken';
 
 const HomePage = lazy(() => import('./components/Home/HomePage'));
-const ClientPanel = lazy(() => import('./components/Home/ClientPanel'));
-
 
 const LoginPage = lazy(() => import('./components/auth/LoginPage'));
 const RegisterPage = lazy(() => import('./components/auth/RegisterPage'));
@@ -36,13 +34,12 @@ function App() {
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/client" element={<ClientPanel />} />
-              <Route path='/register' element={<RegisterPage />} />
-              <Route path="/alerts" element={<AlertPage />} />
-              <Route path="/endpoints" element={<EndpointPage />} />
-              <Route path="/events" element={<EventTable />} />
-              <Route path="/websites" element={<WebsiteTable />} />
-              <Route path="/addwebsite" element={<AddWebsite />} />
+              <Route path='/register/:name' element={<RegisterPage />} />
+              <Route path='/alerts/:name' element={<AlertPage />} />
+              <Route path='/endpoints/:name' element={<EndpointPage />} />
+              <Route path='/events/:name'element={<EventTable />} />
+              <Route path='/websites/:name' element={<WebsiteTable />} />
+              <Route path='/addwebsite/:name' element={<AddWebsite />} />
             </Routes>
           </Suspense>
         <Footer />

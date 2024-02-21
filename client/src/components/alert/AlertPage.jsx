@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Table } from 'react-bootstrap';
 
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
@@ -15,8 +13,7 @@ import { UseCreatedContex } from '../../contex/setupInformation';
 
 function AlertTable() {
 
-  const { currentClient, loading } = useContext(UseCreatedContex);
-
+  const { currentClient_id } = useContext(UseCreatedContex);
 
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState('');
@@ -24,11 +21,12 @@ function AlertTable() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-
-    const user = findClientById(currentClient);
-    setData(user.alerts);
-    console.log(user);
-  }, []);
+    const client = findClientById(currentClient_id);
+    
+    if (client !== -1) {
+      setData(client.alerts);
+    };
+  });
 
   const handleFilterChange = useCallback(
     (newFilter) => {
@@ -77,7 +75,7 @@ function AlertTable() {
 
   const currentItems = getPaginatedItems(filteredData);
 
-  if (!data) {
+  if (data === null || data.items.length === 0) {
     return(
       <Container fluid className="px-4">
         <Row className="justify-content-center">
@@ -93,68 +91,65 @@ function AlertTable() {
         </Row>
       </Container>
     );
-  };
+  }
 
-  if (!loading) {
-    return (
-      <Container className="mt-5">
-        <FilterButtons
-          filterType={filter}
-          handleFilterChange={handleFilterChange}
-        />
-  
-        <Form.Control
-            type="text"
-            placeholder="Search..."
-            className="w-auto d-inline-block"
-            onChange={handleSearch}
-            value={searchTerm}
-        />
-  
-        <Table id="alertTable" responsive bordered striped className="mt-2">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Product</th>
-              <th>Severity</th>
-              <th>Description</th>
-              <th>RaisedAt</th>
+  return (
+    <Container className="mt-5">
+      <FilterButtons
+        filterType={filter}
+        handleFilterChange={handleFilterChange}
+      />
+
+      <Form.Control
+          type="text"
+          placeholder="Search..."
+          className="w-auto d-inline-block"
+          onChange={handleSearch}
+          value={searchTerm}
+      />
+
+      <Table id="alertTable" responsive bordered striped className="mt-2">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Severity</th>
+            <th>Description</th>
+            <th>RaisedAt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentItems.map((value, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{value.product}</td>
+              <td>
+                {value.severity === 'low' ? (
+                  <span className="badge bg-success">low</span>
+                ) : value.severity === 'medium' ? (
+                  <span className="badge bg-warning">medium</span>
+                ) : value.severity === 'high' ? (
+                  <span className="badge bg-danger">high</span>
+                ) : (
+                  ''
+                )}
+              </td>
+              <td>{value.description}</td>
+              <td>{value.raisedAt}</td>
             </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((value, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{value.product}</td>
-                <td>
-                  {value.severity === 'low' ? (
-                    <span className="badge bg-success">low</span>
-                  ) : value.severity === 'medium' ? (
-                    <span className="badge bg-warning">medium</span>
-                  ) : value.severity === 'high' ? (
-                    <span className="badge bg-danger">high</span>
-                  ) : (
-                    ''
-                  )}
-                </td>
-                <td>{value.description}</td>
-                <td>{value.raisedAt}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          totalItems={filteredData.length}
-          setCurrentPage={setCurrentPage}
-        />
-  
-      </Container>
-  
-    );
-  };
+          ))}
+        </tbody>
+      </Table>
+      
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredData.length}
+        setCurrentPage={setCurrentPage}
+      />
+
+    </Container>
+  );
 };
 
 export default AlertTable;

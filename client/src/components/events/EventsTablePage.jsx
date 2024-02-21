@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Card } from 'react-bootstrap';
 
+import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
+
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 const EventTable = () => {
-  const { loading, useEvents } = useContext(UseCreatedContex);
+  const { currentClient_id } = useContext(UseCreatedContex);
 
   const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
   const [useAllEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    if (!loading) {
-      setEvents(useEvents.items);
+    const client = findClientById(currentClient_id);
+
+    if (client !== -1) {
+      setEvents(client.events);
     };
-  }, [useEvents]);
+  });
   
   if(useAllEvents != []){
     return(

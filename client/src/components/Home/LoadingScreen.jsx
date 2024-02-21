@@ -5,9 +5,9 @@ const LoadingScreen = () => (
   <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
     <div>
       <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
+        <span className="sr-only">Loading information...</span>
       </Spinner>
-      <p>Pls wait, the environment is loading</p>
+      <p>Please wait, the environment is loading</p>
     </div>
   </div>
 );

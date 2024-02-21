@@ -15,7 +15,6 @@ const setupClients = async () => {
 
   querySnapshot.forEach((doc) => {
     const clientData = doc.data();
-
     const existingClientIndex = clients.findIndex(client => 
       client.clientName === clientData.name
     );
@@ -23,6 +22,7 @@ const setupClients = async () => {
     if (existingClientIndex === -1) {
       const newClient = new Client(clientData);
       clients.push(newClient);
+;
     };
   });
 
@@ -34,7 +34,9 @@ const setupClients = async () => {
 };
 
 const findClientById = (clientId) => {
-  return clients.find(client => client.uniqueId === clientId);
+  const client = clients.find(client => client.uniqueId === clientId);
+
+  return client !== undefined ? client : -1;
 };
 
 export { setupClients, findClientById };
