@@ -16,11 +16,11 @@ export default async function findByBackupButton(currentClient_id, valueButton, 
         case 'policies':
             statusCodeAndName = await createBackupPolicies(fileName, folderName);
         break;
-        // case 'scanning exclusions':
-        //     statusCodeAndName = await createBackupScanningExclusions(fileName, folderName);
-        // break;
-        case 'policies':
-
+        case 'scanning exclusions':
+            statusCodeAndName = await createBackupScanningExclusions(fileName, folderName);
+        break;
+        case 'exclusions download':
+            statusCodeAndName = await createBackupExclusionsDownload(fileName, folderName);
         break;
         case 'reset':
             
@@ -54,10 +54,18 @@ async function createBackupPolicies(fileName, folderName){
     return backUpPoliciesCheck;
 };
 
-// async function createBackupScanningExclusions(fileName, folderName){
-//     const apiRequestBackup = new ApiBackup(currentClient, folderName);
+async function createBackupScanningExclusions(fileName, folderName){
+    const apiRequestBackup = new ApiBackup(currentClient, folderName);
 
-//     const backUpPoliciesCheck = await apiRequestBackup.backupPolicies(fileName);
+    const backUpScanningExclusionsCheck = await apiRequestBackup.backupScanningExclusions(fileName);
 
-//     return backUpPoliciesCheck;
-// };
+    return backUpScanningExclusionsCheck;
+};
+
+async function createBackupExclusionsDownload(fileName, folderName){
+    const apiRequestBackup = new ApiBackup(currentClient, folderName);
+
+    const backUpExclusionsDownloadCheck = await apiRequestBackup.backupExclusionsDownload(fileName);
+
+    return backUpExclusionsDownloadCheck;
+};

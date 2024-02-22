@@ -6,9 +6,9 @@ const ButtonsArchive = ({ handleBackUpChange }) => {
     { label: 'Backup allow items', value: 'allow items' },
     { label: 'Backup block items', value: 'block items' },
     { label: 'Backup policies', value: 'policies'},
-      // { label: 'Backup scanning exclusions', value: 'scanning exclusions'},
-      // { label: 'Backup web ', value: 'web'},
-      // { label: 'Enviroment reset', value: 'reset'},
+    { label: 'Backup scanning exclusions', value: 'scanning exclusions'},
+    { label: 'Backup download installers', value: 'exclusions download'},
+    { label: 'Enviroment reset', value: 'reset'}
   ];
 
   return (

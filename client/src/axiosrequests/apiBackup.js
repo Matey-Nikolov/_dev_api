@@ -62,23 +62,41 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    // async backupScanningExclusions(fileName){
-    //     try {
-    //         const response = await api.get('/backup/exclusions', {
-    //             params: {
-    //                 clientId:this.clientId,
-    //                 fileName: fileName,
-    //                 folderName:this.folderName
-    //             }
-    //         });
+    async backupScanningExclusions(fileName){
+        try {
+            const response = await api.get('/backup/exclusions/scan', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
 
-    //         this.isCreateFileWithData = response.data;
-    //     } catch (error) {
-    //         console.error('Error:', error.response ? error.response.data : error.message);
-    //     };
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
 
-    //     return this.isCreateFileWithData;
-    // };
+        return this.isCreateFileWithData;
+    };
+
+    async backupExclusionsDownload(fileName){
+        try {
+            const response = await api.get('/backup/exclusions/download', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
+
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isCreateFileWithData;
+    };
 };
 
 export default ApiBackup;
