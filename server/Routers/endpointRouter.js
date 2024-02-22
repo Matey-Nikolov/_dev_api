@@ -1,7 +1,7 @@
 import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
-import { pageSolution } from '.././help/pageSolution.js';
+import { pageSolution } from '../help/pageSolution.js';
 
 const router = express.Router();
 

@@ -1,39 +1,63 @@
 import ApiBackup from '../axiosrequests/apiBackup.js';
 
-const apiRequestBackup = new ApiBackup();
 let statusCodeAndName = {};
+let currentClient = '';
 
-export default async function findByBackupButton(value) {
-    switch (value){
-        case 'items':
-            statusCodeAndName = await createBackupItems();
+export default async function findByBackupButton(currentClient_id, valueButton, fileName, folderName) {
+    currentClient = currentClient_id
+
+    switch (valueButton){
+        case 'allow items':
+            statusCodeAndName = await createBackupItems(fileName, folderName);
         break;
         case 'block items':
-            statusCodeAndName = await createBackupBlockItems();
+            statusCodeAndName = await createBackupBlockItems(fileName, folderName);
         break;
         case 'policies':
-            statusCodeAndName = await createBackupPolicies();
+            statusCodeAndName = await createBackupPolicies(fileName, folderName);
+        break;
+        // case 'scanning exclusions':
+        //     statusCodeAndName = await createBackupScanningExclusions(fileName, folderName);
+        // break;
+        case 'policies':
+
+        break;
+        case 'reset':
+            
         break;
     };
     
     return statusCodeAndName;
 };
 
+async function createBackupItems(fileName, folderName){
+    const apiRequestBackup = new ApiBackup(currentClient, folderName);
 
-async function createBackupItems(){
-    const backUpItemsCheck = await apiRequestBackup.backupByItems();
+    const backUpItemsCheck = await apiRequestBackup.backupByItems(fileName);
 
     return backUpItemsCheck;
 };
 
-async function createBackupBlockItems(){
-    const backUpBlockItemsCheck = await apiRequestBackup.backupBlockItems();
+async function createBackupBlockItems(fileName, folderName){
+    const apiRequestBackup = new ApiBackup(currentClient, folderName);
+
+    const backUpBlockItemsCheck = await apiRequestBackup.backupBlockItems(fileName);
 
     return backUpBlockItemsCheck;
 };
 
-async function createBackupPolicies(){
-    const backUpPoliciesCheck = await apiRequestBackup.backupPolicies();
+async function createBackupPolicies(fileName, folderName){
+    const apiRequestBackup = new ApiBackup(currentClient, folderName);
+
+    const backUpPoliciesCheck = await apiRequestBackup.backupPolicies(fileName);
 
     return backUpPoliciesCheck;
 };
+
+// async function createBackupScanningExclusions(fileName, folderName){
+//     const apiRequestBackup = new ApiBackup(currentClient, folderName);
+
+//     const backUpPoliciesCheck = await apiRequestBackup.backupPolicies(fileName);
+
+//     return backUpPoliciesCheck;
+// };

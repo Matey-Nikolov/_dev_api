@@ -6,14 +6,14 @@ import rateLimit from 'express-rate-limit';
 
 import setupInfomation from './configs/api/setupInfomationRouter.js';
 
-import tokenRouter from './Router/authenticationRouter.js';
-import whoIAmRouter from './Router/authorizationRouter.js';
+import tokenRouter from './Routers/authenticationRouter.js';
+import whoIAmRouter from './Routers/authorizationRouter.js';
 
-import alertRouter from './Router/alertRouter.js';
-import endpointRouter from './Router/endpointRouter.js';
-import getEvents from './Router/eventRouter.js';
-import websiteRouter from './Router/websiteRouter.js';
-import archiveRouter from './Router/backupRouter.js';
+import alertRouter from './Routers/alertRouter.js';
+import endpointRouter from './Routers/endpointRouter.js';
+import getEvents from './Routers/eventRouter.js';
+import websiteRouter from './Routers/websiteRouter.js';
+import archiveRouter from './Routers/backupRouter.js';
 
 const app = express();
 const port = process.env.PORT || 3000;

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 const Navbar = () => {
@@ -30,6 +29,7 @@ const Navbar = () => {
 
           <Link className="navbar-brand" to={`/alerts/${currentClient_name}`}>alerts</Link>
           <Link className="navbar-brand" to={`/endpoints/${currentClient_name}`}>endpoints</Link>
+          <Link className="navbar-brand" to={`/backup/${currentClient_name}`}>soon name</Link>
 
           <div className="left d-flex justify-content-center align-items-center">
             <p className="navbar-brand mb-0">Customer - {currentClient_name}</p>
