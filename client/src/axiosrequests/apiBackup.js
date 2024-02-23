@@ -97,6 +97,22 @@ class ApiBackup {
 
         return this.isCreateFileWithData;
     };
+
+    async resetEnviroment(){
+        try {
+            const response = await api.get('/backup/reset', {
+                params: {
+                    clientId:this.clientId
+                }
+            });
+
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isCreateFileWithData;
+    };
 };
 
 export default ApiBackup;

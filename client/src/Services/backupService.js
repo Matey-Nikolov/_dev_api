@@ -23,7 +23,7 @@ export default async function findByBackupButton(currentClient_id, valueButton, 
             statusCodeAndName = await createBackupExclusionsDownload(fileName, folderName);
         break;
         case 'reset':
-            
+            statusCodeAndName = await resetEnviroment();
         break;
     };
     
@@ -68,4 +68,12 @@ async function createBackupExclusionsDownload(fileName, folderName){
     const backUpExclusionsDownloadCheck = await apiRequestBackup.backupExclusionsDownload(fileName);
 
     return backUpExclusionsDownloadCheck;
+};
+
+async function resetEnviroment(){
+    const apiRequestBackup = new ApiBackup(currentClient);
+
+    const codeResetEnviroment = await apiRequestBackup.resetEnviroment();
+
+    return codeResetEnviroment;
 };

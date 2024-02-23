@@ -8,7 +8,7 @@ const ButtonsArchive = ({ handleBackUpChange }) => {
     { label: 'Backup policies', value: 'policies'},
     { label: 'Backup scanning exclusions', value: 'scanning exclusions'},
     { label: 'Backup download installers', value: 'exclusions download'},
-    { label: 'Enviroment reset', value: 'reset'}
+    { label: 'Enviroment reset', value: 'reset', variant: 'danger'}
   ];
 
   return (
@@ -22,6 +22,7 @@ const ButtonsArchive = ({ handleBackUpChange }) => {
           id={`filter-${option.value}`}
           type="radio"
           name="filter-options"
+          variant={option.variant}
           onChange={() => handleBackUpChange(option.value)}
           >
           {option.label}

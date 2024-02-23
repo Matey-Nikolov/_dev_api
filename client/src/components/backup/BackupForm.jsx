@@ -29,7 +29,21 @@ const BackupFormPage = ( { getNameOfPolicy }) => {
             [e.target.id]: true
         });
     };
+    
+    const handleResetEnvironment = async (e) =>{
+        e.preventDefault();
         
+        const statusAndFileName = await findByBackupButton(currentClient_id, getNameOfPolicy);
+
+        if (statusAndFileName.status === 200) {
+            setSuccessMessage('Reset the environment to base policies - successfully!');
+        };
+
+        setTimeout(() => {
+            setSuccessMessage('');
+        }, 4000);
+    };
+
     const handleBackupInfomation = async (e) => {
         e.preventDefault();
 
@@ -83,38 +97,54 @@ const BackupFormPage = ( { getNameOfPolicy }) => {
         <Container>
             <Row className="justify-content-center">
                 <Col lg={6}>
-                    <Card className="shadow-lg border-0 rounded-lg mt-5">
-                        <Card.Header>
-                            <h3 className="text-center font-weight-light my-4">Create backup for {getNameOfPolicy}</h3>
-                        </Card.Header>
-                        <Card.Body>
-                            <Form onSubmit={handleBackupInfomation}>
-                                <Row>
-                                    <Col md={12}>
-                                        <Form.Group>
-                                            <Form.Label htmlFor="fileName">File name</Form.Label>
-                                            <Form.Control id="fileName" type="text" placeholder="Set file name" onChange={handleChange} isInvalid={touched.fileName && errors.fileName} value={form.fileName} />
-                                            {touched.fileName && errors.fileName && <Form.Control.Feedback type="invalid">{errors.fileName}</Form.Control.Feedback>}
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
 
-                                <div className="mt-4 mb-0">
-                                    <div className="d-grid">
-                                        <Button id="registerPage" variant="primary" type="submit" className="btn-block">Create backup</Button>
+                    {getNameOfPolicy === 'reset' ? (
+                        <Row className="justify-content-center">
+                            <Col lg={8}>
+                                <Card className="shadow-lg border-0 rounded-lg mt-5">
+                                    <Card.Body>
+                                        <p className="text-center font-weight-light my-4">Are you sure you want to reset the environment to base policies?</p>
+                                        <div className="d-grid">
+                                            <Button onClick={handleResetEnvironment} id="reset" variant="danger" type="button" className="btn-block">reset</Button>
+                                        </div>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    ) : (
+                        <Card className="shadow-lg border-0 rounded-lg mt-5">
+                            <Card.Header>
+                                <h3 className="text-center font-weight-light my-4">Create backup for {getNameOfPolicy}</h3>
+                            </Card.Header>
+                            <Card.Body>
+                                <Form onSubmit={handleBackupInfomation}>
+                                    <Row>
+                                        <Col md={12}>
+                                            <Form.Group>
+                                                <Form.Label htmlFor="fileName">File name</Form.Label>
+                                                <Form.Control id="fileName" type="text" placeholder="Set file name" onChange={handleChange} isInvalid={touched.fileName && errors.fileName} value={form.fileName} />
+                                                {touched.fileName && errors.fileName && <Form.Control.Feedback type="invalid">{errors.fileName}</Form.Control.Feedback>}
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
+
+                                    <div className="mt-4 mb-0">
+                                        <div className="d-grid">
+                                            <Button id="backup" variant="primary" type="submit" className="btn-block">Create backup</Button>
+                                        </div>
                                     </div>
-                                </div>
-                            </Form>
+                                </Form>
 
-                            <p></p>
+                                <p></p>
 
-                            {successMessage && (
-                                <Alert variant="success" onClose={() => successMessage('')} dismissible>
-                                    {successMessage}
-                                </Alert>
-                            )}
-                        </Card.Body>
-                    </Card>
+                                {successMessage && (
+                                    <Alert variant="success" onClose={() => successMessage('')} dismissible>
+                                        {successMessage}
+                                    </Alert>
+                                )}
+                            </Card.Body>
+                        </Card>
+                    )}
                 </Col>
             </Row>
         </Container>

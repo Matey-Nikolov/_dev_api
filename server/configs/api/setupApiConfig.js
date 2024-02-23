@@ -36,6 +36,23 @@ class ApiConfiguration {
         return axios(axiosConfig);
     };
 
+    patchApiConfiguration(addURL, addData){
+        const axiosConfig = {
+            method: 'patch',
+            maxBodyLength: Infinity,
+            url: `${this.baseURL}${addURL}`,
+            headers: {
+                'X-Tenant-ID': this.access_Id,
+                'Authorization': `Bearer ${this.accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            data: addData
+        };
+    
+        return axios(axiosConfig);
+    };
+    
+
     apiDeleteConfiguration(addURL, addData){
         const axiosConfig = {
             method: 'delete',
