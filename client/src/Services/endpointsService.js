@@ -1,4 +1,4 @@
-import { getEndpoints, getEndpointDetails, endpointScan } from "../axiosrequests/apiEndpoint";
+import { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest } from "../axiosrequests/apiEndpoint";
 
 const fetchEndpoints = async (clientId) => {
   try {
@@ -22,9 +22,9 @@ const fetchEndpointDetails = async (machine_Id, clientId) => {
   }
 };
   
-const fetchEndpointScan = async (machine_Id, clientId) => {
+const postEndpointScan = async (machine_Id, clientId) => {
   try {
-    const returnStatus = await endpointScan(machine_Id, clientId);
+    const returnStatus = await endpointScanRequest(machine_Id, clientId);
     
     return returnStatus;
   } catch (error) {
@@ -33,4 +33,15 @@ const fetchEndpointScan = async (machine_Id, clientId) => {
   }
 };
 
-export { fetchEndpoints, fetchEndpointDetails, fetchEndpointScan };
+const postUpdateRequest = async (machine_Id, clientId) => {
+  try {
+    const returnStatus = await endpointUpdateRequest(machine_Id, clientId);
+    
+    return returnStatus;
+  } catch (error) {
+    console.error('Error fetching endpoint details:', error);
+    throw error;
+  }
+};
+
+export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest };

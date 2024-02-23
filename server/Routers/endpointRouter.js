@@ -8,6 +8,36 @@ const router = express.Router();
 let pathFromURL = ``;
 
 router.get(
+    '/update',
+    [
+        query('machine_Id').isLength({ min: 35 }).trim().escape(),
+        query('clientId').isLength({ min: 35 }).trim().escape()
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
+        const { machine_Id, clientId } = req.query;
+
+        let api = getApiConfigurationInstance(clientId);
+
+
+        pathFromURL = `endpoint/v1/endpoints/${machine_Id}/update-checks`; 
+
+        await api.postApiConfiguration(pathFromURL, JSON.stringify({}))
+            .then((response) => {
+                res.json(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+);
+
+router.get(
     '/scan',
     [
         query('machine_Id').isLength({ min: 35 }).trim().escape(),
@@ -40,8 +70,8 @@ router.get(
 router.get(
     '/details',
     [
-        query('machine_Id').isLength({ min: 20 }).trim().escape(),
-        query('clientId').isLength({ min: 20 }).trim().escape()
+        query('machine_Id').isLength({ min: 35 }).trim().escape(),
+        query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -53,7 +83,7 @@ router.get(
         
         const { machine_Id, clientId } = req.query;
 
-        pathFromURL = `endpoint/v1/endpoints/${machine_Id}`;
+        pathFromURL = `endpoint/v1/endpoints/${machine_Id}?view=full`;
 
         let api = getApiConfigurationInstance(clientId);
 
@@ -75,7 +105,7 @@ router.get(
 router.get(
     '/',
     [
-        query('clientId').isLength({ min: 20 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
 

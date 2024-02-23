@@ -8,15 +8,17 @@ const Navbar = () => {
 
   const location = useLocation();
   const [isDashboard, setIsDashboard] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
 
   useEffect(() => {
     setIsDashboard(location.pathname === '/');
+    setIsRegister(location.pathname === '/register');
   }, [location]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">Customers Dashboard</Link>
-      {isDashboard ? (
+      {isDashboard || isRegister ? (
           <Link className="navbar-brand" to="/register">register</Link>
       ) : (
         <>

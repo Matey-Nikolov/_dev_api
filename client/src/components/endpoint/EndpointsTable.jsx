@@ -3,7 +3,7 @@ import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
 
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
-import { fetchEndpointScan } from '../../Services/endpointsService';
+import { postEndpointScan, postUpdateRequest } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -16,12 +16,14 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
+  const [successAlertText, setSuccessAlertText] = useState('');
 
   const [filterType, setFilterType] = useState('all');
   const [sortOrder, setSortOrder] = useState('asc');
 
-  const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
-
+  const [selectedScanEndpoints, setSelectedScanEndpoints] = useState(new Set());
+  const [selectedUpdateEndpoints, setSelectedUpdateEndpoints] = useState(new Set());
+  
   const [useRole, setRole] = useState();
 
   useEffect(() => {
@@ -37,32 +39,61 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
     onEndpointDetailsClick(machine_Id, currentClient_id);
   };
 
-  const handleCheckboxChange = (id) => {
-    const updatedSelectedEndpoints = new Set(selectedEndpoints);
-
-    if (!selectedEndpoints.has(id)) {
-      updatedSelectedEndpoints.add(id);
-    };
-
-    setSelectedEndpoints(updatedSelectedEndpoints);
+  const handleCheckboxScanChange = (id) => {
+    const updatedSelectedScanEndpoints = new Set(selectedScanEndpoints);
+  
+    if (!selectedScanEndpoints.has(id)) {
+      updatedSelectedScanEndpoints.add(id);
+    } else {
+      updatedSelectedScanEndpoints.delete(id);
+    }
+  
+    setSelectedScanEndpoints(updatedSelectedScanEndpoints);
+  };
+  
+  const handleCheckboxUpdateChange = (id) => {
+    const updatedSelectedUpdateEndpoints = new Set(selectedUpdateEndpoints);
+  
+    if (!selectedUpdateEndpoints.has(id)) {
+      updatedSelectedUpdateEndpoints.add(id);
+    } else {
+      updatedSelectedUpdateEndpoints.delete(id);
+    }
+  
+    setSelectedUpdateEndpoints(updatedSelectedUpdateEndpoints);
   };
 
   const handleButtonClickSendScanRequest = async (ids) => {
-    try {
+    await Promise.all(ids.map(async (id) => {
+      await postEndpointScan(id, currentClient_id);
+    }));
 
-      await Promise.all(ids.map(async (id) => {
-        await fetchEndpointScan(id, currentClient_id);
-      }));
+    setSuccessAlert(true);
+    setSuccessAlertText('Scan');
 
-      setSuccessAlert(true);
+    selectedScanEndpoints.clear();
 
-      setTimeout(() => {
-        setSuccessAlert(false);
-      }, 4000);
-    } catch (error) {
-      console.error('Error initiating scan requests:', error);
-    }
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
   };
+
+  const handleButtonClickSendUpdateRequest = async (ids) => {
+
+    await Promise.all(ids.map(async (id) => {
+      await postUpdateRequest(id, currentClient_id);
+    }));
+
+    setSuccessAlert(true);
+    setSuccessAlertText('Update');
+
+    selectedUpdateEndpoints.clear();
+
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
+  };
+
   const handleFilterChange = (type) => {
     setFilterType(type);
   };
@@ -105,7 +136,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
       />
       {successAlert && (
         <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
-          Scan is requested successfully!
+          {successAlertText} is requested successfully!
         </Alert>
       )}
       <Table striped bordered hover>
@@ -122,10 +153,22 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   <Button
                     variant="primary"
                     className="mt-3"
-                    disabled={selectedEndpoints.size === 0}
-                    onClick={() => handleButtonClickSendScanRequest([...selectedEndpoints])}
+                    disabled={selectedScanEndpoints.size === 0}
+                    onClick={() => handleButtonClickSendScanRequest([...selectedScanEndpoints])}
                   >
                     Scan
+                  </Button>
+                </th>
+              )}
+              {useRole === 'R/W' && (
+                <th>
+                  <Button
+                    variant="primary"
+                    className="mt-3"
+                    disabled={selectedUpdateEndpoints.size === 0}
+                    onClick={() => handleButtonClickSendUpdateRequest([...selectedUpdateEndpoints])}
+                  >
+                    Update
                   </Button>
                 </th>
               )}
@@ -147,9 +190,18 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                 {useRole === 'R/W' && (
                   <td>
                     <Form.Check
-                      onChange={() => handleCheckboxChange(value.id)}
+                      onChange={() => handleCheckboxScanChange(value.id)}
                       type="checkbox"
-                      checked={selectedEndpoints.has(value.id)}
+                      checked={selectedScanEndpoints.has(value.id)}
+                    />
+                  </td>
+                )}
+                {useRole === 'R/W' && (
+                  <td>
+                    <Form.Check
+                      onChange={() => handleCheckboxUpdateChange(value.id)}
+                      type="checkbox"
+                      checked={selectedUpdateEndpoints.has(value.id)}
                     />
                   </td>
                 )}

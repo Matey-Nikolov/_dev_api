@@ -59,7 +59,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
         <h2 className="font-weight-light text-light">{endpointDetails.hostname}</h2>
         <button onClick={onBackClick} className="btn btn-secondary mb-3">Back to all endpoints</button>
         <div className="row">
-          {/* Table 1 (Top Left) */}
+
           <div className="col-md-6 mb-4">
             <div className="card bg-secondary shadow-2-strong">
               <div className="card-body">
@@ -74,7 +74,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
                       </tr>
                     </thead>
                     <tbody id="table-body">
-                      {assignedProducts != [] ? (
+                      {assignedProducts == [] ? (
                         <tr>
                           <td colSpan="3" className="text-center">No information</td>
                         </tr>
@@ -93,8 +93,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
               </div>
             </div>
           </div>
-  
-          {/* Table 2 (Top Right) */}
+
           <div className="col-md-6 mb-4">
             <div className="card bg-secondary shadow-2-strong">
               <div className="card-body">
@@ -122,8 +121,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
               </div>
             </div>
           </div>
-  
-          {/* Table 3 (Bottom Left) */}
+
           <div className="col-md-12">
             <div className="card bg-secondary shadow-2-strong">
               <div className="card-body">
