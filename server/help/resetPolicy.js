@@ -51,27 +51,10 @@ const policy_type = [
 ];
 
 const resetBasePolicies = async (api) => {
-    let count = 0;
     for (const item of policy_type) {
-        count++;
-
         const url = `/endpoint/v1/policies/${item}/base/settings/reset`;
 
-        const postResponse = await api.postApiConfiguration(url, {});
-
-        if (count === 7) {
-            console.log('Work');
-
-            await sleep(10);
-            count = 0;
-        };
-
-        while ([429, 500, 502, 503].includes(postResponse.status)) {
-            await sleep(10);
-
-            postResponse = await api.postApiConfiguration(url, {});
-        };
-
+        await api.postApiConfiguration(url, {});
     };
 };
 

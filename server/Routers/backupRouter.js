@@ -195,8 +195,6 @@ router.get(
         query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
-
-
         pathFromURL = `/endpoint/v1/policies`;
 
         const { clientId } = req.query;
@@ -204,13 +202,13 @@ router.get(
         const apiResetEnviroment = getApiConfigurationInstance(clientId);
 
         try{
-            callResetBasePolicies(apiResetEnviroment, pathFromURL);
+            await callResetBasePolicies(apiResetEnviroment, pathFromURL);
 
-            // res.json(
-            //     { 
-            //         'status': 200
-            //     }
-            // );
+            res.json(
+                { 
+                    'status': 200
+                }
+            );
         }
         catch(error){
             console.error('Error posting data to external URL:', error.message);

@@ -31,7 +31,7 @@ const Navbar = () => {
 
           <Link className="navbar-brand" to={`/alerts/${currentClient_name}`}>alerts</Link>
           <Link className="navbar-brand" to={`/endpoints/${currentClient_name}`}>endpoints</Link>
-          <Link className="navbar-brand" to={`/backup/${currentClient_name}`}>soon name</Link>
+          <Link className="navbar-brand" to={`/backup/${currentClient_name}`}>management</Link>
 
           <div className="left d-flex justify-content-center align-items-center">
             <p className="navbar-brand mb-0">Customer - {currentClient_name}</p>
