@@ -2,7 +2,7 @@ import { setupInformation } from '../../axiosrequests/apiSetupInfo';
 import { whoIAm } from '../../axiosrequests/apiAuth';
 import { postToken } from "../../axiosrequests/apiToken";
 import { getAlersFromApi } from "../alertService";
-import { fetchEndpoints } from '../endpointsService';
+import { fetchEndpoints, getSoftwareCurrentClient } from '../endpointsService';
 import { fetchEvents } from '../eventsService';
 import getWebsiteServiceInstance from '../websiteService';
 
@@ -28,6 +28,7 @@ class Client {
         this.endpoints = [];
         this.events = [];
         this.websites = [];
+        this.software = [];
     };
 
     async setupEnvironment() {
@@ -46,9 +47,11 @@ class Client {
 
             this.endpoints = await this.getEndpoints();
 
+
             if (this.role === 'R/W') {
                 this.events = await this.getEvents();
                 this.websites = await this.getWebsites();
+                this.software = await this.getSoftware();
             };
 
             this.#setupTimestamp = currentTime;
@@ -73,6 +76,10 @@ class Client {
 
     async getWebsites(){
         return getWebsiteServiceInstance(this.uniqueId);
+    };
+
+    async getSoftware(){
+        return getSoftwareCurrentClient(this.uniqueId);
     };
 
     #clearPrivateProperties() {

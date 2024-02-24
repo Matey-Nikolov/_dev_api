@@ -8,6 +8,8 @@ const ButtonsArchive = ({ handleBackUpChange, role }) => {
     { label: 'Backup policies', value: 'policies'},
     { label: 'Backup scanning exclusions', value: 'scanning exclusions'},
     { label: 'Backup download installers', value: 'exclusions download'},
+    
+    { label: 'Installers download', roleNeeded: 'R/W', value: 'download'},
     { label: 'Enviroment reset', value: 'reset', roleNeeded: 'R/W', variant: 'danger'}
   ];
 

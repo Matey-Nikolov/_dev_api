@@ -148,7 +148,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
             <th>Health</th>
             <th>Status</th>
             <th>LastSeenAt</th>
-            <th>Tamper protection</th>
+            <th>Tamper protection status</th>
             <th></th>
               {useRole === 'R/W' && (
                 <th>
@@ -186,11 +186,11 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
               <td>{value.lastSeenAt}</td>
               <td>{value.tamperProtectionEnabled ? 
                 (
-                  <span className="badge bg-success">It's turn on</span>
+                  <span className="badge bg-success">On</span>
                 )
                 : 
                 (
-                  <span className="badge bg-danger">It's turn off</span>
+                  <span className="badge bg-danger">Off</span>
                 )}
               </td>
               <td>

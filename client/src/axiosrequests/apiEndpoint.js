@@ -73,5 +73,22 @@ const endpointUpdateRequest = async (machine_Id, clientId) => {
     }
 };
 
+const endpointSoftware = async (clientId) => {
+    try {
+        const response = await api.get('/endpoint/software', {
+            params: {
+                clientId
+            }
+        });
 
-export { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest };
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error.response ? error.response.status : error.message);
+
+        return error.response ? error.response.status : 500;
+    }
+};
+
+
+
+export { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest, endpointSoftware };

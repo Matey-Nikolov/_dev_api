@@ -1,4 +1,4 @@
-import { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest } from "../axiosrequests/apiEndpoint";
+import { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest, endpointSoftware } from "../axiosrequests/apiEndpoint";
 
 const fetchEndpoints = async (clientId) => {
   try {
@@ -44,4 +44,10 @@ const postUpdateRequest = async (machine_Id, clientId) => {
   }
 };
 
-export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest };
+const getSoftwareCurrentClient = async (clientId) =>{
+  const getSoftware = await endpointSoftware(clientId);
+
+  return getSoftware;
+};
+
+export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient };
