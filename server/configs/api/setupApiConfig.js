@@ -1,10 +1,33 @@
 import axios from "axios";
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios, {
+    retries: 6,
+    retryDelay: (...arg) => axiosRetry.exponentialDelay(...arg, 3000),
+    retryCondition(error) {
+
+        switch (error.response.status) {
+            case 429:
+            case 500:
+            case 501:
+            case 502:
+            case 503:
+                return true;
+            default:
+                return false;
+        };
+    },
+    onRetry: (retryCount) => {
+        console.log(`retry count: `, retryCount);
+    }
+});
+
 
 class ApiConfiguration {
-    constructor(accessToken, access_Id) {
+    constructor(accessToken, access_Id, URL) {
         this.accessToken = accessToken;
         this.access_Id = access_Id;
-        this.baseURL = 'https://api-eu01.central.sophos.com/';
+        this.baseURL = `https://${URL}/`;
     };
 
     apiGetConfiguration(addURL, addParams) {
@@ -51,7 +74,6 @@ class ApiConfiguration {
     
         return axios(axiosConfig);
     };
-    
 
     apiDeleteConfiguration(addURL, addData){
         const axiosConfig = {
@@ -72,11 +94,11 @@ class ApiConfiguration {
 
 let instances = new Map();
 
-export default function getApiConfigurationInstance(uniqueId, access_Id, accessToken) {
+export default function getApiConfigurationInstance(uniqueId, access_Id, accessToken, URL) {
     const key = uniqueId;
 
     if (!instances.has(key)) {
-        instances.set(key, new ApiConfiguration(accessToken, access_Id));
+        instances.set(key, new ApiConfiguration(accessToken, access_Id, URL));
     } else if (accessToken && access_Id) {
         let instance = instances.get(key);
         instance.accessToken = accessToken;

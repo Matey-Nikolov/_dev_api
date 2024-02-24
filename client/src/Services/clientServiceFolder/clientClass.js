@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 class Client {
     #clientInfo;
-    #tenantId = '';
+    #tenantIdAndDataRegion  = '';
     #setupTimestamp;
 
     constructor(infoUserClient) {
@@ -38,9 +38,9 @@ class Client {
 
         try {
             const setAuthToken = await postToken(this.#clientInfo);
-            this.#tenantId = await whoIAm(setAuthToken);
+            this.#tenantIdAndDataRegion = await whoIAm(setAuthToken);
 
-            await setupInformation(setAuthToken, this.#tenantId, this.uniqueId);
+            await setupInformation(setAuthToken, this.#tenantIdAndDataRegion.id, this.uniqueId, this.#tenantIdAndDataRegion.urlDataRegion);
 
             this.alerts = await this.getAlerts();
 
@@ -76,7 +76,7 @@ class Client {
     };
 
     #clearPrivateProperties() {
-        this.#tenantId = '';
+        this.#tenantIdAndDataRegion = '';
         this.#clientInfo = null;
     };
 }

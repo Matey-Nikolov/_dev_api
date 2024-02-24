@@ -22,7 +22,7 @@ router.post(
       grant_type: 'client_credentials',
       scope: 'token',
       client_id: client_Id_Db,
-      client_secret: client_secret_Db,
+      client_secret: client_secret_Db
     };
 
     try {
