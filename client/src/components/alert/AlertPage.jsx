@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Container, Row, Col, Card, Form, Table } from 'react-bootstrap';
-
-import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
+import { Container, Row, Col, Card, Form, Table, Button, Alert } from 'react-bootstrap';
 
 import FilterButtons from './FilterButtonsAlerts'; 
+import AcknowledgeHelpModal from './HelpModal';
 
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
@@ -11,60 +10,69 @@ import usePagination from '../../Services/Table/PaginationLogic';
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
-function AlertTable() {
+import { findClientAlerts, filterItems, searchItems, takeAction } from '../../Services/alertService';
 
+function AlertTable() {
   const { currentClient_id } = useContext(UseCreatedContex);
 
-  const [data, setData] = useState(null);
+  const [useRole, setRole] = useState();
+
+  const [useAlerts, setAlerts] = useState(null);
   const [filter, setFilter] = useState('');
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [showHelp, setShowHelp] = useState(false);
+
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [successAlertText, setSuccessAlertText] = useState('');
+
+
+  const handleShowHelp = () => setShowHelp(true);
+  const handleCloseHelp = () => setShowHelp(false);
+
   useEffect(() => {
-    const client = findClientById(currentClient_id);
-    
-    if (client !== -1) {
-      setData(client.alerts);
-    };
+    const { alerts, role } = findClientAlerts(currentClient_id);
+    setAlerts(alerts);
+    setRole(role);
   });
+
+  const handleButtonClickTakeAction = async (alertId, action) => {
+    const isSuccess = await takeAction(currentClient_id, alertId, action);
+
+    if (isSuccess === 'success') {
+      setSuccessAlert(true);
+      setSuccessAlertText('Acknowledge');
+    };
+    
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
+  };
 
   const handleFilterChange = useCallback(
     (newFilter) => {
       setFilter(newFilter);
+      setCurrentPage(1);
     },
     [setFilter]
   );
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1);
   };
 
   const filteredData = useMemo(() => {
-    if (!data) {
+    if (!useAlerts) {
       return [];
     }
 
-    let filteredItems;
+    let filteredItems = filterItems(useAlerts, filter);
 
-    switch (filter) {
-      case 'low':
-      case 'medium':
-      case 'high':
-        filteredItems = data.items.filter((x) => x.severity === filter);
-      break;
-      default:
-        filteredItems = data.items;
-      break;
-    };
+    return searchItems(filteredItems, searchTerm);
 
-    return filteredItems.filter(
-      (value) =>
-        value.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        value.severity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        value.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        value.raisedAt.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [data, searchTerm, filter]);
+  }, [useAlerts, searchTerm, filter]);
 
   const {
     currentPage,
@@ -75,7 +83,7 @@ function AlertTable() {
 
   const currentItems = getPaginatedItems(filteredData);
 
-  if (data === null || data.items.length === 0) {
+  if (useAlerts === null || useAlerts.items.length === 0) {
     return(
       <Container fluid className="px-4">
         <Row className="justify-content-center">
@@ -95,18 +103,41 @@ function AlertTable() {
 
   return (
     <Container className="mt-5">
-      <FilterButtons
-        filterType={filter}
-        handleFilterChange={handleFilterChange}
-      />
+      <Row className="mb-3">
+        <Col>
+          <h5>Filters by severity:</h5>
+          <FilterButtons
+            filterType={filter}
+            handleFilterChange={handleFilterChange}
+          />
+        </Col>
+      </Row>
 
-      <Form.Control
-          type="text"
-          placeholder="Search..."
-          className="w-auto d-inline-block"
-          onChange={handleSearch}
-          value={searchTerm}
-      />
+      <Row className="mb-4">
+        <Col md={3}>
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            className="w-100"
+            onChange={handleSearch}
+            value={searchTerm}
+          />
+        </Col>
+        <Col md={2}>
+          {useRole === 'R/W' && (
+            <Button variant="info" onClick={handleShowHelp} className="w-100">
+              Help
+            </Button>
+          )}
+        </Col>        
+        <Col md={5}>
+          {successAlert && (
+            <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
+              {successAlertText} action is requested successfully!
+            </Alert>
+          )}
+        </Col>
+      </Row>
 
       <Table id="alertTable" responsive bordered striped className="mt-2">
         <thead>
@@ -116,6 +147,9 @@ function AlertTable() {
             <th>Severity</th>
             <th>Description</th>
             <th>RaisedAt</th>
+            {useRole === 'R/W' && (
+              <th>allowed actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -136,6 +170,13 @@ function AlertTable() {
               </td>
               <td>{value.description}</td>
               <td>{value.raisedAt}</td>
+              {useRole === 'R/W' && (
+                <td>
+                  <Button variant="info" onClick={() => handleButtonClickTakeAction(value.id, value.allowedActions[0])}>
+                    {value.allowedActions[0]}
+                  </Button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
@@ -148,6 +189,7 @@ function AlertTable() {
         setCurrentPage={setCurrentPage}
       />
 
+      <AcknowledgeHelpModal show={showHelp} handleClose={handleCloseHelp} />
     </Container>
   );
 };

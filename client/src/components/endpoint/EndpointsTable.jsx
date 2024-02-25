@@ -97,6 +97,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
 
   const handleFilterChange = (type) => {
     setFilterType(type);
+    setCurrentPage(1);
   };
 
   const handleSortChange = () => {

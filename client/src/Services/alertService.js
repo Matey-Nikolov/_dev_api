@@ -1,8 +1,6 @@
-import { getAlerts } from "../axiosrequests/apiAlert";
+import { getAlerts, takeActionAlert } from "../axiosrequests/apiAlert";
 
-const sortedAlerts = {
-    'items': {}
-};
+import { findClientById } from './clientServiceFolder/clientSevice';
 
 async function getAlersFromApi(clientId) {
     const alertsData = await getAlerts(clientId);
@@ -10,8 +8,7 @@ async function getAlersFromApi(clientId) {
     const localSortedAlerts = JSON.parse(JSON.stringify(alertsData));
 
     localSortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
-    sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
-    
+
     return localSortedAlerts;
 };
 
@@ -22,51 +19,48 @@ function compareByTime(a, b) {
     return timeB - timeA;
 };
 
-function countAlerts(alertsData){
-
-    let countLowAlerts = alertsData.items.filter(x => x.severity === 'low').length;
-    let countMediumAlerts = alertsData.items.filter(x => x.severity === 'medium').length;
-    let countHighAlerts = alertsData.items.filter(x => x.severity === 'high').length;
-
-    return { 
-        'low': countLowAlerts, 
-        'medium': countMediumAlerts, 
-        'high': countHighAlerts 
+const findClientAlerts = (currentClient_id) => {
+    const client = findClientById(currentClient_id);
+    
+    if (client !== -1) {
+      return { alerts: client.alerts, role: client.role };
     };
+
+    return { alerts: null, role: null };
+};
+  
+const filterItems = (data, filter) => {
+    let filteredItems;
+
+    switch (filter) {
+        case 'low':
+        case 'medium':
+        case 'high':
+        filteredItems = data.items.filter((x) => x.severity === filter);
+        break;
+        default:
+        filteredItems = data.items;
+        break;
+    };
+
+    return filteredItems;
+};
+  
+const searchItems = (filteredItems, searchTerm) => {
+    return filteredItems.filter(
+      (value) =>
+        value.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.severity.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.raisedAt.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 };
 
-function filterAlerts(source, severity) {
-    if (severity === 'all') {
-        return source;
-    };
+const takeAction = async (clientId, alertId, action) =>{
+    const success = await takeActionAlert(clientId, alertId, action);
 
-    const result = {
-        items: source.items.filter(x => x.severity === severity),
-    };
-
-    return result;
+    return success;
 };
 
-const fetchAlerts = async (filter, setData) => {
-    try {
-        let alertsData;
-
-        console.log(filter);
-        switch (filter) {
-            case 'all':
-                alertsData = filterAlerts(sortedAlerts, filter);
-            break;
-            case 'low':
-            case 'medium':
-            case 'high':
-                alertsData = filterAlerts(sortedAlerts, filter);
-            break;
-        };
-
-        setData(alertsData);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    };
-};
-
-export { getAlersFromApi, fetchAlerts, countAlerts };
+export { getAlersFromApi };
+export { findClientAlerts, filterItems, searchItems, takeAction };

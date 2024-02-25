@@ -38,7 +38,7 @@ const HomePage = () => {
   }
 
   return (
-    <Container fluid className="px-4 d-flex justify-content-center">
+    <Container>
       <h1 className="text-center my-4">🚀 Customers Dashboard 🚀</h1>
       <Table striped bordered hover className="my-cool-table">
           <thead>

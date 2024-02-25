@@ -86,10 +86,8 @@ router.get(
 
         const addData = 
             JSON.stringify({
-
-                "categoryId": 50,
-                "url": url,
-                "comment": "Add by Matey - soon custom comments."
+            "url": url,
+            "comment": "Add by Matey - soon custom comments."
         });
 
         await api.postApiConfiguration(pathFromURL, addData)
