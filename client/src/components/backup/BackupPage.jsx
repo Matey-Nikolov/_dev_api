@@ -39,12 +39,11 @@ const BackupPage = () =>{
         <Col lg={3}>
             <div className="card shadow-lg border-0 rounded-lg mt-5">
                 <div className="card-header">
-                    <h3 className="text-center font-weight-light my-4">Actions</h3>
                     <h4 className="text-center font-weight-light my-4">
-                    <ButtonsArchive
-                      handleBackUpChange={handleBackUpChange}
-                      role={useRole}
-                    />
+                      <ButtonsArchive
+                        handleBackUpChange={handleBackUpChange}
+                        role={useRole}
+                      />
                     </h4>
                 </div>
             </div>
@@ -59,15 +58,15 @@ const BackupPage = () =>{
                   <Col lg={8}>
                     <Card className="shadow-lg border-0 rounded-lg mt-5">
                       <Card.Body>
-                        <p className="text-center font-weight-light my-4">
-                          If you want to download software. Make this from this urls.
-                        </p>
+                        <h4 className="text-center font-weight-light my-4">
+                          Installers
+                        </h4>
 
                         <Table responsive bordered striped className="mt-2">
                           <thead>
                             <tr>
                               <th scope="col">Platforms</th>
-                              <th scope="col">urls</th>
+                              <th scope="col">Download Links</th>
                             </tr>
                           </thead>
                           <tbody>

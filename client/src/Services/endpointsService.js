@@ -50,4 +50,20 @@ const getSoftwareCurrentClient = async (clientId) =>{
   return getSoftware;
 };
 
-export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient };
+const searchEndpoints = (endpoints, searchTerm) => {
+  return endpoints.filter(
+    (value) => {
+      let tamperProtectionStatus = value.tamperProtectionEnabled ? 'on' : 'off';
+      
+      return value.hostname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.os.platform.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.health.overall.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.health.services.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.lastSeenAt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tamperProtectionStatus.includes(searchTerm.toLowerCase());
+    }
+  );  
+};
+
+export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient, searchEndpoints };

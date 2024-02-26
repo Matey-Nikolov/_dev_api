@@ -16,7 +16,7 @@ const EndpointsPages = () => {
   };
 
   return (
-    <div className="container text-center">
+    <div>
         <div>
           {selectedEndpointId ? (
             <EndpointDetails machine_Id={selectedEndpointId} clientId={selectedClientId} onBackClick={handleBackClick}/>

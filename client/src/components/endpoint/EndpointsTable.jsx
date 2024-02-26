@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { Container, Table, Button, Alert, Form, Row, Col } from 'react-bootstrap';
 
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
-import { postEndpointScan, postUpdateRequest } from '../../Services/endpointsService';
+import { postEndpointScan, postUpdateRequest, searchEndpoints } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -19,7 +19,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const [successAlertText, setSuccessAlertText] = useState('');
 
   const [filterType, setFilterType] = useState('all');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [selectedScanEndpoints, setSelectedScanEndpoints] = useState(new Set());
   const [selectedUpdateEndpoints, setSelectedUpdateEndpoints] = useState(new Set());
@@ -100,25 +100,46 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
     setCurrentPage(1);
   };
 
-  const handleSortChange = () => {
-    setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
   };
 
-  const filteredEndpoints = endpoints.filter((value) => {
-    if (filterType === 'all') {
-      return true;
+  const filteredEndpoints = useMemo(() => {
+    return endpoints.filter((value) => {
+      if (filterType === 'all') {
+        return true;
+      };
+
+      return value.type === filterType;
+    });
+
+  }, [endpoints, filterType]);
+
+
+  const filteredData = useMemo(() => {
+    return searchEndpoints(filteredEndpoints, searchTerm);
+  }, [filteredEndpoints, searchTerm]);
+
+  const handleMarkAllScan = () => {
+    if (selectedScanEndpoints.size === filteredData.length) {
+      setSelectedScanEndpoints(new Set());
+    } else {
+      const updatedSelectedScanEndpoints = new Set(filteredData.map(item => item.id));
+
+      setSelectedScanEndpoints(updatedSelectedScanEndpoints);
     };
+  };
 
-    return value.type === filterType;
-  });
+  const handleMarkAllUpdate = () => {
+    if (selectedUpdateEndpoints.size === filteredData.length) {
+      setSelectedUpdateEndpoints(new Set());
+    } else {
+      const updatedSelectedUpdateEndpoints = new Set(filteredData.map(item => item.id));
 
-  const sortedEndpoints = filteredEndpoints.sort((a, b) => {
-    const dateA = new Date(a.lastSeenAt);
-    const dateB = new Date(b.lastSeenAt);
-
-    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-  });
-
+      setSelectedUpdateEndpoints(updatedSelectedUpdateEndpoints);
+    };
+  };
   const {
     currentPage,
     itemsPerPage,
@@ -126,35 +147,64 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
     getPaginatedItems,
   } = usePagination();
 
-  const currentItems = getPaginatedItems(sortedEndpoints);
+  const currentItems = getPaginatedItems(filteredData);
 
   return (
     <Container className="mt-5">
-      <FilterButtons
-        filterType={filterType}
-        handleFilterChange={handleFilterChange}
-        handleSortChange={handleSortChange}
-        sortOrder={sortOrder}
-      />
-      {successAlert && (
-        <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
-          {successAlertText} is requested successfully!
-        </Alert>
-      )}
+
+      <Row className="mb-4">
+        <Col md={12}>
+          <FilterButtons
+            filterType={filterType}
+            handleFilterChange={handleFilterChange}
+          />
+        </Col>
+        <Col md={2}>
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            className="w-100"
+            onChange={handleSearch}
+            value={searchTerm}
+          />
+        </Col>
+
+        <Col md={2}>
+          <Button variant="info" onClick={handleMarkAllScan}>
+            Mark All for Scan
+          </Button>
+        </Col>
+
+        <Col md={2}>
+          <Button variant="info" onClick={handleMarkAllUpdate}>
+            Mark All for Update
+          </Button>
+        </Col>
+
+        <Col md={5}>
+          {successAlert && (
+            <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
+              {successAlertText} is requested successfully!
+            </Alert>
+          )}
+        </Col>
+      </Row>
+
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Name machine</th>
-            <th>Type</th>
-            <th>Health</th>
-            <th>Status</th>
-            <th>LastSeenAt</th>
-            <th>Tamper protection status</th>
+            <th className='text-center'>Name machine</th>
+            <th className='text-center'>Os</th>
+            <th className='text-center'>Type</th>
+            <th className='text-center'>Health</th>
+            <th className='text-center'>Status</th>
+            <th className='text-center'>LastSeenAt</th>
+            <th className='text-center'>Tamper protection status</th>
             <th></th>
               {useRole === 'R/W' && (
-                <th>
+                <th className='text-center'>
                   <Button
-                    variant="primary"
+                    variant="info"
                     className="mt-3"
                     disabled={selectedScanEndpoints.size === 0}
                     onClick={() => handleButtonClickSendScanRequest([...selectedScanEndpoints])}
@@ -164,9 +214,9 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                 </th>
               )}
               {useRole === 'R/W' && (
-                <th>
+                <th className='text-center'>
                   <Button
-                    variant="primary"
+                    variant="info"
                     className="mt-3"
                     disabled={selectedUpdateEndpoints.size === 0}
                     onClick={() => handleButtonClickSendUpdateRequest([...selectedUpdateEndpoints])}
@@ -180,12 +230,13 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
         <tbody>
           {currentItems.map((value) => (
             <tr key={value.id}>
-              <td>{value.hostname}</td>
-              <td>{value.type}</td>
-              <td>{value.health.overall}</td>
-              <td>{value.health.services.status}</td>
-              <td>{value.lastSeenAt}</td>
-              <td>{value.tamperProtectionEnabled ? 
+              <td className='text-left'>{value.hostname}</td>
+              <td className='text-center'>{value.os.platform}</td>
+              <td className='text-center'>{value.type}</td>
+              <td className='text-center'>{value.health.overall}</td>
+              <td className='text-center'>{value.health.services.status}</td>
+              <td className='text-center'>{value.lastSeenAt}</td>
+              <td className='text-center'>{value.tamperProtectionEnabled ? 
                 (
                   <span className="badge bg-success">On</span>
                 )
@@ -194,13 +245,13 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   <span className="badge bg-danger">Off</span>
                 )}
               </td>
-              <td>
+              <td className='text-center'>
                 <Button onClick={() => handleButtonClickShowDetails(value.id)} variant="info">
-                  Show Details
+                  Details
                 </Button>
               </td>
                 {useRole === 'R/W' && (
-                  <td>
+                  <td className='text-center'>
                     <Form.Check
                       onChange={() => handleCheckboxScanChange(value.id)}
                       type="checkbox"
@@ -209,7 +260,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   </td>
                 )}
                 {useRole === 'R/W' && (
-                  <td>
+                  <td className='text-center'>
                     <Form.Check
                       onChange={() => handleCheckboxUpdateChange(value.id)}
                       type="checkbox"
@@ -225,7 +276,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
       <Pagination
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
-          totalItems={sortedEndpoints.length}
+          totalItems={filteredData.length}
           setCurrentPage={setCurrentPage}
       />
     </Container>

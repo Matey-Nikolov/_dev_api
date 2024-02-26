@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react';
 import { Container, Row, Col, Card, Form, Table, Button, Alert } from 'react-bootstrap';
 
 import FilterButtons from './FilterButtonsAlerts'; 
@@ -7,7 +7,6 @@ import AcknowledgeHelpModal from './HelpModal';
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
-import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 import { findClientAlerts, filterItems, searchItems, takeAction } from '../../Services/alertService';
@@ -156,8 +155,8 @@ function AlertTable() {
           {currentItems.map((value, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{value.product}</td>
-              <td>
+              <td className='text-left'>{value.product}</td>
+              <td className='text-center'>
                 {value.severity === 'low' ? (
                   <span className="badge bg-success">low</span>
                 ) : value.severity === 'medium' ? (
@@ -168,10 +167,10 @@ function AlertTable() {
                   ''
                 )}
               </td>
-              <td>{value.description}</td>
-              <td>{value.raisedAt}</td>
+              <td className='text-left'>{value.description}</td>
+              <td className='text-center'>{value.raisedAt}</td>
               {useRole === 'R/W' && (
-                <td>
+                <td className='text-center'>
                   <Button variant="info" onClick={() => handleButtonClickTakeAction(value.id, value.allowedActions[0])}>
                     {value.allowedActions[0]}
                   </Button>

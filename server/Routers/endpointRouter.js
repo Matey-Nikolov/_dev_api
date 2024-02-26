@@ -146,7 +146,7 @@ router.get(
         
         let api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `endpoint/v1/endpoints?pageSize=2&view=full`;
+        pathFromURL = `endpoint/v1/endpoints?pageSize=4&sort=lastSeenAt:desc&view=full`;
 
         const addParams = {
             "pageSize": 2

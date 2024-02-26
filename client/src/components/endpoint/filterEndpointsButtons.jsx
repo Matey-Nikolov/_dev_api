@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-const FilterButtons = ({ filterType, handleFilterChange, handleSortChange, sortOrder }) => {
+const FilterButtons = ({ filterType, handleFilterChange }) => {
   const filterOptions = [
     { key: 'all', label: 'Show all' },
     { key: 'computer', label: 'Computer' },
@@ -9,7 +9,7 @@ const FilterButtons = ({ filterType, handleFilterChange, handleSortChange, sortO
   ];
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 d-flex justify-content-start">
       {filterOptions.map(({ key, label }) => (
         <Button
           key={key}
@@ -19,9 +19,6 @@ const FilterButtons = ({ filterType, handleFilterChange, handleSortChange, sortO
           {label}
         </Button>
       ))}
-      <Button onClick={handleSortChange} variant="info">
-        Sort {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
-      </Button>
     </div>
   );
 };
