@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
+import timeConverter from '../../Services/convertTime';
 
 import timeConverter from '../../Services/convertTime';
 
@@ -66,27 +67,47 @@ const EventTable = () => {
   };
 
   return(
-    <Container className="mt-5">
+    <Container className="mt-7 pt-5">
       <Table responsive bordered striped className="mt-2">
         <thead>
           <tr>
-            <th scope="col">Messages</th>
-            <th className="text-center" scope="col">Allow</th>
+            <th>Type</th>
+            <th>Severity</th>
+            <th scope="col">Events for last 24 hours</th>
+            <th className="text-center" scope="col">When</th>
+            <th className="text-center" scope="col">Allow wibsite</th>
           </tr>
         </thead>
         <tbody>
           {currentItemsEvents.map((value) => (
             <tr key={value.id}>
-              <td>{value.name}</td>
+              <td className='text-left'>{value.type}</td>
+
+              <td className='text-center'>
+                {value.severity === 'low' ? (
+                  <span className="badge bg-success">low</span>
+                ) : value.severity === 'medium' ? (
+                  <span className="badge bg-warning">medium</span>
+                ) : value.severity === 'high' ? (
+                  <span className="badge bg-danger">high</span>
+                ) : (
+                  ''
+                )}
+              </td>
+
+              <td className='text-left'>{value.name}</td>
+
+              <td className='text-center'>{timeConverter(value.when)}</td>
+
               <td className="text-center">
                 {filterRegex.test(value.type) && filterRegex.exec(value.type) [2] === 'WebControlViolation' ? (
-                  <Button
+                  <button
                     data-type={value.name}
                     className="btn btn-outline-success"
                     onClick={() => handleClickedAllow(value)}
                   >
                     allow
-                  </Button>
+                  </button>
                 ) : (
                   null
                 )}

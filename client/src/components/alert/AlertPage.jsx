@@ -10,6 +10,7 @@ import usePagination from '../../Services/Table/PaginationLogic';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 import { findClientAlerts, filterItems, searchItems, takeAction } from '../../Services/alertService';
+import timeConverter from '../../Services/convertTime';
 
 function AlertTable() {
   const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
@@ -159,7 +160,9 @@ function AlertTable() {
           {currentItems.map((value, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
+
               <td className='text-left'>{value.product}</td>
+
               <td className='text-center'>
                 {value.severity === 'low' ? (
                   <span className="badge bg-success">low</span>
@@ -171,8 +174,11 @@ function AlertTable() {
                   ''
                 )}
               </td>
+
               <td className='text-left'>{value.description}</td>
-              <td className='text-center'>{value.raisedAt}</td>
+
+              <td className='text-center'>{timeConverter(value.raisedAt)}</td>
+
               {useRole === 'R/W' && (
                 <td className='text-center'>
                   <Button variant="info" onClick={() => handleButtonClickTakeAction(value.id, value.allowedActions[0])}>

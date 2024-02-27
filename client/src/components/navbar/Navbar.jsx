@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
 
+import SecureStorage from 'react-secure-storage';
+
 const Navbar = () => {
   const { currentClient_role , currentClient_name } = useContext(UseCreatedContex);
 
@@ -15,11 +17,21 @@ const Navbar = () => {
     setIsRegister(location.pathname === '/register');
   }, [location]);
 
+  const handleLogout = () => {
+    SecureStorage.removeItem('token');
+    SecureStorage.removeItem('ref');
+    window.location.reload();
+  };
+
+  
   return (
     <nav className="navbar navbar-light bg-light">
       <Link className="navbar-brand" to="/">Customers</Link>
       {isDashboard || isRegister ? (
-          <Link className="navbar-brand" to="/register">Register client</Link>
+        <>
+          <Link className="navbar-brand outlin" to="/register">Register client</Link>
+          <button className="btn btn-outlin" onClick={handleLogout}>Logout</button>
+        </>
       ) : (
         <>
           {currentClient_role === 'R/W' && (

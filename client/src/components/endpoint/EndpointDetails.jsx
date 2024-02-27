@@ -46,7 +46,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
     itemsPerPage,
     setCurrentPage,
     getPaginatedItems,
-  } = usePagination();
+  } = usePagination(1, 5);
 
   const currentItems = getPaginatedItems(detailsHealth);
 
@@ -56,42 +56,45 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
 
     return (
       <Container>
-        <h2 class="text-secondary-emphasis">{endpointDetails.hostname}</h2>
-        <Button onClick={onBackClick} variant="secondary" className="mb-3">Back to all endpoints</Button>
-        <Row>
+        <Row className="pt-3">
+          
           <Col md={4}>
+            <h2 class="text-secondary-emphasis">{endpointDetails.hostname}</h2>
+          </Col>
+
+          <Col md={3}>
+            <Button onClick={onBackClick} variant="secondary" className="mb-3">Back to endpoints</Button>
+          </Col>
+
+          <Col md={5}>
             <Card>
               <Card.Body>
-                <h4 class="text-center text-secondary-emphasis">Assigned products</h4>
+                <h4 class="text-center text-secondary-emphasis">Os</h4>
                 <Table striped bordered responsive>
                   <thead>
                     <tr>
-                      <th>Code</th>
-                      <th class="text-center">Status</th>
-                      <th class="text-center">Version</th>
+                      <th>Name</th>
+                      <th class="text-center">Platform</th>
+                      <th class="text-center">Build</th>
                     </tr>
                   </thead>
                   <tbody id="table-body">
-                    {assignedProducts.length === 0 ? (
-                      <tr>
-                        <td colSpan="3" className="text-center">No information</td>
+                    {details_OS.map((detailsOs) => (
+                      <tr key={detailsOs.code}>
+                        <td class="text-left">{detailsOs.name}</td>
+                        <td class="text-center">{detailsOs.platform}</td>
+                        <td class="text-center">{detailsOs.build === undefined ? <p>no information</p> : <p>{detailsOs.build}</p>}</td>
                       </tr>
-                    ) : (
-                      assignedProducts.map((product) => (
-                        <tr key={product.code}>
-                          <td class="text-left">{product.code}</td>
-                          <td class="text-center">{product.status}</td>
-                          <td class="text-center">{product.version}</td>
-                        </tr>
-                      ))
-                    )}
+                    ))}
                   </tbody>
                 </Table>
               </Card.Body>
             </Card>
           </Col>
-  
-          <Col md={4}>
+        </Row>
+
+        <Row className="pt-3">            
+          <Col>
             <Card>
               <Card.Body>
                 <h4 class="text-center text-secondary-emphasis">Health check</h4>
@@ -128,26 +131,32 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
             </Card>
           </Col>
 
-          <Col md={4}>
+          <Col md={5}>
             <Card>
               <Card.Body>
-                <h4 class="text-center text-secondary-emphasis">Os</h4>
+                <h4 class="text-center text-secondary-emphasis">Assigned products</h4>
                 <Table striped bordered responsive>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th class="text-center">Platform</th>
-                      <th class="text-center">Build</th>
+                      <th>Code</th>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">Version</th>
                     </tr>
                   </thead>
                   <tbody id="table-body">
-                    {details_OS.map((detailsOs) => (
-                      <tr key={detailsOs.code}>
-                        <td class="text-left">{detailsOs.name}</td>
-                        <td class="text-center">{detailsOs.platform}</td>
-                        <td class="text-center">{detailsOs.build === undefined ? <p>no information</p> : <p>{detailsOs.build}</p>}</td>
+                    {assignedProducts.length === 0 ? (
+                      <tr>
+                        <td colSpan="3" className="text-center">No information</td>
                       </tr>
-                    ))}
+                    ) : (
+                      assignedProducts.map((product) => (
+                        <tr key={product.code}>
+                          <td class="text-left">{product.code}</td>
+                          <td class="text-center">{product.status}</td>
+                          <td class="text-center">{product.version}</td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </Table>
               </Card.Body>

@@ -4,8 +4,9 @@ import { findClientById } from "./clientServiceFolder/clientSevice";
 const fetchEvents = async (clientId) => {
     try {
       const events = await getEvents(clientId);
-      
-      return events;
+      const soretedEvents =  events.sort(compareByTime);
+
+      return soretedEvents;
     } catch (error) {
       console.error('Error fetching endpoints:', error);
       throw error;
@@ -30,3 +31,5 @@ const findClientEvents = (currentClient_id) => {
 };
 
 export { fetchEvents, findClientEvents };
+
+export { fetchEvents };

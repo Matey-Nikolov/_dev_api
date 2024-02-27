@@ -3,8 +3,10 @@ import { Container, Table, Button, Alert, Form, Row, Col } from 'react-bootstrap
 
 import { postEndpointScan, postUpdateRequest, searchEndpoints, findClientendpoints } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
+import timeConverter from '../../Services/convertTime';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
+
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
@@ -229,11 +231,17 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
           {currentItems.map((value) => (
             <tr key={value.id}>
               <td className='text-left'>{value.hostname}</td>
+
               <td className='text-center'>{value.os.platform}</td>
+
               <td className='text-center'>{value.type}</td>
+
               <td className='text-center'>{value.health.overall}</td>
+
               <td className='text-center'>{value.health.services.status}</td>
-              <td className='text-center'>{value.lastSeenAt}</td>
+              
+              <td className='text-center'>{timeConverter(value.lastSeenAt)}</td>
+
               <td className='text-center'>{value.tamperProtectionEnabled ? 
                 (
                   <span className="badge bg-success">On</span>
