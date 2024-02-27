@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Row, Col, Card } from 'react-bootstrap';
+import { Table, Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
+import Pagination from '../Table/Pagination';
+import usePagination from '../../Services/Table/PaginationLogic';
+
+import getWebsiteServiceInstance from '../../Services/websiteService';
+
+
 const EventTable = () => {
   const { currentClient_id } = useContext(UseCreatedContex);
+
+  const allowWebsiteEvents = new getWebsiteServiceInstance(currentClient_id);
 
   const filterRegex = /Event::([A-Za-z]+)::([A-Za-z]+)/;
 
@@ -20,8 +28,24 @@ const EventTable = () => {
       setEvents(client.events);
     };
   });
+
+  const handleClickedAllow = async (value) => {
+    const isAddWebsite = await allowWebsiteEvents.btnAllowWebsite(value.name);
+
+    console.log(isAddWebsite);
+  };
   
-  if(useAllEvents != []){
+
+  const {
+    currentPage,
+    itemsPerPage,
+    setCurrentPage,
+    getPaginatedItems,
+  } = usePagination(1, 10);
+
+  const currentItemsEvents = getPaginatedItems(useAllEvents);
+  
+  if(useAllEvents == []){
     return(
       <Container fluid className="px-4">
         <Row className="justify-content-center">
@@ -45,21 +69,22 @@ const EventTable = () => {
         <thead>
           <tr>
             <th scope="col">Messages</th>
-            <th scope="col">Allow</th>
+            <th className="text-center" scope="col">Allow</th>
           </tr>
         </thead>
         <tbody>
-          {useAllEvents.map((value) => (
-            <tr key={value.name}>
+          {currentItemsEvents.map((value) => (
+            <tr key={value.id}>
               <td>{value.name}</td>
-              <td>
+              <td className="text-center">
                 {filterRegex.test(value.type) && filterRegex.exec(value.type) [2] === 'WebControlViolation' ? (
-                  <button
+                  <Button
                     data-type={value.name}
                     className="btn btn-outline-success"
+                    onClick={() => handleClickedAllow(value)}
                   >
                     allow
-                  </button>
+                  </Button>
                 ) : (
                   null
                 )}
@@ -68,6 +93,13 @@ const EventTable = () => {
           ))}
         </tbody>
       </Table>
+
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={useAllEvents.length}
+        setCurrentPage={setCurrentPage}
+      />
     </Container>
   );
 };

@@ -11,8 +11,4 @@ const fetchEvents = async (clientId) => {
     }
 };
 
-const hasEvents = (events) => {
-  return events.items != [] ?  -1 : events.items.length;
-};
-
-export { fetchEvents, hasEvents };
+export { fetchEvents };

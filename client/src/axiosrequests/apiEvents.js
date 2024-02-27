@@ -9,7 +9,7 @@ export const getEvents = async (clientId) => {
         }
     })
     .then((response) => {
-        events =  response.data;
+        events =  response.data.items;
     })
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);
