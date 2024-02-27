@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-import { Table } from 'react-bootstrap';
+import { Table, Card, Row, Col, Container, Button } from 'react-bootstrap';
 
 import { fetchEndpointDetails } from '../../Services/endpointsService';
 
@@ -55,112 +55,106 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
   if (endpointDetails) {
 
     return (
-      <div className="container text-center mt-4">
-        <h2 className="font-weight-light text-light">{endpointDetails.hostname}</h2>
-        <button onClick={onBackClick} className="btn btn-secondary mb-3">Back to all endpoints</button>
-        <div className="row">
-
-          <div className="col-md-6 mb-4">
-            <div className="card bg-secondary shadow-2-strong">
-              <div className="card-body">
-                <div className="table-responsive">
-                  <h4 className="font-weight-light text-light">Assigned products</h4>
-                  <Table striped bordered responsive>
-                    <thead>
+      <Container>
+        <h2 class="text-secondary-emphasis">{endpointDetails.hostname}</h2>
+        <Button onClick={onBackClick} variant="secondary" className="mb-3">Back to all endpoints</Button>
+        <Row>
+          <Col md={4}>
+            <Card>
+              <Card.Body>
+                <h4 class="text-center text-secondary-emphasis">Assigned products</h4>
+                <Table striped bordered responsive>
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">Version</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body">
+                    {assignedProducts.length === 0 ? (
                       <tr>
-                        <th scope="col">Code</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Version</th>
+                        <td colSpan="3" className="text-center">No information</td>
                       </tr>
-                    </thead>
-                    <tbody id="table-body">
-                      {assignedProducts == [] ? (
-                        <tr>
-                          <td colSpan="3" className="text-center">No information</td>
+                    ) : (
+                      assignedProducts.map((product) => (
+                        <tr key={product.code}>
+                          <td class="text-left">{product.code}</td>
+                          <td class="text-center">{product.status}</td>
+                          <td class="text-center">{product.version}</td>
                         </tr>
-                      ) : (
-                        assignedProducts.map((products) => (
-                          <tr key={products.code}>
-                            <td>{products.code}</td>
-                            <td>{products.status}</td>
-                            <td>{products.version}</td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 mb-4">
-            <div className="card bg-secondary shadow-2-strong">
-              <div className="card-body">
-                <div className="table-responsive">
-                  <h4 className="font-weight-light text-light">Os</h4>
-                  <Table striped bordered responsive>
-                    <thead>
+                      ))
+                    )}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+          </Col>
+  
+          <Col md={4}>
+            <Card>
+              <Card.Body>
+                <h4 class="text-center text-secondary-emphasis">Health check</h4>
+                <Table striped bordered responsive>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th class="text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body">
+                    {currentItems.length === 0 ? (
                       <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Platform</th>
-                        <th scope="col">Build</th>
+                        <td colSpan="2" className="text-center">No information</td>
                       </tr>
-                    </thead>
-                    <tbody id="table-body">
-                      {details_OS.map((detailsOs) => (
-                        <tr key={detailsOs.code}>
-                          <td>{detailsOs.name}</td>
-                          <td>{detailsOs.platform}</td>
-                          <td>{detailsOs.build === undefined ? <p>no information</p> : <p>{detailsOs.build}</p>}</td>
+                    ) : (
+                      currentItems.map((health) => (
+                        <tr key={health.code}>
+                          <td class="text-left">{health.name}</td>
+                          <td class="text-center">{health.status}</td>
                         </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
-            </div>
-          </div>
+                      ))
+                    )}
+                  </tbody>
+                </Table>
 
-          <div className="col-md-12">
-            <div className="card bg-secondary shadow-2-strong">
-              <div className="card-body">
-                <div className="table-responsive">
-                  <h4 className="font-weight-light text-light">Health check</h4>
-                  <Table striped bordered responsive>
-                    <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Status</th>
+                <Pagination
+                  currentPage={currentPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={detailsHealth.length}
+                  setCurrentPage={setCurrentPage}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col md={4}>
+            <Card>
+              <Card.Body>
+                <h4 class="text-center text-secondary-emphasis">Os</h4>
+                <Table striped bordered responsive>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th class="text-center">Platform</th>
+                      <th class="text-center">Build</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body">
+                    {details_OS.map((detailsOs) => (
+                      <tr key={detailsOs.code}>
+                        <td class="text-left">{detailsOs.name}</td>
+                        <td class="text-center">{detailsOs.platform}</td>
+                        <td class="text-center">{detailsOs.build === undefined ? <p>no information</p> : <p>{detailsOs.build}</p>}</td>
                       </tr>
-                    </thead>
-                    <tbody id="table-body">
-                      {currentItems == []  ? (
-                        <tr>
-                          <td colSpan="3" className="text-center">No information</td>
-                        </tr>
-                      ) : (
-                        currentItems.map((health) => (
-                          <tr key={health.code}>
-                            <td>{health.name}</td>
-                            <td>{health.status}</td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </Table>
-                  <Pagination
-                    currentPage={currentPage}
-                    itemsPerPage={itemsPerPage}
-                    totalItems={detailsHealth.length}
-                    setCurrentPage={setCurrentPage}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                    ))}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
     
   } else {

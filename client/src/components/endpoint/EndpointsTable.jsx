@@ -169,17 +169,20 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
           />
         </Col>
 
-        <Col md={2}>
-          <Button variant="info" onClick={handleMarkAllScan}>
-            Mark All for Scan
-          </Button>
-        </Col>
-
-        <Col md={2}>
-          <Button variant="info" onClick={handleMarkAllUpdate}>
-            Mark All for Update
-          </Button>
-        </Col>
+        {useRole === 'R/W' && (
+          <>
+            <Col md={2}>
+              <Button variant="info" onClick={handleMarkAllScan}>
+                Mark All for Scan
+              </Button>
+            </Col>
+            <Col md={2}>
+              <Button variant="info" onClick={handleMarkAllUpdate}>
+                Mark All for Update
+              </Button>
+            </Col>
+          </>
+        )}
 
         <Col md={5}>
           {successAlert && (
