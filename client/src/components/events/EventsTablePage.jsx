@@ -4,8 +4,6 @@ import { Table, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 import timeConverter from '../../Services/convertTime';
 
-import timeConverter from '../../Services/convertTime';
-
 import { findClientEvents } from '../../Services/eventsService';
 
 import { useContext } from 'react';

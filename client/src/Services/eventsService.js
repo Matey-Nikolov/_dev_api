@@ -31,5 +31,3 @@ const findClientEvents = (currentClient_id) => {
 };
 
 export { fetchEvents, findClientEvents };
-
-export { fetchEvents };
