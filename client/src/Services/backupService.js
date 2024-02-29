@@ -1,4 +1,5 @@
 import ApiBackup from '../axiosrequests/apiBackup.js';
+import { findClientById } from './clientServiceFolder/clientSevice.js';
 
 let statusCodeAndName = {};
 let currentClient = '';
@@ -77,3 +78,15 @@ async function resetEnviroment(){
 
     return codeResetEnviroment;
 };
+
+const findClientSoftware = (currentClient_id) =>{
+    const client = findClientById(currentClient_id);
+    
+    if (client !== -1) {
+        return client.software.installers;
+    };
+    
+    return [];
+};
+
+export { findClientSoftware };

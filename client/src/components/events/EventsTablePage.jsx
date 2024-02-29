@@ -3,6 +3,10 @@ import { Table, Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
+import timeConverter from '../../Services/convertTime';
+
+import { findClientEvents } from '../../Services/eventsService';
+
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
@@ -22,11 +26,9 @@ const EventTable = () => {
   const [useAllEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    const client = findClientById(currentClient_id);
+    const events = findClientEvents(currentClient_id);
 
-    if (client !== -1) {
-      setEvents(client.events);
-    };
+    setEvents(events);
   });
 
   const handleClickedAllow = async (value) => {

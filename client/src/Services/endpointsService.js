@@ -1,4 +1,5 @@
 import { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest, endpointSoftware } from "../axiosrequests/apiEndpoint";
+import { findClientById } from "./clientServiceFolder/clientSevice";
 
 const fetchEndpoints = async (clientId) => {
   try {
@@ -66,4 +67,14 @@ const searchEndpoints = (endpoints, searchTerm) => {
   );  
 };
 
-export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient, searchEndpoints };
+const findClientendpoints = (currentClient_id) =>{
+  const client = findClientById(currentClient_id);
+
+  if (client !== -1) {
+    return client.endpoints;
+  };
+
+  return [];
+};
+
+export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient, searchEndpoints, findClientendpoints };

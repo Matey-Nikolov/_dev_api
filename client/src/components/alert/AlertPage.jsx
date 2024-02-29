@@ -12,11 +12,11 @@ import { UseCreatedContex } from '../../contex/setupInformation';
 import { findClientAlerts, filterItems, searchItems, takeAction } from '../../Services/alertService';
 
 function AlertTable() {
-  const { currentClient_id } = useContext(UseCreatedContex);
+  const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
 
   const [useRole, setRole] = useState();
 
-  const [useAlerts, setAlerts] = useState(null);
+  const [useAlerts, setAlerts] = useState([]);
   const [filter, setFilter] = useState('');
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,17 +31,21 @@ function AlertTable() {
   const handleCloseHelp = () => setShowHelp(false);
 
   useEffect(() => {
-    const { alerts, role } = findClientAlerts(currentClient_id);
+    const alerts = findClientAlerts(currentClient_id);
+    
     setAlerts(alerts);
-    setRole(role);
-  });
+    setRole(currentClient_role);
+  }, [currentClient_id, currentClient_role]);
 
   const handleButtonClickTakeAction = async (alertId, action) => {
+
     const isSuccess = await takeAction(currentClient_id, alertId, action);
 
     if (isSuccess === 'success') {
       setSuccessAlert(true);
       setSuccessAlertText('Acknowledge');
+
+      setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== alertId));
     };
     
     setTimeout(() => {
@@ -65,9 +69,9 @@ function AlertTable() {
   const filteredData = useMemo(() => {
     if (!useAlerts) {
       return [];
-    }
+    };
 
-    let filteredItems = filterItems(useAlerts, filter);
+    const filteredItems = filterItems(useAlerts, filter);
 
     return searchItems(filteredItems, searchTerm);
 
@@ -82,7 +86,7 @@ function AlertTable() {
 
   const currentItems = getPaginatedItems(filteredData);
 
-  if (useAlerts === null || useAlerts.items.length === 0) {
+  if (!useAlerts || useAlerts.length === 0) {
     return(
       <Container fluid className="px-4">
         <Row className="justify-content-center">

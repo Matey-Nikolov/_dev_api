@@ -4,12 +4,12 @@ import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import ButtonsArchive from './ButtonsBackup';
 import BackupFormPage from './BackupForm';
 
-import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
+import findClientSoftware from '../../Services/backupService';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 const BackupPage = () =>{
-  const { currentClient_id } = useContext(UseCreatedContex);
+  const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
  
   const [useRole, setRole] = useState();
   
@@ -19,13 +19,11 @@ const BackupPage = () =>{
   const [useSoftware, setSoftware] = useState([]);
 
   useEffect(() => {
-    const client = findClientById(currentClient_id);
+    const softwareInstallers = findClientSoftware(currentClient_id);
 
-    if (client !== -1) {
-      setRole(client.role);
-      setSoftware(client.software.installers);
-    };
-  });
+    setSoftware(softwareInstallers);
+    setRole(currentClient_role);
+  }, [currentClient_id, currentClient_role]);
 
   const handleBackUpChange = async (value) => {
     setPolicy(value);

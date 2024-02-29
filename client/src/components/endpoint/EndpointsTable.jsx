@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Container, Table, Button, Alert, Form, Row, Col } from 'react-bootstrap';
 
-import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
-
-import { postEndpointScan, postUpdateRequest, searchEndpoints } from '../../Services/endpointsService';
+import { postEndpointScan, postUpdateRequest, searchEndpoints, findClientendpoints } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -11,7 +9,7 @@ import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
 const EndpointTablePage = ({ onEndpointDetailsClick }) => {
-  const { currentClient_id } = useContext(UseCreatedContex);
+  const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
  
   const [endpoints, setEndpoints] = useState([]);
 
@@ -27,13 +25,10 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const [useRole, setRole] = useState();
 
   useEffect(() => {
-    const client = findClientById(currentClient_id);
-    
-    if (client !== -1) {
-      setEndpoints(client.endpoints);
+    const endpoints = findClientendpoints(currentClient_id);
 
-      setRole(client.role);
-    };
+    setEndpoints(endpoints);
+    setRole(currentClient_role);
   });
 
   const handleButtonClickShowDetails = (machine_Id) => {

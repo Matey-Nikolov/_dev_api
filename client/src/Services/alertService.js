@@ -23,27 +23,27 @@ const findClientAlerts = (currentClient_id) => {
     const client = findClientById(currentClient_id);
     
     if (client !== -1) {
-      return { alerts: client.alerts, role: client.role };
+      return client.alerts.items;
     };
 
-    return { alerts: null, role: null };
+    return [];
 };
   
 const filterItems = (data, filter) => {
-    let filteredItems;
+    let filteredItemsBySeverity;
 
     switch (filter) {
         case 'low':
         case 'medium':
         case 'high':
-        filteredItems = data.items.filter((x) => x.severity === filter);
+            filteredItemsBySeverity = data.filter((x) => x.severity === filter);
         break;
         default:
-        filteredItems = data.items;
+            filteredItemsBySeverity = data;
         break;
     };
 
-    return filteredItems;
+    return filteredItemsBySeverity;
 };
   
 const searchItems = (filteredItems, searchTerm) => {
