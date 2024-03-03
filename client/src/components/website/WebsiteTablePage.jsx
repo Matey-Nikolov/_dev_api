@@ -6,7 +6,6 @@ import getWebsiteServiceInstance from '../../Services/websiteService';
 import { useNavigate } from "react-router-dom";
 
 import { UseCreatedContex } from '../../contex/setupInformation';
-import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 
 const WebsiteTable = () => {
   const navigate = useNavigate();
@@ -30,8 +29,8 @@ const WebsiteTable = () => {
     fetchWebsites();
   });
   
-  async function handleButtonClickBlockWebsite(website_Id){
-    const isDeleted = await websiteService.btnBlockWebsite(website_Id);
+  async function handleButtonClickBlockWebsite(website_Id, url){
+    const isDeleted = await websiteService.btnBlockWebsite(website_Id, url);
 
     setWebsites((prevWebsites) => prevWebsites.filter((website) => website.id !== website_Id));
 
@@ -95,7 +94,7 @@ const WebsiteTable = () => {
               </td>
               <td>{items.comment}</td>
               <td>
-                <Button onClick={() => handleButtonClickBlockWebsite(items.id)} variant="info">
+                <Button onClick={() => handleButtonClickBlockWebsite(items.id, items.url)} variant="info">
                   Block
                 </Button>
               </td>

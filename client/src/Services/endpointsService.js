@@ -67,7 +67,7 @@ const searchEndpoints = (endpoints, searchTerm) => {
   );  
 };
 
-const findClientendpoints = (currentClient_id) =>{
+const findCliEntendpoints = (currentClient_id) =>{
   const client = findClientById(currentClient_id);
 
   if (client !== -1) {
@@ -77,4 +77,4 @@ const findClientendpoints = (currentClient_id) =>{
   return [];
 };
 
-export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient, searchEndpoints, findClientendpoints };
+export { fetchEndpoints, fetchEndpointDetails, postEndpointScan, postUpdateRequest, getSoftwareCurrentClient, searchEndpoints, findCliEntendpoints };

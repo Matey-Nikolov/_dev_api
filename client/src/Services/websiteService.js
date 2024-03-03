@@ -25,7 +25,7 @@ class WebsiteService {
   };
 
   allowWebsite = async (typeName) => {
-    const websiteData = await this.api.getWebsiteData();
+    const websiteData = await this.getWebsiteData();
 
     this.setWebsiteInformation.clear();
     this.setWebsiteURL.clear();
@@ -42,6 +42,7 @@ class WebsiteService {
           { 
             id: value.id,
             url: value.url,
+            tags: value.tags,
             comment: value.comment   
           };
 
@@ -54,38 +55,16 @@ class WebsiteService {
     return this.setWebsiteInformation;
   };
 
-  // addAllowedWebsite = async (valueURL) => {
-  //   const setWebsite = await this.allowWebsite('allow');
-  //   const match = this.regexWebsite.exec(valueURL);
-  //   const urlExtract = match ? match[1] : null;
-
-  //   if (setWebsite.has(urlExtract)) {
-  //     return true;
-  //   } else if (urlExtract !== null) {
-  //     try {
-  //       console.log('WORK');
-  //       this.getWebsiteAllow(urlExtract);
-  //       await ApiWebsite.postRequest('/data/websites/post');
-  //       return false;
-  //     } catch (error) {
-  //       console.error('Error adding allowed website:', error);
-  //       return null;
-  //     }
-  //   }
-
-  //   return null;
-  // };
-
-  btnBlockWebsite = async (website_Id) => {
+  btnBlockWebsite = async (website_Id, url) => {
     try {
 
       this.isDeleted = await this.api.deleteRequest(website_Id);
       
       if (this.isDeleted) {
 
-        const deletedURL = Array.from(this.setWebsiteInformation).find(item => item.id === website_Id);
-        this.setWebsiteURL.delete(deletedURL.url);
+        const deletedURL = Array.from(this.setWebsiteInformation).find(item => item === url);
 
+        this.setWebsiteURL.delete(deletedURL);
         this.setWebsiteInformation.delete(website_Id);
       };
 

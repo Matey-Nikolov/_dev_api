@@ -2,6 +2,8 @@ import { getAlerts, takeActionAlert } from "../axiosrequests/apiAlert";
 
 import { findClientById } from './clientServiceFolder/clientSevice';
 
+let clientAlerts;
+
 async function getAlersFromApi(clientId) {
     const alertsData = await getAlerts(clientId);
 
@@ -20,10 +22,10 @@ function compareByTime(a, b) {
 };
 
 const findClientAlerts = (currentClient_id) => {
-    const client = findClientById(currentClient_id);
+    clientAlerts = findClientById(currentClient_id);
     
-    if (client !== -1) {
-      return client.alerts.items;
+    if (clientAlerts !== -1) {
+      return clientAlerts.alerts.items;
     };
 
     return [];
@@ -62,5 +64,13 @@ const takeAction = async (clientId, alertId, action) =>{
     return success;
 };
 
+const updateAlertsForClient = (alerts, alertId) => {
+    const updateAlerts = alerts.filter(alert => alert.id !== alertId);
+
+    clientAlerts.updateAlerts(updateAlerts);
+    
+    return clientAlerts.alerts.items;
+};
+
 export { getAlersFromApi };
-export { findClientAlerts, filterItems, searchItems, takeAction };
+export { findClientAlerts, filterItems, searchItems, takeAction, updateAlertsForClient };

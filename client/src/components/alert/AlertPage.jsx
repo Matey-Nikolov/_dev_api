@@ -9,7 +9,7 @@ import usePagination from '../../Services/Table/PaginationLogic';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
 
-import { findClientAlerts, filterItems, searchItems, takeAction } from '../../Services/alertService';
+import { findClientAlerts, filterItems, searchItems, takeAction, updateAlertsForClient } from '../../Services/alertService';
 import timeConverter from '../../Services/convertTime';
 
 function AlertTable() {
@@ -36,17 +36,18 @@ function AlertTable() {
     
     setAlerts(alerts);
     setRole(currentClient_role);
-  }, [currentClient_id, currentClient_role]);
+  }, [currentClient_role]);
 
   const handleButtonClickTakeAction = async (alertId, action) => {
-
     const isSuccess = await takeAction(currentClient_id, alertId, action);
 
     if (isSuccess === 'success') {
       setSuccessAlert(true);
       setSuccessAlertText('Acknowledge');
 
-      setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== alertId));
+      const updateAlerts = updateAlertsForClient(useAlerts, alertId);
+
+      setAlerts(updateAlerts);
     };
     
     setTimeout(() => {
@@ -103,7 +104,7 @@ function AlertTable() {
         </Row>
       </Container>
     );
-  }
+  };
 
   return (
     <Container className="mt-5">

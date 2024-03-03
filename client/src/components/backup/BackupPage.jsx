@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import ButtonsArchive from './ButtonsBackup';
 import BackupFormPage from './BackupForm';
 
-import findClientSoftware from '../../Services/backupService';
+import { findClientSoftware } from '../../Services/backupService';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
 

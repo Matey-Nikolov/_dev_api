@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 
-import findByBackupButton from '../../Services/backupService';
+import { findByBackupButton } from '../../Services/backupService';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
 

@@ -86,6 +86,7 @@ router.get(
 
         const addData = 
             JSON.stringify({
+            "tags": ["ALLOW"],
             "url": url,
             "comment": "Add by Matey - soon custom comments."
         });

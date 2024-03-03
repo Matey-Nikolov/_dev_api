@@ -4,7 +4,7 @@ import { findClientById } from './clientServiceFolder/clientSevice.js';
 let statusCodeAndName = {};
 let currentClient = '';
 
-export default async function findByBackupButton(currentClient_id, valueButton, fileName, folderName) {
+async function findByBackupButton(currentClient_id, valueButton, fileName, folderName) {
     currentClient = currentClient_id
 
     switch (valueButton){
@@ -19,9 +19,6 @@ export default async function findByBackupButton(currentClient_id, valueButton, 
         break;
         case 'scanning exclusions':
             statusCodeAndName = await createBackupScanningExclusions(fileName, folderName);
-        break;
-        case 'exclusions download':
-            statusCodeAndName = await createBackupExclusionsDownload(fileName, folderName);
         break;
         case 'reset':
             statusCodeAndName = await resetEnviroment();
@@ -63,14 +60,6 @@ async function createBackupScanningExclusions(fileName, folderName){
     return backUpScanningExclusionsCheck;
 };
 
-async function createBackupExclusionsDownload(fileName, folderName){
-    const apiRequestBackup = new ApiBackup(currentClient, folderName);
-
-    const backUpExclusionsDownloadCheck = await apiRequestBackup.backupExclusionsDownload(fileName);
-
-    return backUpExclusionsDownloadCheck;
-};
-
 async function resetEnviroment(){
     const apiRequestBackup = new ApiBackup(currentClient);
 
@@ -89,4 +78,4 @@ const findClientSoftware = (currentClient_id) =>{
     return [];
 };
 
-export { findClientSoftware };
+export { findClientSoftware, findByBackupButton };

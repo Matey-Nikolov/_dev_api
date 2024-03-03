@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Container, Table, Button, Alert, Form, Row, Col } from 'react-bootstrap';
 
-import { postEndpointScan, postUpdateRequest, searchEndpoints, findClientendpoints } from '../../Services/endpointsService';
+import { postEndpointScan, postUpdateRequest, searchEndpoints, findCliEntendpoints } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
 import timeConverter from '../../Services/convertTime';
 
@@ -27,11 +27,11 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const [useRole, setRole] = useState();
 
   useEffect(() => {
-    const endpoints = findClientendpoints(currentClient_id);
+    const endpoints = findCliEntendpoints(currentClient_id);
 
     setEndpoints(endpoints);
     setRole(currentClient_role);
-  });
+  }, [currentClient_id]);
 
   const handleButtonClickShowDetails = (machine_Id) => {
     onEndpointDetailsClick(machine_Id, currentClient_id);

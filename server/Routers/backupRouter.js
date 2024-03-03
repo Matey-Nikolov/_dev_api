@@ -5,6 +5,7 @@ import createFileForBackup from '../help/createFile.js';
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 import callResetBasePolicies from '../help/resetPolicy.js';
+import setPolicyForWebControl from '../help/setPolicyWebControl.js';
 
 const router = express.Router();
 
@@ -203,6 +204,7 @@ router.get(
 
         try{
             await callResetBasePolicies(apiResetEnviroment, pathFromURL);
+            await setPolicyForWebControl(apiResetEnviroment);
 
             res.json(
                 { 

@@ -43,43 +43,51 @@ class Client {
 
             await setupInformation(setAuthToken, this.#tenantIdAndDataRegion.id, this.uniqueId, this.#tenantIdAndDataRegion.urlDataRegion);
 
-            this.alerts = await this.getAlerts();
+            this.alerts = await this.#getAlerts();
 
-            this.endpoints = await this.getEndpoints();
+            this.endpoints = await this.#getEndpoints();
 
 
             if (this.role === 'R/W') {
-                this.events = await this.getEvents();
-                this.websites = await this.getWebsites();
-                this.software = await this.getSoftware();
+                this.events = await this.#getEvents();
+                this.websites = await this.#getWebsites();
+                this.software = await this.#getSoftware();
             };
 
             this.#setupTimestamp = currentTime;
 
             this.#clearPrivateProperties();
         } catch (error) {
-        console.error('Error:', error.message);
+            console.error('Error:', error.message);
         };
     };
 
-    async getAlerts() {
+    async #getAlerts() {
         return getAlersFromApi(this.uniqueId);
     };
 
-    async getEndpoints() {
+    async #getEndpoints() {
         return fetchEndpoints(this.uniqueId);
     };
 
-    async getEvents() {
+    async #getEvents() {
         return fetchEvents(this.uniqueId);
     };
 
-    async getWebsites(){
+    async #getWebsites(){
         return getWebsiteServiceInstance(this.uniqueId);
     };
 
-    async getSoftware(){
+    async #getSoftware(){
         return getSoftwareCurrentClient(this.uniqueId);
+    };
+
+    updateAlerts(updatedAlerts){
+        this.alerts.items = updatedAlerts;
+    };
+
+    updateEvents(updatedEvents){
+        this.events = updatedEvents;
     };
 
     #clearPrivateProperties() {

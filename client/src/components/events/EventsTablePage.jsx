@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Table, Container, Row, Col, Card, Button } from 'react-bootstrap';
 
-import { findClientById } from '../../Services/clientServiceFolder/clientSevice';
 import timeConverter from '../../Services/convertTime';
 
-import { findClientEvents } from '../../Services/eventsService';
+import { findClientEvents, updateEventsForClient } from '../../Services/eventsService';
 
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -13,7 +12,6 @@ import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
 import getWebsiteServiceInstance from '../../Services/websiteService';
-
 
 const EventTable = () => {
   const { currentClient_id } = useContext(UseCreatedContex);
@@ -24,27 +22,44 @@ const EventTable = () => {
 
   const [useAllEvents, setEvents] = useState([]);
 
+  const [showWebControlViolation, setShowWebControlViolation] = useState(false);
+
   useEffect(() => {
     const events = findClientEvents(currentClient_id);
 
     setEvents(events);
-  });
+  }, [currentClient_id]);
 
   const handleClickedAllow = async (value) => {
     const isAddWebsite = await allowWebsiteEvents.btnAllowWebsite(value.name);
 
     console.log(isAddWebsite);
+
+    const updateEvents = updateEventsForClient(useAllEvents, value.id);
+    setEvents(updateEvents);
   };
   
-
+  const filteredDataEvents = useMemo(() => {
+    if (!useAllEvents) {
+      return [];
+    };
+  
+    if (showWebControlViolation) {
+      return useAllEvents.filter(value => filterRegex.test(value.type) && filterRegex.exec(value.type)[2] === 'WebControlViolation');
+    } else {
+      return useAllEvents;
+    };
+  
+  }, [useAllEvents, showWebControlViolation]);
+  
   const {
     currentPage,
     itemsPerPage,
     setCurrentPage,
     getPaginatedItems,
-  } = usePagination(1, 10);
+  } = usePagination(1, 6);
 
-  const currentItemsEvents = getPaginatedItems(useAllEvents);
+  const currentItemsEvents = getPaginatedItems(filteredDataEvents);
   
   if(useAllEvents == []){
     return(
@@ -66,6 +81,14 @@ const EventTable = () => {
 
   return(
     <Container className="mt-7 pt-5">
+      <Button
+        className="mb-3 info"
+        variant="info"
+        onClick={() => {setShowWebControlViolation(!showWebControlViolation)}}
+      >
+        filter by web events
+      </Button>
+
       <Table responsive bordered striped className="mt-2">
         <thead>
           <tr>
@@ -118,7 +141,7 @@ const EventTable = () => {
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
-        totalItems={useAllEvents.length}
+        totalItems={filteredDataEvents.length}
         setCurrentPage={setCurrentPage}
       />
     </Container>
