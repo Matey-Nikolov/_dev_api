@@ -1,7 +1,34 @@
 # _dev_api_
 This is a single-page application using [Sophos Central APIs](https://developer.sophos.com/).
 
-Soon 
+## Overview
+(Name project - soon) is **SPA** (single page application). The goal of this thesis is to develop a web application that provides providers with a product to **monitor and manage** a group of endpoints (computers or servers). Provide an easy and simple to use **interface** for remote monitoring of computers. Provide an intuitive way to work with the application.
+
+
+# ✨ Features
+- Customers dashboard - general overview of all your customers with their number of machines and their respective alarms.
+
+*All the Features described below are for a specific client and accordingly what rights we have the following information.*
+
+- Enpoints table - display detailed information about the machines of a specific customer.
+  - If you have **limited access**:
+    - Additional function is display more information on a specific machine.
+  - If you have **full access**:
+    - Additional functions are to scan, update or display more information on a specific machine.
+- Events table - this feature is available if you have **full access**. Visualizes what has happened on the machines in the last 24 hours. You have the feature to allow banned sites if there is no reason not to.
+- Alerts table - while in events everything is shown, here the problems are reflected, they need to be addressed.
+  - If you have **limited access**:
+    - Only visualize.
+  - If you have **full access**:
+    - Visualize. An additional feature is Acknowledge.
+- Websites - this feature is available if you have **full access**. Visualizes the sites we are allowed to access. We are allowed to add new ones or ban from the list.
+- Management - allows to make backups of given policies from a corresponding list of policies.
+  - If you have **limited access**:
+    - Only access to backups.
+  - If you have **full access**:
+    - Access to backups, reset all policies to base and software downloader.
+- If the user is **admin** - access to register client.
+- Logout
 
 ## Resources
 Here are some used for the project.
