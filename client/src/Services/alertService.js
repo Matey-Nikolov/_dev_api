@@ -1,73 +1,76 @@
-import { getAlerts } from "../axiosrequests/apiAlert";
+import { getAlerts, takeActionAlert } from "../axiosrequests/apiAlert";
 
-let sortedAlerts = {
-    'items': {},
-};
+import { findClientById } from './clientServiceFolder/clientSevice';
+
+let clientAlerts;
 
 async function getAlersFromApi(clientId) {
     const alertsData = await getAlerts(clientId);
 
-    sortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
-    //sortedAlerts.pages = alertsData.pages;
+    const localSortedAlerts = JSON.parse(JSON.stringify(alertsData));
 
-    return sortedAlerts;
-}
+    localSortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
+
+    return localSortedAlerts;
+};
 
 function compareByTime(a, b) {
     const timeA = new Date(a.raisedAt);
     const timeB = new Date(b.raisedAt);
 
     return timeB - timeA;
-}
-
-function countAlerts(alertsData){
-
-    let countLowAlerts = alertsData.items.filter(x => x.severity === 'low').length;
-    let countMediumAlerts = alertsData.items.filter(x => x.severity === 'medium').length;
-    let countHighAlerts = alertsData.items.filter(x => x.severity === 'high').length;
-
-    return { 
-        'low': countLowAlerts, 
-        'medium': countMediumAlerts, 
-        'high': countHighAlerts 
-    };
-}
-
-function filterAlerts(source, severity) {
-    if (severity === 'all') {
-        return source;
-    }
-
-    const result = {
-        items: source.items.filter(x => x.severity === severity),
-    };
-
-    return result;
-}
-
-const fetchAlerts = async (filter, setData) => {
-    try {
-        let alertsData;
-
-        console.log(filter);
-        switch (filter) {
-            case 'all':
-                alertsData = filterAlerts(sortedAlerts, filter);
-                break;
-            case 'low':
-            case 'medium':
-            case 'high':
-                alertsData = filterAlerts(sortedAlerts, filter);
-                break;
-            default:
-                alertsData = await getAlersFromApi();
-                break;
-        }
-
-        setData(alertsData);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
 };
 
-export { getAlersFromApi, fetchAlerts, countAlerts };
+const findClientAlerts = (currentClient_id) => {
+    clientAlerts = findClientById(currentClient_id);
+    
+    if (clientAlerts !== -1) {
+      return clientAlerts.alerts.items;
+    };
+
+    return [];
+};
+  
+const filterItems = (data, filter) => {
+    let filteredItemsBySeverity;
+
+    switch (filter) {
+        case 'low':
+        case 'medium':
+        case 'high':
+            filteredItemsBySeverity = data.filter((x) => x.severity === filter);
+        break;
+        default:
+            filteredItemsBySeverity = data;
+        break;
+    };
+
+    return filteredItemsBySeverity;
+};
+  
+const searchItems = (filteredItems, searchTerm) => {
+    return filteredItems.filter(
+      (value) =>
+        value.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.severity.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        value.raisedAt.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+};
+
+const takeAction = async (clientId, alertId, action) =>{
+    const success = await takeActionAlert(clientId, alertId, action);
+
+    return success;
+};
+
+const updateAlertsForClient = (alerts, alertId) => {
+    const updateAlerts = alerts.filter(alert => alert.id !== alertId);
+
+    clientAlerts.updateAlerts(updateAlerts);
+    
+    return clientAlerts.alerts.items;
+};
+
+export { getAlersFromApi };
+export { findClientAlerts, filterItems, searchItems, takeAction, updateAlertsForClient };

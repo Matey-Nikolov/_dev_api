@@ -1,6 +1,4 @@
-import { express, axios } from '../globalImports.js';
-
-import { query, validationResult } from 'express-validator';
+import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
@@ -11,13 +9,19 @@ let pathFromURL = ``;
 
 router.get(
     '/',
+    [
+        query('clientId').isLength({ min: 35 }).trim().escape()
+    ],
     async (req, res) => {
         pathFromURL = `/endpoint/v1/settings/web-control/local-sites?pageTotal=true`;
 
-        const apiallWebsites = api.apiGetConfiguration(pathFromURL);
+        const { clientId } = req.query;
+
+        const api = getApiConfigurationInstance(clientId);
+        const apiAllWebsites = api.apiGetConfiguration(pathFromURL);
 
         try{
-            const allWebsites = await apiallWebsites.get();
+            const allWebsites = await apiAllWebsites.get();
             
             res.json(allWebsites.data);
         }
@@ -32,7 +36,8 @@ router.get(
 router.get(
     '/delete',
     [
-        query('website_Id').isLength({ min: 6 }).trim().escape()
+        query('website_Id').isLength({ min: 20 }).trim().escape(),
+        query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -42,7 +47,9 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { website_Id } = req.query;
+        const { website_Id, clientId } = req.query;
+
+        const api = getApiConfigurationInstance(clientId);
 
         pathFromURL = `endpoint/v1/settings/web-control/local-sites/${website_Id}`;
 
@@ -59,7 +66,8 @@ router.get(
 router.get(
     '/add',
     [
-        query('url').isLength({ min: 1 }).trim().escape(),
+        query('url').isLength({ min: 3 }).trim().escape(),
+        query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
         
@@ -69,16 +77,18 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         }
         
-        const { url } = req.query;
+        const { url, clientId } = req.query;
+
+
+        const api = getApiConfigurationInstance(clientId);
 
         pathFromURL = `endpoint/v1/settings/web-control/local-sites`;
 
         const addData = 
             JSON.stringify({
-
-                "categoryId": 50,
-                "url": url,
-                "comment": "Add by Matey - soon custom comments."
+            "tags": ["ALLOW"],
+            "url": url,
+            "comment": "Add by Matey - soon custom comments."
         });
 
         await api.postApiConfiguration(pathFromURL, addData)

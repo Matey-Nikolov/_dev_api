@@ -1,9 +1,10 @@
 import ApiWebsite from '../axiosrequests/apiWebsite.js';
 
-const apiRequestWebsite = new ApiWebsite();
-
 class WebsiteService {
-  constructor() {
+  constructor(apiRequestWebsite) {
+    
+    this.api = apiRequestWebsite;
+
     this.regexWebsite = /(?:https?:\/\/www\.)?(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
     
     this.setWebsiteInformation = new Set();
@@ -15,12 +16,10 @@ class WebsiteService {
       'status': -1,
       'information': { }
     };
-  }
+  };
 
   getWebsiteData = async () => {
-    //apiRequestWebsite.setCredentials();
-
-    const data = await apiRequestWebsite.getWebsite();
+    const data = await this.api.getWebsite();
 
     return data.items;
   };
@@ -28,7 +27,6 @@ class WebsiteService {
   allowWebsite = async (typeName) => {
     const websiteData = await this.getWebsiteData();
 
-    // lazy way - soon fix
     this.setWebsiteInformation.clear();
     this.setWebsiteURL.clear();
 
@@ -44,6 +42,7 @@ class WebsiteService {
           { 
             id: value.id,
             url: value.url,
+            tags: value.tags,
             comment: value.comment   
           };
 
@@ -56,38 +55,16 @@ class WebsiteService {
     return this.setWebsiteInformation;
   };
 
-  // addAllowedWebsite = async (valueURL) => {
-  //   const setWebsite = await this.allowWebsite('allow');
-  //   const match = this.regexWebsite.exec(valueURL);
-  //   const urlExtract = match ? match[1] : null;
-
-  //   if (setWebsite.has(urlExtract)) {
-  //     return true;
-  //   } else if (urlExtract !== null) {
-  //     try {
-  //       console.log('WORK');
-  //       this.getWebsiteAllow(urlExtract);
-  //       await ApiWebsite.postRequest('/data/websites/post');
-  //       return false;
-  //     } catch (error) {
-  //       console.error('Error adding allowed website:', error);
-  //       return null;
-  //     }
-  //   }
-
-  //   return null;
-  // };
-
-  btnBlockWebsite = async (website_Id) => {
+  btnBlockWebsite = async (website_Id, url) => {
     try {
 
-      this.isDeleted = await apiRequestWebsite.deleteRequest(website_Id);
+      this.isDeleted = await this.api.deleteRequest(website_Id);
       
       if (this.isDeleted) {
 
-        const deletedURL = Array.from(this.setWebsiteInformation).find(item => item.id === website_Id);
-        this.setWebsiteURL.delete(deletedURL.url);
+        const deletedURL = Array.from(this.setWebsiteInformation).find(item => item === url);
 
+        this.setWebsiteURL.delete(deletedURL);
         this.setWebsiteInformation.delete(website_Id);
       };
 
@@ -101,17 +78,13 @@ class WebsiteService {
   btnAllowWebsite = async (valueURL) => {
     const extractedURL = (this.regexWebsite.exec(valueURL) || [])[1];
 
-    console.log(this.setWebsiteURL);
-
     if (!this.setWebsiteURL.has(extractedURL)) {
-
       try {
-        this.isAddWebsite = await apiRequestWebsite.addWebsiteRequest(extractedURL);
+        this.isAddWebsite = await this.api.addWebsiteRequest(extractedURL);
       } catch (error) {
         console.error('Error adding website:', error);
-      }
+      };
 
-      console.log(this.isAddWebsite);
       let url = this.isAddWebsite.data.information.url;
 
       if (this.isAddWebsite.status === 200) {
@@ -123,13 +96,14 @@ class WebsiteService {
     return this.isAddWebsite.status;
   };
 };
-  
+
 let instance = null;
 
-export default function getWebsiteServiceInstance() {
-  
+export default function getWebsiteServiceInstance(clientId) {
+  const apiRequestWebsite = new ApiWebsite(clientId);
+
   if (!instance) {
-    instance = new WebsiteService();
+    instance = new WebsiteService(apiRequestWebsite);
   };
 
   return instance;

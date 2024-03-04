@@ -7,8 +7,8 @@ const router = express.Router();
 router.post(
   '/',
   [
-    body('client_Id_Db').isLength({ min: 1 }).trim().escape(),
-    body('client_secret_Db').isLength({ min: 1 }).trim().escape(),
+    body('client_Id_Db').isLength({ min: 35 }).trim().escape(),
+    body('client_secret_Db').isLength({ min: 35 }).trim().escape(),
   ],
   async  (req, res) => {
     const errors = validationResult(req);
@@ -22,7 +22,7 @@ router.post(
       grant_type: 'client_credentials',
       scope: 'token',
       client_id: client_Id_Db,
-      client_secret: client_secret_Db,
+      client_secret: client_secret_Db
     };
 
     try {

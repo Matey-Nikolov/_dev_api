@@ -1,155 +1,292 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Table, Button, Alert, Form } from 'react-bootstrap';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { Container, Table, Button, Alert, Form, Row, Col } from 'react-bootstrap';
 
-import { fetchEndpointScan } from '../../Services/endpointsService';
+import { postEndpointScan, postUpdateRequest, searchEndpoints, findCliEntendpoints } from '../../Services/endpointsService';
 import FilterButtons from './filterEndpointsButtons';
+import timeConverter from '../../Services/convertTime';
 
-import { useLocation } from 'react-router-dom';
-
-import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
-const EndpointTablePage = ({ onEndpointDetailsClick }) => {
-  const location = useLocation();
-  const passedData = location.state;
-  
-  const { loading, useEndpoints } = useContext(UseCreatedContex);
+import Pagination from '../Table/Pagination';
+import usePagination from '../../Services/Table/PaginationLogic';
 
+const EndpointTablePage = ({ onEndpointDetailsClick }) => {
+  const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
+ 
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
+  const [successAlertText, setSuccessAlertText] = useState('');
 
   const [filterType, setFilterType] = useState('all');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const [selectedEndpoints, setSelectedEndpoints] = useState(new Set());
+  const [selectedScanEndpoints, setSelectedScanEndpoints] = useState(new Set());
+  const [selectedUpdateEndpoints, setSelectedUpdateEndpoints] = useState(new Set());
+  
+  const [useRole, setRole] = useState();
 
   useEffect(() => {
-    if (passedData !== null) {
-        setEndpoints([...passedData.key1]);
-    }
-    else{
-      if (!loading) {
-        setEndpoints(useEndpoints);
-      };
-    };
+    const endpoints = findCliEntendpoints(currentClient_id);
 
-  }, [useEndpoints]);
+    setEndpoints(endpoints);
+    setRole(currentClient_role);
+  }, [currentClient_id]);
 
-  //machine_Id or endpointId
   const handleButtonClickShowDetails = (machine_Id) => {
-    onEndpointDetailsClick(machine_Id);
+    onEndpointDetailsClick(machine_Id, currentClient_id);
   };
 
-  const handleCheckboxChange = (id) => {
-    const updatedSelectedEndpoints = new Set(selectedEndpoints);
-
-    if (!selectedEndpoints.has(id)) {
-      updatedSelectedEndpoints.add(id);
+  const handleCheckboxScanChange = (id) => {
+    const updatedSelectedScanEndpoints = new Set(selectedScanEndpoints);
+  
+    if (!selectedScanEndpoints.has(id)) {
+      updatedSelectedScanEndpoints.add(id);
+    } else {
+      updatedSelectedScanEndpoints.delete(id);
     }
-
-    setSelectedEndpoints(updatedSelectedEndpoints);
+  
+    setSelectedScanEndpoints(updatedSelectedScanEndpoints);
+  };
+  
+  const handleCheckboxUpdateChange = (id) => {
+    const updatedSelectedUpdateEndpoints = new Set(selectedUpdateEndpoints);
+  
+    if (!selectedUpdateEndpoints.has(id)) {
+      updatedSelectedUpdateEndpoints.add(id);
+    } else {
+      updatedSelectedUpdateEndpoints.delete(id);
+    }
+  
+    setSelectedUpdateEndpoints(updatedSelectedUpdateEndpoints);
   };
 
   const handleButtonClickSendScanRequest = async (ids) => {
-    try {
+    await Promise.all(ids.map(async (id) => {
+      await postEndpointScan(id, currentClient_id);
+    }));
 
-      await Promise.all(ids.map(async (id) => {
-        await fetchEndpointScan(id);
-      }));
+    setSuccessAlert(true);
+    setSuccessAlertText('Scan');
 
-      setSuccessAlert(true);
+    selectedScanEndpoints.clear();
 
-      setTimeout(() => {
-        setSuccessAlert(false);
-      }, 4000);
-    } catch (error) {
-      console.error('Error initiating scan requests:', error);
-    }
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
   };
+
+  const handleButtonClickSendUpdateRequest = async (ids) => {
+
+    await Promise.all(ids.map(async (id) => {
+      await postUpdateRequest(id, currentClient_id);
+    }));
+
+    setSuccessAlert(true);
+    setSuccessAlertText('Update');
+
+    selectedUpdateEndpoints.clear();
+
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
+  };
+
   const handleFilterChange = (type) => {
     setFilterType(type);
+    setCurrentPage(1);
   };
 
-  const handleSortChange = () => {
-    setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
   };
 
-  const filteredEndpoints = endpoints.filter((value) => {
-    //console.log(endpoints);
-    if (filterType === 'all') {
-      return true;
-    }
-    return value.type === filterType;
-  });
+  const filteredEndpoints = useMemo(() => {
+    return endpoints.filter((value) => {
+      if (filterType === 'all') {
+        return true;
+      };
 
-  const sortedEndpoints = filteredEndpoints.sort((a, b) => {
-    const dateA = new Date(a.lastSeenAt);
-    const dateB = new Date(b.lastSeenAt);
-    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-  });
+      return value.type === filterType;
+    });
+
+  }, [endpoints, filterType]);
+
+
+  const filteredData = useMemo(() => {
+    return searchEndpoints(filteredEndpoints, searchTerm);
+  }, [filteredEndpoints, searchTerm]);
+
+  const handleMarkAllScan = () => {
+    if (selectedScanEndpoints.size === filteredData.length) {
+      setSelectedScanEndpoints(new Set());
+    } else {
+      const updatedSelectedScanEndpoints = new Set(filteredData.map(item => item.id));
+
+      setSelectedScanEndpoints(updatedSelectedScanEndpoints);
+    };
+  };
+
+  const handleMarkAllUpdate = () => {
+    if (selectedUpdateEndpoints.size === filteredData.length) {
+      setSelectedUpdateEndpoints(new Set());
+    } else {
+      const updatedSelectedUpdateEndpoints = new Set(filteredData.map(item => item.id));
+
+      setSelectedUpdateEndpoints(updatedSelectedUpdateEndpoints);
+    };
+  };
+  const {
+    currentPage,
+    itemsPerPage,
+    setCurrentPage,
+    getPaginatedItems,
+  } = usePagination();
+
+  const currentItems = getPaginatedItems(filteredData);
 
   return (
     <Container className="mt-5">
-      <FilterButtons
-        filterType={filterType}
-        handleFilterChange={handleFilterChange}
-        handleSortChange={handleSortChange}
-        sortOrder={sortOrder}
-      />
-      {successAlert && (
-        <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
-          Scan is requested successfully!
-        </Alert>
-      )}
+
+      <Row className="mb-4">
+        <Col md={12}>
+          <FilterButtons
+            filterType={filterType}
+            handleFilterChange={handleFilterChange}
+          />
+        </Col>
+        <Col md={2}>
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            className="w-100"
+            onChange={handleSearch}
+            value={searchTerm}
+          />
+        </Col>
+
+        {useRole === 'R/W' && (
+          <>
+            <Col md={2}>
+              <Button variant="info" onClick={handleMarkAllScan}>
+                Mark All for Scan
+              </Button>
+            </Col>
+            <Col md={2}>
+              <Button variant="info" onClick={handleMarkAllUpdate}>
+                Mark All for Update
+              </Button>
+            </Col>
+          </>
+        )}
+
+        <Col md={5}>
+          {successAlert && (
+            <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
+              {successAlertText} is requested successfully!
+            </Alert>
+          )}
+        </Col>
+      </Row>
+
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Name machine</th>
-            <th>Type</th>
-            <th>Health</th>
-            <th>Status</th>
-            <th>LastSeenAt</th>
+            <th className='text-center'>Name machine</th>
+            <th className='text-center'>Os</th>
+            <th className='text-center'>Type</th>
+            <th className='text-center'>Health</th>
+            <th className='text-center'>Status</th>
+            <th className='text-center'>LastSeenAt</th>
+            <th className='text-center'>Tamper protection status</th>
             <th></th>
-            <th>
-              <Button
-                variant="primary"
-                className="mt-3"
-                disabled={selectedEndpoints.size === 0}
-                onClick={() => handleButtonClickSendScanRequest([...selectedEndpoints])}
-              >
-                Scan
-              </Button>
-            </th>
+              {useRole === 'R/W' && (
+                <th className='text-center'>
+                  <Button
+                    variant="info"
+                    className="mt-3"
+                    disabled={selectedScanEndpoints.size === 0}
+                    onClick={() => handleButtonClickSendScanRequest([...selectedScanEndpoints])}
+                  >
+                    Scan
+                  </Button>
+                </th>
+              )}
+              {useRole === 'R/W' && (
+                <th className='text-center'>
+                  <Button
+                    variant="info"
+                    className="mt-3"
+                    disabled={selectedUpdateEndpoints.size === 0}
+                    onClick={() => handleButtonClickSendUpdateRequest([...selectedUpdateEndpoints])}
+                  >
+                    Update
+                  </Button>
+                </th>
+              )}
           </tr>
         </thead>
         <tbody>
-          {sortedEndpoints.map((value) => (
+          {currentItems.map((value) => (
             <tr key={value.id}>
-              <td>{value.associatedPerson.name}</td>
-              <td>{value.type}</td>
-              <td>{value.health.overall}</td>
-              <td>{value.health.services.status}</td>
-              <td>{value.lastSeenAt}</td>
-              <td>
+              <td className='text-left'>{value.hostname}</td>
+
+              <td className='text-center'>{value.os.platform}</td>
+
+              <td className='text-center'>{value.type}</td>
+
+              <td className='text-center'>{value.health.overall}</td>
+
+              <td className='text-center'>{value.health.services.status}</td>
+              
+              <td className='text-center'>{timeConverter(value.lastSeenAt)}</td>
+
+              <td className='text-center'>{value.tamperProtectionEnabled ? 
+                (
+                  <span className="badge bg-success">On</span>
+                )
+                : 
+                (
+                  <span className="badge bg-danger">Off</span>
+                )}
+              </td>
+              <td className='text-center'>
                 <Button onClick={() => handleButtonClickShowDetails(value.id)} variant="info">
-                  Show Details
+                  Details
                 </Button>
               </td>
-              <td>
-                <Form.Check
-                  onChange={() => handleCheckboxChange(value.id)}
-                  type="checkbox"
-                  checked={selectedEndpoints.has(value.id)}
-                />
-              </td>
+                {useRole === 'R/W' && (
+                  <td className='text-center'>
+                    <Form.Check
+                      onChange={() => handleCheckboxScanChange(value.id)}
+                      type="checkbox"
+                      checked={selectedScanEndpoints.has(value.id)}
+                    />
+                  </td>
+                )}
+                {useRole === 'R/W' && (
+                  <td className='text-center'>
+                    <Form.Check
+                      onChange={() => handleCheckboxUpdateChange(value.id)}
+                      type="checkbox"
+                      checked={selectedUpdateEndpoints.has(value.id)}
+                    />
+                  </td>
+                )}
             </tr>
           ))}
         </tbody>
       </Table>
+
+      <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredData.length}
+          setCurrentPage={setCurrentPage}
+      />
     </Container>
   );
-
 };
 
 export default EndpointTablePage;

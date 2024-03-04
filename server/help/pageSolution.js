@@ -11,7 +11,6 @@ export const pageSolution = async (api) => {
         
         while ([429, 500, 502, 503].includes(response.status)) {
             await sleep(2);
-
             response = await api.get();
         };
 

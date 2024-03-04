@@ -18,12 +18,13 @@ const getEndpoints = async (clientId) => {
     return endponts;
 };
 
-const getEndpointDetails = async (machine_Id) => {
+const getEndpointDetails = async (machine_Id, clientId) => {
     let endpontDetails = {};
 
     await api.get('/endpoint/details', {
         params: {
-            machine_Id
+            machine_Id,
+            clientId
         },
     })
     .then((response) => {
@@ -36,11 +37,12 @@ const getEndpointDetails = async (machine_Id) => {
     return endpontDetails;
 };
 
-const endpointScan = async (machine_Id) => {
+const endpointScanRequest = async (machine_Id, clientId) => {
     try {
         const response = await api.get('/endpoint/scan', {
             params: {
-                machine_Id
+                machine_Id,
+                clientId
             }
         });
 
@@ -53,4 +55,40 @@ const endpointScan = async (machine_Id) => {
     }
 };
 
-export { getEndpoints, getEndpointDetails, endpointScan };
+const endpointUpdateRequest = async (machine_Id, clientId) => {
+    try {
+        const response = await api.get('/endpoint/update', {
+            params: {
+                machine_Id,
+                clientId
+            }
+        });
+
+        console.log(response);
+        return response.status;
+    } catch (error) {
+        console.error('Error:', error.response ? error.response.status : error.message);
+
+        return error.response ? error.response.status : 500;
+    }
+};
+
+const endpointSoftware = async (clientId) => {
+    try {
+        const response = await api.get('/endpoint/software', {
+            params: {
+                clientId
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error.response ? error.response.status : error.message);
+
+        return error.response ? error.response.status : 500;
+    }
+};
+
+
+
+export { getEndpoints, getEndpointDetails, endpointScanRequest, endpointUpdateRequest, endpointSoftware };

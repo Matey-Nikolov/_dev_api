@@ -1,12 +1,12 @@
 body {
-    margin-bottom: 70px; /* Adjust the margin to match the height of your footer */
+    margin-bottom: 70px;
 }
 
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #f8f9fa; /* Change the background color as needed */
+    background-color: #f8f9fa;
     padding: 10px 0;
     text-align: center;
 }

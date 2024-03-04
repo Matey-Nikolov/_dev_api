@@ -1,13 +1,22 @@
 import { api } from "./apiConfig";
 
 class ApiBackup {
-    constructor() {
+    constructor(valueId, valueFolderName) {
+        this.clientId = valueId;
+        this.folderName = valueFolderName;
+
         this.isCreateFileWithData = {};
     };
 
-    async backupByItems() {
+    async backupByItems(fileName) {
         try {
-            const response = await api.get('/backup/items');
+            const response = await api.get('/backup/items', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
 
             this.isCreateFileWithData = response.data;
         } catch (error) {
@@ -17,9 +26,15 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async backupBlockItems(){
+    async backupBlockItems(fileName){
         try {
-            const response = await api.get('/backup/items/blocks');
+            const response = await api.get('/backup/items/blocks', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
 
             this.isCreateFileWithData = response.data;
         } catch (error) {
@@ -29,9 +44,67 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async backupPolicies(){
+    async backupPolicies(fileName){
         try {
-            const response = await api.get('/backup/policies');
+            const response = await api.get('/backup/policies', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
+
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isCreateFileWithData;
+    };
+
+    async backupScanningExclusions(fileName){
+        try {
+            const response = await api.get('/backup/exclusions/scan', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
+
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isCreateFileWithData;
+    };
+
+    async backupExclusionsDownload(fileName){
+        try {
+            const response = await api.get('/backup/exclusions/download', {
+                params: {
+                    clientId:this.clientId,
+                    fileName: fileName,
+                    folderName:this.folderName
+                }
+            });
+
+            this.isCreateFileWithData = response.data;
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        };
+
+        return this.isCreateFileWithData;
+    };
+
+    async resetEnviroment(){
+        try {
+            const response = await api.get('/backup/reset', {
+                params: {
+                    clientId:this.clientId
+                }
+            });
 
             this.isCreateFileWithData = response.data;
         } catch (error) {

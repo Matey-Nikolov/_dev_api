@@ -6,9 +6,6 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import './css/LoginPage.css'
 
 import { AuthLogin } from '../../Services/loginService';
-import { postToken } from '../../axiosrequests/apiToken';
-import { whoIAm } from '../../axiosrequests/apiAuth';
-import { setupInformation } from '../../axiosrequests/apiSetupInfo';
 
 class LoginPage extends React.Component {
   static propTypes = {
@@ -78,21 +75,6 @@ class LoginPage extends React.Component {
     this.infoUser.client_secret_Db = informationData.client_secret_Id;
   };
 
-  async setUpEnvironment(){
-    try {
-      const setAuthToken = await postToken(this.infoUser);
-      
-      const tenantId = await whoIAm(setAuthToken);
-
-      const isOwner = true;
-
-      await setupInformation(setAuthToken, tenantId, isOwner);
-
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-  };
-
   handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -105,8 +87,6 @@ class LoginPage extends React.Component {
     if (this.getToken){
       await this.findUser(instanceAuthClass);
     };
-
-    await this.setUpEnvironment();
 
     this.props.setToken(this.token);
   };

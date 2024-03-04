@@ -1,82 +1,83 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react';
+import { Container, Row, Col, Card, Form, Table, Button, Alert } from 'react-bootstrap';
 
 import FilterButtons from './FilterButtonsAlerts'; 
+import AcknowledgeHelpModal from './HelpModal';
 
 import Pagination from '../Table/Pagination';
 import usePagination from '../../Services/Table/PaginationLogic';
 
-import { useLocation } from 'react-router-dom';
-import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
+import { findClientAlerts, filterItems, searchItems, takeAction, updateAlertsForClient } from '../../Services/alertService';
+import timeConverter from '../../Services/convertTime';
+
 function AlertTable() {
-  const location = useLocation();
-  const passedData = location.state;
+  const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
 
-  const { useAlerts, loading } = useContext(UseCreatedContex);
+  const [useRole, setRole] = useState();
 
-
-  const [data, setData] = useState(null);
+  const [useAlerts, setAlerts] = useState([]);
   const [filter, setFilter] = useState('');
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
+  const [showHelp, setShowHelp] = useState(false);
 
-    // console.log(passedData);
-    if (passedData !== null && passedData.key1 == []) {
-      setData([...passedData.key1]);
-    }
-    else{
-      if (!loading) {
-        setData(useAlerts);
-      };
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [successAlertText, setSuccessAlertText] = useState('');
+
+
+  const handleShowHelp = () => setShowHelp(true);
+  const handleCloseHelp = () => setShowHelp(false);
+
+  useEffect(() => {
+    const alerts = findClientAlerts(currentClient_id);
+    
+    setAlerts(alerts);
+    setRole(currentClient_role);
+  }, [currentClient_role]);
+
+  const handleButtonClickTakeAction = async (alertId, action) => {
+    const isSuccess = await takeAction(currentClient_id, alertId, action);
+
+    if (isSuccess === 'success') {
+      setSuccessAlert(true);
+      setSuccessAlertText('Acknowledge');
+
+      const updateAlerts = updateAlertsForClient(useAlerts, alertId);
+
+      setAlerts(updateAlerts);
     };
-    return () => {
-      setData(null);
-    };
-  }, [useAlerts]);
+    
+    setTimeout(() => {
+      setSuccessAlert(false);
+    }, 4000);
+  };
 
   const handleFilterChange = useCallback(
     (newFilter) => {
       setFilter(newFilter);
+      setCurrentPage(1);
     },
     [setFilter]
   );
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1);
   };
 
   const filteredData = useMemo(() => {
-    if (!data) {
+    if (!useAlerts) {
       return [];
-    }
-
-    let filteredItems;
-
-    switch (filter) {
-      case 'low':
-      case 'medium':
-      case 'high':
-        filteredItems = data.items.filter((x) => x.severity === filter);
-      break;
-      default:
-        filteredItems = data.items;
-      break;
     };
 
-    return filteredItems.filter(
-      (value) =>
-        value.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        value.severity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        value.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        value.raisedAt.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [data, searchTerm, filter]);
+    const filteredItems = filterItems(useAlerts, filter);
+
+    return searchItems(filteredItems, searchTerm);
+
+  }, [useAlerts, searchTerm, filter]);
 
   const {
     currentPage,
@@ -87,7 +88,7 @@ function AlertTable() {
 
   const currentItems = getPaginatedItems(filteredData);
 
-  if (!data) {
+  if (!useAlerts || useAlerts.length === 0) {
     return(
       <Container fluid className="px-4">
         <Row className="justify-content-center">
@@ -105,66 +106,102 @@ function AlertTable() {
     );
   };
 
-  if (!loading) {
-    return (
-      <Container className="mt-5">
-        <FilterButtons
-          filterType={filter}
-          handleFilterChange={handleFilterChange}
-        />
-  
-        <Form.Control
+  return (
+    <Container className="mt-5">
+      <Row className="mb-3">
+        <Col>
+          <h5>Filters by severity:</h5>
+          <FilterButtons
+            filterType={filter}
+            handleFilterChange={handleFilterChange}
+          />
+        </Col>
+      </Row>
+
+      <Row className="mb-4">
+        <Col md={3}>
+          <Form.Control
             type="text"
             placeholder="Search..."
-            className="w-auto d-inline-block"
+            className="w-100"
             onChange={handleSearch}
             value={searchTerm}
-        />
-  
-        <Table id="alertTable" responsive bordered striped className="mt-2">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Product</th>
-              <th>Severity</th>
-              <th>Description</th>
-              <th>RaisedAt</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((value, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{value.product}</td>
-                <td>
-                  {value.severity === 'low' ? (
-                    <span className="badge bg-success">low</span>
-                  ) : value.severity === 'medium' ? (
-                    <span className="badge bg-warning">medium</span>
-                  ) : value.severity === 'high' ? (
-                    <span className="badge bg-danger">high</span>
-                  ) : (
-                    ''
-                  )}
+          />
+        </Col>
+        <Col md={2}>
+          {useRole === 'R/W' && (
+            <Button variant="info" onClick={handleShowHelp} className="w-100">
+              Help
+            </Button>
+          )}
+        </Col>        
+        <Col md={5}>
+          {successAlert && (
+            <Alert variant="success" onClose={() => setSuccessAlert(false)} dismissible>
+              {successAlertText} action is requested successfully!
+            </Alert>
+          )}
+        </Col>
+      </Row>
+
+      <Table id="alertTable" responsive bordered striped className="mt-2">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Severity</th>
+            <th>Description</th>
+            <th>RaisedAt</th>
+            {useRole === 'R/W' && (
+              <th>allowed actions</th>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {currentItems.map((value, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+
+              <td className='text-left'>{value.product}</td>
+
+              <td className='text-center'>
+                {value.severity === 'low' ? (
+                  <span className="badge bg-success">low</span>
+                ) : value.severity === 'medium' ? (
+                  <span className="badge bg-warning">medium</span>
+                ) : value.severity === 'high' ? (
+                  <span className="badge bg-danger">high</span>
+                ) : (
+                  ''
+                )}
+              </td>
+
+              <td className='text-left'>{value.description}</td>
+
+              <td className='text-center'>{timeConverter(value.raisedAt)}</td>
+
+              {useRole === 'R/W' && (
+                <td className='text-center'>
+                  <Button variant="info" onClick={() => handleButtonClickTakeAction(value.id, value.allowedActions[0])}>
+                    {value.allowedActions[0]}
+                  </Button>
                 </td>
-                <td>{value.description}</td>
-                <td>{value.raisedAt}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          totalItems={filteredData.length}
-          setCurrentPage={setCurrentPage}
-        />
-  
-      </Container>
-  
-    );
-  };
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredData.length}
+        setCurrentPage={setCurrentPage}
+      />
+
+      <AcknowledgeHelpModal show={showHelp} handleClose={handleCloseHelp} />
+    </Container>
+  );
 };
 
 export default AlertTable;

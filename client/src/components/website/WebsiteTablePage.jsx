@@ -1,34 +1,36 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Table, Button, Alert, Container } from 'react-bootstrap';
 
 import getWebsiteServiceInstance from '../../Services/websiteService';
 
 import { useNavigate } from "react-router-dom";
 
-import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
 
 const WebsiteTable = () => {
   const navigate = useNavigate();
-  const { loading, useWebsites } = useContext(UseCreatedContex);
+  const { currentClient_id } = useContext(UseCreatedContex);
 
-  const websiteService = new getWebsiteServiceInstance();
+  const websiteService = new getWebsiteServiceInstance(currentClient_id);
 
   const [useAllWebsites, setWebsites] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
 
-  useEffect(() => {
-    if (!loading) {
-      setWebsites([...useWebsites]);
-    };
+  const fetchWebsites = async () =>{
+    const websites = await websiteService.getWebsiteData();
 
-  }, [websiteService, useWebsites]);
+    if (websites != []) {
+      setWebsites(websites);
+    };
+  };
+
+  useEffect(() => {
+    fetchWebsites();
+  });
   
-  const memoizedWebsites = useMemo(() => useAllWebsites, [useAllWebsites]);
-  
-  async function handleButtonClickBlockWebsite(website_Id){
-    const isDeleted = await websiteService.btnBlockWebsite(website_Id);
+  async function handleButtonClickBlockWebsite(website_Id, url){
+    const isDeleted = await websiteService.btnBlockWebsite(website_Id, url);
 
     setWebsites((prevWebsites) => prevWebsites.filter((website) => website.id !== website_Id));
 
@@ -92,7 +94,7 @@ const WebsiteTable = () => {
               </td>
               <td>{items.comment}</td>
               <td>
-                <Button onClick={() => handleButtonClickBlockWebsite(items.id)} variant="info">
+                <Button onClick={() => handleButtonClickBlockWebsite(items.id, items.url)} variant="info">
                   Block
                 </Button>
               </td>

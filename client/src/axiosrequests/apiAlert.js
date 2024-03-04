@@ -1,6 +1,6 @@
 import { api } from "./apiConfig";
 
-export const getAlerts = async (clientId) => {
+const getAlerts = async (clientId) => {
     let alerts = {
         'items': {}
     };
@@ -19,3 +19,25 @@ export const getAlerts = async (clientId) => {
 
     return alerts;
 };
+
+const takeActionAlert = async (clientId, alertId, action) => {
+    let success = {};
+
+    await api.get('/alert/actions', {
+        params: {
+            clientId,
+            alertId,
+            action
+        }
+    })
+    .then((response) => {
+        success = response.data.status
+    })
+    .catch((error) => {
+        console.error('Error:', error.response ? error.response.data : error.message);
+    });
+
+    return success;
+};
+
+export { getAlerts, takeActionAlert };
