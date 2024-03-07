@@ -129,7 +129,7 @@ function AlertTable() {
           />
         </Col>
         <Col md={2}>
-          {useRole === 'R/W' && (
+          {useRole === process.env.REACT_APP_ROLE && (
             <Button variant="info" onClick={handleShowHelp} className="w-100">
               Help
             </Button>
@@ -152,7 +152,7 @@ function AlertTable() {
             <th>Severity</th>
             <th>Description</th>
             <th>RaisedAt</th>
-            {useRole === 'R/W' && (
+            {useRole === process.env.REACT_APP_ROLE && (
               <th>allowed actions</th>
             )}
           </tr>
@@ -180,7 +180,7 @@ function AlertTable() {
 
               <td className='text-center'>{timeConverter(value.raisedAt)}</td>
 
-              {useRole === 'R/W' && (
+              {useRole === process.env.REACT_APP_ROLE && (
                 <td className='text-center'>
                   <Button variant="info" onClick={() => handleButtonClickTakeAction(value.id, value.allowedActions[0])}>
                     {value.allowedActions[0]}

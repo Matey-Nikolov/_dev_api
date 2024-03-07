@@ -48,7 +48,7 @@ class Client {
             this.endpoints = await this.#getEndpoints();
 
 
-            if (this.role === 'R/W') {
+            if (this.role === process.env.REACT_APP_ROLE) {
                 this.events = await this.#getEvents();
                 this.websites = await this.#getWebsites();
                 this.software = await this.#getSoftware();

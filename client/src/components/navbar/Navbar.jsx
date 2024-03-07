@@ -34,7 +34,7 @@ const Navbar = () => {
         </>
       ) : (
         <>
-          {currentClient_role === 'R/W' && (
+          {currentClient_role === process.env.REACT_APP_ROLE && (
             <>
               <Link className="navbar-brand" to={`/events/${currentClient_name}`}>Events</Link> 
             </>
@@ -43,7 +43,7 @@ const Navbar = () => {
           <Link className="navbar-brand" to={`/alerts/${currentClient_name}`}>Alerts</Link>
           <Link className="navbar-brand" to={`/endpoints/${currentClient_name}`}>Endpoints</Link>
 
-          {currentClient_role === 'R/W' && (
+          {currentClient_role === process.env.REACT_APP_ROLE && (
             <>
               <Link className="navbar-brand" to={`/websites/${currentClient_name}`}>Websites</Link> 
             </>

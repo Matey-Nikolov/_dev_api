@@ -71,7 +71,7 @@ const HomePage = () => {
                       </button>
                     </td>
 
-                    {client.role === 'R/W' ? (
+                    {client.role === process.env.REACT_APP_ROLE ? (
                       <td className='text-center'>Full</td>
                     ) : (
                       <td className='text-center'>Limited</td>

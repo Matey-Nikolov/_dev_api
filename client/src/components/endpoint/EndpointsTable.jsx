@@ -166,7 +166,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
           />
         </Col>
 
-        {useRole === 'R/W' && (
+        {useRole === process.env.REACT_APP_ROLE && (
           <>
             <Col md={2}>
               <Button variant="info" onClick={handleMarkAllScan}>
@@ -201,7 +201,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
             <th className='text-center'>LastSeenAt</th>
             <th className='text-center'>Tamper protection status</th>
             <th></th>
-              {useRole === 'R/W' && (
+              {useRole === process.env.REACT_APP_ROLE && (
                 <th className='text-center'>
                   <Button
                     variant="info"
@@ -213,7 +213,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   </Button>
                 </th>
               )}
-              {useRole === 'R/W' && (
+              {useRole === process.env.REACT_APP_ROLE && (
                 <th className='text-center'>
                   <Button
                     variant="info"
@@ -256,7 +256,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   Details
                 </Button>
               </td>
-                {useRole === 'R/W' && (
+                {useRole === process.env.REACT_APP_ROLE && (
                   <td className='text-center'>
                     <Form.Check
                       onChange={() => handleCheckboxScanChange(value.id)}
@@ -265,7 +265,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                     />
                   </td>
                 )}
-                {useRole === 'R/W' && (
+                {useRole === process.env.REACT_APP_ROLE && (
                   <td className='text-center'>
                     <Form.Check
                       onChange={() => handleCheckboxUpdateChange(value.id)}
