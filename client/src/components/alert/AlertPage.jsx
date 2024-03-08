@@ -15,7 +15,7 @@ import timeConverter from '../../Services/convertTime';
 function AlertTable() {
   const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
 
-  const [useRole, setRole] = useState();
+  const [useRole, setRole] = useState(currentClient_role);
 
   const [useAlerts, setAlerts] = useState([]);
   const [filter, setFilter] = useState('');
@@ -35,7 +35,6 @@ function AlertTable() {
     const alerts = findClientAlerts(currentClient_id);
     
     setAlerts(alerts);
-    setRole(currentClient_role);
   }, [currentClient_role]);
 
   const handleButtonClickTakeAction = async (alertId, action) => {

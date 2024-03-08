@@ -9,7 +9,7 @@ import { UseCreatedContex } from '../../contex/setupInformation';
 
 const WebsiteTable = () => {
   const navigate = useNavigate();
-  const { currentClient_id } = useContext(UseCreatedContex);
+  const { currentClient_id, currentClient_name } = useContext(UseCreatedContex);
 
   const websiteService = new getWebsiteServiceInstance(currentClient_id);
 
@@ -68,7 +68,7 @@ const WebsiteTable = () => {
 
   return (
     <Container className="mt-5">
-      <Button onClick={() => navigate('/addwebsite')} variant="info">
+      <Button onClick={() => navigate(`/websites/addwebsite/${currentClient_name}`)} variant="info">
         Add website
       </Button>
       {successAlert && (

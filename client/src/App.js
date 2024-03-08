@@ -6,6 +6,7 @@ import { ContextProvider } from './contex/setupInformation';
 import './App.css';
 
 import Navbar from './components/navbar/Navbar';
+import PrivateRoute from './components/PrivateRoute';
 import Footer from './components/Footer/Footer';
 import useToken from './Services/useToken';
 
@@ -21,6 +22,7 @@ const WebsiteTable = lazy(() => import('./components/website/WebsiteTablePage'))
 const AddWebsite = lazy(() => import('./components/website/WebsiteAddPage'));
 const BackupPage = lazy(() => import('./components/backup/BackupPage'));
 
+
 function App() {
   const { token, setToken } = useToken();
 
@@ -34,20 +36,48 @@ function App() {
         <Navbar />
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path='/' element={<HomePage />} />
               <Route path='/register/' element={<RegisterPage />} />
+
+
               <Route path='/alerts/:name' element={<AlertPage />} />
               <Route path='/endpoints/:name' element={<EndpointPage />} />
-              <Route path='/events/:name'element={<EventTable />} />
-              <Route path='/websites/:name' element={<WebsiteTable />} />
+
+
+              <Route
+                  path='/events/:name'
+                  element={
+                      <PrivateRoute requiredPermissions={process.env.REACT_APP_ROLE}>
+                          <EventTable />
+                      </PrivateRoute>
+                  }
+              />
+
+              <Route
+                  path='/websites/:name'
+                  element={
+                      <PrivateRoute requiredPermissions={process.env.REACT_APP_ROLE}>
+                          <WebsiteTable />
+                      </PrivateRoute>
+                  }
+              />
+
               <Route path='/backup/:name' element={<BackupPage />} />
-              <Route path='/addwebsite' element={<AddWebsite />} />
+
+              <Route
+                  path='/websites/addwebsite/:name'
+                  element={
+                      <PrivateRoute requiredPermissions={process.env.REACT_APP_ROLE}>
+                          <AddWebsite />
+                      </PrivateRoute>
+                  }
+              />
             </Routes>
           </Suspense>
         <Footer />
       </Router>
     </ContextProvider>
   );
-}
+};
 
 export default App;
