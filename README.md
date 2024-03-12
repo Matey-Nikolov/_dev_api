@@ -1,5 +1,4 @@
-# _dev_api_
-This is a single-page application using [Sophos Central APIs](https://developer.sophos.com/).
+#  _dev_api_
 
 ## Overview
 (Name project - soon) is **SPA** (single page application). The goal of this thesis is to develop a web application that provides providers with a product to **monitor and manage** a group of endpoints (computers or servers). Provide an easy and simple to use **interface** for remote monitoring of computers. Provide an intuitive way to work with the application.
@@ -7,28 +6,32 @@ This is a single-page application using [Sophos Central APIs](https://developer.
 
 # ✨ Features
 - Customers dashboard - general overview of all your customers with their number of machines and their respective alarms.
+- Register client - register new clients.
+- Logout - exit from your account. 
 
 *All the Features described below are for a specific client and accordingly what rights we have the following information.*
 
 - Enpoints table - display detailed information about the machines of a specific customer.
   - If you have **limited access**:
-    - Additional function is display more information on a specific machine.
+    - Display function - more information on a specific machine.
   - If you have **full access**:
-    - Additional functions are to scan, update or display more information on a specific machine.
-- Events table - this feature is available if you have **full access**. Visualizes what has happened on the machines in the last 24 hours. You have the feature to allow banned sites if there is no reason not to.
+    - Additional functions are to scan, update on a specific machine.
+
 - Alerts table - while in events everything is shown, here the problems are reflected, they need to be addressed.
   - If you have **limited access**:
     - Only visualize.
   - If you have **full access**:
     - Visualize. An additional feature is Acknowledge.
-- Websites - this feature is available if you have **full access**. Visualizes the sites we are allowed to access. We are allowed to add new ones or ban from the list.
+
 - Management - allows to make backups of given policies from a corresponding list of policies.
   - If you have **limited access**:
     - Only access to backups.
   - If you have **full access**:
     - Access to backups, reset all policies to base and software downloader.
-- If the user is **admin** - access to register client.
-- Logout
+
+- Features available only if you have **full access**.
+  - Websites - visualizes the sites we are allowed to access. We are allowed to add new ones or ban from the list.
+  - Events table - visualizes what has happened on the machines in the last 24 hours. You have the feature to allow banned sites if there is no reason not to.
 
 ## Resources
 Here are some used for the project.
@@ -40,27 +43,40 @@ Here are some used for the project.
 - [axios](https://axios-http.com/docs/intro) - request api.
 - [Expres.js](https://expressjs.com/) - for server.
 
-## How to setup project
 
-- Clone project.
-- This project have two folders - one client and one server.
+# Project Setup
+This project consists of two parts: a client and a server. Follow the steps below to set up each part.
 
-## How to setup client application folder
+### 1. Server Setup
+The server acts as a bridge between the client application and the rest of the Internet.
 
-In terminal (../client) install this packages:
-- react
-- axios
-- react-bootstrap and bootstrap (for now)
-- firebase
-- react-secure-storage
-- uuid
-- react-router-dom
+### 1.1.  Setup Instructions
+Navigate to the server directory (`../server`) in your terminal and install the following packages:
 
 ```
-npm i package
+npm install cors axios express express-rate-limit express-validator helmet
 ```
 
-For firebase setup create one ```.env.local.``` inside copy this
+### 1.2. Running the Server
+```
+npm run start
+```
+Now server is running on port 3000.
+
+### 2. Client application
+The client application folder hosts the frontend interface that interacts with the server.
+
+### 2.2 Setup Instructions
+
+In terminal (`../client`) install this packages:
+
+```
+npm install react axios react-bootstrap bootstrap firebase react-secure-storage uuid react-router-dom
+```
+
+### 2.3 Create .env.local
+Configure Firebase by creating a .env.local file in the client directory and adding the following variables:
+
 ```
 REACT_APP_FIREBASE_API_KEY=
 REACT_APP_FIREBASE_AUTH_DOMAIN=
@@ -68,25 +84,21 @@ REACT_APP_FIREBASE_PROJECT_ID=
 REACT_APP_FIREBASE_STORAGE_BUCKET=a
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
 REACT_APP_FIREBASE_APP_ID=
+
+REACT_APP_BASE_URL=
+REACT_APP_ROLE=
 ```
-I will give you this configuration.
+Note: You will receive this configuration separately.
+
+### 2.4. Running the client application
 
 To run the client application you must be on port 3001. Otherwise you will not have a connection to the server part.
 ```
 npm start
 ```
-## Server part
 
-In terminal (../server) install this packages:
-- cors
-- axios
-- express
-- express-rate-limit
-- express-validator
-- helmet
+## User Login Information
+To login, use the following credentials:
 
-For the server part of the code, it is used as a correspondence between the client application and the rest of the Internet.
-To run this:
-```
-npm run start
-```
+- **Email:** matey@gmail.com
+- **Password:** 123789
