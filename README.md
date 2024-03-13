@@ -54,7 +54,7 @@ The server acts as a bridge between the client application and the rest of the I
 Navigate to the server directory (`../server`) in your terminal and install the following packages:
 
 ```
-npm install cors axios express express-rate-limit express-validator helmet
+npm install cors axios axios-retry express express-rate-limit express-validator helmet
 ```
 
 ### 1.2. Running the Server
@@ -95,6 +95,29 @@ Note: You will receive this configuration separately.
 To run the client application you must be on port 3001. Otherwise you will not have a connection to the server part.
 ```
 npm start
+```
+
+## Unit testing
+
+### 1. Backend testing
+Navigate to the server directory (`../server`) in your terminal and install the following packages:
+
+```
+npm install mocha chai chai-http nock supertest --save-dev
+```
+When is complete go to (`../server/package.json`) and add or update this:
+```
+  "scripts": {
+    "start": "node server",
+    "test": "mocha './tests/*.test.js'"
+  },
+```
+The test script is configured to run all the **unit tests** located in the tests directory with a - *.test.js extension.
+
+### 1.1 Run the tests
+To run backend tests enter following command:
+```
+npm test
 ```
 
 ## User Login Information
