@@ -67,7 +67,7 @@ describe('Token API tests', () => {
             });
     });
     
-    it('should return 500 on POST /token - API does not approve', (done) => {
+    it('should return 400 on POST /token - API does not approve', (done) => {
 
         nock('https://id.sophos.com')
             .post('/api/v2/oauth2/token')
@@ -82,16 +82,15 @@ describe('Token API tests', () => {
                     client_Id_Db: 'longEnoughClientIdDblongEnoughClientIdDb', 
                     client_secret_Db: 'longEnoughClientSecretDblongEnoughClientSecretDb' 
                 }) 
-            .expect(500)
+            .expect(400)
             .end((err, res) => {
                 if (err){
                     return done(err);
                 }
 
                 expect(res.body.success).to.be.false;
-                expect(res.body.message).to.equal('Error posting data to external URL');
+                expect(res.body.message).to.equal('Error posting data for authentication.');
                 done();
             });
     });
-
 });

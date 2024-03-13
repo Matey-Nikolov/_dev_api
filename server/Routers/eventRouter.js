@@ -11,7 +11,7 @@ getEvents.get(
     [
         query('clientId').isLength({ min: 35 }).trim().escape()
     ],
-    async (req, res) => {       
+    async (req, res) => {
 
         const { clientId } = req.query;
         
@@ -26,7 +26,7 @@ getEvents.get(
         catch(error){
             console.error('Error posting data to external URL:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error get data for events.' });
         };
     }
 );

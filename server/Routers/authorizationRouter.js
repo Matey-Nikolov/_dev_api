@@ -35,9 +35,7 @@ router.get(
             });
 
         } catch (error) {
-            console.error('API request failed:', error.message);
-
-            res.status(500).json({ success: false, message: 'Error processing request' });
+            res.status(400).json({ success: false, message: 'Error processing request authorization.' });
         };
 });
 

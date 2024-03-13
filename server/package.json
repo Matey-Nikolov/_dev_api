@@ -15,7 +15,7 @@
   "type": "module",
   "scripts": {
     "start": "node server",
-    "test": "mocha"
+    "test": "mocha './tests/*.test.js'"
   },
   "version": "1.0.0",
   "keywords": [],

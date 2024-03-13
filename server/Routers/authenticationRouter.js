@@ -34,9 +34,9 @@ router.post(
   
       res.json({ success: true, message: 'Token received successfully', responseData: response.data });
     } catch (error) {
-      console.error('Error posting data to external URL:', error.message);
+      // console.error('Error posting data to external URL:', error.message);
 
-      res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+      res.status(400).json({ success: false, message: 'Error posting data for authentication.' });
     };
   
 });
