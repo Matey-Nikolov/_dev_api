@@ -1,0 +1,44 @@
+{
+    "items": [
+        {
+            "id": "1",
+            "value": "C:\\Program Files (x86)\\Microsoft Visual Studio\\",
+            "type": "path",
+            "scanMode": "onDemandAndOnAccess",
+            "lockedByManagingAccount": false
+        },
+        {
+            "id": "2",
+            "value": "C:\\ProgramData\\Microsoft Visual Studio\\",
+            "type": "path",
+            "scanMode": "onDemandAndOnAccess",
+            "lockedByManagingAccount": false
+        },
+        {
+            "id": "3",
+            "value": "C:\\Python\\",
+            "type": "path",
+            "scanMode": "onDemandAndOnAccess",
+            "lockedByManagingAccount": false
+        },
+        {
+            "id": "4",
+            "value": "C:\\samples\\",
+            "type": "path",
+            "scanMode": "onDemandAndOnAccess",
+            "lockedByManagingAccount": false
+        },
+        {
+            "id": "6",
+            "value": "**\\Test Files\\",
+            "type": "path",
+            "scanMode": "onDemandAndOnAccess",
+            "lockedByManagingAccount": false
+        }
+    ],
+    "pages": {
+        "current": 1,
+        "size": 50,
+        "maxSize": 100
+    }
+}

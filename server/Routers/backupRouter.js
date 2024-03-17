@@ -1,4 +1,4 @@
-import { express, query } from '../globalImports.js';
+import { express, query, validationResult } from '../globalImports.js';
 
 import createFileForBackup from '../help/createFile.js';
 
@@ -14,11 +14,24 @@ let pathFromURL = ``;
 router.get(
     '/items',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape(),
-        query('fileName').isLength({ min: 0 }).trim().escape(),
-        query('folderName').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('fileName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('folderName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+
+        query().custom((value, { req }) => {
+            if (req.query.clientId.trim() === '' || req.query.fileName.trim() === '' || req.query.folderName.trim() === '') {
+                throw new Error('Query parameters cannot be empty');
+            };
+            return true;
+        })
     ],
+
     async (req, res) => {
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         pathFromURL = `endpoint/v1/settings/allowed-items?pageTotal=true`;
 
@@ -40,9 +53,9 @@ router.get(
             );
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error to create backups for items:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(400).json({ success: false, message: 'Error to create backups for items' });
         };
     }
 );
@@ -50,11 +63,24 @@ router.get(
 router.get(
     '/items/blocks',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape(),
-        query('fileName').isLength({ min: 0 }).trim().escape(),
-        query('folderName').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('fileName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('folderName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+
+        query().custom((value, { req }) => {
+            if (req.query.clientId.trim() === '' || req.query.fileName.trim() === '' || req.query.folderName.trim() === '') {
+                throw new Error('Query parameters cannot be empty');
+            };
+            return true;
+        })
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
+
         pathFromURL = `/endpoint/v1/settings/blocked-items?pageSize=50&pageTotal=true`;
 
         const { clientId, fileName, folderName } = req.query;
@@ -75,9 +101,9 @@ router.get(
             );
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error to create backups for block items:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error to create backups for block items' });
         };
     }
 );
@@ -85,11 +111,23 @@ router.get(
 router.get(
     '/policies',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape(),
-        query('fileName').isLength({ min: 0 }).trim().escape(),
-        query('folderName').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('fileName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('folderName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        
+        query().custom((value, { req }) => {
+            if (req.query.clientId.trim() === '' || req.query.fileName.trim() === '' || req.query.folderName.trim() === '') {
+                throw new Error('Query parameters cannot be empty');
+            };
+            return true;
+        })
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         pathFromURL = `/endpoint/v1/policies?pageSize=100&pageTotal=true`;
 
@@ -111,9 +149,9 @@ router.get(
             );
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error to create backups for policies:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error to create backups for policies' });
         };
     }
 );
@@ -121,11 +159,23 @@ router.get(
 router.get(
     '/exclusions/scan',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape(),
-        query('fileName').isLength({ min: 0 }).trim().escape(),
-        query('folderName').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('fileName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('folderName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+
+        query().custom((value, { req }) => {
+            if (req.query.clientId.trim() === '' || req.query.fileName.trim() === '' || req.query.folderName.trim() === '') {
+                throw new Error('Query parameters cannot be empty');
+            }
+            return true;
+        })
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         pathFromURL = `endpoint/v1/settings/exclusions/scanning?pageSize=50`;
 
@@ -147,9 +197,9 @@ router.get(
             );
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error to create backups for exclusions scan', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error to create backups for exclusions scan' });
         };
     }
 );
@@ -157,9 +207,16 @@ router.get(
 router.get(
     '/exclusions/download',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape(),
-        query('fileName').isLength({ min: 0 }).trim().escape(),
-        query('folderName').isLength({ min: 0 }).trim().escape()
+        query('clientId').isLength({ min: 35 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('fileName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+        query('folderName').isLength({ min: 3 }).withMessage('Query parameters cannot be empty').trim().escape(),
+       
+        query().custom((value, { req }) => {
+            if (req.query.clientId.trim() === '' || req.query.fileName.trim() === '' || req.query.folderName.trim() === '') {
+                throw new Error('Query parameters cannot be empty');
+            }
+            return true;
+        })
     ],
     async (req, res) => {
 
@@ -183,9 +240,9 @@ router.get(
             );
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error to get data for exclusions download:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error to get data for exclusions download' });
         };
     }
 );
@@ -213,9 +270,9 @@ router.get(
             );
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error to reset to base policies', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error to reset to base policies' });
         };
     }
 );

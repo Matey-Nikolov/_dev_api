@@ -1,0 +1,54 @@
+{
+    "items": [
+        {
+            "id": "12",
+            "createdAt": "2022-06-17T14:13:07.392Z",
+            "updatedAt": "2022-06-17T14:13:07.392Z",
+            "properties": {
+                "path": "C:\\Users\\User\\Desktop\\ransim\\SimulatorSetup.exe"
+            },
+            "comment": "",
+            "type": "path",
+            "originPerson": {
+                "id": "7",
+                "name": "WRK\\user"
+            }
+        },
+        {
+            "id": "13",
+            "createdAt": "2020-01-09T13:47:52.005Z",
+            "updatedAt": "2022-01-05T08:57:32.597Z",
+            "properties": {
+                "sha256": "30f3290f779991c01a528asdd11fdcqwe2dee103ce195d935510610d4bbecb1c"
+            },
+            "comment": "THIS IS COMMENT FROM SOPHOS CENTRAL API NEW API",
+            "type": "sha256",
+            "originPerson": {
+                "id": "a55d8be9-5e9d-46a5-92a1-f87cab02d55e",
+                "name": "LAB\\Administrator"
+            },
+            "originEndpoint": {
+                "id": "2"
+            }
+        },
+        {
+            "id": "14",
+            "createdAt": "2019-12-03T10:04:54.327Z",
+            "updatedAt": "2019-12-03T10:04:54.327Z",
+            "properties": {
+                "sha256": "30f3290ef779991c01a52972d11fdcqwe2dee103ce195d935510610d4bbecb1c"
+            },
+            "comment": "",
+            "type": "sha256",
+            "originPerson": {
+                "id": "1",
+                "name": "CORP\\Administrator"
+            }
+        }
+    ],
+    "pages": {
+        "current": 1,
+        "size": 50,
+        "maxSize": 100
+    }
+}

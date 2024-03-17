@@ -1,0 +1,90 @@
+{
+    "items": [
+        {
+            "id": "1",
+            "name": "FTS",
+            "type": "agent-updating",
+            "lockedByManagingAccount": false,
+            "priority": 1,
+            "tenant": {
+                "id": "1"
+            },
+            "enabled": false,
+            "settings": {
+                "endpoint.agent-updating.dont-use-update-caches.enabled": {
+                    "value": false
+                },
+                "endpoint.agent-updating.scheduled-updates.day": {
+                    "unit": "day",
+                    "value": 3
+                },
+                "endpoint.agent-updating.scheduled-updates.enabled": {
+                    "value": false
+                },
+                "endpoint.agent-updating.scheduled-updates.time": {
+                    "format": "hourMinute",
+                    "value": "14:00"
+                },
+                "endpoint.agent-updating.software-package.mac": {
+                    "value": "recommended"
+                },
+                "endpoint.agent-updating.software-package.windows": {
+                    "value": "45-8697-45"
+                }
+            },
+            "appliesTo": {
+                "endpoints": [
+                    "62be3b682",
+                    "fd8ebf16"
+                ],
+                "endpointGroups": []
+            },
+            "createdAt": "2024-03-07T11:54:33.665Z",
+            "updatedAt": "2024-03-17T09:10:51.739Z"
+        },
+        {
+            "id": "2",
+            "name": "Base Policy",
+            "type": "agent-updating",
+            "lockedByManagingAccount": false,
+            "priority": 0,
+            "tenant": {
+                "id": "2"
+            },
+            "enabled": true,
+            "settings": {
+                "endpoint.agent-updating.dont-use-update-caches.enabled": {
+                    "value": false
+                },
+                "endpoint.agent-updating.scheduled-updates.day": {
+                    "unit": "day",
+                    "value": 3
+                },
+                "endpoint.agent-updating.scheduled-updates.enabled": {
+                    "value": false
+                },
+                "endpoint.agent-updating.scheduled-updates.time": {
+                    "format": "hourMinute",
+                    "value": "14:00"
+                },
+                "endpoint.agent-updating.software-package.mac": {
+                    "value": "recommended"
+                },
+                "endpoint.agent-updating.software-package.windows": {
+                    "value": "recommended"
+                }
+            },
+            "appliesTo": {
+                "userGroups": [],
+                "users": []
+            },
+            "createdAt": "2018-09-18T09:07:22.488Z",
+            "updatedAt": "2024-02-26T17:10:50.032Z"
+        }
+    ],
+    "pages": {
+        "current": 1,
+        "size": 50,
+        "maxSize": 200
+    }
+}
