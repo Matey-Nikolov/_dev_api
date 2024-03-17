@@ -1,0 +1,211 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "Gateway 'GW_RBVPN_LAB_010' is Down",
+      "groupKey": "jjops",
+      "managedAgent": {
+        "id": "123",
+        "type": "utm",
+        "name": "ManagedUTM"
+      },
+      "product": "firewall",
+      "raisedAt": "2024-01-09T11:17:59.346Z",
+      "severity": "high",
+      "tenant": {
+        "id": "456",
+        "name": "Test mock 1"
+      },
+      "type": "Event::Firewall::FirewallGatewayDown"
+    },
+    {
+      "id": "2",
+      "allowedActions": ["acknowledge"],
+      "category": "security",
+      "description": "Intrusion Detected on Server",
+      "groupKey": "ops_team",
+      "managedAgent": {
+        "id": "789",
+        "type": "server",
+        "name": "Server1"
+      },
+      "product": "IDS/IPS",
+      "raisedAt": "2024-01-10T14:22:30.123Z",
+      "severity": "critical",
+      "tenant": {
+        "id": "101",
+        "name": "Test mock 2"
+      },
+      "type": "Event::IDS::IntrusionDetected"
+    },
+    {
+      "id": "3",
+      "allowedActions": ["acknowledge"],
+      "category": "performance",
+      "description": "High CPU Usage on Database Server",
+      "groupKey": "db_team",
+      "managedAgent": {
+        "id": "345",
+        "type": "database",
+        "name": "DB_Server1"
+      },
+      "product": "monitoring",
+      "raisedAt": "2024-01-11T08:45:10.567Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "202",
+        "name": "Test mock 3"
+      },
+      "type": "Event::Performance::HighCPUUsage"
+    },
+    {
+      "id": "4",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "VPN Tunnel 'SiteA-SiteB' Disconnected",
+      "groupKey": "net_eng",
+      "managedAgent": {
+        "id": "567",
+        "type": "vpn",
+        "name": "VPN_GW1"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-12T09:30:45.890Z",
+      "severity": "high",
+      "tenant": {
+        "id": "303",
+        "name": "Test mock 4"
+      },
+      "type": "Event::Network::VPNTunnelDisconnected"
+    },
+    {
+      "id": "5",
+      "allowedActions": ["acknowledge"],
+      "category": "security",
+      "description": "Unauthorized Access Attempt Detected",
+      "groupKey": "sec_team",
+      "managedAgent": {
+        "id": "901",
+        "type": "firewall",
+        "name": "Firewall1"
+      },
+      "product": "security",
+      "raisedAt": "2024-01-13T13:55:20.234Z",
+      "severity": "critical",
+      "tenant": {
+        "id": "404",
+        "name": "Test mock 5"
+      },
+      "type": "Event::Security::UnauthorizedAccess"
+    },
+    {
+      "id": "6",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "Router 'RTR_Site1' Interface Down",
+      "groupKey": "net_ops",
+      "managedAgent": {
+        "id": "111",
+        "type": "router",
+        "name": "Router1"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-14T10:10:15.678Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "505",
+        "name": "Test mock 6"
+      },
+      "type": "Event::Network::RouterInterfaceDown"
+    },
+    {
+      "id": "7",
+      "allowedActions": ["acknowledge"],
+      "category": "performance",
+      "description": "Disk Space Utilization Above Threshold",
+      "groupKey": "sys_admins",
+      "managedAgent": {
+        "id": "222",
+        "type": "server",
+        "name": "Server2"
+      },
+      "product": "monitoring",
+      "raisedAt": "2024-01-15T11:25:35.789Z",
+      "severity": "high",
+      "tenant": {
+        "id": "606",
+        "name": "Test mock 7"
+      },
+      "type": "Event::Performance::DiskSpaceUtilization"
+    },
+    {
+      "id": "8",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "DNS Server Unreachable",
+      "groupKey": "net_ops",
+      "managedAgent": {
+        "id": "333",
+        "type": "dns",
+        "name": "DNS_Server1"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-16T09:40:50.123Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "707",
+        "name": "Test mock 8"
+      },
+      "type": "Event::Network::DNSServerUnreachable"
+    },
+    {
+      "id": "9",
+      "allowedActions": ["acknowledge"],
+      "category": "security",
+      "description": "Malware Detected on Workstation",
+      "groupKey": "sec_team",
+      "managedAgent": {
+        "id": "444",
+        "type": "endpoint",
+        "name": "Workstation1"
+      },
+      "product": "antivirus",
+      "raisedAt": "2024-01-17T15:15:10.456Z",
+      "severity": "high",
+      "tenant": {
+        "id": "808",
+        "name": "Test mock 9"
+      },
+      "type": "Event::Security::MalwareDetected"
+    },
+    {
+      "id": "10",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "Internet Link 'ISP1' Degraded",
+      "groupKey": "net_eng",
+      "managedAgent": {
+        "id": "555",
+        "type": "router",
+        "name": "Router2"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-18T08:20:30.789Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "909",
+        "name": "Test mock 10"
+      },
+      "type": "Event::Network::InternetLinkDegraded"
+    }
+  ],
+  "pages": {
+    "nextKey": "2002259679199",
+    "size": 10,
+    "total": 2,
+    "items": 12,
+    "maxSize": 1000
+  }
+}  

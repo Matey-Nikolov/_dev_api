@@ -6,6 +6,10 @@ axiosRetry(axios, {
     retryDelay: (...arg) => axiosRetry.exponentialDelay(...arg, 3000),
     retryCondition(error) {
 
+        if (!error.response) {
+            return false;
+        };
+
         switch (error.response.status) {
             case 429:
             case 500:

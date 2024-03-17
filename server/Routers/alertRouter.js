@@ -1,4 +1,4 @@
-import { express, query } from '../globalImports.js';
+import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 import { pageSolution } from '.././help/pageSolution.js';
@@ -16,9 +16,14 @@ router.get(
     [
         query('clientId').isLength({ min: 35 }).trim().escape(),
         query('alertId').isLength({ min: 35 }).trim().escape(),
-        query('action').isLength({ min: 35 }).trim().escape()
+        query('action').isLength({ min: 10 }).trim().escape()
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         const { clientId, alertId, action } = req.query;
 
@@ -50,6 +55,11 @@ router.get(
         query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         const { clientId } = req.query;
 
@@ -59,7 +69,7 @@ router.get(
 
         const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
 
-        try{       
+        try{
             const allAlerts = await pageSolution(apiAlert);
 
             res.json(allAlerts);

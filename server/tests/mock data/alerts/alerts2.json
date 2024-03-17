@@ -1,0 +1,210 @@
+{
+  "items": [
+    {
+      "id": "11",
+      "allowedActions": ["acknowledge"],
+      "category": "performance",
+      "description": "Memory Usage Spike on Application Server",
+      "groupKey": "app_team",
+      "managedAgent": {
+        "id": "777",
+        "type": "server",
+        "name": "AppServer1"
+      },
+      "product": "monitoring",
+      "raisedAt": "2024-01-19T12:35:40.234Z",
+      "severity": "high",
+      "tenant": {
+        "id": "1010",
+        "name": "Test mock 11"
+      },
+      "type": "Event::Performance::MemoryUsageSpike"
+    },
+    {
+      "id": "12",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "WAN Link 'ISP2' Flapping",
+      "groupKey": "net_eng",
+      "managedAgent": {
+        "id": "666",
+        "type": "router",
+        "name": "Router3"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-20T09:55:50.567Z",
+      "severity": "high",
+      "tenant": {
+        "id": "1111",
+        "name": "Test mock 12"
+      },
+      "type": "Event::Network::WANLinkFlapping"
+    },
+    {
+      "id": "13",
+      "allowedActions": ["acknowledge"],
+      "category": "security",
+      "description": "DDoS Attack Detected",
+      "groupKey": "sec_team",
+      "managedAgent": {
+        "id": "888",
+        "type": "firewall",
+        "name": "Firewall2"
+      },
+      "product": "security",
+      "raisedAt": "2024-01-21T14:40:10.890Z",
+      "severity": "critical",
+      "tenant": {
+        "id": "1212",
+        "name": "Test mock 13"
+      },
+      "type": "Event::Security::DDoSAttackDetected"
+    },
+    {
+      "id": "14",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "DNS Resolution Failure",
+      "groupKey": "net_ops",
+      "managedAgent": {
+        "id": "999",
+        "type": "dns",
+        "name": "DNS_Server2"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-22T11:15:20.123Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "1313",
+        "name": "Test mock 14"
+      },
+      "type": "Event::Network::DNSResolutionFailure"
+    },
+    {
+      "id": "15",
+      "allowedActions": ["acknowledge"],
+      "category": "performance",
+      "description": "Database Query Latency Above Threshold",
+      "groupKey": "db_team",
+      "managedAgent": {
+        "id": "333",
+        "type": "database",
+        "name": "DB_Server2"
+      },
+      "product": "monitoring",
+      "raisedAt": "2024-01-23T10:30:30.456Z",
+      "severity": "high",
+      "tenant": {
+        "id": "1414",
+        "name": "Test mock 15"
+      },
+      "type": "Event::Performance::DatabaseQueryLatency"
+    },
+    {
+      "id": "16",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "LAN Link 'Switch1' Down",
+      "groupKey": "net_eng",
+      "managedAgent": {
+        "id": "777",
+        "type": "switch",
+        "name": "Switch1"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-24T09:45:45.789Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "1515",
+        "name": "Test mock 16"
+      },
+      "type": "Event::Network::LANLinkDown"
+    },
+    {
+      "id": "17",
+      "allowedActions": ["acknowledge"],
+      "category": "security",
+      "description": "Suspicious Activity Detected",
+      "groupKey": "sec_team",
+      "managedAgent": {
+        "id": "666",
+        "type": "endpoint",
+        "name": "Workstation2"
+      },
+      "product": "security",
+      "raisedAt": "2024-01-25T14:55:55.123Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "1616",
+        "name": "Test mock 17"
+      },
+      "type": "Event::Security::SuspiciousActivityDetected"
+    },
+    {
+      "id": "18",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "VoIP Call Quality Degradation",
+      "groupKey": "net_eng",
+      "managedAgent": {
+        "id": "555",
+        "type": "voip",
+        "name": "VoIP_GW1"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-26T12:10:10.234Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "1717",
+        "name": "Test mock 18"
+      },
+      "type": "Event::Network::VoIPCallQualityDegradation"
+    },
+    {
+      "id": "19",
+      "allowedActions": ["acknowledge"],
+      "category": "security",
+      "description": "Brute Force Attack Detected",
+      "groupKey": "sec_team",
+      "managedAgent": {
+        "id": "777",
+        "type": "firewall",
+        "name": "Firewall3"
+      },
+      "product": "security",
+      "raisedAt": "2024-01-27T11:30:30.567Z",
+      "severity": "high",
+      "tenant": {
+        "id": "1818",
+        "name": "Test mock 19"
+      },
+      "type": "Event::Security::BruteForceAttackDetected"
+    },
+    {
+      "id": "20",
+      "allowedActions": ["acknowledge"],
+      "category": "connectivity",
+      "description": "Remote Site Link Down",
+      "groupKey": "net_eng",
+      "managedAgent": {
+        "id": "999",
+        "type": "router",
+        "name": "Router4"
+      },
+      "product": "network",
+      "raisedAt": "2024-01-28T10:45:45.890Z",
+      "severity": "medium",
+      "tenant": {
+        "id": "1919",
+        "name": "Test mock 20"
+      },
+      "type": "Event::Network::RemoteSiteLinkDown"
+    }
+  ],
+  "pages": {
+    "size": 10,
+    "total": 2,
+    "items": 12,
+    "maxSize": 1000
+  }
+}  
