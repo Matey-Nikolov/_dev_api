@@ -3,7 +3,6 @@ import { express, query, validationResult } from '../globalImports.js';
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
 
 const router = express.Router();
-const api = getApiConfigurationInstance('owner');
 
 let pathFromURL = ``;
 
@@ -13,6 +12,12 @@ router.get(
         query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
+
         pathFromURL = `/endpoint/v1/settings/web-control/local-sites?pageTotal=true`;
 
         const { clientId } = req.query;
@@ -26,9 +31,9 @@ router.get(
             res.json(allWebsites.data);
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error get information for websites:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(404).json({ success: false, message: 'Error get information for websites' });
         };
     }
 );
