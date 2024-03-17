@@ -33,9 +33,9 @@ router.get(
             res.json(software.data);
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error get software:', error.message);
 
-            res.status(500).json({ success: false, message: 'Error getting data to external URL' });
+            res.status(400).json({ success: false, message: 'Error get software.' });
         };
     }
 );
@@ -128,9 +128,9 @@ router.get(
             res.json(details.data);
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error get details for current endpoint:', error.message);
   
-            res.status(500).json({ success: false, message: 'Error posting data to external URL' });
+            res.status(500).json({ success: false, message: 'Error get details for current endpoint:' });
         };
     }
 );
@@ -141,15 +141,20 @@ router.get(
         query('clientId').isLength({ min: 35 }).trim().escape()
     ],
     async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        };
 
         const { clientId } = req.query;
         
         let api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `endpoint/v1/endpoints?pageSize=4&sort=lastSeenAt:desc&view=full`;
+        pathFromURL = `endpoint/v1/endpoints?sort=lastSeenAt:desc&view=full`;
 
         const addParams = {
-            "pageSize": 2
+            "pageSize": 4
         };
 
         const apiAllEndpoints = api.apiGetConfiguration(pathFromURL, addParams);
@@ -160,9 +165,9 @@ router.get(
             res.json(endpoints);
         }
         catch(error){
-            console.error('Error posting data to external URL:', error.message);
+            console.error('Error get data from enpoint:', error.message);
 
-            res.status(500).json({ success: false, message: 'Error getting data to external URL' });
+            res.status(400).json({ success: false, message: 'Error get data for endpoints.' });
         };
     }
 );

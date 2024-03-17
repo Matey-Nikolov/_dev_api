@@ -1,0 +1,111 @@
+{
+    "id": "345",
+    "type": "computer",
+    "tenant": {
+        "id": "3452"
+    },
+    "hostname": "Test-PC1",
+    "health": {
+        "overall": "suspicious",
+        "threats": {
+            "status": "good"
+        },
+        "services": {
+            "status": "good",
+            "serviceDetails": [
+                {
+                    "name": "HitmanPro.Alert service",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos Endpoint Defense",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos Endpoint Defense Service",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos File Scanner",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos File Scanner Service",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos MCS Agent",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos MCS Client",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos NetFilter",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos Network Threat Protection",
+                    "status": "running"
+                },
+                {
+                    "name": "Sophos System Protection Service",
+                    "status": "running"
+                }
+            ]
+        }
+    },
+    "os": {
+        "isServer": false,
+        "platform": "windows",
+        "name": "Windows 10 Enterprise Evaluation",
+        "majorVersion": 10,
+        "minorVersion": 0,
+        "build": 19044
+    },
+    "ipv4Addresses": [
+        ""
+    ],
+    "macAddresses": [
+        ""
+    ],
+    "associatedPerson": {
+        "name": "Test-PC1\\user",
+        "viaLogin": "TEST-PC1\\user"
+    },
+    "tamperProtectionEnabled": true,
+    "assignedProducts": [
+        {
+            "code": "endpointProtection",
+            "version": "10.8.11.4",
+            "status": "installed"
+        },
+        {
+            "code": "deviceEncryption",
+            "version": "2022.3.0.21",
+            "status": "notInstalled"
+        },
+        {
+            "code": "interceptX",
+            "version": "2022.1.3.7",
+            "status": "installed"
+        },
+        {
+            "code": "coreAgent",
+            "version": "2022.4.3.1",
+            "status": "installed"
+        },
+        {
+            "code": "xdr",
+            "version": "2022.4.3.1",
+            "status": "installed"
+        },
+        {
+            "code": "ztna",
+            "version": "2022.4.3.1",
+            "status": "notInstalled"
+        }
+    ],
+    "lastSeenAt": "2023-11-03T09:10:54.041Z"
+}

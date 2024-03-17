@@ -1,0 +1,61 @@
+{
+    "tenant": {
+        "id": "45"
+    },
+    "licensedProducts": [
+        "endpointProtection",
+        "ztna",
+        "interceptX",
+        "deviceEncryption",
+        "xdr"
+    ],
+    "installers": [
+        {
+            "productName": "Sophos Endpoint Protection",
+            "platform": "windows",
+            "type": "computer",
+            "supportedProducts": [
+                "endpointProtection",
+                "ztna",
+                "xdr",
+                "deviceEncryption",
+                "interceptX"
+            ],
+            "downloadUrl": "https://example"
+        },
+        {
+            "productName": "Sophos Endpoint Protection",
+            "platform": "windows",
+            "type": "server",
+            "supportedProducts": [
+                "endpointProtection",
+                "xdr",
+                "interceptX"
+            ],
+            "downloadUrl": "https://example"
+        },
+        {
+            "productName": "Sophos Server Protection Linux",
+            "platform": "linux",
+            "type": "server",
+            "supportedProducts": [
+                "endpointProtection",
+                "xdr"
+            ],
+            "downloadUrl":"https://example"
+        },
+        {
+            "productName": "Sophos Endpoint Protection",
+            "platform": "macOS",
+            "type": "computer",
+            "supportedProducts": [
+                "endpointProtection",
+                "ztna",
+                "xdr",
+                "deviceEncryption",
+                "interceptX"
+            ],
+            "downloadUrl": "https://example"
+        }
+    ]
+}
