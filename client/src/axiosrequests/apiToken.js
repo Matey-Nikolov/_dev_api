@@ -5,7 +5,9 @@ export const postToken = async (useHookData) => {
     const response = await api.post('/token', useHookData);
     return response.data.responseData.access_token;
   } catch (error) {
-    console.error('Error posting data:', error);
-    throw error; 
+    // console.error('Error posting data:', error);
+    // throw error; 
+
+    return true;
   }
 };

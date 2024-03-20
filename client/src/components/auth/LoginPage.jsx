@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-
-import './css/LoginPage.css'
-
+import './css/LoginPage.css';
 import { AuthLogin } from '../../Services/loginService';
 
 class LoginPage extends React.Component {
@@ -21,37 +18,36 @@ class LoginPage extends React.Component {
     {
       email: '',
       password: '',
-      error: '',
+      error: ''
     };
 
-    this.infoUser = 
-    {
-      'client_Id_Db' : '',
-      'client_secret_Db': ''
+    this.infoUser = {
+      client_Id_Db: '',
+      client_secret_Db: ''
     };
 
     this.getToken = false;
   };
 
   validate() {
-    if(this.state.email === '' && this.state.password  === ''){
-      this.setState({ error: 'Enter username and password!' });
-      return;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!this.state.email.match(emailRegex)) {
+      this.setState({ error: 'Enter a valid email address!' });
+
+      return false;
     };
 
-    if (!this.state.email) {
-      this.setState({ error: 'Enter email!' });
-      return;
-    }
-    else if(!this.state.password){
+    if (!this.state.password) {
       this.setState({ error: 'Enter password!' });
-      return;
+
+      return false;
     };
 
     return true;
   };
 
-  async signInForToken(instanceAuthClass){
+  async signInForToken(instanceAuthClass) {
     const accessToken = await instanceAuthClass.signIn();
 
     if (accessToken === undefined || accessToken === '' ||  accessToken === false) {
@@ -93,54 +89,35 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <Container className="full-screen">
-        <Row className="justify-content-center align-items-center vh-100">
-
-          <Card className="shadow-lg rounded-lg mt-3 card-background">
-            <Card.Body className="p-3 text-center">
-              <h3 className="font-weight-light text-uppercase">Website information</h3>
-              <p className="font-weight-light mb-3">
-                The goal of this thesis is to develop a web application that provides providers with a product to monitor and manage a group of endpoints (e.g., computers or servers). Provide an easy and simple to use interface for remote monitoring of computers. Provide an intuitive way to work with the application.
-              </p>
-            </Card.Body>
-          </Card>
-
+      <Container>
+        <Row className="justify-content-center align-items-center mt-5">
           <Col xs={10} md={6} lg={4}>
-            <Card className="shadow-lg rounded-lg mt-3 card-background">
-              <Card.Body className="p-3 text-center">
-                <h3 className="font-weight-light text-uppercase">Login</h3>
-                <p className="font-weight-light mb-3">Please enter your email and password!</p>
-
-                <Form onSubmit={this.handleSignIn}>
-                  <Form.Group controlId="email">
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control
-                      type="email"
-                      value={this.state.email}
-                      placeholder="Enter your email"
-                      onChange={(e) => this.setState({ email: e.target.value })}
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="password">
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control
-                      type="password"
-                      value={this.state.password}
-                      placeholder="Enter your password"
-                      onChange={(e) => this.setState({ password: e.target.value })}
-                    />
-                  </Form.Group>
-
-                  <p></p>
-
-                  <Button variant="primary" type="submit">
-                    Login
-                  </Button>
-                </Form>
-
-                {this.state.error && <div className="mt-4 mb-0 text-danger">{this.state.error}</div>}
-              </Card.Body>
+            <Card className="shadow rounded-lg p-4">
+              <h3 className="text-uppercase mb-4 text-center">Login</h3>
+              <Form onSubmit={this.handleSignIn}>
+                <Form.Group controlId="email">
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={this.state.email}
+                    placeholder="Enter your email"
+                    onChange={(e) => this.setState({ email: e.target.value })}
+                  />
+                </Form.Group>
+                <Form.Group controlId="password">
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={this.state.password}
+                    placeholder="Enter your password"
+                    onChange={(e) => this.setState({ password: e.target.value })}
+                  />
+                </Form.Group>
+                <Button variant="primary" type="submit" className="w-100 mt-3">
+                  Login
+                </Button>
+              </Form>
+              {this.state.error && <div className="mt-3 text-danger text-center">{this.state.error}</div>}
             </Card>
           </Col>
         </Row>

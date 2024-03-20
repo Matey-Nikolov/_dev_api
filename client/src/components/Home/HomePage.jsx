@@ -47,43 +47,51 @@ const HomePage = () => {
       )}
 
       <Table striped bordered hover className="my-cool-table">
-          <thead>
-              <tr>
-                  <th rowSpan="2">Clients names</th>
-                  <th className='text-center' rowSpan="2">Access</th>
-                  <th className='text-center' colSpan="3">Alerts</th>
-                  <th className='text-center' colSpan="2">Endpoints</th>
-              </tr>
-              <tr>
-                  <th className='text-center'><span className="badge bg-danger">High</span></th>
-                  <th className='text-center'><span className="badge bg-warning">Medium</span></th>
-                  <th className='text-center'><span className="badge bg-success">Low</span></th>
-                  <th className='text-center'>Computer</th>
-                  <th className='text-center'>Server</th>
-              </tr>
-          </thead>
+        <thead>
+          <tr>
+            <th rowSpan="2">Clients names</th>
+            <th className='text-center' rowSpan="2">Access</th>
+            <th className='text-center' colSpan="3">Alerts</th>
+            <th className='text-center' colSpan="2">Endpoints</th>
+          </tr>
+          <tr>
+            <th className='text-center'><span className="badge bg-danger">High</span></th>
+            <th className='text-center'><span className="badge bg-warning">Medium</span></th>
+            <th className='text-center'><span className="badge bg-success">Low</span></th>
+            <th className='text-center'>Computer</th>
+            <th className='text-center'>Server</th>
+          </tr>
+        </thead>
           <tbody>
-              {useClientsInformation.map((client) => (
-                  <tr key={client.id}>
+            {useClientsInformation.map((client) => (
+              <tr key={client.id}>
+                {client.unauthorized ? (
+                  <td colSpan="7" className='text-center'>
+                    Unauthorized client: {client.clientName}
+                  </td>
+                ) : (
+                  <>
                     <td className='text-left'>
                       <button onClick={() => handleClickedClientName(client)}>
                         {client.clientName}
                       </button>
                     </td>
-
+    
                     {client.role === process.env.REACT_APP_ROLE ? (
                       <td className='text-center'>Full</td>
                     ) : (
                       <td className='text-center'>Limited</td>
                     )}
-                                                  
+        
                     <td className='text-center'>{client.alerts.items.filter(x => x.severity === 'high').length}</td>
                     <td className='text-center'>{client.alerts.items.filter(x => x.severity === 'medium').length}</td>
                     <td className='text-center'>{client.alerts.items.filter(x => x.severity === 'low').length}</td>
                     <td className='text-center'>{client.endpoints.filter(x => x.type === 'computer').length}</td>
                     <td className='text-center'>{client.endpoints.filter(x => x.type === 'server').length}</td>
-                  </tr>
-              ))}
+                  </>
+                )}
+              </tr>
+            ))}
           </tbody>
       </Table>
     </Container>

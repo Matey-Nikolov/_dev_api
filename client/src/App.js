@@ -25,6 +25,7 @@ const BackupPage = lazy(() => import('./components/backup/BackupPage'));
 
 function App() {
   const { token, setToken } = useToken();
+  const role = process.env.REACT_APP_ROLE;
 
   if (!token) {
     return <LoginPage setToken={setToken} />;
@@ -47,7 +48,7 @@ function App() {
               <Route
                   path='/events/:name'
                   element={
-                      <PrivateRoute requiredPermissions={process.env.REACT_APP_ROLE}>
+                      <PrivateRoute requiredPermissions={role}>
                           <EventTable />
                       </PrivateRoute>
                   }
@@ -56,7 +57,7 @@ function App() {
               <Route
                   path='/websites/:name'
                   element={
-                      <PrivateRoute requiredPermissions={process.env.REACT_APP_ROLE}>
+                      <PrivateRoute requiredPermissions={role}>
                           <WebsiteTable />
                       </PrivateRoute>
                   }
@@ -67,7 +68,7 @@ function App() {
               <Route
                   path='/websites/addwebsite/:name'
                   element={
-                      <PrivateRoute requiredPermissions={process.env.REACT_APP_ROLE}>
+                      <PrivateRoute requiredPermissions={role}>
                           <AddWebsite />
                       </PrivateRoute>
                   }

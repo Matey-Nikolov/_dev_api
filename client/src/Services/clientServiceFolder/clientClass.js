@@ -29,6 +29,8 @@ class Client {
         this.events = [];
         this.websites = [];
         this.software = [];
+
+        this.unauthorized = false;
     };
 
     async setupEnvironment() {
@@ -37,8 +39,14 @@ class Client {
             return;
         };
 
+        const setAuthToken = await postToken(this.#clientInfo);
+
+        if(setAuthToken === true){
+            this.unauthorized = true;
+            return;
+        };
+
         try {
-            const setAuthToken = await postToken(this.#clientInfo);
             this.#tenantIdAndDataRegion = await whoIAm(setAuthToken);
 
             await setupInformation(setAuthToken, this.#tenantIdAndDataRegion.id, this.uniqueId, this.#tenantIdAndDataRegion.urlDataRegion);

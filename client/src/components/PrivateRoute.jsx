@@ -10,7 +10,6 @@ function PrivateRoute({ children, requiredPermissions }) {
         setRole(currentClient_role);
     }, [currentClient_role]);
 
-    console.log(useRole);
     if (useRole !== requiredPermissions) {
         return <Navigate to="/" />;
     };
