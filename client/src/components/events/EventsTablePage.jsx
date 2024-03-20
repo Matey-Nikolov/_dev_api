@@ -39,25 +39,28 @@ const EventTable = () => {
     setEvents(updateEvents);
   };
   
-  const filteredDataEvents = useMemo(() => {
-    if (!useAllEvents) {
-      return [];
-    };
-  
-    if (showWebControlViolation) {
-      return useAllEvents.filter(value => filterRegex.test(value.type) && filterRegex.exec(value.type)[2] === 'WebControlViolation');
-    } else {
-      return useAllEvents;
-    };
-  
-  }, [useAllEvents, showWebControlViolation]);
-  
   const {
     currentPage,
     itemsPerPage,
     setCurrentPage,
     getPaginatedItems,
   } = usePagination(1, 6);
+
+  const filteredDataEvents = useMemo(() => {
+    if (!useAllEvents) {
+      return [];
+    };
+  
+    if (showWebControlViolation) {
+      setCurrentPage(1);
+
+      return useAllEvents.filter(value => filterRegex.test(value.type) && filterRegex.exec(value.type)[2] === 'WebControlViolation');
+    } else {
+      setCurrentPage(1);
+      return useAllEvents;
+    };
+  
+  }, [useAllEvents, showWebControlViolation]);
 
   const currentItemsEvents = getPaginatedItems(filteredDataEvents);
   
