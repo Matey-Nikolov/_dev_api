@@ -7,7 +7,7 @@ const LoadingScreen = () => (
       <Spinner animation="border" role="status">
         <span className="sr-only">Loading information...</span>
       </Spinner>
-      <p>Please wait, the environment is loading</p>
+      <p>Please wait, the environment is setup.</p>
     </div>
   </div>
 );

@@ -30,7 +30,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
       setDetailsHealth(endpointData.health.services.serviceDetails || []);
     } catch (error) {
       console.error('Error fetching data:', error);
-    }
+    };
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
       fetchData();
 
       setMachineId.add(machine_Id);
-    }
+    };
   }, [machine_Id]);
 
   const {
@@ -168,7 +168,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
     
   } else {
     return <h2>get data</h2>;
-  }
+  };
 };
 
 export default EndpointDetails;

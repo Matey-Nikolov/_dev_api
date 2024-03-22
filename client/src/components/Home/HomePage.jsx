@@ -7,8 +7,18 @@ import LoadingScreen from './LoadingScreen';
 
 import { useNavigate } from "react-router-dom";
 
+const getAlertsCount = (items, severity) => {
+  return items.filter(x => x.severity === severity).length;
+};
+
+const getEndpointsCount = (items, type) => {
+  return items.filter(x => x.type === type).length;
+};
+
 const HomePage = () => {
   const navigate = useNavigate();
+  
+  const roleFromEnv = process.env.REACT_APP_ROLE;
 
   const { loading, informationForClients, setCurrentClient_id, setCurrentClient_role, setCurrentClient_name } = useContext(UseCreatedContex);
 
@@ -22,7 +32,7 @@ const HomePage = () => {
   
   useEffect(() => {
     getInfomation();
-  }); 
+  }, [loading, informationForClients]); 
 
   const handleClickedClientName = (value) => {
     setCurrentClient_id(value.uniqueId);
@@ -77,17 +87,17 @@ const HomePage = () => {
                       </button>
                     </td>
     
-                    {client.role === process.env.REACT_APP_ROLE ? (
+                    {client.role === roleFromEnv ? (
                       <td className='text-center'>Full</td>
                     ) : (
                       <td className='text-center'>Limited</td>
                     )}
         
-                    <td className='text-center'>{client.alerts.items.filter(x => x.severity === 'high').length}</td>
-                    <td className='text-center'>{client.alerts.items.filter(x => x.severity === 'medium').length}</td>
-                    <td className='text-center'>{client.alerts.items.filter(x => x.severity === 'low').length}</td>
-                    <td className='text-center'>{client.endpoints.filter(x => x.type === 'computer').length}</td>
-                    <td className='text-center'>{client.endpoints.filter(x => x.type === 'server').length}</td>
+                    <td className='text-center'>{getAlertsCount(client.alerts.items, 'high')}</td>
+                    <td className='text-center'>{getAlertsCount(client.alerts.items, 'medium')}</td>
+                    <td className='text-center'>{getAlertsCount(client.alerts.items, 'low')}</td>
+                    <td className='text-center'>{getEndpointsCount(client.endpoints, 'computer')}</td>
+                    <td className='text-center'>{getEndpointsCount(client.endpoints, 'server')}</td>
                   </>
                 )}
               </tr>

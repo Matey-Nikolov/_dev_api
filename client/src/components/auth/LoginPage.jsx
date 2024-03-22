@@ -12,6 +12,8 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     this.token = '';
 
     this.state = 
@@ -30,9 +32,8 @@ class LoginPage extends React.Component {
   };
 
   validate() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!this.state.email.match(emailRegex)) {
+    if (!this.state.email.match(this.emailRegex)) {
       this.setState({ error: 'Enter a valid email address!' });
 
       return false;

@@ -34,8 +34,6 @@ const RegisterPage = () => {
         setErrors(validationErrors);
 
         if (Object.keys(validationErrors).length === 0) {
-            console.log('work');
-
             const createAccount = new CreateAccount(form.name, form.role, form.clientId, form.clientSecret);
 
             setForm({

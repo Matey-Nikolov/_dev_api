@@ -8,7 +8,7 @@ class ApiBackup {
         this.isCreateFileWithData = {};
     };
 
-    async backupByItems(fileName) {
+    async backupItems(fileName) {
         try {
             const response = await api.get('/backup/items', {
                 params: {

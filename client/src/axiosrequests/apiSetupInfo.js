@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = 'http://localhost:3000'; //process.env.REACT_APP_BASE_URL
+const baseURL = process.env.REACT_APP_BASE_URL;
 const regex = /(?:https?:\/\/www\.)?(?<hostname>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
 
 export const setupInformation = async (accessToken, access_Id, uniqueId, urlDataRegion) => {

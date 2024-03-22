@@ -2,16 +2,20 @@ import React from 'react';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const ButtonsArchive = ({ handleBackUpChange, role }) => {
+  const roleFromEnv = process.env.REACT_APP_ROLE;
+
   const filterOptions = [
     { label: 'Allow items', value: 'allow items', section: '1' },
     { label: 'Block items', value: 'block items', section: '1' },
     { label: 'Policies', value: 'policies', section: '1'},
     { label: 'Scanning exclusions', value: 'scanning exclusions', section: '1'},
 
-    { label: 'Installers download', roleNeeded: process.env.REACT_APP_ROLE, value: 'download', section: '2'},
+    { label: 'Installers download', roleNeeded: roleFromEnv, value: 'download', section: '2'},
 
-    { label: 'Enviroment reset', value: 'reset', roleNeeded: process.env.REACT_APP_ROLE, variant: 'danger', section: '3'}
+    { label: 'Enviroment reset', value: 'reset', roleNeeded: roleFromEnv, variant: 'danger', section: '3'}
   ];
+
+
 
   return (
     <div>
@@ -37,7 +41,7 @@ const ButtonsArchive = ({ handleBackUpChange, role }) => {
         ))}
       </ButtonGroup>
 
-      {(role === process.env.REACT_APP_ROLE) && (
+      {(role === roleFromEnv) && (
         <h4>Software download</h4>
       )}
 
@@ -61,7 +65,7 @@ const ButtonsArchive = ({ handleBackUpChange, role }) => {
         ))}
       </ButtonGroup>
 
-      {(role === process.env.REACT_APP_ROLE) && (
+      {(role === roleFromEnv) && (
         <h4>Management</h4>
       )}
 

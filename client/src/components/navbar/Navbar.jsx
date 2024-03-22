@@ -8,6 +8,8 @@ import SecureStorage from 'react-secure-storage';
 const Navbar = () => {
   const { currentClient_role , currentClient_name } = useContext(UseCreatedContex);
 
+  const roleFromEnv = process.env.REACT_APP_ROLE;
+
   const location = useLocation();
   const [isDashboard, setIsDashboard] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -34,7 +36,7 @@ const Navbar = () => {
         </>
       ) : (
         <>
-          {currentClient_role === process.env.REACT_APP_ROLE && (
+          {currentClient_role === roleFromEnv && (
             <>
               <Link className="navbar-brand" to={`/events/${currentClient_name}`}>Events</Link> 
             </>
@@ -43,7 +45,7 @@ const Navbar = () => {
           <Link className="navbar-brand" to={`/alerts/${currentClient_name}`}>Alerts</Link>
           <Link className="navbar-brand" to={`/endpoints/${currentClient_name}`}>Endpoints</Link>
 
-          {currentClient_role === process.env.REACT_APP_ROLE && (
+          {currentClient_role === roleFromEnv && (
             <>
               <Link className="navbar-brand" to={`/websites/${currentClient_name}`}>Websites</Link> 
             </>

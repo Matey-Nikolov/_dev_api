@@ -13,6 +13,8 @@ import usePagination from '../../Services/Table/PaginationLogic';
 const EndpointTablePage = ({ onEndpointDetailsClick }) => {
   const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
  
+  const roleFromEnv = process.env.REACT_APP_ROLE;
+
   const [endpoints, setEndpoints] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
@@ -166,7 +168,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
           />
         </Col>
 
-        {useRole === process.env.REACT_APP_ROLE && (
+        {useRole === roleFromEnv && (
           <>
             <Col md={2}>
               <Button variant="info" onClick={handleMarkAllScan}>
@@ -201,7 +203,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
             <th className='text-center'>LastSeenAt</th>
             <th className='text-center'>Tamper protection status</th>
             <th></th>
-              {useRole === process.env.REACT_APP_ROLE && (
+              {useRole === roleFromEnv && (
                 <th className='text-center'>
                   <Button
                     variant="info"
@@ -213,7 +215,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   </Button>
                 </th>
               )}
-              {useRole === process.env.REACT_APP_ROLE && (
+              {useRole === roleFromEnv && (
                 <th className='text-center'>
                   <Button
                     variant="info"
@@ -256,7 +258,8 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                   Details
                 </Button>
               </td>
-                {useRole === process.env.REACT_APP_ROLE && (
+                {useRole === roleFromEnv
+                 && (
                   <td className='text-center'>
                     <Form.Check
                       onChange={() => handleCheckboxScanChange(value.id)}
@@ -265,7 +268,7 @@ const EndpointTablePage = ({ onEndpointDetailsClick }) => {
                     />
                   </td>
                 )}
-                {useRole === process.env.REACT_APP_ROLE && (
+                {useRole === roleFromEnv && (
                   <td className='text-center'>
                     <Form.Check
                       onChange={() => handleCheckboxUpdateChange(value.id)}
