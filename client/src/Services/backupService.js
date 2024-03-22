@@ -31,7 +31,7 @@ async function findByBackupButton(currentClient_id, valueButton, fileName, folde
 async function createBackupItems(fileName, folderName){
     const apiRequestBackup = new ApiBackup(currentClient, folderName);
 
-    const backUpItemsCheck = await apiRequestBackup.backupByItems(fileName);
+    const backUpItemsCheck = await apiRequestBackup.backupItems(fileName);
 
     return backUpItemsCheck;
 };
