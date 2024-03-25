@@ -77,7 +77,7 @@ const HomePage = () => {
               <tr key={client.id}>
                 {client.unauthorized ? (
                   <td colSpan="7" className='text-center'>
-                    Unauthorized client: {client.clientName}
+                    Unauthorized user: {client.clientName}
                   </td>
                 ) : (
                   <>

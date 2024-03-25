@@ -59,7 +59,7 @@ const EndpointDetails = ({ machine_Id, clientId, onBackClick  }) => {
         <Row className="pt-3">
           
           <Col md={4}>
-            <h2 class="text-secondary-emphasis">{endpointDetails.hostname}</h2>
+            <h2 class="text-secondary-emphasis">Machine name: {endpointDetails.hostname}</h2>
           </Col>
 
           <Col md={3}>

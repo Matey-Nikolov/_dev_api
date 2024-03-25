@@ -4,9 +4,9 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 const FilterButtons = ({ filterType, handleFilterChange }) => {
     const filterOptions = [
       { label: 'All', value: 'all' },
-      { label: 'Low', value: 'low', variant: 'success' },
+      { label: 'High', value: 'high', variant: 'danger' },
       { label: 'Medium', value: 'medium', variant: 'warning' },
-      { label: 'High', value: 'high', variant: 'danger' }
+      { label: 'Low', value: 'low', variant: 'success' }
     ];
 
   return (

@@ -23,6 +23,7 @@ const EventTable = () => {
   const [useAllEvents, setEvents] = useState([]);
 
   const [showWebControlViolation, setShowWebControlViolation] = useState(false);
+  const [buttonColor, setButtonColor] = useState('secondary');
 
   useEffect(() => {
     const events = findClientEvents(currentClient_id);
@@ -85,9 +86,12 @@ const EventTable = () => {
   return(
     <Container className="mt-7 pt-5">
       <Button
-        className="mb-3 info"
-        variant="info"
-        onClick={() => {setShowWebControlViolation(!showWebControlViolation)}}
+        className={`mb-3 info ${buttonColor}`}
+        variant={buttonColor}
+        onClick={() => {
+          setShowWebControlViolation(!showWebControlViolation);
+          setButtonColor(buttonColor === 'secondary' ? 'primary' : 'secondary');
+        }}
       >
         filter by web events
       </Button>

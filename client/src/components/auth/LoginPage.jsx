@@ -91,10 +91,10 @@ class LoginPage extends React.Component {
   render() {
     return (
       <Container>
-        <Row className="justify-content-center align-items-center mt-5">
+        <Row className="justify-content-center align-items-center vh-100">
           <Col xs={10} md={6} lg={4}>
-            <Card className="shadow rounded-lg p-4">
-              <h3 className="text-uppercase mb-4 text-center">Login</h3>
+            <Card className="shadow rounded-lg p-4 text-center">
+              <h3 className="text-uppercase mb-4">Login</h3>
               <Form onSubmit={this.handleSignIn}>
                 <Form.Group controlId="email">
                   <Form.Label>Email:</Form.Label>
@@ -118,7 +118,7 @@ class LoginPage extends React.Component {
                   Login
                 </Button>
               </Form>
-              {this.state.error && <div className="mt-3 text-danger text-center">{this.state.error}</div>}
+              {this.state.error && <div className="mt-3 text-danger">{this.state.error}</div>}
             </Card>
           </Col>
         </Row>

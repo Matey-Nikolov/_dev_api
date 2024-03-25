@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Table, Button, Alert, Container } from 'react-bootstrap';
+import { Table, Button, Alert, Container, Row } from 'react-bootstrap';
 
 import getWebsiteServiceInstance from '../../Services/websiteService';
 
@@ -16,6 +16,8 @@ const WebsiteTable = () => {
   const [useAllWebsites, setWebsites] = useState([]);
 
   const [successAlert, setSuccessAlert] = useState(false);
+
+  const [buttonColor, setButtonColor] = useState('secondary');
 
   const fetchWebsites = async () =>{
     const websites = await websiteService.getWebsiteData();
@@ -68,9 +70,18 @@ const WebsiteTable = () => {
 
   return (
     <Container className="mt-5">
-      <Button onClick={() => navigate(`/websites/addwebsite/${currentClient_name}`)} variant="info">
-        Add website
-      </Button>
+        <Button
+          className={`mb-3 info ${buttonColor}`}
+
+          onClick={() => {
+            navigate(`/websites/addwebsite/${currentClient_name}`);
+            setButtonColor(buttonColor === 'secondary' ? 'primary' : 'secondary');
+          }}
+          variant={buttonColor}
+        >
+          Add website
+        </Button>
+
       {successAlert && (
         <Alert variant="info" onClose={() => setSuccessAlert(false)} dismissible>
           Block website successfully!
