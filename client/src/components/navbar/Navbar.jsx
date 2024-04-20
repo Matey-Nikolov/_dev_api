@@ -47,7 +47,7 @@ const Navbar = () => {
             to="/register"
             onClick={() => setActiveLink("/register")}
           >
-            Register client
+            Access setup
           </NavLink>
           <button className="btn btn-outlin" onClick={handleLogout}>Logout</button>
         </>
