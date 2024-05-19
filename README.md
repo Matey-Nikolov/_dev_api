@@ -6,7 +6,7 @@
 
 # ✨ Features
 - Customers dashboard - general overview of all your customers with their number of machines and their respective alarms.
-- Register client - register new clients.
+- Access setup - register new client.
 - Logout - exit from your account. 
 
 *All the Features described below are for a specific client and accordingly what rights we have the following information.*
@@ -42,6 +42,10 @@ Here are some used for the project.
 - [firebase](https://firebase.google.com/) - database.
 - [axios](https://axios-http.com/docs/intro) - request api.
 - [Expres.js](https://expressjs.com/) - for server.
+
+## Application architecture
+![project drawio (002)](https://github.com/Matey-Nikolov/_dev_api/assets/80168510/cf99e1cf-4472-4539-9cb5-2faaae2c4248)
+
 
 
 # Project Setup
@@ -88,7 +92,7 @@ REACT_APP_FIREBASE_APP_ID=
 REACT_APP_BASE_URL=
 REACT_APP_ROLE=
 ```
-Note: You will receive this configuration separately.
+***Note: You will receive this configuration separately.***
 
 ### 2.4. Running the client application
 
