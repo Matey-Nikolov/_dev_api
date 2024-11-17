@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
+import apiRouteDatabase from './Routers/loginRoute/apiRouteDatabase.js'
+
 import setupInfomation from './configs/api/setupInfomationRouter.js';
 
 import tokenRouter from './Routers/authenticationRouter.js';
@@ -38,6 +40,15 @@ app.use(
 );
 
 app.use(bodyParser.json());
+
+
+//////////////              NEW               /////////////////////
+
+app.use('/loginInApp', apiRouteDatabase)
+
+
+
+///////////         //////////////////             ////////////////////////
 
 app.use('/configuration', setupInfomation);
 
