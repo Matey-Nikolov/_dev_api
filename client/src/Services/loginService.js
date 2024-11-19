@@ -1,8 +1,4 @@
-// import { auth, signInWithEmailAndPassword, db, collection, getDocs } from '../firebase/firebase-config';
-
-import encryptData from './cryptoService.js'
-
-import SecureStorage from 'react-secure-storage';
+import encryptData from './cryptoService'
 
 import loginInApp from '../axiosrequests/apiLoginRequest/apiLogin'
 
@@ -14,24 +10,21 @@ class AuthLogin {
       password: password
     }
     this.accessToken = '';
-    // this.usersCollectionRef = collection(db, 'User');
+
     this.clients = { };
   };
 
 
   async signIn() {
-  /////////////////////            NEW                            ////////////////////////////////////////
+ 
 
-    const encryptNewData = encryptData(this.information)
-
-    const isLogin = await loginInApp(encryptNewData);
+    const encryptedPayload = encryptData(this.information); 
+    const isLogin = await loginInApp(encryptedPayload); 
 
 
     console.log(isLogin);
-    
+        
 
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
 /*
     await signInWithEmailAndPassword(auth, this.email, this.password)
       .then(async (userCredential) => {

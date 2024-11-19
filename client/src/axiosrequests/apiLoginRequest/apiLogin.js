@@ -1,24 +1,15 @@
 import { api } from "../apiConfig";
 
-const loginInApp = async (encryptedData) => {
-    let responseResult = null;
+const loginInApp = async (encryptedPayload) => {
+    let responseResult = {};
 
     try {
-
-        console.log(encryptedData);
-        
-
-        const response = await api.post('/loginInApp', { encryptedData });
-
-        console.log(response);
-        
+        const response = await api.post('/loginInApp', encryptedPayload);
 
         responseResult = response.data;
     } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
-    }
-
-    console.log(responseResult);
+    };
 
     return responseResult;
 };

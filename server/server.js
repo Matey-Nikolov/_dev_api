@@ -1,10 +1,13 @@
 import express from 'express';
+
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
-import apiRouteDatabase from './Routers/loginRoute/apiRouteDatabase.js'
+import { env } from './globalImports.js';
+
+import apiRouteLoginDatabse from './Routers/DatabaseRoutes/apiRouteLogin.js'
 
 import setupInfomation from './configs/api/setupInfomationRouter.js';
 
@@ -18,10 +21,11 @@ import websiteRouter from './Routers/websiteRouter.js';
 import archiveRouter from './Routers/backupRouter.js';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = env.PORT;
+const host = env.DB_HOST;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: [`http://${host}:${port}`, `http://${host}:3001`],
   methods: 'GET, PUT, POST, DELETE',
 };
 
@@ -41,14 +45,7 @@ app.use(
 
 app.use(bodyParser.json());
 
-
-//////////////              NEW               /////////////////////
-
-app.use('/loginInApp', apiRouteDatabase)
-
-
-
-///////////         //////////////////             ////////////////////////
+app.use('/loginInApp', apiRouteLoginDatabse)
 
 app.use('/configuration', setupInfomation);
 
