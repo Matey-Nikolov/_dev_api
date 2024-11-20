@@ -15,21 +15,14 @@ const loginToApp = async (email, password) => {
     return accessToken;
 };
 
-const findUserInDatabase = async (userEmail) => {
+const findUserInDatabase_ID = async (userEmail) => {
     const data = await getDocs(collection(db, process.env.FIREBASE_COLLECTION));
 
-    let returnData = {};
-
-    data.docs.map((doc) => {
-        if(doc.data().email === userEmail){
-            returnData = {
-                clientId: doc.data().client_id,
-                client_secret_Id: doc.data().client_secret
-            };
+    for (const doc of data.docs) {
+        if (doc.data().email === userEmail) {
+            return doc.id;
         };
-    });
-
-    return returnData;
+    };
 };
 
-export { loginToApp, findUserInDatabase };
+export { loginToApp, findUserInDatabase_ID };

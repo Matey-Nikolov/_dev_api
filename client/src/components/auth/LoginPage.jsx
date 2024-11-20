@@ -48,6 +48,22 @@ class LoginPage extends React.Component {
     return true;
   };
 
+  handleSignIn = async (e) => {
+    e.preventDefault();
+
+    const instanceAuthClass = new AuthLogin(this.state.email, this.state.password);
+
+    if (this.validate()) {   
+      await this.signInForToken(instanceAuthClass);
+    };
+
+    if (this.getToken){
+      await this.findUser(instanceAuthClass);
+    };
+
+    this.props.setToken(this.token);
+  };
+
   async signInForToken(instanceAuthClass) {
     const accessToken = await instanceAuthClass.signIn();
 
@@ -65,27 +81,7 @@ class LoginPage extends React.Component {
   };
 
   async findUser(instanceAuthClass){
-
-    const informationData = await instanceAuthClass.findUserByEmail(this.state.email);
-
-    this.infoUser.client_Id_Db = informationData.clientId;
-    this.infoUser.client_secret_Db = informationData.client_secret_Id;
-  };
-
-  handleSignIn = async (e) => {
-    e.preventDefault();
-
-    const instanceAuthClass = new AuthLogin(this.state.email, this.state.password);
-
-    if (this.validate()) {
-      await this.signInForToken(instanceAuthClass);
-    };
-
-    if (this.getToken){
-      await this.findUser(instanceAuthClass);
-    };
-
-    this.props.setToken(this.token);
+    await instanceAuthClass.findUserByEmail(this.state.email);
   };
 
   render() {

@@ -20,7 +20,7 @@ const findUserInDatabase = async (encryptedEmail) => {
 
     try {
         const response = await api.post('/loginInApp/findUser', encryptedEmail);
-        responseResult = response.data;
+        responseResult = response.data.success;
     } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
     };
