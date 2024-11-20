@@ -5,6 +5,7 @@ import decryptData from '../../help/decryptData.js';
 import { loginToApp, findUserInDatabase_ID } from '../../../database/login.js';
 
 const router = express.Router();
+let ID = '';
 
 router.post(
   '/',
@@ -35,7 +36,7 @@ router.post(
 
       res.status(500).json({
         success: false,
-        message: 'Invalid encrypted data or decryption failed',
+        message: 'Invalid encrypted data or decryption failed'
       });
     };
   }
@@ -59,20 +60,20 @@ router.post(
     try {
       const decryptedInformation = decryptData(encryptedData, iv);
 
-      const isFindId = await findUserInDatabase_ID(decryptedInformation);
-      
+      ID = await findUserInDatabase_ID(decryptedInformation);
+
       res.json({
-        success: true,
-      
+        success: true
       });
     } catch (error) {
 
       res.status(500).json({
         success: false,
-        message: 'Not found id.',
+        message: 'Not found id.'
       });
     };
   }
 );
 
 export default router;
+export { ID };

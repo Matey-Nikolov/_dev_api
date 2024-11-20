@@ -7,12 +7,12 @@ import rateLimit from 'express-rate-limit';
 
 import { env } from './globalImports.js';
 
-import apiRouteLoginDatabse from './Routers/DatabaseRoutes/apiRouteLogin.js'
+import setupClientsRoute from './setUpClientsData/setupClientsRoute.js'
 
-import setupInfomation from './configs/api/setupInfomationRouter.js';
+import apiRouteLoginDatabase from './Routers/DatabaseRoutes/apiRouteLogin.js'
 
-import tokenRouter from './Routers/authenticationRouter.js';
-import whoIAmRouter from './Routers/authorizationRouter.js';
+// import tokenRouter from './Routers/authenticationRouter.js';
+// import whoIAmRouter from './Routers/authorizationRouter.js';
 
 import alertRouter from './Routers/alertRouter.js';
 import endpointRouter from './Routers/endpointRouter.js';
@@ -45,13 +45,15 @@ app.use(
 
 app.use(bodyParser.json());
 
-app.use('/loginInApp', apiRouteLoginDatabse)
+app.use('/loginInApp', apiRouteLoginDatabase)
 
-app.use('/configuration', setupInfomation);
+///////////////
+app.use('/setup', setupClientsRoute);
+///////////////
 
-app.use('/token', tokenRouter);
+// app.use('/token', tokenRouter);
 
-app.use('/access', whoIAmRouter);
+// app.use('/access', whoIAmRouter);
 
 app.use('/alert', alertRouter);
 
