@@ -9,7 +9,7 @@ const getEventsFromAPI = async (clientId) => {
 
     const allEvents = await apiEvents.get();
 
-    return response.data.items;
+    return allEvents.data.items;
 };
 
 export default getEventsFromAPI;

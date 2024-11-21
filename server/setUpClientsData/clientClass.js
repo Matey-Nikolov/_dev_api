@@ -1,11 +1,15 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import authentication from './SetUpDataFromAPI/authentication.js';
 import authorization from './SetUpDataFromAPI/authorization.js';
 import setupInformation from '../configs/api/setupInfomationRouter.js';
 
 import getAlersFromAPI from './SetUpDataFromAPI/alert.js';
 import getEventsFromAPI from './SetUpDataFromAPI/events.js';
+import getEndpointsFromAPI from './SetUpDataFromAPI/endpoints.js';
+import getWebsitesFromAPI from './SetUpDataFromAPI/websites.js';
+import getSoftwareFromAPI from './SetUpDataFromAPI/software.js';
 
-import { v4 as uuidv4 } from 'uuid';
 
 const isAdmin = process.env.DB_ROLE;
 
@@ -32,6 +36,8 @@ class Client {
         this.events = [];
         this.websites = [];
         this.software = [];
+
+        this.unauthorized = false;
     };
   
     async setupEnvironment() {
@@ -42,6 +48,11 @@ class Client {
 
         const setAuthToken = await authentication(this.#clientInfo.client_Id_Db, this.#clientInfo.client_secret_Db);
 
+        if(setAuthToken === true){
+            this.unauthorized = true;
+            return;
+        };
+        
         try {
             this.#tenantIdAndDataRegion = await authorization(setAuthToken);
 
@@ -49,20 +60,15 @@ class Client {
 
             this.alerts = await this.#getAlerts();
 
-            // this.endpoints = await this.#getEndpoints();
+            this.endpoints = await this.#getEndpoints();
 
 
             if (this.#role === isAdmin) {
-
-                console.log('Is admin');
-                
-
-                // this
                 this.events = await this.#getEvents();
-                // // this
-                // this.websites = await this.#getWebsites();
-                // // this
-                // this.software = await this.#getSoftware();
+
+                this.websites = await this.#getWebsites();
+
+                this.software = await this.#getSoftware();
             };
 
             this.#setupTimestamp = currentTime;
@@ -77,21 +83,21 @@ class Client {
         return getAlersFromAPI(this.uniqueId);
     };
 
-    // async #getEndpoints() {
-    //     return getEventsFromAPI(this.uniqueId);
-    // };
+    async #getEndpoints() {
+        return getEndpointsFromAPI(this.uniqueId);
+    };
 
     async #getEvents() {
         return getEventsFromAPI(this.uniqueId);
     };
 
-    // async #getWebsites(){
-    //     return getWebsiteServiceInstance(this.uniqueId);
-    // };
+    async #getWebsites(){
+        return getWebsitesFromAPI(this.uniqueId);
+    };
 
-    // async #getSoftware(){
-    //     return getSoftwareCurrentClient(this.uniqueId);
-    // };
+    async #getSoftware(){
+        return getSoftwareFromAPI(this.uniqueId);
+    };
 
     // updateAlerts(updatedAlerts){
     //     this.alerts.items = updatedAlerts;

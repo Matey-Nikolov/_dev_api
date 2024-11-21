@@ -5,6 +5,12 @@ import encryptData from '../help/encrypt.js';
 import setupClients from '../../database/setupEnvironmentDatabse.js';
 
 const router = express.Router();
+const clients = [];
+
+const findClientById = (clientId) => {
+  const client = clients.find(client => client.uniqueId === clientId);
+  return client !== undefined ? client : -1;
+};
 
 router.get(
   '/',
@@ -12,23 +18,16 @@ router.get(
   async (req, res) => {
 
     try {
-      const clients = await setupClients(ID);
-
-      let uniqueIdArray = [...new Set(clients.map(client => client.uniqueId))];
-
-      uniqueIdArray = encryptData(uniqueIdArray);
+      clients = await setupClients(ID);
 
       for (const client of clients) {
-        await client.setupEnvironment();    
+        await client.setupEnvironment();
       };
 
-      console.log(clients);
-      
-
-      // res.json({
-      //     success: true,
-      //     accessToken: accessToken
-      // });
+      res.json({
+        success: true,
+        data: encryptClients
+      });
     } catch (error) {
       res.status(500).json({
         success: false,
@@ -39,5 +38,21 @@ router.get(
   }
 );
 
+router.get(
+  '/clients/:id',
+  [],
+  async (req, res) => {
+    const clientId = req.params.id;
+    const client = await findClientById(clientId);
+    
+    const encryptClient = encryptData(client);
+
+    if (encryptClient) {
+      res.status(200).json(encryptClient);
+    } else {
+      res.status(404).json({ error: 'Client not found' });
+    };
+  }
+);
 
 export default router;
