@@ -1,21 +1,26 @@
 import authentication from './SetUpDataFromAPI/authentication.js';
 import authorization from './SetUpDataFromAPI/authorization.js';
 import setupInformation from '../configs/api/setupInfomationRouter.js';
-import getAlersFromApi from './SetUpDataFromAPI/alert.js';
+
+import getAlersFromAPI from './SetUpDataFromAPI/alert.js';
+import getEventsFromAPI from './SetUpDataFromAPI/events.js';
 
 import { v4 as uuidv4 } from 'uuid';
+
+const isAdmin = process.env.DB_ROLE;
 
 class Client {
     #clientInfo;
     #tenantIdAndDataRegion  = '';
     #setupTimestamp;
+    #role;
   
     constructor(infoUserClient) {
         this.uniqueId = uuidv4();
 
         this.clientName = infoUserClient.name;
 
-        this.role = infoUserClient.role;
+        this.#role = infoUserClient.role;
 
         this.#clientInfo = {
             'client_Id_Db': infoUserClient.client_id,
@@ -27,8 +32,6 @@ class Client {
         this.events = [];
         this.websites = [];
         this.software = [];
-
-        this.unauthorized = false;
     };
   
     async setupEnvironment() {
@@ -37,54 +40,50 @@ class Client {
             return;
         };
 
-        const setAuthToken = await authentication(this.#clientInfo);
-
-        if(setAuthToken === true){
-            this.unauthorized = true;
-            return;
-        };
+        const setAuthToken = await authentication(this.#clientInfo.client_Id_Db, this.#clientInfo.client_secret_Db);
 
         try {
             this.#tenantIdAndDataRegion = await authorization(setAuthToken);
 
             await setupInformation(setAuthToken, this.#tenantIdAndDataRegion.id, this.uniqueId, this.#tenantIdAndDataRegion.urlDataRegion);
 
-     
-            // this
             this.alerts = await this.#getAlerts();
 
-            // this
             // this.endpoints = await this.#getEndpoints();
 
 
-            // if (this.role === process.env.REACT_APP_ROLE) {
-            //     // this
-            //     this.events = await this.#getEvents();
-            //     // this
-            //     this.websites = await this.#getWebsites();
-            //     // this
-            //     this.software = await this.#getSoftware();
-            // };
+            if (this.#role === isAdmin) {
+
+                console.log('Is admin');
+                
+
+                // this
+                this.events = await this.#getEvents();
+                // // this
+                // this.websites = await this.#getWebsites();
+                // // this
+                // this.software = await this.#getSoftware();
+            };
 
             this.#setupTimestamp = currentTime;
 
             this.#clearPrivateProperties();
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Setup in class clientClass:', error.message);
         };
     };
   
     async #getAlerts() {
-        return getAlersFromApi(this.uniqueId);
+        return getAlersFromAPI(this.uniqueId);
     };
 
     // async #getEndpoints() {
-    //     return fetchEndpoints(this.uniqueId);
+    //     return getEventsFromAPI(this.uniqueId);
     // };
 
-    // async #getEvents() {
-    //     return fetchEvents(this.uniqueId);
-    // };
+    async #getEvents() {
+        return getEventsFromAPI(this.uniqueId);
+    };
 
     // async #getWebsites(){
     //     return getWebsiteServiceInstance(this.uniqueId);

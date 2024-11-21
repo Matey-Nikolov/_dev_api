@@ -11,17 +11,16 @@ const addParams = {
     "pageSize": 25
 };
 
-const getAlersFromApi = async (clientId) => {
-    pathFromURL = `common/v1/alerts`
+const getAlersFromAPI = async (clientId) => {
+    pathFromURL = `/common/v1/alerts`
 
     const api = getApiConfigurationInstance(clientId);
 
     const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
 
     const allAlerts = await pageSolution(apiAlert);
-    // alerts.items = response.data
 
     return allAlerts;
 };
 
-export default getAlersFromApi;
+export default getAlersFromAPI;

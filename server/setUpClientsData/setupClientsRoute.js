@@ -1,5 +1,6 @@
 import { express } from '../globalImports.js';
 import { ID } from '../Routers/DatabaseRoutes/apiRouteLogin.js';
+import encryptData from '../help/encrypt.js';
 
 import setupClients from '../../database/setupEnvironmentDatabse.js';
 
@@ -11,16 +12,18 @@ router.get(
   async (req, res) => {
 
     try {
-      // const clients = await setupClients(ID);
+      const clients = await setupClients(ID);
 
-      // for (const client of clients) {
-      //   console.log(client);
+      let uniqueIdArray = [...new Set(clients.map(client => client.uniqueId))];
 
-      //   await client.setupEnvironment();    
-      // };
+      uniqueIdArray = encryptData(uniqueIdArray);
 
+      for (const client of clients) {
+        await client.setupEnvironment();    
+      };
 
-        
+      console.log(clients);
+      
 
       // res.json({
       //     success: true,

@@ -12,8 +12,8 @@ const authorization = async (accessToken) =>{
     
     const response = await axios.get(`https://api.central.sophos.com/whoami/v1`, axiosConfig);
 
-    id = response.data.responseData.id;
-    urlDataRegion = response.data.responseData.apiHosts.dataRegion;
+    id = response.data.id;
+    urlDataRegion = response.data.apiHosts.dataRegion;
 
     return { id, urlDataRegion };
 };

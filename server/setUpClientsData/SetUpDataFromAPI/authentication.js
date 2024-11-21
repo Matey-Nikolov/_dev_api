@@ -7,7 +7,7 @@ const authentication = async (client_Id_Db, client_secret_Db) => {
     client_id: client_Id_Db,
     client_secret: client_secret_Db
   };
-
+  
   const accessToken = await axios.post('https://id.sophos.com/api/v2/oauth2/token', dataToSend, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
