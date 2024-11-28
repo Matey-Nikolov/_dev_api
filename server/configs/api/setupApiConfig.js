@@ -31,7 +31,7 @@ class ApiConfiguration {
     constructor(accessToken, access_Id, URL) {
         this.accessToken = accessToken;
         this.access_Id = access_Id;
-        this.baseURL = `https://${URL}/`;
+        this.baseURL = `${URL}`;
     };
 
     apiGetConfiguration(addURL, addParams) {

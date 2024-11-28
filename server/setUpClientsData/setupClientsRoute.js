@@ -5,7 +5,7 @@ import encryptData from '../help/encrypt.js';
 import setupClients from '../../database/setupEnvironmentDatabse.js';
 
 const router = express.Router();
-const clients = [];
+let clients = [];
 
 const findClientById = (clientId) => {
   const client = clients.find(client => client.uniqueId === clientId);
@@ -24,6 +24,21 @@ router.get(
         await client.setupEnvironment();
       };
 
+      const setUpData = clients.map(client => ({
+        uniqueId: client.uniqueId,
+        clientName: client.clientName,
+        role: client.role,
+        unauthorized: client.unauthorized,
+        alerts: client.alerts,
+        endpoints: client.endpoints
+      }));
+
+      const encryptClients = await Promise.all(
+        setUpData.map(async (data) => {
+          return encryptData(data);
+        })
+      );
+
       res.json({
         success: true,
         data: encryptClients
@@ -32,7 +47,7 @@ router.get(
       res.status(500).json({
         success: false,
 
-        message: 'Failed'
+        message: 'Failed to setup information fisrt login.'
       });
     };
   }
@@ -47,11 +62,11 @@ router.get(
     
     const encryptClient = encryptData(client);
 
-    if (encryptClient) {
-      res.status(200).json(encryptClient);
-    } else {
-      res.status(404).json({ error: 'Client not found' });
-    };
+    // if (encryptClient) {
+    //   res.status(200).json(encryptClient);
+    // } else {
+    //   res.status(404).json({ error: 'Client not found' });
+    // };
   }
 );
 

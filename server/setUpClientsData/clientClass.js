@@ -17,14 +17,14 @@ class Client {
     #clientInfo;
     #tenantIdAndDataRegion  = '';
     #setupTimestamp;
-    #role;
+    // #role;
   
     constructor(infoUserClient) {
         this.uniqueId = uuidv4();
 
         this.clientName = infoUserClient.name;
 
-        this.#role = infoUserClient.role;
+        this.role = infoUserClient.role;
 
         this.#clientInfo = {
             'client_Id_Db': infoUserClient.client_id,
@@ -58,19 +58,30 @@ class Client {
 
             await setupInformation(setAuthToken, this.#tenantIdAndDataRegion.id, this.uniqueId, this.#tenantIdAndDataRegion.urlDataRegion);
 
-            this.alerts = await this.#getAlerts();
-
-            this.endpoints = await this.#getEndpoints();
-
-
-            if (this.#role === isAdmin) {
-                this.events = await this.#getEvents();
-
-                this.websites = await this.#getWebsites();
-
-                this.software = await this.#getSoftware();
+            const apiPromises = [
+                this.#getAlerts(),
+                this.#getEndpoints()
+            ];
+    
+            if (this.role === isAdmin) {
+                apiPromises.push(
+                    this.#getEvents(),
+                    this.#getWebsites(),
+                    this.#getSoftware()
+                );
             };
+    
+            const [alerts, endpoints, events, websites, software] = await Promise.all(apiPromises);
+    
+            this.alerts = alerts || [];
+            this.endpoints = endpoints || [];
 
+            if (this.role === isAdmin) {
+                this.events = events || [];
+                this.websites = websites || [];
+                this.software = software || [];
+            };
+    
             this.#setupTimestamp = currentTime;
 
             this.#clearPrivateProperties();
