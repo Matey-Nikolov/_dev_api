@@ -1,5 +1,5 @@
 import { auth, signInWithEmailAndPassword } from './firebase-config.js';
-import { db, doc, collection, getDocs, addDoc } from './firebase-config.js';
+import { db, collection, getDocs } from './firebase-config.js';
 
 let accessToken;
 

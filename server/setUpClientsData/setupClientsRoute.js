@@ -2,7 +2,7 @@ import { express } from '../globalImports.js';
 import { ID } from '../Routers/DatabaseRoutes/apiRouteLogin.js';
 import encryptData from '../help/encrypt.js';
 
-import setupClients from '../../database/setupEnvironmentDatabse.js';
+import setupClients from '../../database/setupEnvironmentDatabase.js';
 
 const router = express.Router();
 let clients = [];
