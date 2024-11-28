@@ -11,14 +11,15 @@ const formatKey = (key) => {
   return CryptoJS.lib.WordArray.create(keyWordArray.words.slice(0, 8));
 };
 
+const formattedKey = formatKey(SECRET_KEY);
+
 function encryptData(data) {
-  const key = formatKey(SECRET_KEY);
   const iv = CryptoJS.lib.WordArray.random(16);
 
-  const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key, {
+  const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), formattedKey, {
     iv: iv,
     mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7,
+    padding: CryptoJS.pad.Pkcs7
   }).toString();
 
   return {
@@ -27,4 +28,18 @@ function encryptData(data) {
   };
 };
 
-export default encryptData;
+const decryptData = (encryptedData, iv) => {
+  const ivHex = CryptoJS.enc.Hex.parse(iv);
+
+  const decrypted = CryptoJS.AES.decrypt(encryptedData, formattedKey, {
+    iv: ivHex,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+
+  const decryptedData = decrypted.toString(CryptoJS.enc.Utf8);
+
+  return JSON.parse(decryptedData);
+};
+
+export { encryptData, decryptData };

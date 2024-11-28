@@ -1,4 +1,4 @@
-import encryptData from './cryptoService'
+import { encryptData } from './cryptoService'
 
 import { loginInApp, findUserInDatabase } from '../axiosrequests/apiLoginRequest/apiLogin'
 
