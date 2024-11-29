@@ -1,4 +1,5 @@
 import { api } from "./apiConfig";
+import { decryptData } from "../Services/cryptoService";
 
 const getAlerts = async (clientId) => {
     let alerts = {
@@ -11,17 +12,17 @@ const getAlerts = async (clientId) => {
         }
     })
     .then((response) => {
-        alerts.items = response.data;
+        alerts.items = decryptData(response.data.alerts, response.data.iv);
     })
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
-
+    
     return alerts;
 };
 
 const takeActionAlert = async (clientId, alertId, action) => {
-    let success = {};
+    let successAndAlerts = {};
 
     await api.get('/alert/actions', {
         params: {
@@ -31,13 +32,13 @@ const takeActionAlert = async (clientId, alertId, action) => {
         }
     })
     .then((response) => {
-        success = response.data.status
+        successAndAlerts = response.data;
     })
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
 
-    return success;
+    return successAndAlerts;
 };
 
 export { getAlerts, takeActionAlert };
