@@ -110,9 +110,9 @@ class Client {
         return getSoftwareFromAPI(this.uniqueId);
     };
 
-    // updateAlerts(updatedAlerts){
-    //     this.alerts.items = updatedAlerts;
-    // };
+    updateAlerts(alertId){
+        return this.alerts = this.alerts.filter(alert => alert.id !== alertId)
+    };
 
     // updateEvents(updatedEvents){
     //     this.events = updatedEvents;

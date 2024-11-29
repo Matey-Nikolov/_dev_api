@@ -4,7 +4,7 @@ import encryptData from '../help/encrypt.js';
 
 import setupClients from '../../database/setupEnvironmentDatabase.js';
 
-const router = express.Router();
+const setupClientsRoute = express.Router();
 let clients = [];
 
 const findClientById = (clientId) => {
@@ -12,7 +12,7 @@ const findClientById = (clientId) => {
   return client !== undefined ? client : -1;
 };
 
-router.get(
+setupClientsRoute.get(
   '/',
   [],
   async (req, res) => {
@@ -53,7 +53,7 @@ router.get(
   }
 );
 
-router.get(
+setupClientsRoute.get(
   '/clients/:id',
   [],
   async (req, res) => {
@@ -70,4 +70,4 @@ router.get(
   }
 );
 
-export default router;
+export { setupClientsRoute, clients, findClientById };

@@ -1,10 +1,14 @@
 import { express, query, validationResult } from '../globalImports.js';
 
-import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
+// import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
+
+import { findClientById } from '../setUpClientsData/setupClientsRoute.js';
+
+import encryptData from '../help/encrypt.js';
 
 const getEvents = express.Router();
 
-const pathFromURL = `/siem/v1/events`; 
+// const pathFromURL = `/siem/v1/events`; 
 
 getEvents.get(
     '/',
@@ -20,14 +24,21 @@ getEvents.get(
 
         const { clientId } = req.query;
 
-        const api = getApiConfigurationInstance(clientId);
+        // const api = getApiConfigurationInstance(clientId);
+        const clientEvents = findClientById(clientId);
 
-        const apiEvents = api.apiGetConfiguration(pathFromURL);
+        const encryptEvents = encryptData(clientEvents.events);
+
+        // const apiEvents = api.apiGetConfiguration(pathFromURL);
 
         try{
-            const allEvents = await apiEvents.get();
+            // const allEvents = await apiEvents.get();
         
-            res.json(allEvents.data);
+            res.json({ 
+                'status': 200,
+                'iv': encryptEvents.iv,
+                'events': encryptEvents.encryptedData
+            });
         }
         catch(error){
             res.status(400).json({ success: false, message: 'Error get data for events.' });

@@ -1,15 +1,15 @@
 import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
-import { pageSolution } from '.././help/pageSolution.js';
+// import { pageSolution } from '.././help/pageSolution.js';
+
+import { findClientById } from '../setUpClientsData/setupClientsRoute.js';
+import encryptData from '../help/encrypt.js';
 
 const router = express.Router();
 
-let pathFromURL = `common/v1/alerts`; 
-
-const addParams = {
-    "pageSize": 10
-};
+let pathFromURL = `/common/v1/alerts`; 
+let clientAlerts;
 
 router.get(
     '/actions',
@@ -30,6 +30,7 @@ router.get(
         pathFromURL = `/common/v1/alerts/${alertId}/actions`;
 
         const api = getApiConfigurationInstance(clientId);
+        clientAlerts = findClientById(clientId);
 
         const addData = 
             JSON.stringify({
@@ -39,8 +40,12 @@ router.get(
 
         await api.postApiConfiguration(pathFromURL, addData)
         .then((response) => {
+
+            const alerts = clientAlerts.updateAlerts(alertId);
+
             res.json({ 
-                'status': response.data.result
+                'status': response.data.result,
+                'alerts': alerts
             });
         })
         .catch((error) => {
@@ -63,16 +68,24 @@ router.get(
 
         const { clientId } = req.query;
 
-        pathFromURL = `common/v1/alerts`
+        pathFromURL = `/common/v1/alerts`
 
-        const api = getApiConfigurationInstance(clientId);
+        // const api = getApiConfigurationInstance(clientId);
 
-        const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
+        clientAlerts = findClientById(clientId);
+
+        const encryptAlerts = encryptData(clientAlerts.alerts);
+
+        // const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
 
         try{
-            const allAlerts = await pageSolution(apiAlert);
+            // const allAlerts = await pageSolution(apiAlert);
 
-            res.json(allAlerts);
+            res.json({ 
+                'status': 200,
+                'iv': encryptAlerts.iv,
+                'alerts': encryptAlerts.encryptedData
+            });
         }
         catch(error){
             console.error('Error getting information for alerts:', error.message);

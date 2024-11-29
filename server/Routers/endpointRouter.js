@@ -23,7 +23,7 @@ router.get(
 
         let api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `endpoint/v1/downloads`; 
+        pathFromURL = `/endpoint/v1/downloads`; 
 
         const apiSoftware = api.apiGetConfiguration(pathFromURL);
 
@@ -58,7 +58,7 @@ router.get(
         let api = getApiConfigurationInstance(clientId);
 
 
-        pathFromURL = `endpoint/v1/endpoints/${machine_Id}/update-checks`; 
+        pathFromURL = `/endpoint/v1/endpoints/${machine_Id}/update-checks`; 
 
         await api.postApiConfiguration(pathFromURL, JSON.stringify({}))
             .then((response) => {
@@ -88,7 +88,7 @@ router.get(
         let api = getApiConfigurationInstance(clientId);
 
 
-        pathFromURL = `endpoint/v1/endpoints/${machine_Id}/scans`; 
+        pathFromURL = `/endpoint/v1/endpoints/${machine_Id}/scans`; 
 
         await api.postApiConfiguration(pathFromURL, JSON.stringify({}))
             .then((response) => {
@@ -116,7 +116,7 @@ router.get(
         
         const { machine_Id, clientId } = req.query;
 
-        pathFromURL = `endpoint/v1/endpoints/${machine_Id}?view=full`;
+        pathFromURL = `/endpoint/v1/endpoints/${machine_Id}?view=full`;
 
         let api = getApiConfigurationInstance(clientId);
 
@@ -151,7 +151,7 @@ router.get(
         
         let api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `endpoint/v1/endpoints?sort=lastSeenAt:desc&view=full`;
+        pathFromURL = `/endpoint/v1/endpoints?sort=lastSeenAt:desc&view=full`;
 
         const addParams = {
             "pageSize": 4
