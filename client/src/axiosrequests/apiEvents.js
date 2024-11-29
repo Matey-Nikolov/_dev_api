@@ -1,4 +1,5 @@
 import { api } from "./apiConfig";
+import { decryptData } from "../Services/cryptoService";
 
 export const getEvents = async (clientId) => {
     let events = {};
@@ -9,7 +10,7 @@ export const getEvents = async (clientId) => {
         }
     })
     .then((response) => {
-        events =  response.data.items;
+        events =  decryptData(response.data.events, response.data.iv) ;
     })
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);

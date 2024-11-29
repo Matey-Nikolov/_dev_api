@@ -3,7 +3,7 @@ import { Table, Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import timeConverter from '../../Services/convertTime';
 
-import { findClientEvents, updateEventsForClient } from '../../Services/eventsService';
+import { updateEventsForClient, fetchEvents } from '../../Services/eventsService';
 
 import { useContext } from 'react';
 import { UseCreatedContex } from '../../contex/setupInformation';
@@ -26,9 +26,12 @@ const EventTable = () => {
   const [buttonColor, setButtonColor] = useState('secondary');
 
   useEffect(() => {
-    const events = findClientEvents(currentClient_id);
+    async function fetchData() {
+      const events = await fetchEvents(currentClient_id);
+      setEvents(events);
+    };
 
-    setEvents(events);
+    fetchData();
   }, [currentClient_id]);
 
   const handleClickedAllow = async (value) => {
