@@ -46,7 +46,6 @@ const endpointScanRequest = async (machine_Id, clientId) => {
             }
         });
 
-        console.log(response);
         return response.status;
     } catch (error) {
         console.error('Error:', error.response ? error.response.status : error.message);
@@ -64,7 +63,6 @@ const endpointUpdateRequest = async (machine_Id, clientId) => {
             }
         });
 
-        console.log(response);
         return response.status;
     } catch (error) {
         console.error('Error:', error.response ? error.response.status : error.message);

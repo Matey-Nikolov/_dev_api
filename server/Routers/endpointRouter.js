@@ -135,41 +135,43 @@ router.get(
     }
 );
 
-router.get(
-    '/',
-    [
-        query('clientId').isLength({ min: 35 }).trim().escape()
-    ],
-    async (req, res) => {
-        const errors = validationResult(req);
+// future implementation for getting all endpoints updated
 
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        };
+// router.get(
+//     '/',
+//     [
+//         query('clientId').isLength({ min: 35 }).trim().escape()
+//     ],
+//     async (req, res) => {
+//         const errors = validationResult(req);
 
-        const { clientId } = req.query;
+//         if (!errors.isEmpty()) {
+//             return res.status(400).json({ errors: errors.array() });
+//         };
+
+//         const { clientId } = req.query;
         
-        let api = getApiConfigurationInstance(clientId);
+//         let api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `/endpoint/v1/endpoints?sort=lastSeenAt:desc&view=full`;
+//         pathFromURL = `/endpoint/v1/endpoints?sort=lastSeenAt:desc&view=full`;
 
-        const addParams = {
-            "pageSize": 4
-        };
+//         const addParams = {
+//             "pageSize": 4
+//         };
 
-        const apiAllEndpoints = api.apiGetConfiguration(pathFromURL, addParams);
+//         const apiAllEndpoints = api.apiGetConfiguration(pathFromURL, addParams);
 
-        try{
-            const endpoints = await pageSolution(apiAllEndpoints);
+//         try{
+//             const endpoints = await pageSolution(apiAllEndpoints);
 
-            res.json(endpoints);
-        }
-        catch(error){
-            console.error('Error get data from enpoint:', error.message);
+//             res.json(endpoints);
+//         }
+//         catch(error){
+//             console.error('Error get data from enpoint:', error.message);
 
-            res.status(400).json({ success: false, message: 'Error get data for endpoints.' });
-        };
-    }
-);
+//             res.status(400).json({ success: false, message: 'Error get data for endpoints.' });
+//         };
+//     }
+// );
 
 export default router;

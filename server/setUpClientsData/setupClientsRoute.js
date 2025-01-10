@@ -30,7 +30,8 @@ setupClientsRoute.get(
         role: client.role,
         unauthorized: client.unauthorized,
         alerts: client.alerts,
-        endpoints: client.endpoints
+        endpoints: client.endpoints,
+        software: client.software
       }));
 
       const encryptClients = await Promise.all(

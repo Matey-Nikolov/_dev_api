@@ -1,7 +1,6 @@
 import { express, query, validationResult } from '../globalImports.js';
 
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
-// import { pageSolution } from '.././help/pageSolution.js';
 
 import { findClientById } from '../setUpClientsData/setupClientsRoute.js';
 import encryptData from '../help/encrypt.js';
@@ -70,17 +69,12 @@ router.get(
 
         pathFromURL = `/common/v1/alerts`
 
-        // const api = getApiConfigurationInstance(clientId);
 
         clientAlerts = findClientById(clientId);
 
         const encryptAlerts = encryptData(clientAlerts.alerts);
 
-        // const apiAlert = api.apiGetConfiguration(pathFromURL, addParams);
-
         try{
-            // const allAlerts = await pageSolution(apiAlert);
-
             res.json({ 
                 'status': 200,
                 'iv': encryptAlerts.iv,
