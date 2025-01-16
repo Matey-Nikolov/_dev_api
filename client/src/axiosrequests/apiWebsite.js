@@ -1,4 +1,5 @@
 import { api } from "./apiConfig";
+import { encryptData, decryptData } from "../Services/cryptoService";
 
 class ApiWebsite {
     constructor(valueId) {
@@ -15,13 +16,16 @@ class ApiWebsite {
 
     async getWebsite() {
         try {
+            const encryptedData = encryptData({ clientId: this.clientId });
+
             const response = await api.get('/website', {
-                params:{
-                    clientId:this.clientId
+                params: {
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
             
-            this.website = response.data;
+            this.website = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
@@ -29,15 +33,18 @@ class ApiWebsite {
         return this.website;
     };
 
-    async deleteRequest(website_Id){
+    async deleteRequest(website_Id) {
         try {
-            this.isDeleted = await api.get('/website/delete', {
+            const encryptedData = encryptData({ website_Id, clientId: this.clientId });
+
+            const response = await api.get('/website/delete', {
                 params: {
-                    website_Id,
-                    clientId:this.clientId
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
+            this.isDeleted = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         }
@@ -45,15 +52,18 @@ class ApiWebsite {
         return this.isDeleted;
     };
 
-    async addWebsiteRequest(url){
+    async addWebsiteRequest(url) {
         try {
-            this.isAddWebsite = await api.get('/website/add', {
+            const encryptedData = encryptData({ url, clientId: this.clientId });
+
+            const response = await api.get('/website/add', {
                 params: {
-                    url,
-                    clientId:this.clientId
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
+            this.isAddWebsite = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
