@@ -27,7 +27,7 @@ router.get(
 
         try{
             const allWebsites = await apiAllWebsites.get();
-            
+
             res.json(allWebsites.data);
         }
         catch(error){
@@ -56,7 +56,7 @@ router.get(
 
         const api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `endpoint/v1/settings/web-control/local-sites/${website_Id}`;
+        pathFromURL = `/endpoint/v1/settings/web-control/local-sites/${website_Id}`;
 
         api.apiDeleteConfiguration(pathFromURL, JSON.stringify({}))
             .then((isDeleted) => {
@@ -87,7 +87,7 @@ router.get(
 
         const api = getApiConfigurationInstance(clientId);
 
-        pathFromURL = `endpoint/v1/settings/web-control/local-sites`;
+        pathFromURL = `/endpoint/v1/settings/web-control/local-sites`;
 
         const addData = 
             JSON.stringify({

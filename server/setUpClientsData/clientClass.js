@@ -114,9 +114,9 @@ class Client {
         return this.alerts = this.alerts.filter(alert => alert.id !== alertId)
     };
 
-    // updateEvents(updatedEvents){
-    //     this.events = updatedEvents;
-    // };
+    updateEvents(updatedEvents){
+        this.events = updatedEvents;
+    };
 
     #clearPrivateProperties() {
         this.#tenantIdAndDataRegion = '';

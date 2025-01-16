@@ -29,7 +29,7 @@ const WebsiteTable = () => {
 
   useEffect(() => {
     fetchWebsites();
-  });
+  }, [currentClient_id]);
   
   async function handleButtonClickBlockWebsite(website_Id, url){
     const isDeleted = await websiteService.btnBlockWebsite(website_Id, url);
