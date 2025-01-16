@@ -1,4 +1,5 @@
 import { api } from "./apiConfig";
+import { encryptData, decryptData } from "../Services/cryptoService";
 
 class ApiBackup {
     constructor(valueId, valueFolderName) {
@@ -10,15 +11,19 @@ class ApiBackup {
 
     async backupItems(fileName) {
         try {
+            const encryptedData = encryptData({ 
+                clientId: this.clientId, 
+                fileName, 
+                folderName: this.folderName });
+
             const response = await api.get('/backup/items', {
                 params: {
-                    clientId:this.clientId,
-                    fileName: fileName,
-                    folderName:this.folderName
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
-            this.isCreateFileWithData = response.data;
+            this.isCreateFileWithData = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
@@ -26,17 +31,22 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async backupBlockItems(fileName){
+    async backupBlockItems(fileName) {
         try {
+            const encryptedData = encryptData({ 
+                clientId: this.clientId, 
+                fileName, 
+                folderName: this.folderName 
+            });
+
             const response = await api.get('/backup/items/blocks', {
                 params: {
-                    clientId:this.clientId,
-                    fileName: fileName,
-                    folderName:this.folderName
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
-            this.isCreateFileWithData = response.data;
+            this.isCreateFileWithData = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
@@ -44,17 +54,22 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async backupPolicies(fileName){
+    async backupPolicies(fileName) {
         try {
+            const encryptedData = encryptData({ 
+                clientId: this.clientId, 
+                fileName, 
+                folderName: this.folderName
+            });
+
             const response = await api.get('/backup/policies', {
                 params: {
-                    clientId:this.clientId,
-                    fileName: fileName,
-                    folderName:this.folderName
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
-            this.isCreateFileWithData = response.data;
+            this.isCreateFileWithData = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
@@ -62,17 +77,22 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async backupScanningExclusions(fileName){
+    async backupScanningExclusions(fileName) {
         try {
+            const encryptedData = encryptData({ 
+                clientId: this.clientId, 
+                fileName, 
+                folderName: this.folderName 
+            });
+
             const response = await api.get('/backup/exclusions/scan', {
                 params: {
-                    clientId:this.clientId,
-                    fileName: fileName,
-                    folderName:this.folderName
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
-            this.isCreateFileWithData = response.data;
+            this.isCreateFileWithData = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
@@ -80,17 +100,22 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async backupExclusionsDownload(fileName){
+    async backupExclusionsDownload(fileName) {
         try {
+            const encryptedData = encryptData({ 
+                clientId: this.clientId, 
+                fileName, 
+                folderName: this.folderName 
+            });
+
             const response = await api.get('/backup/exclusions/download', {
                 params: {
-                    clientId:this.clientId,
-                    fileName: fileName,
-                    folderName:this.folderName
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
-            this.isCreateFileWithData = response.data;
+            this.isCreateFileWithData = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };
@@ -98,15 +123,18 @@ class ApiBackup {
         return this.isCreateFileWithData;
     };
 
-    async resetEnviroment(){
+    async resetEnviroment() {
         try {
+            const encryptedData = encryptData({ clientId: this.clientId });
+
             const response = await api.get('/backup/reset', {
                 params: {
-                    clientId:this.clientId
+                    encryptedData: encryptedData.encryptedData,
+                    iv: encryptedData.iv
                 }
             });
 
-            this.isCreateFileWithData = response.data;
+            this.isCreateFileWithData = decryptData(response.data.encryptedData, response.data.iv);
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         };

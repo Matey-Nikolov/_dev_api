@@ -1,14 +1,17 @@
 import { api } from "./apiConfig";
-import { decryptData } from "../Services/cryptoService";
+import { decryptData, encryptData } from "../Services/cryptoService";
 
 const getAlerts = async (clientId) => {
     let alerts = {
         'items': {}
     };
 
+    const encryptedData = encryptData({ clientId });
+
     await api.get('/alert', {
         params: {
-            clientId
+            encryptedData: encryptedData.encryptedData,
+            iv: encryptedData.iv
         }
     })
     .then((response) => {
@@ -24,11 +27,12 @@ const getAlerts = async (clientId) => {
 const takeActionAlert = async (clientId, alertId, action) => {
     let successAndAlerts = {};
 
+    const encryptedData = encryptData({ clientId, alertId, action });
+
     await api.get('/alert/actions', {
         params: {
-            clientId,
-            alertId,
-            action
+            encryptedData: encryptedData.encryptedData,
+            iv: encryptedData.iv
         }
     })
     .then((response) => {

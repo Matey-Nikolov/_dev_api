@@ -1,9 +1,8 @@
 import { express, query, validationResult } from '../globalImports.js';
-
 import getApiConfigurationInstance from '../configs/api/setupApiConfig.js';
-
 import { findClientById } from '../setUpClientsData/setupClientsRoute.js';
 import encryptData from '../help/encrypt.js';
+import decryptData from '../help/decryptData.js';
 
 const router = express.Router();
 
@@ -13,9 +12,8 @@ let clientAlerts;
 router.get(
     '/actions',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape(),
-        query('alertId').isLength({ min: 35 }).trim().escape(),
-        query('action').isLength({ min: 10 }).trim().escape()
+        query('encryptedData').isString(),
+        query('iv').isString()
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -24,7 +22,8 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         };
 
-        const { clientId, alertId, action } = req.query;
+        const { encryptedData, iv } = req.query;
+        const { clientId, alertId, action } = decryptData(encryptedData, iv);
 
         pathFromURL = `/common/v1/alerts/${alertId}/actions`;
 
@@ -56,7 +55,8 @@ router.get(
 router.get(
     '/',
     [
-        query('clientId').isLength({ min: 35 }).trim().escape()
+        query('encryptedData').isString(),
+        query('iv').isString()
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -65,10 +65,10 @@ router.get(
             return res.status(400).json({ errors: errors.array() });
         };
 
-        const { clientId } = req.query;
+        const { encryptedData, iv } = req.query;
+        const { clientId } = decryptData(encryptedData, iv);
 
         pathFromURL = `/common/v1/alerts`
-
 
         clientAlerts = findClientById(clientId);
 
