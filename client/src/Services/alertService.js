@@ -1,5 +1,4 @@
 import { getAlerts, takeActionAlert } from "../axiosrequests/apiAlert";
-import { findClientById } from './clientServiceFolder/clientSevice';
 
 /** @type {Object} */
 let clientAlerts;
@@ -13,11 +12,11 @@ let clientAlerts;
 async function getAlersFromApi(clientId) {
     const alertsData = await getAlerts(clientId);
 
-    const localSortedAlerts = JSON.parse(JSON.stringify(alertsData));
+    const localSortedAlerts = JSON.parse(JSON.stringify(alertsData.items));
 
     localSortedAlerts.items = Object.values(alertsData.items).sort(compareByTime);
 
-    return localSortedAlerts;
+    return localSortedAlerts.items;
 };
 
 /**
@@ -38,11 +37,11 @@ function compareByTime(a, b) {
  * @param {string} currentClient_id - The ID of the current client.
  * @returns {Array} The alerts items.
  */
-const findClientAlerts = (currentClient_id) => {
-    clientAlerts = findClientById(currentClient_id);
-    
+const findClientAlerts = async (currentClient_id) => {
+    clientAlerts = await getAlersFromApi(currentClient_id);
+
     if (clientAlerts !== -1) {
-      return clientAlerts.alerts.items;
+        return clientAlerts;
     };
 
     return [];
@@ -96,24 +95,12 @@ const searchItems = (filteredItems, searchTerm) => {
  * @returns {Promise<boolean>} The success status.
  */
 const takeAction = async (clientId, alertId, action) =>{
-    const success = await takeActionAlert(clientId, alertId, action);
+    const successAndAlers = await takeActionAlert(clientId, alertId, action);
 
-    return success;
-};
+    clientAlerts = successAndAlers.alerts;
 
-/**
- * Update alerts for client.
- * @param {Array} alerts - The alerts.
- * @param {string} alertId - The ID of the alert.
- * @returns {Array} The updated alerts items.
- */
-const updateAlertsForClient = (alerts, alertId) => {
-    const updateAlerts = alerts.filter(alert => alert.id !== alertId);
-
-    clientAlerts.updateAlerts(updateAlerts);
-    
-    return clientAlerts.alerts.items;
+    return successAndAlers;
 };
 
 export { getAlersFromApi };
-export { findClientAlerts, filterItems, searchItems, takeAction, updateAlertsForClient };
+export { findClientAlerts, filterItems, searchItems, takeAction };

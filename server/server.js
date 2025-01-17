@@ -1,13 +1,15 @@
 import express from 'express';
+
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
-import setupInfomation from './configs/api/setupInfomationRouter.js';
+import { env } from './globalImports.js';
 
-import tokenRouter from './Routers/authenticationRouter.js';
-import whoIAmRouter from './Routers/authorizationRouter.js';
+import { setupClientsRoute } from './setUpClientsData/setupClientsRoute.js'
+
+import apiRouteLoginDatabase from './Routers/DatabaseRoutes/apiRouteLogin.js'
 
 import alertRouter from './Routers/alertRouter.js';
 import endpointRouter from './Routers/endpointRouter.js';
@@ -16,10 +18,11 @@ import websiteRouter from './Routers/websiteRouter.js';
 import archiveRouter from './Routers/backupRouter.js';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = env.PORT;
+const host = env.DB_HOST;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: [`http://${host}:${port}`, `http://${host}:3001`],
   methods: 'GET, PUT, POST, DELETE',
 };
 
@@ -39,11 +42,9 @@ app.use(
 
 app.use(bodyParser.json());
 
-app.use('/configuration', setupInfomation);
+app.use('/loginInApp', apiRouteLoginDatabase)
 
-app.use('/token', tokenRouter);
-
-app.use('/access', whoIAmRouter);
+app.use('/setup', setupClientsRoute);
 
 app.use('/alert', alertRouter);
 

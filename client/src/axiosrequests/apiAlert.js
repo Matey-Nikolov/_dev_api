@@ -1,43 +1,48 @@
 import { api } from "./apiConfig";
+import { decryptData, encryptData } from "../Services/cryptoService";
 
 const getAlerts = async (clientId) => {
     let alerts = {
         'items': {}
     };
 
+    const encryptedData = encryptData({ clientId });
+
     await api.get('/alert', {
         params: {
-            clientId
+            encryptedData: encryptedData.encryptedData,
+            iv: encryptedData.iv
         }
     })
     .then((response) => {
-        alerts.items = response.data;
+        alerts.items = decryptData(response.data.alerts, response.data.iv);
     })
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
-
+    
     return alerts;
 };
 
 const takeActionAlert = async (clientId, alertId, action) => {
-    let success = {};
+    let successAndAlerts = {};
+
+    const encryptedData = encryptData({ clientId, alertId, action });
 
     await api.get('/alert/actions', {
         params: {
-            clientId,
-            alertId,
-            action
+            encryptedData: encryptedData.encryptedData,
+            iv: encryptedData.iv
         }
     })
     .then((response) => {
-        success = response.data.status
+        successAndAlerts = response.data;
     })
     .catch((error) => {
         console.error('Error:', error.response ? error.response.data : error.message);
     });
 
-    return success;
+    return successAndAlerts;
 };
 
 export { getAlerts, takeActionAlert };

@@ -9,11 +9,13 @@ import usePagination from '../../Services/Table/PaginationLogic';
 
 import { UseCreatedContex } from '../../contex/setupInformation';
 
-import { findClientAlerts, filterItems, searchItems, takeAction, updateAlertsForClient } from '../../Services/alertService';
+import { findClientAlerts, filterItems, searchItems, takeAction } from '../../Services/alertService';
 import timeConverter from '../../Services/convertTime';
 
 function AlertTable() {
   const { currentClient_id, currentClient_role } = useContext(UseCreatedContex);
+
+  const adminRole = process.env.REACT_APP_ROLE;
 
   const [useRole, setRole] = useState(currentClient_role);
 
@@ -32,21 +34,29 @@ function AlertTable() {
   const handleCloseHelp = () => setShowHelp(false);
 
   useEffect(() => {
-    const alerts = findClientAlerts(currentClient_id);
-    
-    setAlerts(alerts);
-  }, [currentClient_role]);
+
+    async function fetchData() {
+      const alerts = await findClientAlerts(currentClient_id);
+
+      setAlerts(alerts);
+    };
+
+    fetchData();
+  
+  }, [currentClient_id]);
+
+  useEffect( () => { 
+    setRole(currentClient_role);
+  },[currentClient_id]);
 
   const handleButtonClickTakeAction = async (alertId, action) => {
-    const isSuccess = await takeAction(currentClient_id, alertId, action);
+    const successAndAlers = await takeAction(currentClient_id, alertId, action);
 
-    if (isSuccess === 'success') {
+    if (successAndAlers.status === 'success') {
       setSuccessAlert(true);
       setSuccessAlertText('Acknowledge');
 
-      const updateAlerts = updateAlertsForClient(useAlerts, alertId);
-
-      setAlerts(updateAlerts);
+      setAlerts(successAndAlers.alerts);
     };
     
     setTimeout(() => {
@@ -128,7 +138,7 @@ function AlertTable() {
           />
         </Col>
         <Col md={2}>
-          {useRole === process.env.REACT_APP_ROLE && (
+          {useRole === adminRole && (
             <Button variant="info" onClick={handleShowHelp} className="w-100">
               Help
             </Button>
@@ -151,7 +161,7 @@ function AlertTable() {
             <th>Severity</th>
             <th>Description</th>
             <th>RaisedAt</th>
-            {useRole === process.env.REACT_APP_ROLE && (
+            {useRole === adminRole && (
               <th>allowed actions</th>
             )}
           </tr>
@@ -179,7 +189,7 @@ function AlertTable() {
 
               <td className='text-center'>{timeConverter(value.raisedAt)}</td>
 
-              {useRole === process.env.REACT_APP_ROLE && (
+              {useRole === adminRole && (
                 <td className='text-center'>
                   <Button variant="info" onClick={() => handleButtonClickTakeAction(value.id, value.allowedActions[0])}>
                     {value.allowedActions[0]}
