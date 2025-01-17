@@ -44,8 +44,7 @@ Here are some used for the project.
 - [Expres.js](https://expressjs.com/) - for server.
 
 ## Application architecture
-![project drawio (002)](https://github.com/Matey-Nikolov/_dev_api/assets/80168510/cf99e1cf-4472-4539-9cb5-2faaae2c4248)
-
+![project drawio](https://github.com/user-attachments/assets/d2dfb6ba-6d88-46ad-9277-44b69d8978b2)
 
 
 # Project Setup
